@@ -1,6 +1,6 @@
 /* eslint-disable import/no-dynamic-require */
 import React from 'react';
-import { StaticRouter, matchPath } from 'react-router-dom';
+import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 
@@ -21,8 +21,6 @@ import { stripCountry } from '../helper/helper';
 // https://github.com/facebookincubator/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = (relativePath: any) => path.resolve(appDirectory, relativePath);
-// const appSrc = resolveApp('src');
-// const appPublic = resolveApp('public');
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
@@ -101,9 +99,9 @@ i18n
                                             </body>
                                         </html>`;
 
-                        if (!ROUTES.includes(req.path)) {
-                            res.status(404).send(indexHTML);
-                        }
+                        // if (!ROUTES.includes(req.path)) {
+                        //     res.status(404).send(indexHTML);
+                        // }
 
                         res.status(200).send(indexHTML);
                     }

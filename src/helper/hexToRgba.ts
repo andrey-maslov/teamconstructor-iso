@@ -1,6 +1,6 @@
-const removeHash = hex => (hex.charAt(0) === '#' ? hex.slice(1) : hex);
+const removeHash = (hex: any) => (hex.charAt(0) === '#' ? hex.slice(1) : hex);
 
-const parseHex = (nakedHex) => {
+const parseHex = (nakedHex: any) => {
     const isShort = (
         nakedHex.length === 3
         || nakedHex.length === 4
@@ -21,20 +21,19 @@ const parseHex = (nakedHex) => {
     };
 };
 
-const hexToDecimal = hex => parseInt(hex, 16);
+const hexToDecimal = (hex: any) => parseInt(hex, 16);
 
-const hexesToDecimals = ({
-                             r, g, b, a,
-                         }) => ({
+//@ts-ignore
+const hexesToDecimals = ({r, g, b, a,}) => ({
     r: hexToDecimal(r),
     g: hexToDecimal(g),
     b: hexToDecimal(b),
     a: +((hexToDecimal(a) / 255).toFixed(2)),
 });
 
-const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n); // eslint-disable-line no-restricted-globals, max-len
+const isNumeric = (n: any) => !isNaN(parseFloat(n)) && isFinite(n); // eslint-disable-line no-restricted-globals, max-len
 
-const formatRgb = (decimalObject, parameterA) => {
+const formatRgb = (decimalObject: any, parameterA: any) => {
     const {
         r, g, b, a: parsedA,
     } = decimalObject;
@@ -52,12 +51,14 @@ const formatRgb = (decimalObject, parameterA) => {
  * @param An alpha value to apply. (optional) ('0.5', '0.25')
  * @return An rgb or rgba value. ('rgb(11, 22, 33)'. 'rgba(11, 22, 33, 0.5)')
  */
-const hexToRgba = (hex, a) => {
+const hexToRgba = (hex: any, a: any) => {
     const hashlessHex = removeHash(hex);
     const hexObject = parseHex(hashlessHex);
     const decimalObject = hexesToDecimals(hexObject);
 
     return formatRgb(decimalObject, a);
 };
+
+export default hexToRgba;
 
 module.exports = hexToRgba;

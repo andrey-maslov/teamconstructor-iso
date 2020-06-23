@@ -25,11 +25,10 @@ interface IUsersLocalState {
 }
 
 interface ICompareInputProps {
-    location: any
-    // schemeCurrent: SchemeType
+
 }
 
-const CompareInput: React.FC<ICompareInputProps> = ({...props}) => {
+const CompareInput: React.FC<ICompareInputProps> = () => {
 
     // const userData1: any = useSelector((state: any) => state.compareReducer.user1.data)
     // const userData2: any = useSelector((state: any) => state.compareReducer.user2.data)
@@ -45,8 +44,6 @@ const CompareInput: React.FC<ICompareInputProps> = ({...props}) => {
             isError: false
         }
     })
-
-    console.log(localState)
 
     let userDataQS: string = '';
     useEffect(() => {
@@ -65,7 +62,6 @@ const CompareInput: React.FC<ICompareInputProps> = ({...props}) => {
             }
         }
     },[localState.user1.data])
-
 
 
     return (
