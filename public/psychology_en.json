@@ -1,0 +1,1134 @@
+{
+  "terms": {
+    "axes": [
+      {
+        "mainAxis": [
+          "extraversion",
+          "introversion"
+        ],
+        "subAxes": [
+          [
+            "activity",
+            "passivity"
+          ],
+          [
+            "excitation",
+            "braking"
+          ],
+          [
+            "sociability",
+            "isolation"
+          ],
+          [
+            "search for impressions",
+            "avoidance of impressions"
+          ],
+          [
+            "to attract attention",
+            "attention avoidance"
+          ]
+        ],
+        "correctionFactors": [
+          1,
+          1
+        ]
+      },
+      {
+        "mainAxis": [
+          "anxiety",
+          "aggressiveness"
+        ],
+        "subAxes": [
+          [
+            "self-incrimination",
+            "complacency"
+          ],
+          [
+            "cooperation",
+            "rivalry"
+          ],
+          [
+            "socialization",
+            "individualism"
+          ],
+          [
+            "subordination",
+            "dominance"
+          ],
+          [
+            "anxiety",
+            "confidence"
+          ]
+        ],
+        "correctionFactors": [
+          1,
+          2
+        ]
+      },
+      {
+        "mainAxis": [
+          "Sensitivity",
+          "spontaneity"
+        ],
+        "subAxes": [
+          [
+            "accuracy",
+            "sloppiness"
+          ],
+          [
+            "persistence",
+            "spontaneity"
+          ],
+          [
+            "thought-provoking",
+            "reliance on intuition"
+          ],
+          [
+            "self-control",
+            "impulsiveness"
+          ],
+          [
+            "forethought",
+            "carelessness"
+          ]
+        ],
+        "correctionFactors": [
+          1,
+          1
+        ]
+      },
+      {
+        "mainAxis": [
+          "attachment",
+          "individuality"
+        ],
+        "subAxes": [
+          [
+            "avoidance of responsibility",
+            "a responsibility"
+          ],
+          [
+            "acceptance of control",
+            "failure to take control"
+          ],
+          [
+            "neuroticism",
+            "stability"
+          ],
+          [
+            "caution",
+            "propensity to accept relationships"
+          ],
+          [
+            "propensity to establish relationships",
+            "caution in establishing relationships"
+          ]
+        ],
+        "correctionFactors": [
+          1,
+          1
+        ]
+      },
+      {
+        "mainAxis": [
+          "emotionality",
+          "rigidity"
+        ],
+        "subAxes": [
+          [
+            "curiosity",
+            "conservatism"
+          ],
+          [
+            "daydreaming",
+            "realism"
+          ],
+          [
+            "artistry",
+            "down to earth"
+          ],
+          [
+            "emotional flexibility",
+            "emotional stability"
+          ],
+          [
+            "plastic",
+            "rigidity"
+          ]
+        ],
+        "correctionFactors": [
+          1,
+          1
+        ]
+      }
+    ],
+    "octants": [
+      {
+        "psychotypes": [
+          "Hemispheric style",
+          "intuitive"
+        ],
+        "octants": [
+          "individual",
+          "innovator"
+        ]
+      },
+      {
+        "psychotypes": [
+          "Hemispheric style",
+          "sensual",
+          "shaped"
+        ],
+        "octants": [
+          "opinion leader",
+          "mod"
+        ]
+      },
+      {
+        "psychotypes": [
+          "Left hemisphere style",
+          "abstract"
+        ],
+        "octants": [
+          "conservative",
+          "sensitive"
+        ]
+      },
+      {
+        "psychotypes": [
+          "Left hemisphere style",
+          "rational"
+        ],
+        "octants": [
+          "closed",
+          "realist"
+        ]
+      }
+    ],
+    "additionalParameters": [
+      {
+        "title": "Efficiency in small group leadership",
+        "desc": ""
+      },
+      {
+        "title": "Self-organization",
+        "desc": "Efficiency on remote work."
+      },
+      {
+        "title": "Loyalty",
+        "desc": ""
+      },
+      {
+        "title": "Entrepreneurship and initiative",
+        "desc": ""
+      },
+      {
+        "title": "Learning",
+        "desc": "Training programs should be developed taking into account each cognitive style of thinking, then they will be effective. Moreover, by \"learning \" we mean the ability to perceive and repeat in practice the knowledge gained, as well as the desire to acquire it."
+      },
+      {
+        "title": "Conformism (conciliation)",
+        "desc": ""
+      },
+      {
+        "title": "Self-esteem",
+        "desc": "Floating indicator. In people with mobile nervous processes, it can fluctuate significantly within the normal range (general positive values. In people with stiff and strong GNI, a decrease in indicators can serve as a marker of burnout and depression."
+      },
+      {
+        "title": "Conflict",
+        "desc": ""
+      },
+      {
+        "title": "Burnout and depression",
+        "desc": "Floating indicator. In people with mobile nervous processes, it can fluctuate significantly within normal limits (general positive values). In people with stiff and strong GNI, a decrease in indicators can serve as a marker of professional burnout and depression."
+      }
+    ],
+    "fullProfile": [
+      {
+        "title": "Profile (combination of profiles)",
+        "values": [],
+        "checkValues": [
+          20
+        ]
+      },
+      {
+        "title": "Severity",
+        "values": [
+          "poorly expressed",
+          "confidently expressed",
+          "you may have been very worried about answering test questions"
+        ],
+        "checkValues": [
+          20,
+          40
+        ]
+      },
+      {
+        "title": "Relationship propensity",
+        "values": [
+          "small",
+          "Medium",
+          "high"
+        ],
+        "checkValues": [
+          -2,
+          0
+        ]
+      },
+      {
+        "title": "Propensity to accept relationships",
+        "values": [
+          "small",
+          "Medium",
+          "high"
+        ],
+        "checkValues": [
+          0,
+          2
+        ]
+      },
+      {
+        "title": "Neuroticism",
+        "values": [
+          "tall",
+          "middle",
+          "no"
+        ],
+        "checkValues": [
+          -2,
+          0
+        ]
+      },
+      {
+        "title": "Adaptability to stress",
+        "values": [
+          "high",
+          "Medium",
+          "low"
+        ],
+        "checkValues": [
+          20,
+          35
+        ]
+      },
+      {
+        "title": "Motivation",
+        "values": [
+          "achievement motivation, focusing on your own result",
+          "achievement motivation, focusing on a group result",
+          "motivation to achieve success, focusing on the process itself",
+          "motivation to attract attention",
+          "the motivation to avoid failure and avoid anxiety",
+          "motivation to avoid failure and conflict communication",
+          "contact avoidance motivation",
+          "motivation to maintain socio-economic status"
+        ],
+        "checkValues": []
+      },
+      {
+        "title": "Style of thinking",
+        "values": [
+          "holistic, heuristic, intuitive",
+          "sensual, visual-figurative",
+          "verbal, abstract-analytical",
+          "formal logical, synthetic, rational"
+        ],
+        "checkValues": []
+      },
+      {
+        "title": "Top Trends",
+        "values": [],
+        "checkValues": [
+          20
+        ]
+      },
+      {
+        "title": "Leading emotion",
+        "values": [
+          "impulsiveness",
+          "optimism",
+          "pessimism",
+          "aggressiveness"
+        ],
+        "checkValues": []
+      },
+      {
+        "title": "Response Type",
+        "values": [
+          "spontaneity (impulsiveness)",
+          "lability (flexibility)",
+          "sensitivity (sensitivity)",
+          "rigidity (perseverance)"
+        ],
+        "checkValues": []
+      },
+      {
+        "title": "Efficiency",
+        "values": [
+          "ineffective to use as a leader",
+          "suitable as a leader",
+          "born leader"
+        ],
+        "checkValues": [
+          13,
+          20
+        ]
+      },
+      {
+        "title": "Leadership",
+        "values": [
+          "leadership qualities are weak",
+          "leader",
+          "effective",
+          "businessman",
+          "politician",
+          "probably"
+        ],
+        "checkValues": [
+          24,
+          42
+        ]
+      },
+      {
+        "title": "Survival in the team",
+        "values": [
+          "low coexistence",
+          "high coexistence"
+        ],
+        "checkValues": [
+          5
+        ]
+      },
+      {
+        "title": "Self-organization",
+        "values": [
+          "no propensity for self-organization",
+          "there is a tendency to self-organization",
+          "a great propensity for self-organization"
+        ],
+        "checkValues": [
+          5,
+          15
+        ]
+      },
+      {
+        "title": "Loyalty",
+        "values": [
+          "may change jobs if a better offer arrives",
+          "loyal",
+          "betrayed"
+        ],
+        "checkValues": [
+          5,
+          15
+        ]
+      },
+      {
+        "title": "Initiative",
+        "values": [
+          "little initiative",
+          "initiative",
+          "very often takes the initiative, strives for career growth"
+        ],
+        "checkValues": [
+          5,
+          15
+        ]
+      },
+      {
+        "title": "Learning",
+        "values": [
+          "not interested in learning",
+          "committed to learning"
+        ],
+        "checkValues": [
+          5
+        ]
+      },
+      {
+        "title": "Conformism",
+        "values": [
+          "has his own opinion",
+          "flexible"
+        ],
+        "checkValues": [
+          5
+        ]
+      },
+      {
+        "title": "Self-esteem",
+        "values": [
+          "low self-esteem",
+          "a high self-evaluation",
+          "very high self-esteem"
+        ],
+        "checkValues": [
+          5,
+          15
+        ]
+      },
+      {
+        "title": "Conflict",
+        "values": [
+          "low conflict",
+          "conflict",
+          "very conflicted"
+        ],
+        "checkValues": [
+          5,
+          15
+        ]
+      },
+      {
+        "title": "Depression",
+        "values": [
+          "depression is unlikely",
+          "on the verge of depression",
+          "depression"
+        ],
+        "checkValues": [
+          5,
+          12
+        ]
+      }
+    ],
+    "descriptions": {
+      "axis": [
+        "Anxiety - indicates caution, pondering decisions, a sense of responsibility towards others; increased concern about the difficulties of relatives and friends, as well as their own problems and failures; desire to help people, work of a social nature;",
+        "Lability - indicates emotionality (increased sensitivity), sharp mood swings, sentimentality; instability of motivation, a tendency to emotional involvement; a predisposition to work of a creative and social nature;",
+        "Extraversion - indicates the focus of attention in the external, real world; openness, a tendency to open communication and expansion of contacts, sociability; motivation to achieve in a hurry; desire for social work, as well as increased activity and exaltation;",
+        "Spontaneity - indicates a penchant for independence and self-affirmation; committing rash acts, enterprise; desire for independent and creative work, mainly without submission to anyone;",
+        "Aggressiveness - indicates the need for self-realization, perseverance, the presence of their own principles and interests; practical perception of reality, offensive; propensity for vigorous activity, work of a technical nature, as well as self-affirmation, short temper, selfishness;",
+        "Rigidity - indicates a hypertrophied desire to uphold their interests and principles, a critical attitude to the position of others; subjectivity of thinking, inertia of attitudes, perseverance; penchant for exact sciences, technical and creative activities.",
+        "Introversion - indicates that the person’s attention is turned to his inner world - the world of his personal experiences and ideas; propensity for illusory representations and subjective values; desire for separate work, limiting contacts with others; selective communication;",
+        "Sensitivity - indicates increased sensitivity and sensitivity to events of the surrounding reality, reflection, a pessimistic view of the future; guilty feelings of failure, lack of conflict, the need for understanding and harmonious relationships; humanitarian mindset;"
+      ],
+      "psychoTypes": [
+        [
+          [
+            "2. Maverick up to 20 points.",
+            "You know how to defend your interests. Without rushing into a fight, counting allies and resources, you will go towards your goal. All that you achieve will be thanks to your pressure, perseverance and perseverance. You are a man of business, and you can be proud of that.",
+            "You are a master at finding errors. And you like to crack any defenses. If something or someone challenges you, you will surely find how to deal with it. Try the Tester specialization - it seems that there you will find something that will be close to you heart. "
+          ],
+          [
+            "3. Maverick from 20 to 35 points inclusive.",
+            "You know how to restrain your anger and ambition, although it is very difficult. Not everyone can argue with you when you go towards your goal. Sometimes your friends may suffer, but they are already used to an explosive and persistent character. You are a leader, you are a person pressure.",
+            "It seems that there are no impossible tasks for you, and any task is a challenge to a duel. And you almost never leave a chance to an opponent. You will not stop until you solve a difficult task, and the more difficult it is, the stronger the excitement. You can to be both the strongest tester and the stubborn product manager, you just need a challenge. "
+          ],
+          [
+            "4. Maverick from 35 points and above.",
+            "A warrior who rushes into battle, who does not feel wounds from rage and anticipation of victory. A man who goes to his goal, despite pain and suffering: his own and others. A victorious man. Only after a victory there is often a scorched field ...",
+            "Only you can be introduced to you. I came, I saw, I won. But try to restrain anger where it is not necessary. Your will will allow it to be done. In any case, such people are worth their weight in gold..."
+          ],
+          [
+            "1. The maverick and the Conservative are approximately equal. (With a difference of less than 10%).",
+            "Combining pressure and caution, you achieve your goal. You can be gentle, aggressive, and good-natured, and defend your interests. Sometimes you can mix up where you need to be tough and where to soften the situation, but most often you succeed \"Good should be with fists,\" is about you. "
+          ]
+        ],
+        [
+          [
+            "6. Innovator up to 20 points.",
+            "You are independent and independent. Few people or what can change your position. And if someone tries ... let them not climb. Climbing into your life, let alone teach life, is not recommended to anyone. Friends will understand, but to the opinions of the others, by and large, don't give a damn. ",
+            "Your hobby is intuition. Where others need a causal relationship, you can see the whole picture. You like to rely on intuition, on spontaneity. Most often it doesn’t let you down. What if you try _____? Maybe you will like it, and it will be interesting. "
+          ],
+          [
+            "7. Innovator from 20 to 35 points inclusive.",
+            "You are a very impulsive person, because of which you often suffer. Finding adventures on the fifth point is your everything. Yes, sometimes scandals are indispensable, but more fun. After all, life is full of adventures and unexpected turns, isn't it? ",
+            "Everything new, innovative for you is a matter of sincere interest. Yes, you are not like most. Yes, sometimes people around you do not understand. But most often you are not very worried about this: while the misunderstood are stuck at one point, you’re already We’ve gone far ahead. It seems you will be curious to try _________, there are a lot of interesting things in these specializations! "
+          ],
+          [
+            "8. Innovator from 35 points and above.",
+            "Each person in this world is unique. You should not assume that the rest are worse than you just because they are OTHER. Perhaps then you will have warm friendships that you may already have forgotten about.",
+            "If everyone does this, then you will find a completely different way and look with a completely different look. You are interested in everything unusual. Any routine and repeatability are bored. It seems worth finding a few people who are not far behind you and try to convey your thoughts. Try specializations like __________. There are likely to be people there who can convey the new things that interest you today. "
+          ],
+          [
+            "5. Innovator and Sensitive are approximately equal. (With a difference of less than 10%).",
+            "You are a man with a twist, preserving your childlike spontaneity. \"X hour\" is coming, and that’s it: you are able to rush to the ends of the world for the weekend, listen to the shaman’s singing in the tundra. You are able to stand on a snowboard and go down a difficult mountain for the first time. But at the same time, everything will be under control with medical insurance and spare socks. You are a person of the Way, and many interesting things await you on it. At the same time, you will not forget to take care of the night at the hotel for at least four stars. ",
+            ""
+          ]
+        ],
+        [
+          [
+            "10. Opinion leader up to 20 points.",
+            "You have a lot of friends and friends, you are a sociable person. The best rest is a rest in the company. You do not get lost in the thick of fun, people reach for you, and you reach for people. To lead - you can, know and love. You are an authority in certain circles, and a very nice person to talk to. ",
+            "You have a calling - communication with other people. You communicate with pleasure, and your interlocutors enjoy the same pleasure from you. To tell something new, to share information, to keep in touch is yours. You probably should try yourself in ________. Usually those who are successful and who communicate a lot with pleasure are usually successful there. It is not for nothing that they believe that communication is the future. "
+          ],
+          [
+            "11. Opinion leader from 20 to 35 points inclusive.",
+            "It seems you don’t think a day without communication: without having to make a new acquaintance. Your goal is to share your thoughts with a wide audience, tell interesting, show unknown. At the same time, you must certainly express your attitude: to what is happening, to the subject , to a person. Our world is rapidly moving forward, but still, all the same ... Sometimes it’s worthwhile to pause and try to look at the essence of things with a deeper, more attentive look. And then tell others about it. ",
+            "You are very sociable, you are very sociable. It probably occurred to you to try to monetize this in some way. Well, people are following you, and if you are careful in the direction you take them, you can safely apply for the vacancy _____________. The only thing that is required of you is the repeated verification of the information that you will interest others. "
+          ],
+          [
+            "12. Opinion Leader from 35 points and above.",
+            "If you stay for half an hour or an hour without talking to someone, reading some news, posting a post, comment or note, you feel uncomfortable. But forgetting a smartphone at home is already a disaster. It seems to be locked without means of communication and without communication, it’s not just punishment for you, but something worse than murder. It seems that it’s time to use \"loneliness\" in small portions. Otherwise, you can lose yourself. To lose and not to find among a huge number of onlookers. ",
+            "Professional tiredness from communicating with a large number of people does not threaten you, but dizziness from success ... You should also note the need to stop from time to time. Stop and analyze whether you are going there and, most importantly - how many people of those with whom you are started the way, still coming after you. "
+          ],
+          [
+            "9. The Leader of Opinions and Closed are approximately equal (with a difference of less than 10%).",
+            "You can be alone, and you can be in a crowd of people, and all with the same comfort. You are a happy person who knows a lot about good conversation and the pleasure of being alone. Wherever and with whoever you are, you get pleasure. Communication with others and communication with yourself is equally pleasant for you. ",
+            ""
+          ]
+        ],
+        [
+          [
+            "14. Mod to 20 points.",
+            "You adapt very easily to a changing world, very easily find a new one and apply it with pleasure. Communication and novelty are your motto in life. But sometimes you worry that what was loved yesterday was forgotten today; and the one with whom You could chat all night long, today has become completely uninteresting. ",
+            "You adapt very easily to changes, find a new one very easily and apply it with pleasure. Moreover, it inspires genuine enthusiasm and you are happy to introduce a new one that has already been tested. Add a little perseverance and the ability to bring it to logical conclusion - and you will make a magnificent ______. "
+          ],
+          [
+            "15. Mod from 20 to 35 points inclusive.",
+            "You are very easily carried away, quickly catch up with enthusiasm and just as quickly move from one new to another. Fashion, style, fame are not empty words for you. But you need some stability from who is nearby. Without this, you risk trying everything but don’t find what turns out to be beloved, long-term, permanent. ",
+            "Your lifestyle is to keep an eye on what is new and popular. You will not miss a single novelty in the field where you invest your energy. And you will find those trendsetters who will demonstrate this novelty to you. Conferences, presentations, training - you are with you absorb trends with pleasure and always know how to keep \"your nose in the wind\". Well, these are very good qualities in order to succeed in areas such as _____________ "
+          ],
+          [
+            "16. Fashionista from 35 points and above.",
+            "You are so flexible that it borders on inconstancy. One thing that is constant in your life is a trend. You should look at the possibility of using reliable, time-tested connections, things and friends. Something must be permanent in a person’s life, but you risk it to lose. ",
+            "You can adapt to absolutely any circumstances and respond to rapid changes in the \"rules of the game\". Someone may say that this is the absence of a core, the lack of an opinion. Although this is not so, this point of view can be a problem. In some specializations like _________, for example, it’s good, but don’t forget that there’s a lot of new, fresh, interesting, and that time is limited. And in some cases it’s worth stopping and being a little deeper. "
+          ],
+          [
+            "13. Modnik and Realist are approximately equal (with a difference of less than 10%).",
+            "Where necessary, you are able to be flexible, where necessary - persistent. You combine those qualities that allow you to rely on your own unique experience and feel those trends that help you \"stay afloat\" in a rapidly changing world. And you know how to be different. This is a very valuable quality. ",
+            ""
+          ]
+        ],
+        [
+          [
+            "17. Conservative up to 20 points.",
+            "You try water with your foot before diving, and that's right. Eliminating risks is your motto in life. And how many situations have your forethought helped you! Very often, life develops according to the most negative scenario, but you are ready for this. In any you will survive the cataclysm, first of all, because you are very careful. ",
+            "Your motto is \"Measure out seven times\" in work. And you are an indispensable worker where there is a danger of mistakes. You will not go along unpaved paths, preferring a comfortable asphalt road. Most often, it leads to the goal faster. You are a very good worker in such fields as __________ . Most have already chosen this path. "
+          ],
+          [
+            "18. Conservative from 20 to 35 points inclusive.",
+            "You are one of those who prefer old, but beloved things, reliable friends and a familiar circle of friends. You consider everything fashionable to be unstable. But you yourself will be happy to use some of this when many people check it, most. And in relationships , and in other areas of life you are not inclined to change something. But sometimes it is necessary to do it. ",
+            "You just need stability and a gradual career growth. The growth that occurs by itself due to the gradual growth of experience, the amount of knowledge, breadth of connections. You are advised to choose the work that will be pleasant for you for many years, with an established team and stable benevolent. And at this work you will be able to achieve what you will be known as a stable and deep specialist."
+          ],
+          [
+            "19. Conservative from 35 points and above.",
+            "Sometimes you worry too much about a random word, careless action and the slightest change in the situation. The world around us is inexorably changing, and we need firm support under our feet. Each of us gets into difficult situations, but the vast majority leaves them in something more favorable . Remember this, and remember that there will always be a person nearby with whom you will feel calmer. ",
+            "You simply are contraindicated in frequent job changes and sharp turns in your career. Yours is work in large stable corporations, where you will carry out work that will not change much during your career. Changes are not for you, and you understand that stability is Your goal of life. "
+          ]
+        ],
+        [
+          [
+            "20. Sensitive up to 20 points.",
+            "You are very sensitive to the outside world. Especially to the one who is a determining figure for you in this outside world. It can be a mother, Teacher, a loved one. You are like a mirror that reflects what he expects to see in you. And you are different with different important people. As an actor who plays hundreds of roles talentedly, lives in them. But it’s not roles, it’s you. And in return you get what this person can give, playing his part. Mom will be the perfect mom with you , the teacher - with a capital Teacher. To live dozens of different lives in one life - this can be envied.",
+            "You are an ideal substitute for any boss. You clearly convey his desires, requirements. But at the same time you subtly feel the desires and requirements of others - those whom you lead. And so thanks to you, you get an alloy from the orders of the leadership with the capabilities of the team. The best middle manager - it's about you. "
+          ],
+          [
+            "21. Sensitive from 20 to 35 points inclusive.",
+            "It seems that you are too dissolving in another person. You feel it on an intuitive level and involuntarily adjust to it. When the balance of your \"want\" and \"want\" of another person is observed - this is a guarantee of a long happy relationship. But you are sometimes too soft, and there are danger of losing oneself. ",
+            "You will make an excellent trade union leader, social activist, social worker. You know human needs very well and strive to satisfy them. You will always have \"both the wolves are fed and the sheep are safe\". And this is a great talent!"
+          ],
+          [
+            "22. Sensitive from 35 points and above.",
+            "Sometimes you think what you are. Too different, inconsistent, inconsistent. You are the way others want to see you. And sometimes because of this you act in a contradictory way, not the way you would like yourself. And this can cause problems - inability to understand for yourself what you are. ",
+            "You are too in line with expectations. The expectations of management, the expectations of subordinates. And they can then blame you for this! And all because you cannot but feel these expectations, you cannot justify these expectations. If someone believes in you, you you can turn mountains; if someone decides that you are not capable of anything, you will prove that he was not mistaken ... "
+          ]
+        ],
+        [
+          [
+            "23. Closed to 20 points.",
+            "Is someone suffering from loneliness? It's not about you! In solitude, you can do what you love, read a book, watch a movie, just make plans. The rest just can't enjoy such a pleasant state!",
+            "You know how to disconnect, \"catch the stream\". And, I must say, this is a pleasant state. Communication is also good when there is an opportunity to exit it at any time. And the best is balance. Time to work and time to talk, forgetting about. They say that good PROJECT ARCHITECTS have achieved perfection in this."
+          ],
+          [
+            "24. Closed from 20 to 35 points inclusive.",
+            "The best communication is communication with a person who appreciates your time. Everything is on business, nothing more. Unfortunately, most people kill time by talking about nothing, empty words, monologues without information. After such communication, you only feel tired and irritated. Good when it’s possible to be alone, \"recharge\" with silence. ",
+            "The most interesting thing is to listen to yourself and be in a state where everything is \"going by itself\". Disconnect from everything external, catch a wave. Then you can exhale, admire what you have done, but the biggest buzz is to be in the stream. Everyone has their own ways, but the general thing is the ability to disconnect from the external. If you know this, then there is a good chance to become a coder-guru. "
+          ],
+          [
+            "25. Enclosed from 35 points and above.",
+            "If people annoy you, interfere with your thoughts and deeds, and it happens all the time, it’s worth thinking and trying to change something. It’s very easy to become a hermit, and perhaps a sociopath. Perhaps there are people around you who Who will you find common interests? Give them a chance! ",
+            "If you are able to do without offline communication for a long time (say, a week), if the most interesting thing you can take from other people is their thoughts; if after forced communication with other human individuals you tend to be left alone as quickly as possible - this it’s a sign that you have practically learned Zen. They say that such a Zen understood the great Black Coder, who went to the Black Cocoon with his black cat and black laptop. But even he needs to maintain communication skills. Leader, architect, food delivery. Yes, and for health it’s better to take a little walk ... "
+          ]
+        ],
+        [
+          [
+            "26. Realist up to 20 points.",
+            "Constancy is a great thing! You are a very constant person in everything. But at the same time you are flexible enough to include new things in your life. But you will let this new one when it is noted in your plans. Add new people to your plans!",
+            "You are a very solid and persistent person. And very persistent. Many envy this perseverance and perseverance. And there is something to envy: not everyone is capable of painstaking work. There are sprinters, there are styers, and you are a marathon runner. Everything is clearly planned, laid out, done. With this approach to business, you can try yourself in _______. You have very good chances to succeed in this. "
+          ],
+          [
+            "27. Realist from 20 to 35 points inclusive.",
+            "Only you are capable of such fidelity and patience, which poets sing and about which writers write. Fidelity and patience, which last for years and decades. But it happens that it is necessary to let something new into your life. It is difficult, but sometimes necessary . Try to give a chance to a miracle, and it will happen! ",
+            "Your accuracy is on the verge of fiction. Everything is clear, everything is logical, everything is clear. Nothing superfluous, nothing missing. Everything that you use in your work is reliable, tested, tested. Only the best professionals __________ and _________ have such a talent for structuring everything. "
+          ],
+          [
+            "28. Realist from 35 points and above.",
+            "Not always new is dangerous. Not always old - acceptable today. It seems that you just need at least some change. Let it be small, even completely small. Without this, your life is too familiar and monotonous.",
+            "Perhaps few people compare with you in the ability to structure the space and lay it out in detail, find the slightest roughness, and then synthesize a working system from these details. Structure, perseverance, synthesis. And most often you succeed. If you tried __________ and _________ maybe worth continuing - these specializations are just asking for such a master of planning and a genius of perseverance. "
+          ]
+        ]
+      ],
+      "famous": [
+        [
+          "Han Solo / Daenerys Targaryen",
+          "James Bond / Arya Stark",
+          "Joker / Snow Queen"
+        ],
+        [
+          "Henry Ford / Coco Chanel",
+          "Steve Jobs / Katie Ireland",
+          "Jack Ma / Lucy Pang"
+        ],
+        [
+          "Woody Allen / Hermione",
+          "Elon Musk / Miley Cyrus",
+          "Captain Jack Sparrow / Oprah Winfrey"
+        ],
+        [
+          "Robert Downey Jr. / Camille Belle",
+          "Will Smith / Scarlett O. Hara",
+          "Jared Leto / Kylie Geneer"
+        ],
+        [
+          "Ryan Reynolds / The Little Mermaid",
+          "Prince Harry / Sandra Bullock",
+          "Robert De Niro / Marilyn Monroe"
+        ],
+        [
+          "Frodo Baggins / Sansa Stark",
+          "Freddie Mercury / Bjork",
+          "Keanu Reeves / Mother Teresa"
+        ],
+        [
+          "Harry Potter / Joan Rowling",
+          "House MD / Agatha Christie",
+          "Sherlock / Greta Tunberg"
+        ],
+        [
+          "Winston Churchill / Angela Merkel",
+          "Don Corleone / Hillary Clinton",
+          "Margaret Thatcher / Bruce Willis"
+        ]
+      ],
+      "complex": [
+        [
+          [
+            "Behavioral symptoms",
+            "INDIVIDUALIST. They seek to command others and resist attempts to control themselves. They have developed a sense of competition, perseverance in achieving goals, a tendency to oppose other strong personalities in the environment. Persons of this type easily ignite with hostility and are prone to conflict, especially with those in whom they see It is combined with such features as traits of complacency (or narcissism) Domination is not aimed at common interests with the group and is not manifested by the desire to lead people along. Low severity. Confident, independent, self-oriented, competitive type. Average severity. Smug, narcissistic, with a pronounced sense of self-esteem, superiority over others, with a tendency to have a separate opinion that is different from the majority opinion, and to take a separate position in the group. but. Arrogant, boastful "
+          ],
+          [
+            "Specialty",
+            ""
+          ],
+          [
+            "Hobbies, relaxation",
+            ""
+          ],
+          [
+            "Lead motive",
+            "Achieving individual success"
+          ],
+          [
+            "Thinking style",
+            "The cognitive style is holistic and intuitive."
+          ],
+          [
+            "Type of response",
+            "Spontaneity, arrogance, some aggressiveness. Expressed through motor activity."
+          ],
+          [
+            "Leading emotion",
+            "Impulsivity (expressed through aggression)"
+          ],
+          [
+            "GNI Type",
+            "A strong type of higher nervous activity, the predominance of the excitable properties of the nervous system."
+          ],
+          [
+            "Preferred Colors",
+            "Red color gamut (extreme - black)"
+          ],
+          [
+            "Character Properties",
+            "They believe that they are always right in everything. They believe in their intuition and rely on it. They don’t obey someone else’s opinion, but if they have the same views, they are friendly. They have a creative, non-standard approach."
+          ],
+          [
+            "Barriers",
+            "The barrier is mass, similarity to others, the inability to take a leadership position, to show their superiority over others."
+          ],
+          [
+            "Definition by style of communication",
+            "The use of the words exceptional, new, special, such as for a few, small party, limited edition, limited collection, exclusive. Support for the illusion of uniqueness, features (the thing that belongs to him is always the best, special, because ITS). Possible expressed aggressiveness towards those who doubt it or have a different point of view."
+          ],
+          [
+            "Preferences",
+            "They prefer an individual style that is acceptable to one person or a specific group. The preferences of the \"individualist\" often do not fit into the generally accepted, sometimes inadequate."
+          ]
+        ],[
+          [
+            "Behavioral symptoms",
+            "INDIVIDUALIST. They seek to command others and resist attempts to control themselves. They have developed a sense of competition, perseverance in achieving goals, a tendency to oppose other strong personalities in the environment. Persons of this type easily ignite with hostility and are prone to conflict, especially with those in whom they see It is combined with such features as traits of complacency (or narcissism) Domination is not aimed at common interests with the group and is not manifested by the desire to lead people along. Low severity. Confident, independent, self-oriented, competitive type. Average severity. Smug, narcissistic, with a pronounced sense of self-esteem, superiority over others, with a tendency to have a separate opinion that is different from the majority opinion, and to take a separate position in the group. but. Arrogant, boastful "
+          ],
+          [
+            "Specialty",
+            ""
+          ],
+          [
+            "Hobbies, relaxation",
+            ""
+          ],
+          [
+            "Lead motive",
+            "Achieving individual success"
+          ],
+          [
+            "Thinking style",
+            "The cognitive style is holistic and intuitive."
+          ],
+          [
+            "Type of response",
+            "Spontaneity, arrogance, some aggressiveness. Expressed through motor activity."
+          ],
+          [
+            "Leading emotion",
+            "Impulsivity (expressed through aggression)"
+          ],
+          [
+            "GNI Type",
+            "A strong type of higher nervous activity, the predominance of the excitable properties of the nervous system."
+          ],
+          [
+            "Preferred Colors",
+            "Red color gamut (extreme - black)"
+          ],
+          [
+            "Character Properties",
+            "They believe that they are always right in everything. They believe in their intuition and rely on it. They don’t obey someone else’s opinion, but if they have the same views, they are friendly. They have a creative, non-standard approach."
+          ],
+          [
+            "Barriers",
+            "The barrier is mass, similarity to others, the inability to take a leadership position, to show their superiority over others."
+          ],
+          [
+            "Definition by style of communication",
+            "The use of the words exceptional, new, special, such as for a few, small party, limited edition, limited collection, exclusive. Support for the illusion of uniqueness, features (the thing that belongs to him is always the best, special, because ITS). Possible expressed aggressiveness towards those who doubt it or have a different point of view."
+          ],
+          [
+            "Preferences",
+            "They prefer an individual style that is acceptable to one person or a specific group. The preferences of the \"individualist\" often do not fit into the generally accepted, sometimes inadequate."
+          ]
+        ],[
+          [
+            "Behavioral symptoms",
+            "INDIVIDUALIST. They seek to command others and resist attempts to control themselves. They have developed a sense of competition, perseverance in achieving goals, a tendency to oppose other strong personalities in the environment. Persons of this type easily ignite with hostility and are prone to conflict, especially with those in whom they see It is combined with such features as traits of complacency (or narcissism) Domination is not aimed at common interests with the group and is not manifested by the desire to lead people along. Low severity. Confident, independent, self-oriented, competitive type. Average severity. Smug, narcissistic, with a pronounced sense of self-esteem, superiority over others, with a tendency to have a separate opinion that is different from the majority opinion, and to take a separate position in the group. but. Arrogant, boastful "
+          ],
+          [
+            "Specialty",
+            ""
+          ],
+          [
+            "Hobbies, relaxation",
+            ""
+          ],
+          [
+            "Lead motive",
+            "Achieving individual success"
+          ],
+          [
+            "Thinking style",
+            "The cognitive style is holistic and intuitive."
+          ],
+          [
+            "Type of response",
+            "Spontaneity, arrogance, some aggressiveness. Expressed through motor activity."
+          ],
+          [
+            "Leading emotion",
+            "Impulsivity (expressed through aggression)"
+          ],
+          [
+            "GNI Type",
+            "A strong type of higher nervous activity, the predominance of the excitable properties of the nervous system."
+          ],
+          [
+            "Preferred Colors",
+            "Red color gamut (extreme - black)"
+          ],
+          [
+            "Character Properties",
+            "They believe that they are always right in everything. They believe in their intuition and rely on it. They don’t obey someone else’s opinion, but if they have the same views, they are friendly. They have a creative, non-standard approach."
+          ],
+          [
+            "Barriers",
+            "The barrier is mass, similarity to others, the inability to take a leadership position, to show their superiority over others."
+          ],
+          [
+            "Definition by style of communication",
+            "The use of the words exceptional, new, special, such as for a few, small party, limited edition, limited collection, exclusive. Support for the illusion of uniqueness, features (the thing that belongs to him is always the best, special, because ITS). Possible expressed aggressiveness towards those who doubt it or have a different point of view."
+          ],
+          [
+            "Preferences",
+            "They prefer an individual style that is acceptable to one person or a specific group. The preferences of the \"individualist\" often do not fit into the generally accepted, sometimes inadequate."
+          ]
+        ],[
+          [
+            "Behavioral symptoms",
+            "INDIVIDUALIST. They seek to command others and resist attempts to control themselves. They have developed a sense of competition, perseverance in achieving goals, a tendency to oppose other strong personalities in the environment. Persons of this type easily ignite with hostility and are prone to conflict, especially with those in whom they see It is combined with such features as traits of complacency (or narcissism) Domination is not aimed at common interests with the group and is not manifested by the desire to lead people along. Low severity. Confident, independent, self-oriented, competitive type. Average severity. Smug, narcissistic, with a pronounced sense of self-esteem, superiority over others, with a tendency to have a separate opinion that is different from the majority opinion, and to take a separate position in the group. but. Arrogant, boastful "
+          ],
+          [
+            "Specialty",
+            ""
+          ],
+          [
+            "Hobbies, relaxation",
+            ""
+          ],
+          [
+            "Lead motive",
+            "Achieving individual success"
+          ],
+          [
+            "Thinking style",
+            "The cognitive style is holistic and intuitive."
+          ],
+          [
+            "Type of response",
+            "Spontaneity, arrogance, some aggressiveness. Expressed through motor activity."
+          ],
+          [
+            "Leading emotion",
+            "Impulsivity (expressed through aggression)"
+          ],
+          [
+            "GNI Type",
+            "A strong type of higher nervous activity, the predominance of the excitable properties of the nervous system."
+          ],
+          [
+            "Preferred Colors",
+            "Red color gamut (extreme - black)"
+          ],
+          [
+            "Character Properties",
+            "They believe that they are always right in everything. They believe in their intuition and rely on it. They don’t obey someone else’s opinion, but if they have the same views, they are friendly. They have a creative, non-standard approach."
+          ],
+          [
+            "Barriers",
+            "The barrier is mass, similarity to others, the inability to take a leadership position, to show their superiority over others."
+          ],
+          [
+            "Definition by style of communication",
+            "The use of the words exceptional, new, special, such as for a few, small party, limited edition, limited collection, exclusive. Support for the illusion of uniqueness, features (the thing that belongs to him is always the best, special, because ITS). Possible expressed aggressiveness towards those who doubt it or have a different point of view."
+          ],
+          [
+            "Preferences",
+            "They prefer an individual style that is acceptable to one person or a specific group. The preferences of the \"individualist\" often do not fit into the generally accepted, sometimes inadequate."
+          ]
+        ],[
+          [
+            "Behavioral symptoms",
+            "INDIVIDUALIST. They seek to command others and resist attempts to control themselves. They have developed a sense of competition, perseverance in achieving goals, a tendency to oppose other strong personalities in the environment. Persons of this type easily ignite with hostility and are prone to conflict, especially with those in whom they see It is combined with such features as traits of complacency (or narcissism) Domination is not aimed at common interests with the group and is not manifested by the desire to lead people along. Low severity. Confident, independent, self-oriented, competitive type. Average severity. Smug, narcissistic, with a pronounced sense of self-esteem, superiority over others, with a tendency to have a separate opinion that is different from the majority opinion, and to take a separate position in the group. but. Arrogant, boastful "
+          ],
+          [
+            "Specialty",
+            ""
+          ],
+          [
+            "Hobbies, relaxation",
+            ""
+          ],
+          [
+            "Lead motive",
+            "Achieving individual success"
+          ],
+          [
+            "Thinking style",
+            "The cognitive style is holistic and intuitive."
+          ],
+          [
+            "Type of response",
+            "Spontaneity, arrogance, some aggressiveness. Expressed through motor activity."
+          ],
+          [
+            "Leading emotion",
+            "Impulsivity (expressed through aggression)"
+          ],
+          [
+            "GNI Type",
+            "A strong type of higher nervous activity, the predominance of the excitable properties of the nervous system."
+          ],
+          [
+            "Preferred Colors",
+            "Red color gamut (extreme - black)"
+          ],
+          [
+            "Character Properties",
+            "They believe that they are always right in everything. They believe in their intuition and rely on it. They don’t obey someone else’s opinion, but if they have the same views, they are friendly. They have a creative, non-standard approach."
+          ],
+          [
+            "Barriers",
+            "The barrier is mass, similarity to others, the inability to take a leadership position, to show their superiority over others."
+          ],
+          [
+            "Definition by style of communication",
+            "The use of the words exceptional, new, special, such as for a few, small party, limited edition, limited collection, exclusive. Support for the illusion of uniqueness, features (the thing that belongs to him is always the best, special, because ITS). Possible expressed aggressiveness towards those who doubt it or have a different point of view."
+          ],
+          [
+            "Preferences",
+            "They prefer an individual style that is acceptable to one person or a specific group. The preferences of the \"individualist\" often do not fit into the generally accepted, sometimes inadequate."
+          ]
+        ],[
+          [
+            "Behavioral symptoms",
+            "INDIVIDUALIST. They seek to command others and resist attempts to control themselves. They have developed a sense of competition, perseverance in achieving goals, a tendency to oppose other strong personalities in the environment. Persons of this type easily ignite with hostility and are prone to conflict, especially with those in whom they see It is combined with such features as traits of complacency (or narcissism) Domination is not aimed at common interests with the group and is not manifested by the desire to lead people along. Low severity. Confident, independent, self-oriented, competitive type. Average severity. Smug, narcissistic, with a pronounced sense of self-esteem, superiority over others, with a tendency to have a separate opinion that is different from the majority opinion, and to take a separate position in the group. but. Arrogant, boastful "
+          ],
+          [
+            "Specialty",
+            ""
+          ],
+          [
+            "Hobbies, relaxation",
+            ""
+          ],
+          [
+            "Lead motive",
+            "Achieving individual success"
+          ],
+          [
+            "Thinking style",
+            "The cognitive style is holistic and intuitive."
+          ],
+          [
+            "Type of response",
+            "Spontaneity, arrogance, some aggressiveness. Expressed through motor activity."
+          ],
+          [
+            "Leading emotion",
+            "Impulsivity (expressed through aggression)"
+          ],
+          [
+            "GNI Type",
+            "A strong type of higher nervous activity, the predominance of the excitable properties of the nervous system."
+          ],
+          [
+            "Preferred Colors",
+            "Red color gamut (extreme - black)"
+          ],
+          [
+            "Character Properties",
+            "They believe that they are always right in everything. They believe in their intuition and rely on it. They don’t obey someone else’s opinion, but if they have the same views, they are friendly. They have a creative, non-standard approach."
+          ],
+          [
+            "Barriers",
+            "The barrier is mass, similarity to others, the inability to take a leadership position, to show their superiority over others."
+          ],
+          [
+            "Definition by style of communication",
+            "The use of the words exceptional, new, special, such as for a few, small party, limited edition, limited collection, exclusive. Support for the illusion of uniqueness, features (the thing that belongs to him is always the best, special, because ITS). Possible expressed aggressiveness towards those who doubt it or have a different point of view."
+          ],
+          [
+            "Preferences",
+            "They prefer an individual style that is acceptable to one person or a specific group. The preferences of the \"individualist\" often do not fit into the generally accepted, sometimes inadequate."
+          ]
+        ],[
+          [
+            "Behavioral symptoms",
+            "INDIVIDUALIST. They seek to command others and resist attempts to control themselves. They have developed a sense of competition, perseverance in achieving goals, a tendency to oppose other strong personalities in the environment. Persons of this type easily ignite with hostility and are prone to conflict, especially with those in whom they see It is combined with such features as traits of complacency (or narcissism) Domination is not aimed at common interests with the group and is not manifested by the desire to lead people along. Low severity. Confident, independent, self-oriented, competitive type. Average severity. Smug, narcissistic, with a pronounced sense of self-esteem, superiority over others, with a tendency to have a separate opinion that is different from the majority opinion, and to take a separate position in the group. but. Arrogant, boastful "
+          ],
+          [
+            "Specialty",
+            ""
+          ],
+          [
+            "Hobbies, relaxation",
+            ""
+          ],
+          [
+            "Lead motive",
+            "Achieving individual success"
+          ],
+          [
+            "Thinking style",
+            "The cognitive style is holistic and intuitive."
+          ],
+          [
+            "Type of response",
+            "Spontaneity, arrogance, some aggressiveness. Expressed through motor activity."
+          ],
+          [
+            "Leading emotion",
+            "Impulsivity (expressed through aggression)"
+          ],
+          [
+            "GNI Type",
+            "A strong type of higher nervous activity, the predominance of the excitable properties of the nervous system."
+          ],
+          [
+            "Preferred Colors",
+            "Red color gamut (extreme - black)"
+          ],
+          [
+            "Character Properties",
+            "They believe that they are always right in everything. They believe in their intuition and rely on it. They don’t obey someone else’s opinion, but if they have the same views, they are friendly. They have a creative, non-standard approach."
+          ],
+          [
+            "Barriers",
+            "The barrier is mass, similarity to others, the inability to take a leadership position, to show their superiority over others."
+          ],
+          [
+            "Definition by style of communication",
+            "The use of the words exceptional, new, special, such as for a few, small party, limited edition, limited collection, exclusive. Support for the illusion of uniqueness, features (the thing that belongs to him is always the best, special, because ITS). Possible expressed aggressiveness towards those who doubt it or have a different point of view."
+          ],
+          [
+            "Preferences",
+            "They prefer an individual style that is acceptable to one person or a specific group. The preferences of the \"individualist\" often do not fit into the generally accepted, sometimes inadequate."
+          ]
+        ],[
+          [
+            "Behavioral symptoms",
+            "INDIVIDUALIST. They seek to command others and resist attempts to control themselves. They have developed a sense of competition, perseverance in achieving goals, a tendency to oppose other strong personalities in the environment. Persons of this type easily ignite with hostility and are prone to conflict, especially with those in whom they see It is combined with such features as traits of complacency (or narcissism) Domination is not aimed at common interests with the group and is not manifested by the desire to lead people along. Low severity. Confident, independent, self-oriented, competitive type. Average severity. Smug, narcissistic, with a pronounced sense of self-esteem, superiority over others, with a tendency to have a separate opinion that is different from the majority opinion, and to take a separate position in the group. but. Arrogant, boastful "
+          ],
+          [
+            "Specialty",
+            ""
+          ],
+          [
+            "Hobbies, relaxation",
+            ""
+          ],
+          [
+            "Lead motive",
+            "Achieving individual success"
+          ],
+          [
+            "Thinking style",
+            "The cognitive style is holistic and intuitive."
+          ],
+          [
+            "Type of response",
+            "Spontaneity, arrogance, some aggressiveness. Expressed through motor activity."
+          ],
+          [
+            "Leading emotion",
+            "Impulsivity (expressed through aggression)"
+          ],
+          [
+            "GNI Type",
+            "A strong type of higher nervous activity, the predominance of the excitable properties of the nervous system."
+          ],
+          [
+            "Preferred Colors",
+            "Red color gamut (extreme - black)"
+          ],
+          [
+            "Character Properties",
+            "They believe that they are always right in everything. They believe in their intuition and rely on it. They don’t obey someone else’s opinion, but if they have the same views, they are friendly. They have a creative, non-standard approach."
+          ],
+          [
+            "Barriers",
+            "The barrier is mass, similarity to others, the inability to take a leadership position, to show their superiority over others."
+          ],
+          [
+            "Definition by style of communication",
+            "The use of the words exceptional, new, special, such as for a few, small party, limited edition, limited collection, exclusive. Support for the illusion of uniqueness, features (the thing that belongs to him is always the best, special, because ITS). Possible expressed aggressiveness towards those who doubt it or have a different point of view."
+          ],
+          [
+            "Preferences",
+            "They prefer an individual style that is acceptable to one person or a specific group. The preferences of the \"individualist\" often do not fit into the generally accepted, sometimes inadequate."
+          ]
+        ]
+      ]
+    }
+  }
+}

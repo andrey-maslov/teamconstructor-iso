@@ -1,0 +1,87 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.footer {
+  background-color: #4F5962;
+  color: #999;
+  padding-top: 30px;
+}
+
+.sharing {
+  width: 220px;
+  margin: 0 auto 20px;
+  text-align: center;
+
+  & > div {
+    font-size: 22px;
+    padding-top: 10px;
+
+    & > div {
+      display: inline-block;
+      padding: 0 5px;
+      margin: 0 5px;
+    }
+  }
+
+  button {
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+
+    svg {
+      transition: all .3s ease-in-out;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.copy {
+  padding: 20px 10px;
+  border-top: 1px solid rgba(#fff, .1);
+  font-size: 14px;
+
+  div {
+
+    &:first-child {
+      text-align: left;
+    }
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+
+  a {
+    color: currentColor;
+    text-decoration: underline;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+
+@media(max-width: 768px) {
+
+  .copy {
+    padding: 20px 0;
+
+    div {
+
+      &:first-child {
+        margin-bottom: 10px;
+      }
+
+      &:first-child,
+      &:last-child {
+        text-align: center;
+      }
+    }
+
+  }
+}

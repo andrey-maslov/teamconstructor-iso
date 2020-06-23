@@ -1,0 +1,635 @@
+{
+  "personalInfo": [
+    {
+      "title": "Статус",
+      "values": [
+        "Холост",
+        "Женат/замужем",
+        "В разводе"
+      ],
+      "isRequired": 1
+    },
+    {
+      "title": "Возраст",
+      "values": [
+        "18-24",
+        "25-34",
+        "35-44",
+        "45-54",
+        "55-64",
+        "65-74"
+      ],
+      "isRequired": 1
+    },
+    {
+      "title": "Пол",
+      "values": [
+        "Мужской",
+        "Женский",
+        "Не скажу"
+      ],
+      "isRequired": 1
+    }
+  ],
+  "questions":[
+  {
+    "title": "1",
+    "values": [
+      "Ich mache gerne Sport, ich besuche regelmäßig ein Fitnessstudio",
+      "Sport steht auf meinem Plan, aber bis jetzt treibe ich Sport unregelmäßig."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "2",
+    "values": [
+      "Ich habe viele Schwächen und Nachteile",
+      "Ich habe ein hohes Selbstwertgefühl"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "3",
+    "values": [
+      "Mein Zimmer ist immer ordentlich aufgeräumt",
+      "Ich bin nicht eifrig besorgt, die Ordnung in meinem Zimmer halten."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "4",
+    "values": [
+      "Es ist angenehm, alleine zu arbeiten, weil man in diesem Fall für andere Leute nicht verantwortlich sein kann. ",
+      " Die Arbeit des Leiters gibt ein wichtiges Gefühl der Verantwortung für andere Menschen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "5",
+    "values": [
+      "Ich interessiere mich für Neuheiten in der Modewelt",
+      "Einige Mode irritieren mich"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "6",
+    "values": [
+      "Es fällt mir schwer, untätig zu bleiben",
+      "Ich bin ein ruhiger Mensch und ziehe es vor, keine Eile zu haben"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "7",
+    "values": [
+      "An allen meinen Fehlern träge nur ich selbst die Schuld, keine andere Menschen und Umstände ",
+      "Es kommt vor, dass meine Pläne durch die Umstände und andere Menschen behindert werden"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "8",
+    "values": [
+      "Ich finde daran Gefallen, wenn an meinem Arbeitstisch die Ordnung herrscht ",
+      "Ich habe ein buntscheckiges Durcheinander gern. Pedantismus ist nicht mein Ding."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "9",
+    "values": [
+      "Ich bin ein sehr guter Anbieter, wenn die Geschäftsleitung mir klar die Aufgabe stellt ",
+      "Ich nehme oft die Leitung in meine Hand und versuche zu entscheiden, was und wie getan"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "10",
+    "values": [
+      "Überraschungen zwingen mich in Bann ",
+      "Mir gefällt die Vorhersagbarkeit von Ereignissen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "11",
+    "values": [
+      "Ich denke, dass ich ein aktiver und beweglicher Mensch bin",
+      "Ich denke, dass eine regelmäßige Lebensweise mir besser passt"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "12",
+    "values": [
+      "Es kommt vor, dass ich mich wie ein Verlierer fühle",
+      "Fast immer gewinne ich"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "13",
+    "values": [
+      "Ich erscheine zum Termin pünktlich oder rechtzeitig, das ist sehr wichtig. ",
+      "Es kommt vor, dass ich zu spät zum Termin erscheine. In einer großen Stadt mit den Stockungen wird es zum Normalfall."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "14",
+    "values": [
+      "Bei der Zielerreichung können viele Kleinigkeiten erscheinen. Erfahrenere Menschen können helfen, Fehler zu vermeiden",
+      "Wenn ich von dem gewählten Ziel überzeugt bin, ist es sehr schwer, meine Handlungen zu beeinflussen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "15",
+    "values": [
+      "Es ist für mich nicht interessant, wenn die Antwort im Voraus klar ist",
+      "Ich gebe den bekannten und klaren Gegenstände den Vorzug"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "16",
+    "values": [
+      "Es gefällt mir sehr, mehrere Eisen im Feuer haben",
+      "Wenn ich mehrere Sache geplant habe, mache ich sie nacheinander: zuerst eine, dann eine andere"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "17",
+    "values": [
+      "Mit Zank und Streit kommt man nicht weit.",
+      "Im Streit wird die Wahrheit geboren"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "18",
+    "values": [
+      "Schwierige Aufgaben, die die Ausdauer und Fleiß erfordern, zwingen mich in Bann ",
+      "Zuerst löse ich die Problemen, die keine große Zeitaufwand erfordern, und nur dann alles andere."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "19",
+    "values": [
+      "Ich halte mich ruhig dazu, wenn jemand meine Arbeit in verschiedenen Phasen kontrolliert ",
+      " Ich dulde die Situationen, wenn jemand meine Arbeit kontrolliert, bis sie fertig ist"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "20",
+    "values": [
+      "Es ist meine Art zu fantasieren und erträumen ",
+      "Ich ziehe es vor, die Welt wirklich zu betrachten."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "21",
+    "values": [
+      "In Museen gehe ich lieber schnell, da ich viele Gemälde sehen und betrachten kann",
+      "Im Museum werde ich lieber langsam gehen und genau das Interessanteste betrachten"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "22",
+    "values": [
+      "Die Menschen müssen einander helfen",
+      "Jeder muss um sich selbst sorgen können"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "23",
+    "values": [
+      "In der Schule war ich ein fleißiger Schüler",
+      "In der Schule war es für mich schwierig, still zu sitzen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "24",
+    "values": [
+      "Es ist viel einfacher, Fehler während der Arbeit zu korrigieren, als nach ihrer Ende",
+      "Es ist viel einfacher, die ganze Arbeit zu erledigen, und dann die Mängel zu berichtigen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "25",
+    "values": [
+      "Ich lese lieber Abenteuerliteratur, Mystik, Phantastik, wo alles unberechenbar ist ",
+      "Wissenschaftliche Literatur und Klassik zwingen mich in ihren Bann dort ist alles realistisch"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "26",
+    "values": [
+      "Ich werde ruhig Einsamkeit ertragen, aber während der intensiven Kommunikation bekomme ich innere Energie ",
+      "Ich kann ganz ruhig in einer grossen Gesellschaft sein, aber erhole ich mich allein oder mit meinen nahestehenden Personen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "27",
+    "values": [
+      "Es gibt immer die Möglichkeit einen Ausgleich herbeizuführen und in Vorleistung gegenseitigzugehen ",
+      "Bei dem Kuhhandel sind die beiden Seite nicht zufrieden. Um Ziel zu erreichen, muss jemand zukommen lassen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "28",
+    "values": [
+      "Ich denke, dass Fleiß und Ausdauer im Mittelpunkt des Erfolgs stehen.",
+      "Ich denke, dass der Erfolg zu den glücklichen und begabten Menschen kommt."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "29",
+    "values": [
+      "Meine Lieben können mich mehrmals am Tag anrufen",
+      "Es gefällt mich nicht, wenn meine Lieben mich mehrmals am Tag anrufen."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "30",
+    "values": [
+      "Manchmal verbringe ich die Zeit selbstvergessen",
+      "Ich bedenke nicht oft, ich bin ein Mann der Tät"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "31",
+    "values": [
+      "Ich lerne leicht neue Leute kennen",
+      " Es ist einfacher für mich, wenn jemand aus meinen Freunden und Bekannten mit einer fremden Person mich bekannt macht"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "32",
+    "values": [
+      "Ich mag die Leute, die mich umgeben, und es macht mir Spaß, Teil des Teeams zu sein ",
+      "Das Ziel eines jeden Menschen ist sein persönliches Glück und das Glück eines engen Kreises seiner Lieben. Wenn Sie die Menschen glücklich machen wollen-machen Sie in erster Linie sich selbst glücklich."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "33",
+    "values": [
+      "Es ist wichtig im Leben, die Zukunft zu planen",
+      "Das Leben kann und soll unberechenbar sein"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "34",
+    "values": [
+      "Ich bin oft einsam und traurig, und habe oft keine Lust etwas zu tun ",
+      "Ich bin Optimist und werde nie gedrückt"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "35",
+    "values": [
+      "Ich weiß genau, was Schönheit und Eleganz sind ",
+      "Meine Vorstellung von Schönheit ist genau so, wie die Anderen haben"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "36",
+    "values": [
+      "Ich denke, es ist toll, meinen Kreis von Freunden und Bekannten zu erweitern ",
+      "Ich denke, es ist am besten für die ständige Verständigung ein paar Freunde zu haben"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "37",
+    "values": [
+      "Die meisten Menschen versuchen, anständig zu sein",
+      "Die meisten Menschen haben Angst vor der Bestrafung, und oft nur das hält sie auf."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "38",
+    "values": [
+      "Die Erfolglosigkeit macht mich sehr traurig ",
+      "Sie achten nicht auf die Erfolglosigkeit bei der Zielerreichung"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "39",
+    "values": [
+      "Meine Laune hängt von den Umständen ab",
+      "Es ist schwer mich in üble Laune zu versetzen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "40",
+    "values": [
+      "Ich würde die Schauspielkurse besuchen",
+      "Ich würde die Finanzkurse besuchen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "41",
+    "values": [
+      "Ich verbringe gerne die Zeit in großen und lustigen Gesellschaften",
+      "Ich bevorzuge Privatsphäre und Ruhe"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "42",
+    "values": [
+      "Ich denke, dass die Menschen pflegen, zusammenzuarbeiten ",
+      "Ich denke, dass dieMenschen pflegen in Wettbewerb zu stehen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "43",
+    "values": [
+      "Erfolglosigkeit kann mich eine Zeit lang aus der Bahn werfen. Man muss jede Erfolglosigkeit gut überlegen. ",
+      "Irren ist menschlich, ich bin keine Ausnahme. Heute ist Misserfolg, morgen kommt Erfolg."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "44",
+    "values": [
+      "Es gab viel tragisches in meinem Leben.",
+      "In allen Situationen finde Vorteile."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "45",
+    "values": [
+      "Kunstwerke wecken bei mir Bewunderung und Freude",
+      "Nicht alle Kunstwerken können bei mir Bewunderung wecken"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "46",
+    "values": [
+      "Ich beobachte gerne extreme Wettkämpfe.",
+      "Ich verstehe nicht, warum Menschen gefährliche Sportarten ausüben"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "47",
+    "values": [
+      "Der beste Führungsstil ist eine taktvolle, höfliche Erklärung, was zu tun notwendig ist",
+      "Man versteht oft die Befehle besser als Erklärungen und Überzeugungen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "48",
+    "values": [
+      "Ich wege das Für und Wider ab, bevor ich meine Entscheidung treffe ",
+      "Ich treffe die Entscheidungen ganz schnell"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "49",
+    "values": [
+      "Ich denke, dass das Leben einige Menschen boshaft macht. ",
+      "Die meisten Leute sind warmherzig von Natur aus"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "50",
+    "values": [
+      "Ich bin durch die Emotione ausgesetzt",
+      "Es ist fast unmöglich, mich aus dem Gleichgewicht zu bringen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "5",
+    "values": [
+      "Nervenkitzel gibt das Gefühl “lebendig”",
+      "Ich ziehe es vor, gefährliche Situationen zu vermeiden"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "52",
+    "values": [
+      "Wenn ich zum Leiter ernannt werde, werde ich nicht ablehnen, aber selbst nach dem Purpur werde ich nicht streben ",
+      "Ich fange gerne die Führersrolle an, ich zeige Eigeninitiative"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "53",
+    "values": [
+      "Ich habe an mich meine Gefühle und Wünsche zu kontrollieren ",
+      "Ich erfülle meine Begehren. Wenn ich etwas möchte, dann mache ich das."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "5",
+    "values": [
+      "Es gibt solche Leute, die ich nich mag. ",
+      "Gewöhnlich mag ich die Menschen, mi denen ich mich unterhalte"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "55",
+    "values": [
+      "Meine Laune kann leicht ganz gegenteilig ändern. ",
+      "Ich bin immer ruhig und ausgeglichen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "56",
+    "values": [
+      "Ich denke, dass Karneval, Feste und Partys Spaß machen.",
+      "Die Abspannung in einem stillen lauschigen Ort macht viel Spaß"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "57",
+    "values": [
+      "Ich beachte die Meinung der anderen Menschen und lasse mir raten ",
+      "Wenn ich ganz genau weiss, dass ich Recht habe, so spielt die Meinung der Ӓlteren und der Störchen keine wesentliche Rolle"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "58",
+    "values": [
+      "Ich mache eine Einkaufsliste und versuche, nicht darüber hinaus zu gehen ",
+      "Das macht mir Spass, mich mit den ungeplanten und angenehmen Sachen zu erfreuen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "59",
+    "values": [
+      "Manchmal beziehe ich mich auf andere Menschen verdächtig ",
+      "Die meisten Menschen sind ehrlich, man kann ihnen trauen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "60",
+    "values": [
+      "Ich kann manchmal so aufgeregt sein, und deswegen kann ich sogar weinen  ",
+      "Ich weine niemals, es ist sehr schwer mich in Harnisch zu bringen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "61",
+    "values": [
+      "Ich fühle mich gut, wenn man mich beachtet  ",
+      "Ich bin ein bescheidener Mensch, und es gefält mir nicht, auf mich aufmerksam zu machen."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "62",
+    "values": [
+      "Meine Gefühle sind leicht verletzt",
+      "Die Aussagen der Anderen in meine Adresse bleieben mich ganz ruhig."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "63",
+    "values": [
+      "Ich bin ein vorsichtiger Mensch, denke über mehrere Variante nach ",
+      "Eine ruhige Lebenseinstellung ist typisch für mich. Wenn ein Problem erscheint – dann werden wir es lösen."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "64",
+    "values": [
+      "Ich versuche, freundlich zu allen Menschen zu sein",
+      "Ich bin nicht immer und nicht mit allen Menschen freundlich"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "65",
+    "values": [
+      "Es macht mir Spass die Lächeln und Überraschung der Leute zu fördern ",
+      "Ich bin immer so, wie ich bin. Ich habe kein solches Ziel jemandem zu gefallen zu suchen"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "66",
+    "values": [
+      "Ich kann die Aufmerksamkeit der Leute auf mich ziehen, ich kann das ganz leicht machen ",
+      "Ich ziehe die Aufmerksamkeit der Leute auf mich nicht, ich brauche es nicht."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "67",
+    "values": [
+      "Ich mache mir Sorge darum, dass etwas Unangenehmes in meinem Leben passieren kann",
+      "Ich mache mir keine Sorge um mögliche Verdruße in meinem Leben"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "68",
+    "values": [
+      "Ich plane meine Reisen sorgfältig",
+      "Ungeplante Abenteuer sind die eindrucksvollsten"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "69",
+    "values": [
+      "Ich bin immer taktvoll zu den anderen Menschen",
+      "Manchmal aus Scherz, manchmal im Ernst versetzte ich dem Ehrgeiz der Anderen einen Stich"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "70",
+    "values": [
+      "Ich meine, dass das Leben ein Spiel ist ",
+      "Das Leben ist eine Erfahrung, die von einer Generation zu der anderen übergegeben wird"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "71",
+    "values": [
+      "Es macht mir Spass, wenn die Menschen darauf achten, wie ich aussehe. ",
+      "Gewöhnlich falle ich durch meine aktuelle Kleidung oder durch mein Verhalten in der Gesellschaft nicht auf"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "72",
+    "values": [
+      "Am meisten bin ich “Hörer”als “Sprecher”",
+      "Im Runde stehe ich oft im Mittelpunkt"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "73",
+    "values": [
+      "Ich meine, dass mühsamere Kleinarbeit das wichtigste in der erfolgreichen Arbeit ist ",
+      "Ich denke, dass man jede Arbeit einfacher tun kann, wenn Sie Ihrer Intuition und Inspiration vertrauen."
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "74",
+    "values": [
+      "Ich versuche immer, freundlich und aufmerksam mit jeder Person zu sein",
+      "Ich bin vorsichtig mit anderen Menschen, und nur mit Freunden und meiner Familie bin ich freundlich und aufmerksam"
+    ],
+    "isRequired": 1
+  },
+  {
+    "title": "75",
+    "values": [
+      "Manchmal habe ich das Gefühl, dass ich etwas Neue in mir entdecken kann",
+      "Die Menschen ändern sich nicht, sie passen sich nur den Umständen an"
+    ],
+    "isRequired": 1
+  }
+]}

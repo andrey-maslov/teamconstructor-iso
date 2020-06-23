@@ -1,0 +1,10 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.nav {
+  display: flex;
+  align-items: center;
+
+  button {
+    margin-bottom: 0;
+  }
+}

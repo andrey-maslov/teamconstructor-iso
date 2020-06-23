@@ -1,0 +1,36 @@
+export type AnswerType = {
+    id: string
+    value: string
+}
+
+export interface ValueByCat {
+    title: string
+    value: number
+}
+
+export interface ModalProps {
+    isModalShown: boolean
+    closeModal: () => void
+}
+
+export interface LoginBtnProps {
+    handleLogin: (name: string, email: string) => void
+    closeModal: () => void
+    isEnabled: boolean
+}
+
+export interface Question {
+    title: string,
+    values: Array<string>
+    labels?: Array<string>
+    isRequired: number | boolean
+}
+
+export interface QuestionsProps {
+    saveAnswers: (data: number[] | number[][]) => void
+    questions: Array<Question>
+    isVisible: boolean
+    changeBlock: (blockToShow: string, currentBlock?: string) => void
+    content?: string
+}
+

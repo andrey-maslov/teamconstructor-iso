@@ -1,0 +1,95 @@
+@import 'src/common/assets/scss/vars';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  transition: -webkit-transform .4s ease-out 0s;
+  transition: transform .4s ease-out 0s;
+  will-change: transform;
+  overflow-y: auto;
+  background-color: #fff;
+  width: 70%;
+  left: 0;
+  box-shadow: 0 4px 6px rgba(#000, .2);
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  visibility: visible;
+  transition: background-color 0.2s ease-out 0s, visibility 0.1s ease-out 0s;
+  //background-color: transparent;
+
+  &.closed {
+
+    .wrapper {
+      transform: translateX(-110%);
+    }
+  }
+
+  &.opened {
+    z-index: 1;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.3);
+    right: 0;
+    bottom: 0;
+
+    .wrapper {
+      transform: translateX(0%);
+    }
+  }
+}
+
+.title {
+  border-bottom: 1px solid rgba($grey, .3);
+  padding: 15px 20px 14px;
+  line-height: 1;
+  text-align: center;
+
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+
+.nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.link {
+  display: flex;
+  font-size: 18px;
+  padding: 20px;
+  border-left: 5px solid transparent;
+  line-height: 1;
+
+  &.current {
+    color: $accent;
+    background-color: rgba($accent, .1);
+    border-left: 5px solid $accent;
+  }
+
+  &.disabled {
+    color: rgba($grey, .7)
+  }
+
+  svg {
+    margin-right: 10px;
+  }
+}
+
+.copy {
+  padding: 20px 25px;
+  background-color: $grey-bg;
+}
+

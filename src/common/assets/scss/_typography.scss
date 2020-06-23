@@ -1,0 +1,135 @@
+/*-----TYPOGRAPHY-----*/
+
+a {
+  text-decoration: none;
+  color: $text;
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    text-decoration: none;
+    color: $accent;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+body {
+  //font-family: $default-font, sans-serif;
+  font-weight: normal;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: $text;
+  font-size: 17px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $title-font, sans-serif;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+p {
+  //font-family: $default-font;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+// Header Styles
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  font-weight: inherit;
+}
+
+h1 {
+  font-size: $h1-fontsize;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: $h2-fontsize;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: $h3-fontsize;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+h4 {
+  font-size: $h4-fontsize;
+  line-height: 1.2;
+}
+
+h5 {
+  font-size: $h5-fontsize;
+  line-height: 1.2;
+}
+
+h6 {
+  font-size: $h6-fontsize;
+  line-height: 1.2;
+}
+
+
+
+//Experimental margins
+h1 + h3 {
+  margin-top: 10px;
+}
+
+h2 + h3 {
+  margin-top: 10px;
+}
+
+p + h2 {
+  margin-top: 25px;
+}
+p + h3 {
+  margin-top: 18px;
+}
+
+p + ul {
+  margin-top: 14px;
+}
+
+p + ol {
+  margin-top: 14px;
+}
+
+h2 + ul,
+h3 + ul,
+h4 + ul {
+  margin-top: 14px;
+}
+
+small {
+  font-size: 75%;
+}
+
+blockquote {
+  margin: 0;
+  padding: 0 0 0 40px;
+  border-left: 0;
+  position: relative;
+}
+
+
+@media(max-width: 992px) {
+  h1 {
+    font-size: calc(#{$h1-fontsize} * .7);
+  }
+  h2 {
+    font-size: calc(#{$h2-fontsize} * .7);
+  }
+  h3 {
+    font-size: calc(#{$h3-fontsize} * .8);
+  }
+  h4 {
+    font-size: calc(#{$h4-fontsize} * .9);
+  }
+}

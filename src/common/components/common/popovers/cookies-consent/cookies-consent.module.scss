@@ -1,0 +1,41 @@
+.popup {
+  width: 250px;
+  height: auto;
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.2);
+  padding: 20px;
+  z-index: 20;
+
+  button {
+    width: 100%;
+  }
+
+  .policyLink {
+    display: block;
+    color: #2386B6;
+    text-decoration: underline;
+    margin-bottom: 20px;
+  }
+
+  p {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+}
+
+@media(max-width: 992px) {
+  .popup {
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+
+    p {
+      margin-bottom: 5px;
+    }
+  }
+}

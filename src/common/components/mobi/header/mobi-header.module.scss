@@ -1,0 +1,17 @@
+@import 'src/common/assets/scss/vars';
+
+.header {
+  position: relative;
+  border-bottom: 1px solid rgba($grey, .2);
+  background-color: #fff;
+  z-index: 99;
+}
+
+.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding-top: 0;
+  padding-bottom: 0;
+}

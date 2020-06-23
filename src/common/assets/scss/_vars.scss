@@ -1,0 +1,78 @@
+$default-font: 'Ubuntu', sans-serif;
+$title-font: 'Ubuntu Mono', sans-serif;
+$title-font: $default-font;
+
+///Colors
+$accent: #556587;
+//$accent: #36a9e0;
+$accent-hover: darken($accent, 10%);
+$yellow: #FFC734;
+$orange: #FF5E34;
+$text: #203152;
+
+$gradient-accent: linear-gradient(90deg, #67C3F0, $accent);
+
+$accent2: #36A9E0;
+$accent2-hover: darken($accent2, 10%);
+
+$secondary-color: #C57A44;
+
+$bg-dark: #000;
+
+$grey: #7D7D7D;
+$grey-bg: #EFF1F4;
+
+$link: $accent;
+$link-hover: $accent-hover;
+
+/// OK/NO colors
+$danger: #D73A49;
+$warning: orange;
+$success: #26AF7E;
+
+
+//Decoration
+$border-radius: 3px;
+$border-radius-sm: 3px;
+$border-radius-lg: 6px;
+$box-shadow-sm: 0 1px 1px 0 rgba(10,22,70,.1), 0 0 1px 0 rgba(10,22,70,.06);
+$box-shadow-md: 0 2px 3px 0 rgba(10,22,70,.1), 0 1px 3px 0 rgba(10,22,70,.08);
+$box-shadow-lg: 0px 20px 42px rgba(0, 0, 0, 0.12); /// ?
+
+///Typography
+$h1-fontsize: 38px;
+$h2-fontsize: 32px;
+$h3-fontsize: 24px;
+$h4-fontsize: 20px;
+$h5-fontsize: 18px;
+$h6-fontsize: 16px;
+
+/// Customization Bootstrap vars from "app/libs/bootstrap/scss/_variables.scss"
+//$grid-gutter-width: 30px;
+//$grid-columns: 12;
+//$grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1360px);
+//$container-max-widths: (sm: 540px, md: 720px, lg: 980px, xl: 1290px) !default;
+//
+//$gutter: $grid-gutter-width;
+
+
+//Brands Colors
+$facebook: #3b5998;
+$linkedin: #0077b5;
+$google: #ea4335;
+$twitter: #1DA1F2;
+$vk: #4680C2;
+$telegram: #0088cc;
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: .2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
