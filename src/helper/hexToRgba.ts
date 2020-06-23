@@ -60,5 +60,3 @@ const hexToRgba = (hex: any, a: any) => {
 };
 
 export default hexToRgba;
-
-module.exports = hexToRgba;
