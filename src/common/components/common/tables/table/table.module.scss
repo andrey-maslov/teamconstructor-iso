@@ -11,7 +11,7 @@
   overflow: hidden;
 
   th {
-    background-color: $grey-bg;
+    background-color: $overlay-light;
   }
 
   th, td {
@@ -24,7 +24,7 @@
     transition: background-color .3s ease-in-out;
 
     &:hover {
-      background-color: darken($grey-bg, 5%);
+      background-color: $overlay-light;
     }
 
     td {
@@ -49,7 +49,7 @@
   tr {
 
     &:nth-child(odd) {
-      background-color: $grey-bg;
+      background-color: $overlay-light;
 
       td {
 

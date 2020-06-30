@@ -6,8 +6,8 @@
   padding: 30px;
   color: currentColor;
   position: relative;
-  background: #fff;
-  border-radius: 3px;
+  background: rgba($overlay-light, .3);
+  border-radius: $border-radius-sm;
   box-shadow: $box-shadow-sm;
   transition: all .3s;
 }

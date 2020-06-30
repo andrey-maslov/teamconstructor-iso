@@ -14,6 +14,7 @@ import {
     SET_COMPARISON_READY,
     SET_USERS_RESULTS,
     CLEAR_USERS_RESULTS,
+    COMPARE_PROCESS,
 } from './actionTypes';
 // import axios from "axios";
 // import { REQUEST_BASE_ROUTE } from 'constants/constants';
@@ -34,11 +35,32 @@ export const setLanguage = (language: string) => {
     };
 };
 
-export const setComparisonResult = (isComparisonResultReady: boolean) => {
+
+export const setComparisonProcess = (isComparisonInProcess: boolean) => {
     return {
-        type: SET_COMPARISON_READY,
-        isComparisonResultReady
+        type: COMPARE_PROCESS,
+        isComparisonInProcess
     };
+};
+
+export const setComparisonResult = (isComparisonResultReady: boolean) => {
+
+    return (dispatch: any) => {
+        dispatch({
+            type: SET_COMPARISON_READY,
+            isComparisonResultReady
+        });
+        dispatch({
+            type: COMPARE_PROCESS,
+            isComparisonInProcess: true
+        });
+        setTimeout(() => {
+            dispatch({
+                type: COMPARE_PROCESS,
+                isComparisonInProcess: false
+            })
+        }, 5000)
+    }
 };
 
 export const setUsersResults = (userData1: [] | string, userData2: [] | string,) => {
@@ -107,15 +129,17 @@ export const setCookiesConsent = (bool: boolean) => {
 };
 
 export const fetchTerms = (lang: string) => {
-    const url = `/psychology_${lang}.json`;
-
+    // const url = `/psychology_${lang}.json`;
+    const url = `https://strapi.nobugs.today/psychologies?slug=${lang}`;
+// console.log(lang)
     return (dispatch: any) => {
         fetch(url)
             .then(response => response.json())
             .then(data => {
+                // console.log(data)
                 dispatch({
                     type: FETCH_TERMS,
-                    terms: data.terms
+                    terms: data[0].terms
                 });
             });
     };

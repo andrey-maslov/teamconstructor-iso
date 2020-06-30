@@ -34,3 +34,8 @@ export interface QuestionsProps {
     content?: string
 }
 
+export type PersonalInfoType = Array<number>
+export type TestResultType = Array<number[]>
+export type FullResultType = [PersonalInfoType, TestResultType]
+
+

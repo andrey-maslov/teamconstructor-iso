@@ -28,7 +28,9 @@ const Table: React.FC<TableProps> = ({tableHeader, tableData, addClasses,}) => {
             {tableData.map((item, index) => {
                 return (
                     <tr key={index}>
-                        {item.map((value, i) => (<td key={`${index}-${i}`}>{value}</td>))}
+                        {item.map((value, i) => (<td key={`${index}-${i}`}>
+                            <span dangerouslySetInnerHTML={{__html: value}}/>
+                        </td>))}
                     </tr>)
             })
             }

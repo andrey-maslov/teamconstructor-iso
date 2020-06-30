@@ -1,0 +1,9 @@
+{
+  "footer": {
+    "links": {
+      "privacy_policy": "footer.links.privacy_policy",
+      "terms": "footer.links.terms",
+      "cookie": "footer.links.cookie"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TopLogo from '../../common/header/top-logo/TopLogo';
+import TopLogo from '../../common/layout/header/top-logo/TopLogo';
 import MobiNav from '../../mobi/header/nav/MobiNav';
 import MobileNavToggle from '../../mobi/header/nav-toggle/NavToggle';
 import { Header } from '../../web/header/WebHeader';

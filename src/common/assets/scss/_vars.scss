@@ -1,6 +1,6 @@
 $default-font: 'Ubuntu', sans-serif;
 $title-font: 'Ubuntu Mono', sans-serif;
-$title-font: $default-font;
+//$title-font: $default-font;
 
 ///Colors
 $accent: #556587;
@@ -9,6 +9,7 @@ $accent-hover: darken($accent, 10%);
 $yellow: #FFC734;
 $orange: #FF5E34;
 $text: #203152;
+
 
 $gradient-accent: linear-gradient(90deg, #67C3F0, $accent);
 
@@ -25,19 +26,39 @@ $grey-bg: #EFF1F4;
 $link: $accent;
 $link-hover: $accent-hover;
 
+//DARK THEME COLORS
+$base: #1C1E23;
+$overlay-dark: #2D3037;
+$overlay-light: lighten($overlay-dark, 5%);
+$surface: lighten($base, 5%);
+$overflow: #010101;
+
+//$surface: #556587;
+//$overlay-dark: lighten($surface, .1%);
+//$overlay-light: lighten($overlay-dark, 5%);
+//$base: darken($surface, 5%);
+//$overflow: #010101;
+
+$base-bg: $surface;
+//$base-bg: linear-gradient(90deg, $overlay-light, $base);
+
+$blue: #5D9EFC;
+$text-light: #b9b9b0;
+//$text-light: #fefefe;
+
 /// OK/NO colors
-$danger: #D73A49;
-$warning: orange;
+$danger: #D8596C;
+$warning: #FF9D48;
 $success: #26AF7E;
 
 
 //Decoration
-$border-radius: 3px;
-$border-radius-sm: 3px;
+$border-radius: 0px;
+$border-radius-sm: 0px;
 $border-radius-lg: 6px;
 $box-shadow-sm: 0 1px 1px 0 rgba(10,22,70,.1), 0 0 1px 0 rgba(10,22,70,.06);
 $box-shadow-md: 0 2px 3px 0 rgba(10,22,70,.1), 0 1px 3px 0 rgba(10,22,70,.08);
-$box-shadow-lg: 0px 20px 42px rgba(0, 0, 0, 0.12); /// ?
+$box-shadow-lg: 0 4px 12px 0 rgba($base,.2), 0 2px 6px 0 rgba($base,.1);
 
 ///Typography
 $h1-fontsize: 38px;

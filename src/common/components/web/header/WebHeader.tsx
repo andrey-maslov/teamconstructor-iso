@@ -1,5 +1,5 @@
 import React from 'react';
-import TopLogo from '../../common/header/top-logo/TopLogo';
+import TopLogo from '../../common/layout/header/top-logo/TopLogo';
 import WebNav from './nav/WebNav';
 import style from './web-header.module.scss';
 
@@ -13,16 +13,14 @@ const WebHeader = ({isLoggedIn, handleLoginBtn, userEmail}: Header) => {
 
     return (
         <header className={style.header}>
-            <div className="container">
-                <nav className={style.bar}>
-                    <TopLogo/>
-                    <WebNav
-                        isLoggedIn={isLoggedIn}
-                        handleLoginBtn={handleLoginBtn}
-                        userEmail={userEmail}
-                    />
-                </nav>
-            </div>
+            <nav className={style.bar}>
+                <TopLogo/>
+                <WebNav
+                    isLoggedIn={isLoggedIn}
+                    handleLoginBtn={handleLoginBtn}
+                    userEmail={userEmail}
+                />
+            </nav>
         </header>
     );
 };

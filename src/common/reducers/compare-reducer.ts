@@ -1,7 +1,7 @@
 import {
     SET_COMPARISON_READY,
     SET_USERS_RESULTS,
-    CLEAR_USERS_RESULTS,
+    CLEAR_USERS_RESULTS, COMPARE_PROCESS,
 } from "../actions/actionTypes";
 import {loadState} from "../store/sessionStorage";
 
@@ -11,6 +11,7 @@ if (!STATE) {
     STATE = {
         type: '',
         isComparisonResultReady: false,
+        isComparisonInProcess: false,
         user1: {
             data: [],
         },
@@ -36,6 +37,7 @@ type compareReducerType = typeof STATE;
 export const compareReducer = (state = STATE, {
     type,
     isComparisonResultReady,
+    isComparisonInProcess,
     userData1,
     userData2,
 }: any) => {
@@ -44,6 +46,11 @@ export const compareReducer = (state = STATE, {
             return {
                 ...state,
                 isComparisonResultReady,
+            };
+        case COMPARE_PROCESS :
+            return {
+                ...state,
+                isComparisonInProcess,
             };
         case SET_USERS_RESULTS :
             return {

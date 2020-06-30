@@ -6,20 +6,19 @@ interface InputFieldProps {
     name: string
     id: string
     value: string
-
+    placeholder?: string
 }
 
-const InputField: React.FC<InputFieldProps> = ({label, name, id, value}) => {
+const InputField: React.FC<InputFieldProps> = ({label, name, id, value, placeholder}) => {
 
     return (
-        <div>
+        <div className={style.wrapper}>
             <h4 className={style.title}>{label}</h4>
             <textarea
                 name={name}
                 id={id}
                 defaultValue={value}
-                cols={30}
-                rows={10}
+                placeholder={placeholder}
             />
         </div>
     );

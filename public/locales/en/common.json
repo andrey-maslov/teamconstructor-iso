@@ -28,7 +28,12 @@
   "footer": {
     "copy": "ООО Центр технологических инвестиций",
     "author_text": "Разработка приложения:  ",
-    "sharing_text": "Поделитесь с друзьями"
+    "sharing_text": "Поделитесь с друзьями",
+    "links": {
+      "privacy_policy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookie": "Cookie Policy"
+    }
   },
   "buttons": {
     "login": "Войти",

@@ -4,6 +4,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-around;
 
   //table {
   //  width: 300px;
@@ -15,7 +16,7 @@
   position: relative;
   padding-right: 70px;
   margin-bottom: 20px;
-  border-bottom: 1px solid $grey-bg;
+  border-bottom: 1px solid $overlay-light;
 
   .title {
     margin-bottom: 20px;
@@ -27,8 +28,8 @@
 }
 
 .radar {
-  flex-grow: 1;
-  flex-shrink: 0;
+  //flex-grow: 1;
+  //flex-shrink: 0;
 
   canvas {
     margin: 0 auto;
@@ -46,16 +47,31 @@
   width: 230px;
 }
 
-.desc {
-  border: 1px solid $grey-bg;
-  border-radius: 5px;
-  padding: 30px;
-  max-width: 500px;
+.comp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid $overlay-light;
+  border-radius:$border-radius-sm;
+  padding: 2rem;
+  max-width: 20rem;
 
   &:not(:last-of-type) {
     margin-bottom: 20px;
   }
+
+  h5 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  small {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
 }
+
 
 @media(max-width: 992px) {
 

@@ -5,9 +5,11 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import {LANGS, LANG_DEFAULT} from './constants/constants';
 
+const languages = LANGS.map(item => item[0])
+
 const options = {
     fallbackLng: LANG_DEFAULT,
-    whitelist: LANGS,
+    whitelist: languages,
     load: 'languageOnly', // we only provide en, de -> no region specific locals like en-US, de-DE
     // have a common namespace used around the full app
     ns: ['common'],

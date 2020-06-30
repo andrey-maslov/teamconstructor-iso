@@ -8,8 +8,8 @@ import ComparePage from './components/pages/compare-page/ComparePage';
 import ErrorPage from './components/pages/error-page/ErrorPage';
 import Modals from './components/common/modals/Modals';
 import ScrollToTop from './components/common/layout/ScrollToTop';
-import Footer from './components/common/footer/Footer';
-import Header from './components/common/header/Header';
+import Footer from './components/common/layout/footer/Footer';
+import Header from './components/common/layout/header/Header';
 
 // import CookiesWarn from "./components/CommonComponents/Modals/CookiesWarn/CookiesWarn";
 

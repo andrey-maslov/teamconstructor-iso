@@ -1,9 +1,29 @@
-@import 'src/common/assets/scss/_vars.scss';
+@import '../../../../assets/scss/vars';
 
 .footer {
-  background-color: #4F5962;
-  color: #999;
+  background-color: transparent;
+  //color: #fff;
   padding-top: 30px;
+  z-index: 1;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  svg {
+    filter: grayscale(1);
+    transition: .3s ease-in-out;
+  }
+
+  &:hover {
+
+    svg {
+      filter: none;
+    }
+  }
+
 }
 
 .sharing {
@@ -61,6 +81,30 @@
 
     &:hover {
       color: #fff;
+    }
+  }
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+
+  .item {
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  a {
+    display: inline-block;
+    color: $text-light;
+    padding: .5rem 1rem;
+
+    &:hover {
+      background-color: $overlay-light;
     }
   }
 }

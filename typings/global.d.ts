@@ -7,6 +7,7 @@ declare module 'react-facebook-login/dist/facebook-login-render-props';
 declare module 'react-svg-bar-chart';
 declare module 'react-outside-click-handler';
 declare module 'i18next-fs-backend';
+declare module 'encoded-data-parser';
 
 declare module 'file-saver';
 

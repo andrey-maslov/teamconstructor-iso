@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useMediaPredicate } from 'react-media-hook';
-import { clearUserData } from '../../../actions/actionCreator';
-import MobiHeader from '../../../components/mobi/header/MobiHeader';
-import WebHeader from '../../../components/web/header/WebHeader';
+import { clearUserData } from '../../../../actions/actionCreator';
+import MobiHeader from '../../../mobi/header/MobiHeader';
+import WebHeader from '../../../web/header/WebHeader';
 
 type HeaderProps = {
     isLoggedIn: boolean

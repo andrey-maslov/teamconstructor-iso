@@ -4,6 +4,7 @@ export const SAVE_PERSONAL_INFO: string = 'SAVE_PERSONAL_INFO';
 export const SET_COMPARISON_READY: string = 'SET_COMPARISON_READY';
 export const SET_USERS_RESULTS: string = 'SET_USERS_RESULTS';
 export const CLEAR_USERS_RESULTS: string = 'CLEAR_USERS_RESULTS';
+export const COMPARE_PROCESS: string = 'COMPARE_PROCESS';
 
 export const ADD_AUTH_DATA = 'ADD_AUTH_DATA';
 export const SUBSCRIPTION = 'SUBSCRIPTION';

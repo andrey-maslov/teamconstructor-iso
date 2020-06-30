@@ -60,20 +60,20 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({fetchTerms}) => {
                     {currLang}
                 </div>
 
-                <Popover isVisible={isOpen} className='lang-popover'>
+                <Popover isVisible={isOpen} className={`lang-popover ${style.popover}`}>
                     <ul className={style.links}>
                         {LANGS.map(lang => {
                             let activeClass = '';
-                            if (lang === currLang) {
+                            if (lang[0] === currLang) {
                                 activeClass = 'current';
                             }
-                            return <li key={lang} className={`${style.item} ${activeClass ? style[activeClass] : ''}`}>
+                            return <li key={lang[0]} className={`${style.item} ${activeClass ? style[activeClass] : ''}`}>
                                 <a className={style.switcher}
-                                    href={`?lng=${lang}`}
+                                    href={`?lng=${lang[0]}`}
                                     // onClick={()=> {changeLanguage(lang)}}
                                 >
-                                    <SVGFlag id={lang} tagClass={style.flag}/>
-                                    {lang}
+                                    <SVGFlag id={lang[0]} tagClass={style.flag}/>
+                                    <span>{lang[0]}</span>
                                 </a>
                             </li>
                         })}

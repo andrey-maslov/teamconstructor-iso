@@ -3,17 +3,18 @@ import { Radar } from 'react-chartjs-2';
 import { getChartLabels, getRealData } from '../../../../../../helper/helper';
 import { COLORS } from '../../../../../../constants/constants';
 import hexToRgba from '../../../../../../helper/hexToRgba';
-import Box from '../../../layout/box/Box';
 import { useMediaPredicate } from 'react-media-hook';
 import { useTranslation } from 'react-i18next';
-import style from './radar-chart.module.scss';
+import style from './charts.module.scss';
+import CircleDiagram from "./circle-diagram/CircleDiagram";
 
 type ChartsPropsType = {
     userProfile1: [string, number][]
     userProfile2: [string, number][]
+    compatibility: number
 }
 
-const ChartRadar: React.FC<ChartsPropsType> = ({userProfile1, userProfile2}) => {
+const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatibility}) => {
 
     const {t} = useTranslation();
 
@@ -63,7 +64,7 @@ const ChartRadar: React.FC<ChartsPropsType> = ({userProfile1, userProfile2}) => 
         scale: {
             reverse: false,
             gridLines: {
-                color: ['black', 'red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+                color: '#5d626d'
             },
             ticks: {
                 // suggestedMax: 30,
@@ -86,9 +87,9 @@ const ChartRadar: React.FC<ChartsPropsType> = ({userProfile1, userProfile2}) => 
 
     // @ts-ignore
     return (
-        <Box>
+        <>
             <div className={style.top}>
-                <h4 className={style.title}>Comparison result</h4>
+                <h4 className={style.title}>Результаты сравнения</h4>
 
             </div>
             <div className={`${style.wrapper} radar-chart block-wrapper`}>
@@ -101,14 +102,16 @@ const ChartRadar: React.FC<ChartsPropsType> = ({userProfile1, userProfile2}) => 
                     />
                 </div>
                 <div>
-                    <div className={style.desc}>
-                        some description
+                    <div className={style.comp}>
+                        <h5>Совместимость</h5>
+                        <CircleDiagram value={compatibility}/>
+                        <small>Вероятность того, что пара будет устойчива на протяжение 5-7 лет</small>
                     </div>
                 </div>
             </div>
-        </Box>
+        </>
     );
 
 };
 
-export default ChartRadar;
+export default Charts;

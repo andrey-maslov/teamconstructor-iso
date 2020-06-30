@@ -9,6 +9,7 @@ import index from '../common/store/index';
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
+import qs from 'qs';
 import { LANGS, LANG_DEFAULT, ROUTES } from '../constants/constants';
 import { I18nextProvider } from 'react-i18next';
 import Backend from 'i18next-fs-backend';
@@ -26,6 +27,8 @@ const assets = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 
 const i18nextMiddleware = require('i18next-http-middleware');
 
+const languages = LANGS.map(item => item[0]);
+
 const server = express();
 
 i18n
@@ -36,7 +39,7 @@ i18n
             debug: false,
             preload: ['en', 'ru'],
             // @ts-ignore
-            whitelist: LANGS,
+            whitelist: languages,
             ns: ['common', 'questions'],
             defaultNS: 'common',
             backend: {
@@ -92,6 +95,7 @@ i18n
                                                 <script>
                                                   window.initialI18nStore = JSON.parse('${JSON.stringify(initialI18nStore)}');
                                                   window.initialLanguage = '${initLang}';
+                                                  window.encData = '${req.query.encdata}';
                                                 </script>
                                             </head>
                                             <body>
@@ -104,7 +108,9 @@ i18n
                         // }
 
                         res.status(200).send(indexHTML);
+
                     }
+
                 });
         },
     );

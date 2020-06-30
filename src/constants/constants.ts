@@ -1,6 +1,15 @@
 export const SITE_TITLE: string = 'Teamconstructor';
-export const LANG_DEFAULT = 'ru';
-export const LANGS = ['ru', 'en', 'pl', 'es', 'de', 'fr', 'it'];
+// export const LANGS = ['ru', 'en', 'pl', 'es', 'de', 'fr', 'it'];
+export const LANGS = [
+    ['ru', 'Русский'],
+    ['en', 'English'],
+    ['pl', 'Polski'],
+    ['es', 'El español'],
+    ['de', 'Deutsch '],
+    ['fr', 'Le français'],
+    ['it', 'Italiano'],
+];
+export const LANG_DEFAULT = LANGS[0][0];
 // export const LANGS = ['ru', 'en', 'pl'];
 
 export const ROUTES = ['/', '/result'];
