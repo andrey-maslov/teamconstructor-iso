@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Radar } from 'react-chartjs-2';
+import {useSelector} from 'react-redux'
 import { getChartLabels, getRealData } from '../../../../../../helper/helper';
 import { COLORS } from '../../../../../../constants/constants';
 import hexToRgba from '../../../../../../helper/hexToRgba';
@@ -17,6 +18,8 @@ type ChartsPropsType = {
 const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatibility}) => {
 
     const {t} = useTranslation();
+    const userName1 = useSelector((state: any) => state.pairCoopReducer.user1.name)
+    const userName2 = useSelector((state: any) => state.pairCoopReducer.user2.name)
 
     const chartLabels = getChartLabels(userProfile1);
 
@@ -41,7 +44,7 @@ const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatib
         labels: currentOptions.labels,
         datasets: [
             {
-                label: 'User 1',
+                label: userName1,
                 backgroundColor: hexToRgba(COLORS.orange, .5),
                 pointBackgroundColor: COLORS.orange,
                 borderColor: COLORS.orange,
@@ -49,7 +52,7 @@ const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatib
                 data: getRealData(userProfile1)
             },
             {
-                label: 'User 2',
+                label: userName2,
                 backgroundColor: hexToRgba(COLORS.accent, .5),
                 pointBackgroundColor: COLORS.accent,
                 borderColor: COLORS.accent,
@@ -89,7 +92,7 @@ const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatib
     return (
         <>
             <div className={style.top}>
-                <h4 className={style.title}>Результаты сравнения</h4>
+                <h4 className={style.title}>{`Результаты анализа совместимости пары ${userName1} и ${userName2}`}</h4>
 
             </div>
             <div className={`${style.wrapper} radar-chart block-wrapper`}>

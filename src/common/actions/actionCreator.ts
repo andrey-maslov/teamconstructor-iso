@@ -15,6 +15,8 @@ import {
     SET_USERS_RESULTS,
     CLEAR_USERS_RESULTS,
     COMPARE_PROCESS,
+    SET_ROW_DATA1,
+    SET_ROW_DATA2,
 } from './actionTypes';
 // import axios from "axios";
 // import { REQUEST_BASE_ROUTE } from 'constants/constants';
@@ -63,13 +65,35 @@ export const setComparisonResult = (isComparisonResultReady: boolean) => {
     }
 };
 
-export const setUsersResults = (userData1: [] | string, userData2: [] | string,) => {
+export const setUsersResults = (userData1: [] | string, userData2: [] | string, name1: string, name2: string) => {
     return {
         type: SET_USERS_RESULTS,
         userData1,
         userData2,
+        name1,
+        name2
     };
 };
+
+export const setRowData = (rowData1: string, rowData2: string) => {
+
+    if (rowData1.length !== 0) {
+        return {
+            type: SET_ROW_DATA1,
+            rowData1: rowData1,
+        };
+    } else if (rowData2.length !== 0) {
+        return {
+            type: SET_ROW_DATA2,
+            rowData2: rowData2,
+        };
+    }
+    console.log('default')
+    return {
+        type: SET_ROW_DATA1,
+    }
+};
+
 
 export const clearUserData = (bool = true) => {
     return {

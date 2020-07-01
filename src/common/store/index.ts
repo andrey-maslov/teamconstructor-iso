@@ -39,7 +39,7 @@ const index = configureStore({});
 index.subscribe(() => {
     saveState('terms', index.getState().termsReducer)
     saveState('userData', index.getState().userData)
-    saveState('compare', index.getState().compareReducer)
+    saveState('pair', index.getState().pairCoopReducer)
 });
 
 export default index;

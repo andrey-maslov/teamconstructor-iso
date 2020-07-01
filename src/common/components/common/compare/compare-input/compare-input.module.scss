@@ -3,3 +3,19 @@
 .fields {
   margin-bottom: 5rem;
 }
+
+.floatBtn {
+  position: fixed;
+  right: 0;
+  top: 20%;
+  background-color: $text-light;
+  border: 0;
+  box-shadow: $box-shadow-md;
+  cursor: pointer;
+  padding: .3rem .5rem;
+
+  svg {
+    position: relative;
+    bottom: -3px
+  }
+}

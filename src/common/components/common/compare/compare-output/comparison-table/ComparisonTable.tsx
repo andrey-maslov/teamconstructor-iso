@@ -11,8 +11,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({tableData}) => {
 
     // const schemeCurrent: SchemeType = useSelector((state: any) => state.termsReducer.terms)
     //
-    // const userData1: any = useSelector((state: any) => state.compareReducer.user1.data)
-    // const userData2: any = useSelector((state: any) => state.compareReducer.user2.data)
+    // const userData1: any = useSelector((state: any) => state.pairCoopReducer.user1.data)
+    // const userData2: any = useSelector((state: any) => state.pairCoopReducer.user2.data)
     // //
     // // const userResult1 = new UserResult(userData1[1], schemeCurrent)
     // // const userResult2 = new UserResult(userData2[1], schemeCurrent)

@@ -326,6 +326,15 @@ th, td {
 //  border-color: $accent;
 //}
 
+input, textarea {
+  background-color: $overlay-light;
+  border: 0;
+  caret-color: $text-light;
+  color: $text-light;
+  font-family: monospace;
+  border-radius: $border-radius-sm;
+}
+
 //Media
 @media (max-width: 992px) {
 

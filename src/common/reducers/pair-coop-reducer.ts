@@ -1,11 +1,14 @@
 import {
     SET_COMPARISON_READY,
     SET_USERS_RESULTS,
-    CLEAR_USERS_RESULTS, COMPARE_PROCESS,
+    CLEAR_USERS_RESULTS,
+    COMPARE_PROCESS,
+    SET_ROW_DATA1,
+    SET_ROW_DATA2,
 } from "../actions/actionTypes";
 import {loadState} from "../store/sessionStorage";
 
-let STATE = loadState('compare');
+let STATE = loadState('pair');
 
 if (!STATE) {
     STATE = {
@@ -13,33 +16,30 @@ if (!STATE) {
         isComparisonResultReady: false,
         isComparisonInProcess: false,
         user1: {
+            rowData: '',
             data: [],
+            name: '',
         },
         user2: {
+            rowData: '',
             data: [],
+            name: '',
         },
     }
 }
 
-// const STATE = {
-//     type: '',
-//     isComparisonResultReady: false,
-//     user1: {
-//         data: [],
-//     },
-//     user2: {
-//         data: [],
-//     },
-// };
+type pairCoopReducerType = typeof STATE;
 
-type compareReducerType = typeof STATE;
-
-export const compareReducer = (state = STATE, {
+export const pairCoopReducer = (state = STATE, {
     type,
     isComparisonResultReady,
     isComparisonInProcess,
     userData1,
     userData2,
+    rowData1,
+    rowData2,
+    name1,
+    name2,
 }: any) => {
     switch (type) {
         case SET_COMPARISON_READY :
@@ -56,10 +56,30 @@ export const compareReducer = (state = STATE, {
             return {
                 ...state,
                 user1: {
-                    data: userData1
+                    ...state.user1,
+                    data: userData1,
+                    name: name1,
                 },
                 user2: {
-                    data: userData2
+                    ...state.user2,
+                    data: userData2,
+                    name: name2,
+                },
+            };
+        case SET_ROW_DATA1 :
+            return {
+                ...state,
+                user1: {
+                    ...state.user1,
+                    rowData: rowData1
+                },
+            };
+        case SET_ROW_DATA2 :
+            return {
+                ...state,
+                user2: {
+                    ...state.user2,
+                    rowData: rowData2
                 },
             };
         case CLEAR_USERS_RESULTS :
@@ -67,10 +87,14 @@ export const compareReducer = (state = STATE, {
                 ...state,
                 isComparisonResultReady: false,
                 user1: {
-                    data: []
+                    rowData: '',
+                    data: [],
+                    name: ''
                 },
                 user2: {
-                    data: []
+                    rowData: '',
+                    data: [],
+                    name: ''
                 },
             };
         default:

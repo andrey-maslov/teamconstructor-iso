@@ -27,9 +27,11 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
     //Initial data
     const schemeCurrent: SchemeType = useSelector((state: any) => state.termsReducer.terms)
-    const isCompareReady: boolean = useSelector((state: any) => state.compareReducer.isComparisonResultReady)
-    const userData1: any = useSelector((state: any) => state.compareReducer.user1.data)
-    const userData2: any = useSelector((state: any) => state.compareReducer.user2.data)
+    const isCompareReady: boolean = useSelector((state: any) => state.pairCoopReducer.isComparisonResultReady)
+    const userData1: any = useSelector((state: any) => state.pairCoopReducer.user1.data)
+    const userData2: any = useSelector((state: any) => state.pairCoopReducer.user2.data)
+    const userName1 = useSelector((state: any) => state.pairCoopReducer.user1.name)
+    const userName2 = useSelector((state: any) => state.pairCoopReducer.user2.name)
     const dispatch = useDispatch()
 
     if (!isCompareReady) {
@@ -159,9 +161,9 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
         const complexData2 = userResult2.getComplexData()
 
         return [
-            [complexData1[3][0], `${complexData1[3][0]} Профиль 1 - ${complexData1[3][1]},</br> ${complexData1[3][0]} Профиль 2 - ${complexData2[3][1]}`],
-            [complexData1[4][0], `${complexData1[4][0]} Профиль 1 - ${complexData1[4][1]},</br> ${complexData1[4][0]} Профиль 2 - ${complexData2[4][1]}`],
-            [complexData1[6][0], `${complexData1[6][0]} Профиль 1 - ${complexData1[6][1]},</br> ${complexData1[6][0]} Профиль 2 - ${complexData2[6][1]}`],
+            [complexData1[3][0], `${complexData1[3][0]} ${userName1} - ${complexData1[3][1]},</br> ${complexData1[3][0]} ${userName2} - ${complexData2[3][1]}`],
+            [complexData1[4][0], `${complexData1[4][0]} ${userName1} - ${complexData1[4][1]},</br> ${complexData1[4][0]} ${userName2} - ${complexData2[4][1]}`],
+            [complexData1[6][0], `${complexData1[6][0]} ${userName1} - ${complexData1[6][1]},</br> ${complexData1[6][0]} ${userName2} - ${complexData2[6][1]}`],
         ]
     }
 
@@ -178,13 +180,13 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
         const maxValue2 = sortedProfile2[0][1]
 
         let diff: number | null = null;
-        let users: string[] = ['Пользователь 1', 'Пользователь 2'];
+        let users: string[] = [userName1, userName2];
 
         if ((maxValue1 - maxValue2) >= 0) {
             diff = Math.round((1 - maxValue2 / maxValue1) * 100)
         } else {
             diff = Math.round((1 - maxValue1 / maxValue2) * 100);
-            users = ['Пользователь 2', 'Пользователь 1']
+            users = [userName2, userName1]
         }
 
         if (diff < checkValues[0]) {
@@ -221,7 +223,7 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
         return [
             'Совмещение психотипов в характере',
-            `Отношение составляющих характера Пользователя 1 к Пользователю 2:</br>
+            `Отношение составляющих характера ${userName1} к ${userName2}:</br>
             Индивидуализм - ${result[0]},</br> 
             Инноваторство - ${result[1]},</br> 
             Стремление к лидерству во мнении - ${result[2]},</br> 
@@ -239,7 +241,7 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
         const indexOfSegment2 = indexes.indexOf(userResult2.sortedOctants[0].index)
 
         return [
-            'Дополняемость', `Пользователь 1 ${complementarity[indexOfSegment1]}.</br> Пользователь 2 ${complementarity[indexOfSegment2]}`
+            'Дополняемость', `${userName1} ${complementarity[indexOfSegment1]}.</br> ${userName2} ${complementarity[indexOfSegment2]}`
         ]
     }
 
@@ -253,17 +255,17 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
         //TODO добавить обработку 0; обойтись без цифр "Пользователь 1 склонен к принятию контроля..."
         //Принятие отношений, 2 последних поля в таблице
-        const relationsTemplate = `У Пользователя 1 ${data1[3] < -0 ? labels[3][0] : labels[3][1]} = ${Math.abs(data1[3])}, ${data1[4] < -0 ? labels[4][0] : labels[4][1]} = ${Math.abs(data1[4])}, 
-                                    у Пользователя 2 - ${data2[3] < -0 ? labels[3][0] : labels[3][1]} = ${Math.abs(data2[3])}, ${data2[4] < -0 ? labels[4][0] : labels[4][1]} = ${Math.abs(data2[4])}`
+        const relationsTemplate = `У Пользователя ${userName1} ${data1[3] < -0 ? labels[3][0] : labels[3][1]} = ${Math.abs(data1[3])}, ${data1[4] < -0 ? labels[4][0] : labels[4][1]} = ${Math.abs(data1[4])}, 
+                                    у Пользователя ${userName2} - ${data2[3] < -0 ? labels[3][0] : labels[3][1]} = ${Math.abs(data2[3])}, ${data2[4] < -0 ? labels[4][0] : labels[4][1]} = ${Math.abs(data2[4])}`
 
         //поле избегание ответственности - ответственность
-        const responsibilityTemplate = `У Пользователя 1 ${data1[0] < -0 ? labels[0][0] : labels[0][1]} = ${Math.abs(data1[0])}, у Пользователя 2 - ${data2[0] < -0 ? labels[0][0] : labels[0][1]} = ${Math.abs(data2[0])}`
+        const responsibilityTemplate = `У Пользователя ${userName1} ${data1[0] < -0 ? labels[0][0] : labels[0][1]} = ${Math.abs(data1[0])}, у Пользователя ${userName2} - ${data2[0] < -0 ? labels[0][0] : labels[0][1]} = ${Math.abs(data2[0])}`
 
         //поле невротизам - стабильность
-        const stabilityTemplate = `У Пользователя 1 ${data1[2] < -0 ? labels[2][0] : labels[2][1]} = ${Math.abs(data1[2])}, у Пользователя 2 - ${data2[2] < -0 ? labels[2][0] : labels[2][1]} = ${Math.abs(data2[2])}`
+        const stabilityTemplate = `У Пользователя ${userName1} ${data1[2] < -0 ? labels[2][0] : labels[2][1]} = ${Math.abs(data1[2])}, у Пользователя ${userName2} - ${data2[2] < -0 ? labels[2][0] : labels[2][1]} = ${Math.abs(data2[2])}`
 
         //поле притяние контроля - не принятие контроля
-        const controlTemplate = `У Пользователя 1 ${data1[1] < -0 ? labels[1][0] : labels[1][1]} = ${Math.abs(data1[1])}, у Пользователя 2 - ${data2[1] < -0 ? labels[1][0] : labels[1][1]} = ${Math.abs(data2[1])}`
+        const controlTemplate = `У Пользователя ${userName1} ${data1[1] < -0 ? labels[1][0] : labels[1][1]} = ${Math.abs(data1[1])}, у Пользователя ${userName1} - ${data2[1] < -0 ? labels[1][0] : labels[1][1]} = ${Math.abs(data2[1])}`
 
         return [
             ['Принятие отношений', relationsTemplate],
@@ -277,6 +279,7 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
     function getCompatibility(): number {
 
         //initial value
+        let log: string[] = [];
         let value = 0;
         const leadSegment1 = userResult1.sortedOctants[0]
         const leadSegment2 = userResult2.sortedOctants[0]
@@ -291,6 +294,7 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
         if (intensityRatio < 25) {
             value += .3
+            log.push(`1. Интенсивность главных ненденций = ${value}; + 0.3`)
         }
 
         //если ведущие сегменты - соседние, то + .1
@@ -300,7 +304,7 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
         if(Math.abs(index1 - index2) === 1 || Math.abs(index1 - index2) === (letterIndexes.length - 1)) {
             value += .1
-            console.log('сегменты соседние')
+            log.push('1. сегменты соседние; + 0.1')
         }
 
 
@@ -411,7 +415,13 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
         console.groupEnd()
 
+        makeLog(log);
+
         return Math.round(value * 100)
+    }
+
+    function makeLog(data: string[]) {
+        console.log(data)
     }
 }
 

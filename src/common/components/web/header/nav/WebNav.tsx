@@ -19,7 +19,7 @@ const WebNav = ({handleLoginBtn, isLoggedIn, userEmail}: Navigation) => {
     if (isLoggedIn) {
         return (
             <div className={style.nav}>
-                {/*<LangSwitcher/>*/}
+                <LangSwitcher/>
                 <PopoverUser
                     userEmail={userEmail}
                     logoutHandle={handleLoginBtn}
@@ -30,7 +30,7 @@ const WebNav = ({handleLoginBtn, isLoggedIn, userEmail}: Navigation) => {
 
     return (
         <div className={style.nav}>
-            {/*<LangSwitcher/>*/}
+            <LangSwitcher/>
             <Button
                 handle={handleLoginBtn}
                 btnClass='btn-link'

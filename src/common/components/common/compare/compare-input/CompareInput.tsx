@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
 import InputField from "./input-field/InputField";
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setComparisonResult, setUsersResults} from '../../../../actions/actionCreator';
+
+import {FaReact} from 'react-icons/fa'
 
 // import Loader from "../../loaders/loader/Loader";
 
-import {getAndDecodeData, validateDecodedData} from 'encoded-data-parser';
+import {getAndDecodeData} from 'encoded-data-parser';
 import Button from "../../buttons/button/Button";
 import {GoRocket} from "react-icons/go";
 
 import style from './compare-input.module.scss';
+import ProfileGenerator from "./profile-generator/ProfileGenerator";
 
 //EXAMPLE SEE HERE https://www.carlrippon.com/building-super-simple-react-form-component-typescript-basics/
 
@@ -22,7 +25,8 @@ interface IUsersLocalState {
     user2: {
         data: string
         isError: boolean
-    }
+    },
+    isGenerator: boolean
 }
 
 interface ICompareInputProps {
@@ -31,11 +35,13 @@ interface ICompareInputProps {
 
 const CompareInput: React.FC<ICompareInputProps> = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const rowData1 = useSelector((state: any) => state.pairCoopReducer.user1.rowData);
+    const rowData2 = useSelector((state: any) => state.pairCoopReducer.user2.rowData);
 
     const userDataFromURL = getAndDecodeData().encoded;
 
-    const userData1 = userDataFromURL ? userDataFromURL : '';
+    const userData1 = userDataFromURL ? userDataFromURL : rowData1;
 
     const [localState, setLocalState] = useState<IUsersLocalState>({
         user1: {
@@ -43,39 +49,87 @@ const CompareInput: React.FC<ICompareInputProps> = () => {
             isError: false
         },
         user2: {
-            data: '',
+            data: rowData2,
             isError: false
-        }
+        },
+        isGenerator: false
     })
 
+    const generateAndSet1 = (data: any) => {
+        setLocalState({
+            ...localState,
+            user1: {...localState.user1, data: data},
+        })
+    }
+
+    const onChangeHandler1 = (e: any) => {
+        setLocalState({
+            ...localState,
+            user1: {...localState.user1, data: e.target.value, isError: false},
+        })
+    }
+
+    const generateAndSet2 = (data: any) => {
+        setLocalState({
+            ...localState,
+            user2: {...localState.user2, data: data},
+        })
+    }
+
+    const onChangeHandler2 = (e: any) => {
+        setLocalState({
+            ...localState,
+            user2: {...localState.user2, data: e.target.value, isError: false},
+        })
+    }
 
     return (
-        <form onSubmit={submitCompare}>
-            <div className={`row between-xs ${style.fields}`}>
-                <InputField
-                    label={'User 1'}
-                    name={'user1'}
-                    id={'user1'}
-                    value={localState.user1.data}
-                    placeholder={'Put data for user 1 here'}
+        <>
+            {localState.isGenerator && <div className="row between-xs">
+                <ProfileGenerator
+                    label="Сгенерировать первый профиль"
+                    id="profile_1"
+                    getRowData={generateAndSet1}
                 />
-                <InputField
-                    label={'User 2'}
-                    name={'user2'}
-                    id={'user2'}
-                    value={localState.user2.data}
-                    placeholder={'Put data for user 2 here'}
+                <ProfileGenerator
+                    label="Сгенерировать второй профиль"
+                    id="profile_2"
+                    getRowData={generateAndSet2}
                 />
-            </div>
-            <div className="row center-xs">
-                <Button
-                    title={'Compare'}
-                    startIcon={<GoRocket/>}
-                    handle={() => {}}
-                    btnClass={'btn-outlined'}
-                />
-            </div>
-        </form>
+            </div>}
+            <form onSubmit={submitCompare}>
+                <div className={`row between-xs ${style.fields}`}>
+                    <InputField
+                        label={'Профиль 1'}
+                        name={'user1'}
+                        value={localState.user1.data}
+                        placeholder={'Внесите в это поле зашифрованный результат для пользователя 1'}
+                        hasErrored={localState.user1.isError}
+                        onChangeHandler={onChangeHandler1}
+                        autoFocus={true}
+                    />
+                    <InputField
+                        label={'Профиль 2'}
+                        name={'user2'}
+                        value={localState.user2.data}
+                        placeholder={'Внесите в это поле зашифрованный результат для пользователя 2'}
+                        hasErrored={localState.user2.isError}
+                        onChangeHandler={onChangeHandler2}
+                    />
+                </div>
+                <div className="row center-xs">
+                    <Button
+                        title={'Сравнить'}
+                        startIcon={<GoRocket/>}
+                        handle={() => {}}
+                        btnClass={'btn-outlined'}
+                    />
+                </div>
+            </form>
+            <button className={style.floatBtn} onClick={() => {setLocalState({...localState, isGenerator: !localState.isGenerator})}}>
+                <FaReact/>
+            </button>
+        </>
     );
 
     function submitCompare(e: React.FormEvent<HTMLFormElement>) {
@@ -83,28 +137,31 @@ const CompareInput: React.FC<ICompareInputProps> = () => {
 
         const userValue1 = e.target['user1'].value;
         const userValue2 = e.target['user2'].value;
+        const userName1 = e.target['name_user1'].value;
+        const userName2 = e.target['name_user2'].value;
 
         const {user1, user2} = decodeAndValidateUsersData(userValue1, userValue2)
 
         decodeAndValidateUsersData(userValue1, userValue2)
 
         setLocalState({
+            ...localState,
             user1: {...localState.user1, data: userValue1, isError: !user1.isValid},
             user2: {...localState.user2, data: userValue2, isError: !user2.isValid}
         })
 
         if (user1.isValid && user2.isValid) {
             dispatch(setComparisonResult(true))
-            dispatch(setUsersResults(user1.data, user2.data))
+            dispatch(setUsersResults(user1.data, user2.data, userName1, userName2))
             return;
         } else if (!user1.isValid && !user2.isValid) {
-            dispatch(setUsersResults([], []))
+            dispatch(setUsersResults([], [], '', ''))
             return;
         } else if (!user1.isValid && user2.isValid) {
-            dispatch(setUsersResults([], []))
+            dispatch(setUsersResults([], [], '', ''))
             return;
         } else if (user1.isValid && !user2.isValid) {
-            dispatch(setUsersResults([], []))
+            dispatch(setUsersResults([], [], '', ''))
             return;
         }
 

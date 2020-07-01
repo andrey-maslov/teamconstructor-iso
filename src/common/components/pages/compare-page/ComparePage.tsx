@@ -9,12 +9,13 @@ import Button from "../../common/buttons/button/Button";
 import {FiRefreshCw} from "react-icons/fi";
 import {clearUsersResults} from '../../../actions/actionCreator'
 import CompareLoader from "../../common/loaders/compare-loader/CompareLoader";
+import ProfileGenerator from "../../common/compare/compare-input/profile-generator/ProfileGenerator";
 
 const ComparePage = () => {
 
     const schemeCurrent: SchemeType = useSelector((state: any) => state.termsReducer.terms);
-    const isCompareReady: boolean = useSelector((state: any) => state.compareReducer.isComparisonResultReady);
-    const isComparisonInProcess: boolean = useSelector((state: any) => state.compareReducer.isComparisonInProcess);
+    const isCompareReady: boolean = useSelector((state: any) => state.pairCoopReducer.isComparisonResultReady);
+    const isComparisonInProcess: boolean = useSelector((state: any) => state.pairCoopReducer.isComparisonInProcess);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -41,7 +42,7 @@ const ComparePage = () => {
             <div className="container">
                 {isCompareReady &&
                 <Button
-                    title={'New comparison'}
+                    title={'Еще раз'}
                     handle={newComparisonHandler}
                     startIcon={<FiRefreshCw/>}
                     btnClass={'btn-outlined'}

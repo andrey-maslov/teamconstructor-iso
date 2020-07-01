@@ -49,16 +49,16 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({fetchTerms}) => {
             onOutsideClick={outsideClickHandler}
         >
             <div className={style.wrapper}>
-                <div
-                    className={style.btn}
-                    onClick={() => {
-                        setIsOpen(!isOpen)
-                    }}
-                    suppressHydrationWarning={true}
-                >
-                    <SVGFlag id={currLang} tagClass={style.flag}/>
-                    {currLang}
-                </div>
+                {/*<div*/}
+                {/*    className={style.btn}*/}
+                {/*    onClick={() => {*/}
+                {/*        setIsOpen(!isOpen)*/}
+                {/*    }}*/}
+                {/*    suppressHydrationWarning={true}*/}
+                {/*>*/}
+                {/*    <SVGFlag id={currLang} tagClass={style.flag}/>*/}
+                {/*    {currLang}*/}
+                {/*</div>*/}
 
                 <Popover isVisible={isOpen} className={`lang-popover ${style.popover}`}>
                     <ul className={style.links}>

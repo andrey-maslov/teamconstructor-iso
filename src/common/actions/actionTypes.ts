@@ -6,6 +6,9 @@ export const SET_USERS_RESULTS: string = 'SET_USERS_RESULTS';
 export const CLEAR_USERS_RESULTS: string = 'CLEAR_USERS_RESULTS';
 export const COMPARE_PROCESS: string = 'COMPARE_PROCESS';
 
+export const SET_ROW_DATA1: string = 'SET_ROW_DATA1'; //tmp
+export const SET_ROW_DATA2: string = 'SET_ROW_DATA2'; //tmp
+
 export const ADD_AUTH_DATA = 'ADD_AUTH_DATA';
 export const SUBSCRIPTION = 'SUBSCRIPTION';
 export const COOKIES_CONSENT = 'COOKIES_CONSENT';
