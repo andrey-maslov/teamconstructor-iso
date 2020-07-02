@@ -5,6 +5,7 @@ import {
     COMPARE_PROCESS,
     SET_ROW_DATA1,
     SET_ROW_DATA2,
+    SAVE_LOG
 } from "../actions/actionTypes";
 import {loadState} from "../store/sessionStorage";
 
@@ -15,6 +16,7 @@ if (!STATE) {
         type: '',
         isComparisonResultReady: false,
         isComparisonInProcess: false,
+        log: [],
         user1: {
             rowData: '',
             data: [],
@@ -40,6 +42,7 @@ export const pairCoopReducer = (state = STATE, {
     rowData2,
     name1,
     name2,
+    log
 }: any) => {
     switch (type) {
         case SET_COMPARISON_READY :
@@ -81,6 +84,11 @@ export const pairCoopReducer = (state = STATE, {
                     ...state.user2,
                     rowData: rowData2
                 },
+            };
+        case SAVE_LOG :
+            return {
+                ...state,
+                log,
             };
         case CLEAR_USERS_RESULTS :
             return {

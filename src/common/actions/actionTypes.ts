@@ -8,6 +8,7 @@ export const COMPARE_PROCESS: string = 'COMPARE_PROCESS';
 
 export const SET_ROW_DATA1: string = 'SET_ROW_DATA1'; //tmp
 export const SET_ROW_DATA2: string = 'SET_ROW_DATA2'; //tmp
+export const SAVE_LOG: string = 'SAVE_LOG'; //tmp
 
 export const ADD_AUTH_DATA = 'ADD_AUTH_DATA';
 export const SUBSCRIPTION = 'SUBSCRIPTION';

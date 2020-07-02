@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { Radar } from 'react-chartjs-2';
+import React, {useState} from 'react';
+import {Radar} from 'react-chartjs-2';
 import {useSelector} from 'react-redux'
-import { getChartLabels, getRealData } from '../../../../../../helper/helper';
-import { COLORS } from '../../../../../../constants/constants';
+import {getChartLabels, getRealData} from '../../../../../../helper/helper';
+import {COLORS} from '../../../../../../constants/constants';
 import hexToRgba from '../../../../../../helper/hexToRgba';
-import { useMediaPredicate } from 'react-media-hook';
-import { useTranslation } from 'react-i18next';
+import {useMediaPredicate} from 'react-media-hook';
+import {useTranslation} from 'react-i18next';
 import style from './charts.module.scss';
 import CircleDiagram from "./circle-diagram/CircleDiagram";
+import PopoverMore from "../../../popovers/popover-more/PopoverMore";
 
 type ChartsPropsType = {
     userProfile1: [string, number][]
@@ -20,6 +21,7 @@ const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatib
     const {t} = useTranslation();
     const userName1 = useSelector((state: any) => state.pairCoopReducer.user1.name)
     const userName2 = useSelector((state: any) => state.pairCoopReducer.user2.name)
+    const log = useSelector((state: any) => state.pairCoopReducer.log)
 
     const chartLabels = getChartLabels(userProfile1);
 
@@ -80,7 +82,7 @@ const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatib
         tooltips: {
             // enabled: false,
             callbacks: {
-                title: function(tooltipItem: any) {
+                title: function (tooltipItem: any) {
                     const i = tooltipItem[0].index;
                     return chartLabels[i];
                 },
@@ -93,7 +95,7 @@ const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatib
         <>
             <div className={style.top}>
                 <h4 className={style.title}>{`Результаты анализа совместимости пары ${userName1} и ${userName2}`}</h4>
-
+                <PopoverMore data={log}/>
             </div>
             <div className={`${style.wrapper} radar-chart block-wrapper`}>
                 <div className={style.radar}>

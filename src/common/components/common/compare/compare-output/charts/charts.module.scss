@@ -13,8 +13,10 @@
 }
 
 .top {
+  display: flex;
+  justify-content: space-between;
   position: relative;
-  padding-right: 70px;
+  //padding-right: 70px;
   margin-bottom: 20px;
   border-bottom: 1px solid $overlay-light;
 

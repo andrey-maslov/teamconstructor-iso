@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {UserResult, SchemeType} from '../../../../../UserResult';
 import {useTranslation} from "react-i18next";
@@ -7,6 +7,7 @@ import Box from "../../layout/box/Box";
 import Table from "../../tables/table/Table";
 import ComparisonTable from "./comparison-table/ComparisonTable";
 import {PersonalInfoType, TestResultType, FullResultType} from '../../../../../constants/types';
+import {saveLog} from "../../../../actions/actionCreator";
 
 const complementarity = [
     "приносит в пару: спонтанность, самонадеянность, некоторую агрессивность. Выражает себя через двигательную активность",
@@ -32,7 +33,7 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
     const userData2: any = useSelector((state: any) => state.pairCoopReducer.user2.data)
     const userName1 = useSelector((state: any) => state.pairCoopReducer.user1.name)
     const userName2 = useSelector((state: any) => state.pairCoopReducer.user2.name)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     if (!isCompareReady) {
         return null;
@@ -54,7 +55,6 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
     return (
         <div>
-
             <Box>
                 <Charts
                     userProfile1={userProfile1}
@@ -290,11 +290,9 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
         const intensityRatio: any = getIntensityRatioComparison().ratio
 
-        console.group('совместимость')
-
         if (intensityRatio < 25) {
             value += .3
-            log.push(`1. Интенсивность главных ненденций = ${value}; + 0.3`)
+            log.push(`1. Интенсивность главных тенденций = ${value}, это больше 25; + 0.3`)
         }
 
         //если ведущие сегменты - соседние, то + .1
@@ -304,20 +302,20 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
         if(Math.abs(index1 - index2) === 1 || Math.abs(index1 - index2) === (letterIndexes.length - 1)) {
             value += .1
-            log.push('1. сегменты соседние; + 0.1')
+            log.push('2. Ведущие сегменты соседние; + 0.1')
         }
 
 
         //если ведущие сегменты в пределах одной четверти, то + .1
         if (leadSegment1.index[0] === leadSegment2.index[0]) {
             value += .1
-            console.log('сегменты в одной четверти')
+            log.push('3. Ведущие сегменты в одной четверти; + 0.1')
         }
 
         //TODO если ведущие сегменты равны...
         if (leadSegment1.index === leadSegment2.index) {
             value += 0
-            console.log('Ведущие сегменты равны')
+            log.push('3.1. Ведущие сегменты совпадают; + 0')
         }
 
 
@@ -326,7 +324,7 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
         //Если у обоих положительное значение "Принятие ответственности", то + .1
         if (affSep[0][0] >= 0 && affSep[1][0] >= 0) {
-            console.log('Принятие ответственности у обоих')
+            log.push('4. Принятие ответственности у обоих; + 0.1')
             value += .1
         }
 
@@ -334,57 +332,57 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
         // и принятие ответственности больше  или равно по абсолютному значению, чем избегание, то + .05
         if ((affSep[0][0] < 0 && affSep[1][0] >= 0) && affSep[1][0] >= Math.abs(affSep[0][0])) {
             value += .05
-            console.log('adoption more 2')
+            log.push(`5. Избегание отв-и у ${userName1}, у ${userName2} Принятие ответственности; + 0.05`)
         }
         if ((affSep[0][0] >= 0 && affSep[1][0] < 0) && affSep[0][0] >= Math.abs(affSep[1][0])) {
             value += .05
-            console.log('adoption more 1')
+            log.push(`5. Избегание отв-и у ${userName2}, у ${userName1} Принятие ответственности; + 0.05`)
         }
 
         //Если у одного из пары присутствует избегание отвественности, а у другого присутствует принятие ответственности,
         // и Принятие ответственности меньше по абсолютному значению, чем избегание, то + 0
         if ((affSep[0][0] < 0 && affSep[1][0] >= 0) && affSep[1][0] < Math.abs(affSep[0][0])) {
             value += 0
-            console.log('avoidance more 1')
+            log.push(`6. Избегание отв-и у ${userName1}, у ${userName2} Принятие ответственности; + 0`)
         }
         if ((affSep[0][0] >= 0 && affSep[1][0] < 0) && affSep[0][0] < Math.abs(affSep[1][0])) {
             value += 0
-            console.log('avoidance more 2')
+            log.push(`6. Избегание отв-и у ${userName2}, у ${userName1} Принятие ответственности; + 0`)
         }
 
         //Если у обоих присутствует "Избегание ответственности", то - 0.1
         if (affSep[0][0] < 0 && affSep[1][0] < 0) {
             value -= .1
-            console.log('avoidance twice')
+            log.push(`7. Избегание отв-и у обоих; - 0.1`)
         }
 
         //= + 0.1
         if (affSep[0][2] >= 0 && affSep[1][2] >= 0) {
             value += .1
-            console.log('Стабильность у обоих')
+            log.push(`8. Стабильность у обоих; + 0.1`)
         }
 
         //Если у одного из пары присутствует невротизм, а у другого присутствует стабильность,
         // и оно больше или равно по абсолютному значению, чем невротизм, то + 0.05
         if ((affSep[0][2] < 0 && affSep[1][2] >= 0) && affSep[1][2] >= Math.abs(affSep[0][2])) {
             value += .05
-            console.log('У первого невротизм, но стабильность второго больше')
+            log.push(`9. У ${userName1} невротизм, но стабильность ${userName2} больше; + 0.05`)
         }
         if ((affSep[1][2] < 0 && affSep[0][2] >= 0) && affSep[0][2] >= Math.abs(affSep[1][2])) {
             value += .05
-            console.log('У второго невротизм, но стабильность первого больше')
+            log.push(`9. У ${userName2} невротизм, но стабильность ${userName1} больше; + 0.05`)
         }
 
 
         //Если у одного из пары присутствует невротизм, а у другого присутствует стабильность,
-        // и она мненьше по абсолютному значению, чем невротизм, то + 0
+        // и она меньше по абсолютному значению, чем невротизм, то + 0
         if ((affSep[0][2] < 0 && affSep[1][2] >= 0) && affSep[1][2] < Math.abs(affSep[0][2])) {
-            value += .05
-            console.log('У первого невротизм, и стабильность второго меньше')
+            value += 0
+            log.push(`10. У ${userName1} невротизм, но стабильность ${userName2} меньше; + 0`)
         }
         if ((affSep[1][2] < 0 && affSep[0][2] >= 0) && affSep[0][2] < Math.abs(affSep[1][2])) {
-            value += .05
-            console.log('У второго невротизм, и стабильность первого меньше')
+            value += 0
+            log.push(`10. У ${userName2} невротизм, но стабильность ${userName1} меньше; + 0`)
         }
 
 
@@ -392,28 +390,29 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
         // и они по значению больше или равно 2, то + 0.1
         if ((affSep[0][3] >= 0 && affSep[1][4] < 0) && (affSep[0][3] >= 2 && Math.abs(affSep[1][4]) >= 2)) {
             value += .1
-            console.log('У 1 - принятие отнош, у 2 установл отнош и они больше 2')
+            log.push(`11. У ${userName1} принятие отнош-й, у ${userName2} установл отнош-й и они больше 2; + 0.1`)
         }
         if ((affSep[1][3] >= 0 && affSep[0][4] < 0) && (Math.abs(affSep[0][4]) >= 2 && affSep[1][3] >= 2)) {
             value += .1
-            console.log('У 1 - установл отнош, у 2 принятие отнош и они больше 2')
+            log.push(`11. У ${userName2} принятие отнош-й, у ${userName1} установл отнош-й и они больше 2; + 0.1`)
         }
 
         //
         if ((affSep[0][3] >= 0 && affSep[1][4] >= 0) || (affSep[1][3] >= 0 && affSep[0][4] >= 0)) {
             value += .05
-            console.log('12 пункт сработал')
+            log.push(`12. ...; + 0.05`)
         }
 
         // Если у одного из пары равны положительные цифры в принятии отношений с положительными цифрами установления отношений у другого партнера, то + .1
         if ((affSep[0][3] >= 0 && affSep[1][4] >= 0) && (affSep[0][3] === affSep[1][4])) {
             value += .1
+            log.push(`13. У ${userName1} принятие отнош-й = установл отнош-й у ${userName2} ; + 0.1`)
         }
         if ((affSep[1][3] >= 0 && affSep[0][4] >= 0) && (affSep[1][3] === affSep[0][4])) {
             value += .1
+            log.push(`13. У ${userName2} принятие отнош-й = установл отнош-й у ${userName1} ; + 0.1`)
         }
 
-        console.groupEnd()
 
         makeLog(log);
 
@@ -422,6 +421,7 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
     function makeLog(data: string[]) {
         console.log(data)
+        dispatch(saveLog(data))
     }
 }
 

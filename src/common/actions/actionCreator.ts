@@ -17,6 +17,7 @@ import {
     COMPARE_PROCESS,
     SET_ROW_DATA1,
     SET_ROW_DATA2,
+    SAVE_LOG,
 } from './actionTypes';
 // import axios from "axios";
 // import { REQUEST_BASE_ROUTE } from 'constants/constants';
@@ -44,6 +45,13 @@ export const setComparisonProcess = (isComparisonInProcess: boolean) => {
         isComparisonInProcess
     };
 };
+
+export const saveLog = (log:  any) => {
+    return {
+        type: SAVE_LOG,
+        log
+    };
+}
 
 export const setComparisonResult = (isComparisonResultReady: boolean) => {
 

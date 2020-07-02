@@ -2,14 +2,15 @@
 
 .wrapper {
   box-sizing: border-box;
-  margin: 0 0 15px;
-  padding: 30px;
+  margin: 0 0 1rem;
+  padding: 2rem;
   color: currentColor;
   position: relative;
   background: rgba($overlay-light, .3);
   border-radius: $border-radius-sm;
   box-shadow: $box-shadow-sm;
   transition: all .3s;
+  animation: fadeIn .3s;
 }
 
 
