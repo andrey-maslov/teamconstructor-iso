@@ -10,7 +10,7 @@ interface PopoverMoreProps {
 const PopoverMore: React.FC<PopoverMoreProps> = ({data}) => {
 
     const [state, setState] = useState({
-                                           isOpen: true,
+                                           isOpen: false,
                                        });
 
     const closeMore = () => {
