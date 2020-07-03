@@ -99,34 +99,41 @@ const CompareInput: React.FC<ICompareInputProps> = () => {
             </div>}
             <form onSubmit={submitCompare}>
                 <div className={`row between-xs ${style.fields}`}>
-                    <InputField
-                        label={'Профиль 1'}
-                        name={'user1'}
-                        value={localState.user1.data}
-                        placeholder={'Внесите в это поле зашифрованный результат для пользователя 1'}
-                        hasErrored={localState.user1.isError}
-                        onChangeHandler={onChangeHandler1}
-                        autoFocus={true}
-                    />
-                    <InputField
-                        label={'Профиль 2'}
-                        name={'user2'}
-                        value={localState.user2.data}
-                        placeholder={'Внесите в это поле зашифрованный результат для пользователя 2'}
-                        hasErrored={localState.user2.isError}
-                        onChangeHandler={onChangeHandler2}
-                    />
+                    <div className="col-lg-6 mb-md">
+                        <InputField
+                            label={'Профиль 1'}
+                            name={'user1'}
+                            value={localState.user1.data}
+                            placeholder={'Внесите в это поле зашифрованный результат для пользователя 1'}
+                            hasErrored={localState.user1.isError}
+                            onChangeHandler={onChangeHandler1}
+                            autoFocus={true}
+                        />
+                    </div>
+                    <div className="col-lg-6 mb-md">
+                        <InputField
+                            label={'Профиль 2'}
+                            name={'user2'}
+                            value={localState.user2.data}
+                            placeholder={'Внесите в это поле зашифрованный результат для пользователя 2'}
+                            hasErrored={localState.user2.isError}
+                            onChangeHandler={onChangeHandler2}
+                        />
+                    </div>
                 </div>
-                <div className="row center-xs">
+                <div className={style.buttons}>
                     <Button
                         title={'Сравнить'}
                         startIcon={<GoRocket/>}
-                        handle={() => {}}
+                        handle={() => {
+                        }}
                         btnClass={'btn-outlined'}
                     />
                 </div>
             </form>
-            <button className={style.floatBtn} onClick={() => {setLocalState({...localState, isGenerator: !localState.isGenerator})}}>
+            <button className={style.floatBtn} onClick={() => {
+                setLocalState({...localState, isGenerator: !localState.isGenerator})
+            }}>
                 <FaReact/>
             </button>
         </>

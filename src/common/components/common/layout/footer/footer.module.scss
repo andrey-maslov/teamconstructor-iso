@@ -112,6 +112,20 @@
 
 @media(max-width: 768px) {
 
+  ul.list {
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+
+    .item {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 0rem;
+      margin-right: 0;
+    }
+  }
+
+
+
   .copy {
     padding: 20px 0;
 

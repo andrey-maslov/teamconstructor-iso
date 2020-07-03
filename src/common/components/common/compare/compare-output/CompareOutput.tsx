@@ -77,51 +77,50 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
                 <div className="row center-md">
                     <div className="col-md-11">
                         <Table
-                            tableData={[['user 1', ...userData1[1][3]], ['user 2', ...userData2[1][3]]]}
+                            tableData={[[userName1, ...userData1[1][3]], [userName2, ...userData2[1][3]]]}
                             tableHeader={['', ...(schemeCurrent.axes[3].subAxes).map(item => item.join(' - '))]}
                         />
                     </div>
                 </div>
             </Box>
 
-            {/*<Box className='result-box full-profile'>*/}
-            {/*    <h4>Users profiles</h4>*/}
-            {/*    <div className="row around-md">*/}
-            {/*        <div className="col-md-6 col-lg-5">*/}
-            {/*            <strong>User 1</strong>*/}
-            {/*            <Table*/}
-            {/*                tableData={userProfile1}*/}
-            {/*            />*/}
-            {/*        </div>*/}
-            {/*        <div className="col-md-6 col-lg-5">*/}
-            {/*            <strong>User 2</strong>*/}
-            {/*            <Table*/}
-            {/*                tableData={userProfile2}*/}
-            {/*            />*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</Box>*/}
+            <Box className='result-box full-profile'>
+                <h4>Профили пользователей</h4>
+                <div className="row around-md">
+                    <div className="col-md-6 col-lg-5">
+                        <strong>{userName1}</strong>
+                        <Table
+                            tableData={userProfile1}
+                        />
+                    </div>
+                    <div className="col-md-6 col-lg-5">
+                        <strong>{userName2}</strong>
+                        <Table
+                            tableData={userProfile2}
+                        />
+                    </div>
+                </div>
+            </Box>
 
-            {/*<Box className='result-box additional-profile'>*/}
-            {/*    <h4>Users sorted octants</h4>*/}
-            {/*    {userResult1.octantsTitles.join(' / ')}*/}
-            {/*    <div className="row around-md">*/}
-            {/*        <div className="col-md-6 col-lg-5">*/}
-            {/*            <strong>User 1</strong>*/}
-            {/*            <Table*/}
-            {/*                tableData={userResult1.getCalculatedOctants().map(item => [item.title, item.value])}*/}
-            {/*                tableHeader={['октант', 'значение']}*/}
-            {/*            />*/}
-            {/*        </div>*/}
-            {/*        <div className="col-md-6 col-lg-5">*/}
-            {/*            <strong>User 2</strong>*/}
-            {/*            <Table*/}
-            {/*                tableData={userResult2.getCalculatedOctants().map(item => [item.title, item.value])}*/}
-            {/*                tableHeader={['октант', 'значение']}*/}
-            {/*            />*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</Box>*/}
+            <Box className='result-box additional-profile'>
+                <h4>Отсортированные психотипы</h4>
+                <div className="row around-md">
+                    <div className="col-md-6 col-lg-5">
+                        <strong>{userName1}</strong>
+                        <Table
+                            tableData={userResult1.sortedOctants.map(item => [item.title, item.value])}
+                            tableHeader={['октант', 'значение']}
+                        />
+                    </div>
+                    <div className="col-md-6 col-lg-5">
+                        <strong>{userName2}</strong><br/>
+                        <Table
+                            tableData={userResult2.sortedOctants.map(item => [item.title, item.value])}
+                            tableHeader={['октант', 'значение']}
+                        />
+                    </div>
+                </div>
+            </Box>
         </div>
     );
 
@@ -208,6 +207,7 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
         }
     }
 
+
     function getPsychotypesCombination(): string[] {
         type PLT = [string, number][]
         const psychotypesList1: PLT = userResult1.getCalculatedOctants().map(({title, value}) => {
@@ -292,7 +292,7 @@ const CompareOutput: React.FC<ICompareOutputProps> = () => {
 
         if (intensityRatio < 25) {
             value += .3
-            log.push(`1. Интенсивность главных тенденций = ${value}, это больше 25; + 0.3`)
+            log.push(`1. Разница в интенсивности главных тенденций = ${intensityRatio}%, это меньше 25%; + 0.3`)
         }
 
         //если ведущие сегменты - соседние, то + .1
