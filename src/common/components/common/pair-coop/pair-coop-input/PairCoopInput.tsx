@@ -1,18 +1,14 @@
-import React, {useState} from 'react';
-import InputField from "./input-field/InputField";
-import {useDispatch, useSelector} from 'react-redux';
-import {setComparisonResult, setUsersResults} from '../../../../actions/actionCreator';
-
-import {FaReact} from 'react-icons/fa'
-
-// import Loader from "../../loaders/loader/Loader";
-
-import {getAndDecodeData} from 'encoded-data-parser';
-import Button from "../../buttons/button/Button";
-import {GoRocket} from "react-icons/go";
-
-import style from './compare-input.module.scss';
-import ProfileGenerator from "./profile-generator/ProfileGenerator";
+import React, {useState} from "react"
+import InputField from "./input-field/InputField"
+import {useDispatch, useSelector} from "react-redux"
+import {setComparisonResult, setUsersResults,} from "../../../../actions/actionCreator"
+import {getAndDecodeData} from "encoded-data-parser"
+import Button from "../../buttons/button/Button"
+import {FaReact} from "react-icons/fa"
+import {GoRocket} from "react-icons/go"
+import ProfileGenerator from "./profile-generator/ProfileGenerator"
+import style from './pair-coop-input.module.scss'
+// import Loader from "../../loaders/loader/Loader"
 
 //EXAMPLE SEE HERE https://www.carlrippon.com/building-super-simple-react-form-component-typescript-basics/
 
@@ -29,12 +25,8 @@ interface IUsersLocalState {
     isGenerator: boolean
 }
 
-interface ICompareInputProps {
 
-}
-
-const CompareInput: React.FC<ICompareInputProps> = () => {
-
+const PairCoopInput: React.FC = () => {
     const dispatch = useDispatch();
     const rowData1 = useSelector((state: any) => state.pairCoopReducer.user1.rowData);
     const rowData2 = useSelector((state: any) => state.pairCoopReducer.user2.rowData);
@@ -46,7 +38,7 @@ const CompareInput: React.FC<ICompareInputProps> = () => {
     const [localState, setLocalState] = useState<IUsersLocalState>({
         user1: {
             data: userData1,
-            isError: false
+            isError: false,
         },
         user2: {
             data: rowData2,
@@ -107,7 +99,6 @@ const CompareInput: React.FC<ICompareInputProps> = () => {
                             placeholder={'Внесите в это поле зашифрованный результат для пользователя 1'}
                             hasErrored={localState.user1.isError}
                             onChangeHandler={onChangeHandler1}
-                            autoFocus={true}
                         />
                     </div>
                     <div className="col-lg-6 mb-md">
@@ -125,8 +116,7 @@ const CompareInput: React.FC<ICompareInputProps> = () => {
                     <Button
                         title={'Сравнить'}
                         startIcon={<GoRocket/>}
-                        handle={() => {
-                        }}
+                        handle={() => void(0)}
                         btnClass={'btn-outlined'}
                     />
                 </div>
@@ -193,4 +183,4 @@ const CompareInput: React.FC<ICompareInputProps> = () => {
     }
 }
 
-export default CompareInput;
+export default PairCoopInput;

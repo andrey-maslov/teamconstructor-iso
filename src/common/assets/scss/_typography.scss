@@ -16,7 +16,7 @@ a {
 }
 
 body {
-  //font-family: $default-font, sans-serif;
+  //font-family: $font-default, sans-serif;
   font-weight: normal;
   line-height: 1.5;
   letter-spacing: 0;
@@ -25,13 +25,13 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $title-font, sans-serif;
+  font-family: $font-mono, sans-serif;
   line-height: 1.2;
   font-weight: 700;
 }
 
 p {
-  //font-family: $default-font;
+  //font-family: $font-default;
   line-height: 1.5;
   margin-bottom: 20px;
 }

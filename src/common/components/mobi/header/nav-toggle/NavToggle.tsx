@@ -1,6 +1,6 @@
-import React from 'react';
-import style from './nav-toggle.module.scss';
-import { FiAlignLeft } from 'react-icons/fi';
+import React from 'react'
+import style from './nav-toggle.module.scss'
+import { FiAlignLeft } from 'react-icons/fi'
 
 type NavToggle = {
     handler: () => void

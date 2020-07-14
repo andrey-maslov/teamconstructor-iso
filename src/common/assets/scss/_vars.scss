@@ -1,6 +1,5 @@
-$default-font: 'Ubuntu', sans-serif;
-$title-font: 'Ubuntu Mono', sans-serif;
-//$title-font: $default-font;
+$font-default: 'PT Sans', sans-serif;
+$font-mono: 'PT Mono', sans-serif;
 
 ///Colors
 $accent: #556587;
@@ -33,18 +32,11 @@ $overlay-light: lighten($overlay-dark, 5%);
 $surface: lighten($base, 5%);
 $overflow: #010101;
 
-//$surface: #556587;
-//$overlay-dark: lighten($surface, .1%);
-//$overlay-light: lighten($overlay-dark, 5%);
-//$base: darken($surface, 5%);
-//$overflow: #010101;
-
 $base-bg: $surface;
-//$base-bg: linear-gradient(90deg, $overlay-light, $base);
+$base-gradient: linear-gradient(90deg, $overlay-light, $base);
 
 $blue: #5D9EFC;
 $text-light: #b9b9b0;
-//$text-light: #fefefe;
 
 /// OK/NO colors
 $danger: #D8596C;
@@ -67,14 +59,6 @@ $h3-fontsize: 24px;
 $h4-fontsize: 20px;
 $h5-fontsize: 18px;
 $h6-fontsize: 16px;
-
-/// Customization Bootstrap vars from "app/libs/bootstrap/scss/_variables.scss"
-//$grid-gutter-width: 30px;
-//$grid-columns: 12;
-//$grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1360px);
-//$container-max-widths: (sm: 540px, md: 720px, lg: 980px, xl: 1290px) !default;
-//
-//$gutter: $grid-gutter-width;
 
 
 //Brands Colors

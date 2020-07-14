@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import CompareInput from "../../common/compare/compare-input/CompareInput";
-import CompareOutput from "../../common/compare/compare-output/CompareOutput";
+import PairCoopInput from "../../common/pair-coop/pair-coop-input/PairCoopInput";
+import PairCoopOutput from "../../common/pair-coop/pair-coop-output/PairCoopOutput";
 import Loader from "../../common/loaders/loader/Loader";
 import {SchemeType} from "../../../../UserResult";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,7 +9,7 @@ import Button from "../../common/buttons/button/Button";
 import {FiRefreshCw} from "react-icons/fi";
 import {clearUsersResults} from '../../../actions/actionCreator'
 import CompareLoader from "../../common/loaders/compare-loader/CompareLoader";
-import ProfileGenerator from "../../common/compare/compare-input/profile-generator/ProfileGenerator";
+import ProfileGenerator from "../../common/pair-coop/pair-coop-input/profile-generator/ProfileGenerator";
 
 const ComparePage = () => {
 
@@ -48,9 +48,9 @@ const ComparePage = () => {
                     btnClass={'btn-outlined'}
                 />}
                 {!isCompareReady ?
-                    <CompareInput/>
+                    <PairCoopInput/>
                     :
-                    <CompareOutput/>
+                    <PairCoopOutput/>
                 }
 
             </div>
