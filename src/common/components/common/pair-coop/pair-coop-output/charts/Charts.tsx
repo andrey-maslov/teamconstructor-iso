@@ -1,29 +1,25 @@
-import React, {useState} from 'react';
-import {Radar} from 'react-chartjs-2';
-import {useSelector} from 'react-redux'
-import {getChartLabels, getRealData} from '../../../../../../helper/helper';
-import {COLORS} from '../../../../../../constants/constants';
-import hexToRgba from '../../../../../../helper/hexToRgba';
-import {useMediaPredicate} from 'react-media-hook';
-import {useTranslation} from 'react-i18next';
-import style from './charts.module.scss';
-import CircleDiagram from "./circle-diagram/CircleDiagram";
-import PopoverMore from "../../../popovers/popover-more/PopoverMore";
+import React  from 'react'
+import {Radar} from 'react-chartjs-2'
+import {getChartLabels, getRealData} from '../../../../../../helper/helper'
+import {COLORS} from '../../../../../../constants/constants'
+import hexToRgba from '../../../../../../helper/hexToRgba'
+import {useMediaPredicate} from 'react-media-hook'
+import style from './charts.module.scss'
+import CircleDiagram from "./circle-diagram/CircleDiagram"
+
+const chartColors = [
+    COLORS.orange,
+    COLORS.accent
+]
 
 type ChartsPropsType = {
-    userProfile1: [string, number][]
-    userProfile2: [string, number][]
-    compatibility: number
+    profiles: {name: string, data: [string, number][]}[]
+    keyValues: {title: string, description: string, value: number}[]
 }
 
-const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatibility}) => {
+const Charts: React.FC<ChartsPropsType> = ({profiles, keyValues}) => {
 
-    const {t} = useTranslation();
-    const userName1 = useSelector((state: any) => state.pairCoopReducer.user1.name)
-    const userName2 = useSelector((state: any) => state.pairCoopReducer.user2.name)
-    const log = useSelector((state: any) => state.pairCoopReducer.log)
-
-    const chartLabels = getChartLabels(userProfile1);
+    const chartLabels = getChartLabels(profiles[0].data);
 
     const chartRadarOptions: any = {
         desktop: {
@@ -44,24 +40,14 @@ const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatib
 
     const data = {
         labels: currentOptions.labels,
-        datasets: [
-            {
-                label: userName1,
-                backgroundColor: hexToRgba(COLORS.orange, .5),
-                pointBackgroundColor: COLORS.orange,
-                borderColor: COLORS.orange,
-                pointRadius: 7,
-                data: getRealData(userProfile1)
-            },
-            {
-                label: userName2,
-                backgroundColor: hexToRgba(COLORS.accent, .5),
-                pointBackgroundColor: COLORS.accent,
-                borderColor: COLORS.accent,
-                pointRadius: 7,
-                data: getRealData(userProfile2)
-            }
-        ]
+        datasets: profiles.map((profile, i) => ({
+            label: profile.name,
+            backgroundColor: hexToRgba(chartColors[i], .5),
+            pointBackgroundColor: chartColors[i],
+            borderColor: chartColors[i],
+            pointRadius: 7,
+            data: getRealData(profile.data)
+        })),
     };
 
     // chartjs.org/docs/latest/configuration/tooltip.html#tooltip-callbacks
@@ -90,12 +76,11 @@ const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatib
         },
     };
 
-    // @ts-ignore
     return (
         <>
             <div className={style.top}>
-                <h4 className={style.title}>{`Результаты анализа совместимости пары ${userName1} и ${userName2}`}</h4>
-                <PopoverMore data={log}/>
+                <h4 className={style.title}>{`Результаты анализа совместимости пары ${profiles[0].name} и ${profiles[1].name}`}</h4>
+                {/*<PopoverMore data={log}/>*/}
             </div>
             <div className={`${style.wrapper} radar-chart block-wrapper`}>
                 <div className={style.radar}>
@@ -107,11 +92,13 @@ const Charts: React.FC<ChartsPropsType> = ({userProfile1, userProfile2, compatib
                     />
                 </div>
                 <div>
-                    <div className={style.comp}>
-                        <h5>Совместимость</h5>
-                        <CircleDiagram value={compatibility}/>
-                        <small>Вероятность того, что пара будет устойчива на протяжение 5-7 лет</small>
-                    </div>
+                    {keyValues.map((item, i) => (
+                        <div className={style.comp} key={i}>
+                            <h5>{item.title}</h5>
+                            <CircleDiagram value={item.value}/>
+                            <small>{item.description}</small>
+                        </div>
+                    ))}
                 </div>
             </div>
         </>

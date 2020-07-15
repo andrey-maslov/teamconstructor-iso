@@ -46,16 +46,10 @@ const Footer = () => {
                 <FooterLinks/>
                 <div className={style.copy}>
                     <div className="row justify-content-between">
-                        <div className="col-md-4">
-                            {t('common:footer.author_text')}
-                            <a href='https://maslov.work' target='_blank' rel='noreferrer noopener'>
-                                maslov.work
-                            </a>
-                        </div>
-                        <div className="col-md-4">
+                        <div className="col-md-6">
                             © {new Date().getFullYear()} | {t('common:footer.copy')}
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-md-6">
                             <LangSwitcherAlt/>
                         </div>
                     </div>
