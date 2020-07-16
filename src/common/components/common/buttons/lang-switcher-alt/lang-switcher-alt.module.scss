@@ -70,11 +70,17 @@
     width: 100%;
     color: $text-light;
     text-decoration: none;
-  }
+    background-color: transparent;
+    border: 0;
 
-  &:hover {
-    cursor: pointer;
-    background-color: $overlay-light;
+    &:hover {
+      cursor: pointer;
+      background-color: $overlay-light;
+    }
+    &:focus {
+      outline: solid 3px rgba($orange, .5);
+      outline-offset: -1px;
+    }
   }
 
   &.current {

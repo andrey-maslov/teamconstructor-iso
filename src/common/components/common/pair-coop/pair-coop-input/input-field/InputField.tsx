@@ -1,5 +1,4 @@
 import React from 'react';
-import {FiSettings} from 'react-icons/fi'
 import style from './input-field.module.scss';
 
 interface InputFieldProps {
@@ -9,11 +8,10 @@ interface InputFieldProps {
     placeholder?: string
     hasErrored: boolean
     onChangeHandler: any
-    autoFocus?: boolean
 }
 
 const InputField: React.FC<InputFieldProps> = (
-    {label, name, value, placeholder, hasErrored, onChangeHandler, autoFocus}
+    {label, name, value, placeholder, hasErrored, onChangeHandler}
 ) => {
 
     return (
@@ -23,9 +21,10 @@ const InputField: React.FC<InputFieldProps> = (
                     type="text"
                     name={`name_${name}`}
                     defaultValue={label}
-                    autoFocus={autoFocus}
                     required
-                    // onFocus={(e: any) => e.target.select()}
+                    onFocus={(e: any) => e.target.select()}
+                    placeholder={label}
+                    autoComplete={'off'}
                 />
             </div>
             <textarea

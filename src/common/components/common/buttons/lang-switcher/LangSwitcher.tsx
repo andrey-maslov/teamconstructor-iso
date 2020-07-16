@@ -5,8 +5,8 @@ import { fetchTerms } from '../../../../actions/actionCreator';
 import { LANGS } from '../../../../../constants/constants';
 import { SVGFlag } from '../../media/svgflag/SVGFlag';
 import { Popover } from '../../popovers/Popover';
-import style from './lang-switcher.module.scss';
 import {useTranslation} from "react-i18next";
+import style from './lang-switcher.module.scss';
 
 interface LangSwitcherProps {
     fetchTerms: (language: string) => {}

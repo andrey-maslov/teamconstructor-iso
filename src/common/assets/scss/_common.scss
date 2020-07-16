@@ -10,7 +10,9 @@ body {
     //border: 1px solid red;
 
     &:focus {
-      outline: none;
+      outline: solid 3px rgba($orange, .5);
+      outline-offset: -1px;
+      border-radius: 0;
     }
   }
 
@@ -20,6 +22,11 @@ body {
   }
 }
 
+
+//focus visible polyfill
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
 
 //Dark color theme
 .app-wrapper {

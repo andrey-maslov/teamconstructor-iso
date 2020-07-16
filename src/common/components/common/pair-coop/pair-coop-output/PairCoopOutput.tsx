@@ -7,7 +7,7 @@ import Table from "../../tables/table/Table";
 import ComparisonTable from "./comparison-table/ComparisonTable";
 import {OctantType} from "../../../../../constants/types";
 
-const complementarityData = [
+const complementarityDesc = [
     "спонтанность, импульсивность, некоторую агрессивность, умение добиваться целей",
     "спонтанность, стремление к новизне, общительность, умение организовать команду, стремление к новизне",
     "общительность, гибкость, артистизм, подстройку под внешние обстоятельства и окружающих людей",
@@ -16,6 +16,19 @@ const complementarityData = [
     "чувствительность к партнеру, внимательность, умение рассуждать, анализировать",
     "умение работать без контроля, способность к синтетическому восприятию действительности, логику в поступках, планирование",
     "напор и способность постоять за себя и партнера. Стабильность и устойчивость"
+]
+
+const efficiencyDesc = [
+    'Прогноз тяжелый. Вам необходимо внимательно обходить острые углы',
+    'Вероятно, вы сможете выполнить то, ради чего объединились. Но, что будет легко, не обещаем',
+    'Поздравляем! Вы удивительно хорошие соратники',
+    '100% гармоничное сочетание психологических характеристик',
+]
+const compatibilityDesc = [
+    'Прогноз тяжелый. Вам необходимо внимательно обходить острые углы',
+    'Вероятно, вы сможете сохранить ваш союз.Что будет легко, не обещаем',
+    'Поздравляем! Вы удивительно друг другу подходите',
+    '100% гармоничное сочетание психологических характеристик',
 ]
 
 const PairCoopOutput: React.FC = () => {
@@ -65,12 +78,12 @@ const PairCoopOutput: React.FC = () => {
     const keyValues = [
         {
             title: 'Совместимость',
-            description: 'Вероятность того, что пара будет устойчива на протяжение 5-7 лет',
+            description: getKeyDesc(compatibility, compatibilityDesc, 100),
             value: compatibility
         },
         {
             title: 'Эффективность',
-            description: 'Вероятность того, что пара будет эффективна на протяжение 5-7 лет',
+            description: getKeyDesc(efficiency, efficiencyDesc, 100),
             value: efficiency
         }
     ]
@@ -149,6 +162,25 @@ const PairCoopOutput: React.FC = () => {
             </Box>
         </div>
     );
+
+    function getKeyDesc(value: number, descArr: string[], factor?: number): string {
+
+        const ratio = factor ? factor : 1
+
+        if (value < 0) {
+            return 'Error, value < zero'
+        }
+        if (value < .5 * ratio) {
+            return descArr[0]
+        }
+        if (value >= .5 * ratio && value <= .8 * ratio) {
+            return descArr[1]
+        }
+        if (value > .8 * ratio && value <= .95 * ratio) {
+            return descArr[2]
+        }
+        return descArr[3]
+    }
 
     function getComparisonTableData() {
 
@@ -281,10 +313,10 @@ const PairCoopOutput: React.FC = () => {
         const indexOfSegment2 = indexes.indexOf(userResult2.sortedOctants[0].index)
 
         if (userResult1.sortedOctants[0].index === userResult2.sortedOctants[0].index) {
-            return `И ${userName1}, и ${userName2} дают паре ${complementarityData[indexOfSegment1]}`
+            return `И ${userName1}, и ${userName2} дают паре ${complementarityDesc[indexOfSegment1]}`
         }
 
-        return `${userName1} привносит в пару ${complementarityData[indexOfSegment1]}.</br> ${userName2}  привносит в пару ${complementarityData[indexOfSegment2]}`
+        return `${userName1} привносит в пару ${complementarityDesc[indexOfSegment1]}.</br> ${userName2}  привносит в пару ${complementarityDesc[indexOfSegment2]}`
     }
 
     //Психологическая взрослость

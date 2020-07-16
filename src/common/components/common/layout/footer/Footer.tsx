@@ -1,10 +1,10 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
-import style from './footer.module.scss';
 import SocialSharing from "../../buttons/social-sharing/SocialSharing";
 import TopLogo from "../header/top-logo/TopLogo";
 import {NavLink} from "react-router-dom";
 import LangSwitcherAlt from "../../buttons/lang-switcher-alt/LangSwitcherAlt";
+import style from './footer.module.scss';
 
 const Footer = () => {
 
@@ -30,7 +30,7 @@ const Footer = () => {
             <ul className={style.list}>
                 {links.map(({link, title}) => (
                     <li className={style.item} key={title}>
-                        <NavLink to={link}>
+                        <NavLink to={link} tabIndex={0}>
                             {title}
                         </NavLink>
                     </li>

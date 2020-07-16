@@ -4,6 +4,10 @@
   width: 28rem;
   margin: 0 auto;
 
+  textarea, input {
+    outline: 0;
+  }
+
   textarea {
     padding: 1.5rem;
     width: 100%;
@@ -29,6 +33,11 @@
     width: 100%;
     padding: .5rem;
     z-index: 2;
+    border: 1px solid transparent;
+
+    &:focus {
+      border: 1px solid rgba($orange, .7);
+    }
   }
 
   svg {
