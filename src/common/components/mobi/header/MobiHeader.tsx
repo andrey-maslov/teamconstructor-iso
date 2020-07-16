@@ -28,8 +28,8 @@ const MobiHeader = ({isLoggedIn, handleLoginBtn, userEmail}: Header) => {
             <div className="container">
                 <div className={style.bar}>
                     <MobileNavToggle handler={mobileNavOpen}/>
-                    <TopLogo/>
                     <LangSwitcher/>
+                    <TopLogo/>
                 </div>
             </div>
             <MobiNav

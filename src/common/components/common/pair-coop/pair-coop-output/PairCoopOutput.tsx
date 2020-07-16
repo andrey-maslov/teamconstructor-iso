@@ -1,23 +1,34 @@
 import React, {useMemo} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {UserResult, SchemeType} from '../../../../../UserResult';
-import {useTranslation} from "react-i18next";
 import Charts from "./charts/Charts";
 import Box from "../../layout/box/Box";
 import Table from "../../tables/table/Table";
 import ComparisonTable from "./comparison-table/ComparisonTable";
-// import {PersonalInfoType, TestResultType, FullResultType} from '../../../../../constants/types';
-import {saveLog} from "../../../../actions/actionCreator";
+import {OctantType} from "../../../../../constants/types";
 
-const complementarity = [
-    "приносит в пару: спонтанность, самонадеянность, некоторую агрессивность. Выражает себя через двигательную активность",
-    "приносит в пару: спонтанность, стремление к новизне, общительность, стремление быть лидером. Выражает себя через мыслительную активность",
-    "приносит в пару: гибкость, артистизм, подстройку под внешние обстоятельства и окружающих людей.Выражает себя через эмоциональную вовлеченность",
-    "приносит в пару: гибкость, подстройку под внешние обстоятельства и тех людей, которые считаются современными, «продвинутыми». Выражает себя через социальную вовлеченность",
-    "приносит в пару: чувствительность, опаску, повышеннуя тревожность, склонность к раздумьям. Выражает скбя через тревогу и мнительность",
-    "приносит в пару: созерцательность. Выражает скбя через чувствительность к окружающим",
-    "приносит в пару: замкнутость.Стремиться к максимальному уменьшению контактов и построению систем.",
-    "приносит в пару: агрессию, жесткость установок, консерватизм в словах и поступках. Выражает себя через сохраниение того, что есть"
+const complementarityDesc = [
+    "спонтанность, импульсивность, некоторую агрессивность, умение добиваться целей",
+    "спонтанность, стремление к новизне, общительность, умение организовать команду, стремление к новизне",
+    "общительность, гибкость, артистизм, подстройку под внешние обстоятельства и окружающих людей",
+    "общительность, гибкость, подстройку под внешние обстоятельства и тех людей, которые считаются современными, «продвинутыми»",
+    "чувствительность к требованиям социума, внимательность, логику и последовательность",
+    "чувствительность к партнеру, внимательность, умение рассуждать, анализировать",
+    "умение работать без контроля, способность к синтетическому восприятию действительности, логику в поступках, планирование",
+    "напор и способность постоять за себя и партнера. Стабильность и устойчивость"
+]
+
+const efficiencyDesc = [
+    'Прогноз тяжелый. Вам необходимо внимательно обходить острые углы',
+    'Вероятно, вы сможете выполнить то, ради чего объединились. Но, что будет легко, не обещаем',
+    'Поздравляем! Вы удивительно хорошие соратники',
+    '100% гармоничное сочетание психологических характеристик',
+]
+const compatibilityDesc = [
+    'Прогноз тяжелый. Вам необходимо внимательно обходить острые углы',
+    'Вероятно, вы сможете сохранить ваш союз.Что будет легко, не обещаем',
+    'Поздравляем! Вы удивительно друг другу подходите',
+    '100% гармоничное сочетание психологических характеристик',
 ]
 
 const PairCoopOutput: React.FC = () => {
@@ -29,33 +40,65 @@ const PairCoopOutput: React.FC = () => {
     const userData2: any = useSelector((state: any) => state.pairCoopReducer.user2.data)
     const userName1 = useSelector((state: any) => state.pairCoopReducer.user1.name)
     const userName2 = useSelector((state: any) => state.pairCoopReducer.user2.name)
-    const dispatch = useDispatch();
+
+    const unit = {factor: 100, sign: '%'}
 
     if (!isCompareReady) {
         return null;
     }
 
-    const {t} = useTranslation();
-
     const userResult1 = useMemo(() => new UserResult(userData1[1], schemeCurrent), [userData1, schemeCurrent])
     const userResult2 = useMemo(() => new UserResult(userData2[1], schemeCurrent), [userData2, schemeCurrent])
 
+    const octants1 = useMemo(() => userResult1.getCalculatedOctants(), [userResult1, schemeCurrent]);
+    const octants2 = useMemo(() => userResult2.getCalculatedOctants(), [userResult2, schemeCurrent]);
 
     //tmp
     const userProfile1 = userResult1.profile
     const userProfile2 = userResult2.profile
 
+    //All calculated values for comparison table
+    const intensityRatio: number = getIntensityRatio()
+    const understanding: number = getUnderstanding()
+    const attraction: number[] = getAttraction()
+    const lifeAttitudes: number = getLifeAttitudes()
+    const similarityThinking: number = getSimilarityThinking()
+    const emotionalCompatibility: number = getEmotionalCompatibility()
+    const complementarity: string = getComplementarity()
+    const maturity: number[] = getPsychologicalMaturity()
+
+    const valuesForEfficiency: number[] = [intensityRatio, understanding, lifeAttitudes, similarityThinking, emotionalCompatibility];
+    const efficiency: number = valuesForEfficiency.reduce((a, b) => a + b) / valuesForEfficiency.length;
+
+    const valuesForCompatibility: number[] = [intensityRatio, understanding, ...maturity, lifeAttitudes, similarityThinking, emotionalCompatibility, ...maturity];
+    const compatibility: number = valuesForCompatibility.reduce((a, b) => a + b) / valuesForCompatibility.length;
+
     const comparisonTableData = getComparisonTableData()
 
-    const compatibility = getCompatibility()
+    const keyValues = [
+        {
+            title: 'Совместимость',
+            description: getKeyDesc(compatibility, compatibilityDesc, 100),
+            value: compatibility
+        },
+        {
+            title: 'Эффективность',
+            description: getKeyDesc(efficiency, efficiencyDesc, 100),
+            value: efficiency
+        }
+    ]
+
+    const profiles = [
+        {name: userName1, data: userProfile1},
+        {name: userName2, data: userProfile2},
+    ]
 
     return (
         <div>
             <Box>
                 <Charts
-                    userProfile1={userProfile1}
-                    userProfile2={userProfile2}
-                    compatibility={compatibility}
+                    profiles={profiles}
+                    keyValues={keyValues}
                 />
             </Box>
 
@@ -120,305 +163,185 @@ const PairCoopOutput: React.FC = () => {
         </div>
     );
 
+    function getKeyDesc(value: number, descArr: string[], factor?: number): string {
+
+        const ratio = factor ? factor : 1
+
+        if (value < 0) {
+            return 'Error, value < zero'
+        }
+        if (value < .5 * ratio) {
+            return descArr[0]
+        }
+        if (value >= .5 * ratio && value <= .8 * ratio) {
+            return descArr[1]
+        }
+        if (value > .8 * ratio && value <= .95 * ratio) {
+            return descArr[2]
+        }
+        return descArr[3]
+    }
+
     function getComparisonTableData() {
 
-        //Получаем сравнение комплексных характеристик
-        const complexDataComparison = getComplexDataComparison();
-
-        //Получаем вывод о соотношении интенсивностей
-        const intensityRatioComparison = getIntensityRatioComparison().tableData
-
-        //Получаем совмещение психотипов в характере
-        const psychotypesCombination = useMemo(() => getPsychotypesCombination(), [userProfile1, userProfile2]);
-
-        //
-        const complementarity = getComplementarity()
-
-        //
-        const affectionSeparationData = getAffectionSeparationData()
-
-        const compatibility = getCompatibility()
-
         const commonComplexData: string[][] = [
-            intensityRatioComparison,
-            psychotypesCombination,
-            ...complexDataComparison,
-            complementarity,
-            ...affectionSeparationData,
-            ['Вероятность длительного сотрудничества', `${compatibility}%`]
+            ['Принятие особенностей партнера', `${intensityRatio.toFixed()}${unit.sign}`],
+            ['Взаимное понимание', `${understanding.toFixed()}${unit.sign}`],
+            ['Бессознательное притяжение', `${userName1} - ${attraction[0].toFixed()}${unit.sign},</br>${userName2} - ${attraction[1].toFixed()}${unit.sign}`],
+            ['Схожесть жизненных установок', `${lifeAttitudes.toFixed()}${unit.sign}`],
+            ['Схожесть мышления', `${similarityThinking.toFixed()}${unit.sign}`],
+            ['Эмоциональная совместимость', `${emotionalCompatibility.toFixed()}${unit.sign}`],
+            ['Дополняемость', complementarity],
+            ['Психологическая взрослость', `${userName1} - ${maturity[0].toFixed()}${unit.sign},</br>${userName2} - ${maturity[1].toFixed()}${unit.sign}`],
+            ['Эффективность', `${efficiency.toFixed(2)}${unit.sign}`],
+            ['Совместимость', `${compatibility.toFixed(2)}${unit.sign}`]
         ]
 
         return commonComplexData
     }
 
-    function getComplexDataComparison() {
-        const complexData1 = userResult1.getComplexData()
-        const complexData2 = userResult2.getComplexData()
-
-        return [
-            [complexData1[3][0], `${complexData1[3][0]} ${userName1} - ${complexData1[3][1]},</br> ${complexData1[3][0]} ${userName2} - ${complexData2[3][1]}`],
-            [complexData1[4][0], `${complexData1[4][0]} ${userName1} - ${complexData1[4][1]},</br> ${complexData1[4][0]} ${userName2} - ${complexData2[4][1]}`],
-            [complexData1[6][0], `${complexData1[6][0]} ${userName1} - ${complexData1[6][1]},</br> ${complexData1[6][0]} ${userName2} - ${complexData2[6][1]}`],
-        ]
-    }
-
-    //Вывод о соотношении интенсивности ведущих тенденций (у каждого профиля по одной). Разница в процентах
-    function getIntensityRatioComparison(): { ratio: number, tableData: string[] } {
-        const checkValues: number[] = [25, 40];
-        const conclusions: string[] = ['Характеры совместимы', 'Совместимость затруднена', 'Совместимость характеров проходит очень сложно']
-        const label = 'Интенсивность основных тенденций'
+    //Вывод о соотношении интенсивности ведущих тенденций (у каждого профиля по одной)
+    function getIntensityRatio() {
 
         const sortedProfile1 = [...userResult1.profile].sort((a, b) => b[1] - a[1]);
         const sortedProfile2 = [...userResult2.profile].sort((a, b) => b[1] - a[1]);
 
-        const maxValue1 = sortedProfile1[0][1]
-        const maxValue2 = sortedProfile2[0][1]
+        const maxVal1 = sortedProfile1[0][1]
+        const maxVal2 = sortedProfile2[0][1]
 
-        let diff: number | null = null;
-        let users: string[] = [userName1, userName2];
-
-        if ((maxValue1 - maxValue2) >= 0) {
-            diff = Math.round((1 - maxValue2 / maxValue1) * 100)
-        } else {
-            diff = Math.round((1 - maxValue1 / maxValue2) * 100);
-            users = [userName2, userName1]
-        }
-
-        if (diff < checkValues[0]) {
-            return {
-                ratio: diff,
-                tableData: [label, `У ${users[0]} свойства характера проявляется более интенсивно,чем у ${users[1]}, на ${diff}%. ${conclusions[0]}`]
-            }
-        }
-        if (diff > checkValues[2]) {
-            return {
-                ratio: diff,
-                tableData: [label, `У ${users[0]} свойства характера проявляется более интенсивно,чем у ${users[1]}, на ${diff}%. ${conclusions[2]}`]
-            }
-        }
-
-        return {
-            ratio: diff,
-            tableData: [label, `У ${users[0]} свойства характера проявляется более интенсивно,чем у ${users[1]}, на ${diff}%. ${conclusions[1]}`]
-        }
+        return (maxVal1 < maxVal2 ? maxVal1 / maxVal2 : maxVal2 / maxVal1) * unit.factor;
     }
 
+    //Взаимное понимание
+    function getUnderstanding(): number {
+        let result = 1; // init result value
+        const fraction = 0.125
 
-    function getPsychotypesCombination(): string[] {
-        type PLT = [string, number][]
-        const psychotypesList1: PLT = userResult1.getCalculatedOctants().map(({title, value}) => {
-            return [title, value]
-        });
-        const psychotypesList2: PLT = userResult2.getCalculatedOctants().map(({title, value}) => {
-            return (value === 0) ? [title, 10000] : [title, value]
-        });
-
-        const result = psychotypesList1.map((item, index) => {
-            return (item[0], (item[1] / psychotypesList2[index][1]).toFixed(2))
-        })
-
-        return [
-            'Совмещение психотипов в характере',
-            `Отношение составляющих характера ${userName1} к ${userName2}:</br>
-            Индивидуализм - ${result[0]},</br> 
-            Инноваторство - ${result[1]},</br> 
-            Стремление к лидерству во мнении - ${result[2]},</br> 
-            Стремление к модным тенденциям - ${result[3]},</br>
-            Консерватизм - ${result[4]},</br>
-            Чувствительность - ${result[5]},</br>
-            Замкнутость - ${result[6]},</br>
-            Реализм - ${result[7]}`
-        ]
+        for (let i = 0; i < 8; i++) {
+            if ((octants1[i].value === 0 && octants2[i].value !== 0) || (octants1[i].value !== 0 && octants2[i].value === 0)) {
+                result -= fraction
+            }
+        }
+        return result * unit.factor
     }
 
-    function getComplementarity() {
+    //Бессознательное притяжение
+    function getAttraction(): number[] {
+
+        const leadSegment1: OctantType = userResult1.sortedOctants[0]
+        const leadSegment2: OctantType = userResult2.sortedOctants[0]
+
+        const oppositeSegmentForUser1 = octants2[getOppositeSegmentIndex(leadSegment1.index)];
+        const oppositeSegmentForUser2 = octants1[getOppositeSegmentIndex(leadSegment2.index)];
+
+        const oppositeVals1 = [oppositeSegmentForUser1.value, leadSegment1.value]
+        const oppositeVals2 = [oppositeSegmentForUser2.value, leadSegment2.value]
+
+        const ratio1 = oppositeVals1[0] < oppositeVals1[1] ? oppositeVals1[0] / oppositeVals1[1] : oppositeVals1[1] / oppositeVals1[0]
+        const ratio2 = oppositeVals2[0] < oppositeVals2[1] ? oppositeVals2[0] / oppositeVals2[1] : oppositeVals2[1] / oppositeVals2[0]
+
+        return [ratio1 * unit.factor, ratio2 * unit.factor];
+    }
+
+    //Находим индекс противоположного сегмента (октанта)
+    function getOppositeSegmentIndex(segmentLetterIndex: string): number {
+        const allIndexes = userResult1.letterIndexes
+
+        //get place of out lead letter index in letter indexes list
+        const commonIndex = allIndexes.indexOf(segmentLetterIndex)
+        if (commonIndex < 4) {
+            return commonIndex + 4
+        }
+        return commonIndex - 4
+    }
+
+    //Сходство жизненных установок
+    function getLifeAttitudes() {
+
+        //Получаем буквенные индексы в разрезе полушарий
+        const indexes = [[...userResult1.letterIndexes.slice(0, 4)], [...userResult1.letterIndexes.slice(4)]];
+
+        const leadSegment1 = userResult1.sortedOctants[0]
+        const leadSegment2 = userResult2.sortedOctants[0]
+
+        if (leadSegment1.index === leadSegment2.index) {
+            return unit.factor
+        }
+
+        if (leadSegment1.index[0] === leadSegment2.index[0]) {
+            return 0.5 * unit.factor
+        }
+
+        if ((indexes[0].includes(leadSegment1.index) && indexes[0].includes(leadSegment2.index)) || (indexes[1].includes(leadSegment1.index) && indexes[1].includes(leadSegment2.index))) {
+            return 0.25 * unit.factor
+        }
+
+        return 0
+    }
+
+    //Схожесть мышления
+    function getSimilarityThinking() {
+
+        //Получаем буквенные индексы в разрезе полушарий
+        const indexes = [[...userResult1.letterIndexes.slice(0, 4)], [...userResult1.letterIndexes.slice(4)]];
+
+        const leadSegment1 = userResult1.sortedOctants[0]
+        const leadSegment2 = userResult2.sortedOctants[0]
+
+        //Ведущие сегменты совпадают или в одной четверти; 100%'
+        if (leadSegment1.index === leadSegment2.index || leadSegment1.index[0] === leadSegment2.index[0]) {
+            return unit.factor
+        }
+
+        //Ведущие сегменты в одном полушарии; 50%
+        if ((indexes[0].includes(leadSegment1.index) && indexes[0].includes(leadSegment2.index)) || (indexes[1].includes(leadSegment1.index) && indexes[1].includes(leadSegment2.index))) {
+            return 0.5 * unit.factor
+        }
+
+        return 0
+    }
+
+    //Эмоциональная совместимость
+    function getEmotionalCompatibility() {
+        return getLifeAttitudes()
+    }
+
+    //Дополняемость
+    function getComplementarity(): string {
         const indexes = userResult1.letterIndexes
         const indexOfSegment1 = indexes.indexOf(userResult1.sortedOctants[0].index)
         const indexOfSegment2 = indexes.indexOf(userResult2.sortedOctants[0].index)
 
-        return [
-            'Дополняемость', `${userName1} ${complementarity[indexOfSegment1]}.</br> ${userName2} ${complementarity[indexOfSegment2]}`
-        ]
+        if (userResult1.sortedOctants[0].index === userResult2.sortedOctants[0].index) {
+            return `И ${userName1}, и ${userName2} дают паре ${complementarityDesc[indexOfSegment1]}`
+        }
+
+        return `${userName1} привносит в пару ${complementarityDesc[indexOfSegment1]}.</br> ${userName2}  привносит в пару ${complementarityDesc[indexOfSegment2]}`
     }
 
-    //Вывод по диапазону "привязанность-отдельность"
-    function getAffectionSeparationData() {
+    //Психологическая взрослость
+    function getPsychologicalMaturity() {
+        const allOctants = [octants1, octants2]
 
-        const labels = schemeCurrent.axes[3].subAxes;
+        //init
+        const counter = Array(allOctants.length).fill(0);
 
-        const data1 = userData1[1][3];
-        const data2 = userData2[1][3];
+        //find counts of positive octants values for each profile
+        for (let i = 0; i < allOctants.length; i++) {
+            for (let j = 0; j < allOctants[0].length; j++) {
+                if (allOctants[i][j].value !== 0) {
+                    counter[i]++
+                }
+            }
+        }
 
-        //TODO добавить обработку 0; обойтись без цифр "Пользователь 1 склонен к принятию контроля..."
-        //Принятие отношений, 2 последних поля в таблице
-        const relationsTemplate = `У Пользователя ${userName1} ${data1[3] < 0 ? labels[3][0] : labels[3][1]} = ${Math.abs(data1[3])}, ${data1[4] < 0 ? labels[4][0] : labels[4][1]} = ${Math.abs(data1[4])}, 
-                                    у Пользователя ${userName2} - ${data2[3] < 0 ? labels[3][0] : labels[3][1]} = ${Math.abs(data2[3])}, ${data2[4] < 0 ? labels[4][0] : labels[4][1]} = ${Math.abs(data2[4])}`
-
-        //поле избегание ответственности - ответственность
-        const responsibilityTemplate = `У Пользователя ${userName1} ${data1[0] < 0 ? labels[0][0] : labels[0][1]} = ${Math.abs(data1[0])}, у Пользователя ${userName2} - ${data2[0] < 0 ? labels[0][0] : labels[0][1]} = ${Math.abs(data2[0])}`
-
-        //поле невротизам - стабильность
-        const stabilityTemplate = `У Пользователя ${userName1} ${data1[2] < 0 ? labels[2][0] : labels[2][1]} = ${Math.abs(data1[2])}, у Пользователя ${userName2} - ${data2[2] < 0 ? labels[2][0] : labels[2][1]} = ${Math.abs(data2[2])}`
-
-        //поле притяние контроля - не принятие контроля
-        const controlTemplate = `У Пользователя ${userName1} ${data1[1] < 0 ? labels[1][0] : labels[1][1]} = ${Math.abs(data1[1])}, у Пользователя ${userName1} - ${data2[1] < 0 ? labels[1][0] : labels[1][1]} = ${Math.abs(data2[1])}`
-
-        return [
-            ['Принятие отношений', relationsTemplate],
-            ['Отвественность', responsibilityTemplate],
-            ['Стабильность', stabilityTemplate],
-            ['Взаимный контроль', controlTemplate]
-        ]
+        return counter.map(item => item / 8 * unit.factor)
     }
 
-    //Совместимость типов характера
-    function getCompatibility(): number {
 
-        //initial value
-        const log: string[] = [];
-        let value = 0;
-        const leadSegment1 = userResult1.sortedOctants[0]
-        const leadSegment2 = userResult2.sortedOctants[0]
-
-        //For testing
-        // const leadSegment1 = {title: "индивидуал", value: 22.63, index: "A1"}
-        // const leadSegment2 = {title: "модник", value: 12.63, index: "b2"}
-
-        const intensityRatio: any = getIntensityRatioComparison().ratio
-
-        if (intensityRatio < 25) {
-            value += .3
-            log.push(`1. Разница в интенсивности главных тенденций = ${intensityRatio}%, это меньше 25%; + 0.3`)
-        }
-
-        //если ведущие сегменты - соседние, то + .1
-        const letterIndexes = userResult1.letterIndexes
-        const index1 = letterIndexes.indexOf(leadSegment1.index); //3
-        const index2 = letterIndexes.indexOf(leadSegment2.index); //4
-
-        if (Math.abs(index1 - index2) === 1 || Math.abs(index1 - index2) === (letterIndexes.length - 1)) {
-            value += .1
-            log.push('2. Ведущие сегменты соседние; + 0.1')
-        }
-
-
-        //если ведущие сегменты в пределах одной четверти, то + .1
-        if (leadSegment1.index[0] === leadSegment2.index[0]) {
-            value += .1
-            log.push('3. Ведущие сегменты в одной четверти; + 0.1')
-        }
-
-        //TODO если ведущие сегменты равны...
-        if (leadSegment1.index === leadSegment2.index) {
-            value += 0
-            log.push('3.1. Ведущие сегменты совпадают; + 0')
-        }
-
-
-        //Данные секции "Привязанность-отдельность" - Affection-Separation - в одном массиве
-        const affSep = [userData1[1][3], userData2[1][3]]
-
-        //Если у обоих положительное значение "Принятие ответственности", то + .1
-        if (affSep[0][0] >= 0 && affSep[1][0] >= 0) {
-            log.push('4. Принятие ответственности у обоих; + 0.1')
-            value += .1
-        }
-
-        //Если у одного из пары присутствует избегание отвественности, а у другого присутствует Принятие ответственности,
-        // и принятие ответственности больше  или равно по абсолютному значению, чем избегание, то + .05
-        if ((affSep[0][0] < 0 && affSep[1][0] >= 0) && affSep[1][0] >= Math.abs(affSep[0][0])) {
-            value += .05
-            log.push(`5. Избегание отв-и у ${userName1}, у ${userName2} Принятие ответственности; + 0.05`)
-        }
-        if ((affSep[0][0] >= 0 && affSep[1][0] < 0) && affSep[0][0] >= Math.abs(affSep[1][0])) {
-            value += .05
-            log.push(`5. Избегание отв-и у ${userName2}, у ${userName1} Принятие ответственности; + 0.05`)
-        }
-
-        //Если у одного из пары присутствует избегание отвественности, а у другого присутствует принятие ответственности,
-        // и Принятие ответственности меньше по абсолютному значению, чем избегание, то + 0
-        if ((affSep[0][0] < 0 && affSep[1][0] >= 0) && affSep[1][0] < Math.abs(affSep[0][0])) {
-            value += 0
-            log.push(`6. Избегание отв-и у ${userName1}, у ${userName2} Принятие ответственности; + 0`)
-        }
-        if ((affSep[0][0] >= 0 && affSep[1][0] < 0) && affSep[0][0] < Math.abs(affSep[1][0])) {
-            value += 0
-            log.push(`6. Избегание отв-и у ${userName2}, у ${userName1} Принятие ответственности; + 0`)
-        }
-
-        //Если у обоих присутствует "Избегание ответственности", то - 0.1
-        if (affSep[0][0] < 0 && affSep[1][0] < 0) {
-            value -= .1
-            log.push(`7. Избегание отв-и у обоих; - 0.1`)
-        }
-
-        //= + 0.1
-        if (affSep[0][2] >= 0 && affSep[1][2] >= 0) {
-            value += .1
-            log.push(`8. Стабильность у обоих; + 0.1`)
-        }
-
-        //Если у одного из пары присутствует невротизм, а у другого присутствует стабильность,
-        // и оно больше или равно по абсолютному значению, чем невротизм, то + 0.05
-        if ((affSep[0][2] < 0 && affSep[1][2] >= 0) && affSep[1][2] >= Math.abs(affSep[0][2])) {
-            value += .05
-            log.push(`9. У ${userName1} невротизм, но стабильность ${userName2} больше; + 0.05`)
-        }
-        if ((affSep[1][2] < 0 && affSep[0][2] >= 0) && affSep[0][2] >= Math.abs(affSep[1][2])) {
-            value += .05
-            log.push(`9. У ${userName2} невротизм, но стабильность ${userName1} больше; + 0.05`)
-        }
-
-
-        //Если у одного из пары присутствует невротизм, а у другого присутствует стабильность,
-        // и она меньше по абсолютному значению, чем невротизм, то + 0
-        if ((affSep[0][2] < 0 && affSep[1][2] >= 0) && affSep[1][2] < Math.abs(affSep[0][2])) {
-            value += 0
-            log.push(`10. У ${userName1} невротизм, но стабильность ${userName2} меньше; + 0`)
-        }
-        if ((affSep[1][2] < 0 && affSep[0][2] >= 0) && affSep[0][2] < Math.abs(affSep[1][2])) {
-            value += 0
-            log.push(`10. У ${userName2} невротизм, но стабильность ${userName1} меньше; + 0`)
-        }
-
-
-        //Если у одного из пары склонность к принятию отношений, а удругого - склонность к установлению отношений
-        // и они по значению больше или равно 2, то + 0.1
-        if ((affSep[0][3] >= 0 && affSep[1][4] < 0) && (affSep[0][3] >= 2 && Math.abs(affSep[1][4]) >= 2)) {
-            value += .1
-            log.push(`11. У ${userName1} принятие отнош-й, у ${userName2} установл отнош-й и они больше 2; + 0.1`)
-        }
-        if ((affSep[1][3] >= 0 && affSep[0][4] < 0) && (Math.abs(affSep[0][4]) >= 2 && affSep[1][3] >= 2)) {
-            value += .1
-            log.push(`11. У ${userName2} принятие отнош-й, у ${userName1} установл отнош-й и они больше 2; + 0.1`)
-        }
-
-        //
-        if ((affSep[0][3] >= 0 && affSep[1][4] >= 0) || (affSep[1][3] >= 0 && affSep[0][4] >= 0)) {
-            value += .05
-            log.push(`12. ...; + 0.05`)
-        }
-
-        // Если у одного из пары равны положительные цифры в принятии отношений с положительными цифрами установления отношений у другого партнера, то + .1
-        if ((affSep[0][3] >= 0 && affSep[1][4] >= 0) && (affSep[0][3] === affSep[1][4])) {
-            value += .1
-            log.push(`13. У ${userName1} принятие отнош-й = установл отнош-й у ${userName2} ; + 0.1`)
-        }
-        if ((affSep[1][3] >= 0 && affSep[0][4] >= 0) && (affSep[1][3] === affSep[0][4])) {
-            value += .1
-            log.push(`13. У ${userName2} принятие отнош-й = установл отнош-й у ${userName1} ; + 0.1`)
-        }
-
-
-        makeLog(log);
-
-        return Math.round(value * 100)
-    }
-
-    function makeLog(data: string[]) {
-        console.log(data)
-        dispatch(saveLog(data))
-    }
+    // function makeLog(data: string[]) {
+    //     dispatch(saveLog(data))
+    // }
 }
 
 export default PairCoopOutput;

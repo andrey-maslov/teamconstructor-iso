@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { fetchTerms } from '../../../../actions/actionCreator';
-import { LANGS } from '../../../../../constants/constants';
-import { Popover } from '../../popovers/Popover';
+import {fetchTerms} from '../../../../actions/actionCreator';
+import {LANGS} from '../../../../../constants/constants';
+import {Popover} from '../../popovers/Popover';
 import style from './lang-switcher-alt.module.scss';
 import {useTranslation} from "react-i18next";
 import {stripCountry} from "../../../../../helper/helper";
@@ -61,14 +61,20 @@ const LangSwitcherAlt: React.FC = () => {
                             if (lang[0] === currentLang) {
                                 activeClass = 'current';
                             }
-                            return <li key={lang[0]} className={`${style.item} ${activeClass ? style[activeClass] : ''}`}>
-                                <a className={style.switcher}
-                                   // href={`?lng=${lang[0]}`}
-                                    onClick={()=> {changeLanguage(lang[0])}}
+                            return (
+                                <li key={lang[0]}
+                                    className={`${style.item} ${activeClass ? style[activeClass] : ''}`}
                                 >
-                                    {lang[1]}
-                                </a>
-                            </li>
+                                    <button className={style.switcher}
+                                        // href={`?lng=${lang[0]}`}
+                                            onClick={() => {
+                                                changeLanguage(lang[0])
+                                            }}
+                                    >
+                                        {lang[1]}
+                                    </button>
+                                </li>
+                            )
                         })}
                     </ul>
                 </Popover>

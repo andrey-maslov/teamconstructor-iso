@@ -26,6 +26,8 @@
     ],
     "rules": {
         "semi": 0,
+        "react/prop-types": 0,
+        "ban-ts-comment": 0,
         "@typescript-eslint/no-explicit-any": 1,
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     }

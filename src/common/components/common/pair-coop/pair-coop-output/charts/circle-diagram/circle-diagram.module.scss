@@ -63,16 +63,16 @@
   font-size: 2rem;
   //background-color: $overlay-light;
   //padding: 0 .8rem;
+}
 
-  &.danger {
-    color: $danger;
-  }
+.danger {
+  color: $danger;
+}
 
-  &.warning {
-    color: $warning;
-  }
+.warning {
+  color: $warning;
+}
 
-  &.success {
-    color: $success;
-  }
+.success {
+  color: $success;
 }

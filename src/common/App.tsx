@@ -13,7 +13,7 @@ import Header from './components/common/layout/header/Header';
 
 // import CookiesWarn from "./components/CommonComponents/Modals/CookiesWarn/CookiesWarn";
 
-const App: React.FC<{}> = () => {
+const App: React.FC = () => {
 
     return (
         <div className="app-wrapper">

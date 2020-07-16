@@ -8,15 +8,17 @@ interface CircleDiagramProps {
 
 const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
 
-    const color = value > 33 ? (value < 66 ? 'warning' : 'success' ) : 'danger';
+    const roundValue = Math.round(value)
+
+    const color = roundValue > 33 ? (roundValue < 66 ? 'warning' : 'success' ) : 'danger';
 
     const [val, setVal] = useState(0)
     const [isFinish, setFinish] = useState(false)
 
     useEffect(() => {
-        if (val < value) {
+        if (val < roundValue) {
            setTimeout( increment, 20)
-        } else if (val === value) {
+        } else if (val === roundValue) {
             setFinish(true)
         }
     }, [val])
@@ -24,6 +26,7 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
     function increment() {
         setVal(val + 1)
     }
+
 
     return (
         <div className={style.wrapper}>

@@ -6,6 +6,8 @@ import index from '../common/store';
 import App from '../common/App';
 import Loader from '../common/components/common/loaders/loader/Loader';
 
+import 'focus-visible/dist/focus-visible.js';
+
 import { useSSR } from 'react-i18next';
 import '../i18n';
 

@@ -3,6 +3,12 @@ export type AnswerType = {
     value: string
 }
 
+export type OctantType = {
+    title: string
+    value: number
+    index: string
+}
+
 export interface ValueByCat {
     title: string
     value: number
