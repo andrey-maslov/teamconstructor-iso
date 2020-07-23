@@ -19,7 +19,7 @@ const ProfileGenerator: React.FC<ProfileGeneratorProps> = ({label, id, getRowDat
     const generate = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        let arr: any = [[],[],[],[],[]];
+        const arr: number[][] = [[],[],[],[],[]];
 
         for (let i = 1; i < 6; i++) {
 

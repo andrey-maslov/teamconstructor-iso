@@ -4,7 +4,8 @@ import { SVGSource } from './components/common/media/svgflag/SVGFlag';
 
 import './index.scss';
 
-import ComparePage from './components/pages/compare-page/ComparePage';
+import PairCoopPage from './components/pages/pair-coop-page/PairCoopPage';
+import TeamCoopPage from './components/pages/team-coop-page/TeamCoopPage';
 import ErrorPage from './components/pages/error-page/ErrorPage';
 import Modals from './components/common/modals/Modals';
 import ScrollToTop from './components/common/layout/ScrollToTop';
@@ -20,7 +21,8 @@ const App: React.FC = () => {
             <Header/>
             <ScrollToTop/>
             <Switch>
-                <Route exact path="/" render={() => <ComparePage/>}/>te
+                <Route exact path="/" render={() => <PairCoopPage/>}/>
+                <Route exact path="/team" render={() => <TeamCoopPage/>}/>
                 <Route path="*" render={() => <ErrorPage/>}/>
             </Switch>
             <Footer/>

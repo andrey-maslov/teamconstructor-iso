@@ -77,12 +77,12 @@ const PairCoopOutput: React.FC = () => {
 
     const keyValues = [
         {
-            title: 'Совместимость',
+            title: 'Взаимное принятие',
             description: getKeyDesc(compatibility, compatibilityDesc, 100),
             value: compatibility
         },
         {
-            title: 'Эффективность',
+            title: 'Эффективность совместной деятельности',
             description: getKeyDesc(efficiency, efficiencyDesc, 100),
             value: efficiency
         }
@@ -193,8 +193,8 @@ const PairCoopOutput: React.FC = () => {
             ['Эмоциональная совместимость', `${emotionalCompatibility.toFixed()}${unit.sign}`],
             ['Дополняемость', complementarity],
             ['Психологическая взрослость', `${userName1} - ${maturity[0].toFixed()}${unit.sign},</br>${userName2} - ${maturity[1].toFixed()}${unit.sign}`],
-            ['Эффективность', `${efficiency.toFixed(2)}${unit.sign}`],
-            ['Совместимость', `${compatibility.toFixed(2)}${unit.sign}`]
+            ['Эффективность совместной деятельности', `${efficiency.toFixed(2)}${unit.sign}`],
+            ['Взаимное принятие', `${compatibility.toFixed(2)}${unit.sign}`]
         ]
 
         return commonComplexData

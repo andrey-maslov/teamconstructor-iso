@@ -11,13 +11,14 @@ import {
 } from '../actions/actionTypes';
 import { loadState } from '../store/sessionStorage';
 
+
 let USER_DATA = loadState('userData');
 
 if (!USER_DATA) {
     USER_DATA = {
-        name: '',
+        name: 'testName',
         email: '',
-        isLoggedIn: false,
+        isLoggedIn: true,
         isUserInBase: false,
         isSubscribed: false,
         language: '',

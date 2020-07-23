@@ -1,0 +1,72 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+$gutter: 10px;
+
+.wrapper {
+  user-select: none;
+  padding: 1rem;
+  margin: 0 0 $gutter 0;
+
+  &.fixed {
+    background-color: $overlay-dark;
+  }
+
+  &.dragging {
+    background-color: $overlay-light;
+    box-shadow: $box-shadow-lg;
+  }
+
+  &.clone + div {
+    display: none !important;
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  max-width: 30%;
+  width: 30%;
+  margin-right: 1rem;
+  opacity: .5;
+
+  svg {
+    font-size: 50px;
+  }
+}
+
+.content {
+  width: 100%;
+}
+
+.name {
+  font-weight: 700;
+  color: $text-light;
+}
+
+.position {
+  color: $text-light;
+  opacity: .8;
+}
+
+.delete {
+  width: 20px;
+  border: 0;
+  background-color: transparent;
+  color: $text-light;
+  opacity: .5;
+  transition: color .2s, opacity .2s;
+
+  &:hover {
+    color: $danger;
+    cursor: pointer;
+    opacity: 1;
+  }
+
+  //svg {
+  //  position: relative;
+  //  bottom: -3px;
+  //}
+}

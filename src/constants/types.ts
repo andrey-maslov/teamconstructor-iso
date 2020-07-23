@@ -9,10 +9,18 @@ export type OctantType = {
     index: string
 }
 
+export interface IEmployeeProfile {
+    id: string,
+    name: string,
+    position: string,
+    encData: string
+}
+
 export interface ValueByCat {
     title: string
     value: number
 }
+
 
 export interface ModalProps {
     isModalShown: boolean
