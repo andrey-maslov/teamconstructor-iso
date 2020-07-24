@@ -16,6 +16,11 @@ export interface IEmployeeProfile {
     encData: string
 }
 
+export interface ITeamProfile {
+    label: string,
+    items: IEmployeeProfile[]
+}
+
 export interface ValueByCat {
     title: string
     value: number

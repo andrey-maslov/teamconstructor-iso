@@ -6,6 +6,7 @@ import Box from "../../layout/box/Box";
 import Table from "../../tables/table/Table";
 import ComparisonTable from "./comparison-table/ComparisonTable";
 import {OctantType} from "../../../../../constants/types";
+import {BsTable} from "react-icons/bs";
 
 const complementarityDesc = [
     "спонтанность, импульсивность, некоторую агрессивность, умение добиваться целей",
@@ -102,8 +103,11 @@ const PairCoopOutput: React.FC = () => {
                 />
             </Box>
 
-            <Box className='result-box'>
-                <h4>Сводная таблица</h4>
+            <Box
+                addClass='result-box'
+                title={'Сводная таблица'}
+                icon={<BsTable/>}
+            >
                 <div className="row center-md">
                     <div className="col-md-11">
                         <ComparisonTable tableData={comparisonTableData}/>
@@ -111,8 +115,7 @@ const PairCoopOutput: React.FC = () => {
                 </div>
             </Box>
 
-            <Box className='result-box additional-profile'>
-                <h4>Привязанность-отдельность</h4>
+            <Box addClass='result-box additional-profile' title={'Привязанность-отдельность'}>
                 <div className="row center-md">
                     <div className="col-md-11">
                         <Table
@@ -123,8 +126,7 @@ const PairCoopOutput: React.FC = () => {
                 </div>
             </Box>
 
-            <Box className='result-box full-profile'>
-                <h4>Профили пользователей</h4>
+            <Box addClass='result-box full-profile' title={'Профили пользователей'}>
                 <div className="row around-md">
                     <div className="col-md-6 col-lg-5">
                         <strong>{userName1}</strong>
@@ -141,8 +143,7 @@ const PairCoopOutput: React.FC = () => {
                 </div>
             </Box>
 
-            <Box className='result-box additional-profile'>
-                <h4>Отсортированные психотипы</h4>
+            <Box addClass='result-box additional-profile' title={'Отсортированные психотипы'}>
                 <div className="row around-md">
                     <div className="col-md-6 col-lg-5">
                         <strong>{userName1}</strong>

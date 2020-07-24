@@ -10,7 +10,11 @@ $orange: #FF5E34;
 $text: #203152;
 
 
-$gradient-accent: linear-gradient(90deg, #67C3F0, $accent);
+$gradient-accent: linear-gradient(90deg, rgba(#67C3F0, .1), rgba($accent, .1));
+
+@mixin gradient-accent($angle, $opacity1, $opacity2) {
+  background: linear-gradient($angle, rgba(#67C3F0, $opacity1), rgba($accent, $opacity2));
+}
 
 $accent2: #36A9E0;
 $accent2-hover: darken($accent2, 10%);

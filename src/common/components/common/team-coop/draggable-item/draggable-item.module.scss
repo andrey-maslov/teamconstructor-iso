@@ -6,6 +6,7 @@ $gutter: 10px;
   user-select: none;
   padding: 1rem;
   margin: 0 0 $gutter 0;
+  box-shadow: $box-shadow-md;
 
   &.fixed {
     background-color: $overlay-dark;
@@ -17,7 +18,7 @@ $gutter: 10px;
   }
 
   &.clone + div {
-    display: none !important;
+    //display: none !important;
   }
 }
 

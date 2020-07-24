@@ -1,15 +1,21 @@
 import React, {useState} from 'react'
-import {DragDropContext, Droppable, DropResult} from "react-beautiful-dnd";
-import DraggableItem from "./draggable-item/DraggableItem";
-import Button from "../buttons/button/Button";
-import style from "./draggable-item/draggable-item.module.scss";
-import {FaTrashAlt} from "react-icons/fa";
+import {DragDropContext, Droppable, DropResult} from "react-beautiful-dnd"
+import DraggableItem from "./draggable-item/DraggableItem"
+import Button from "../buttons/button/Button"
+import style from "./draggable-item/draggable-item.module.scss"
+import {FaTrashAlt} from "react-icons/fa"
+import Box from '../layout/box/Box'
+import DroppableColumn from "./droppable-column/DroppableColumn";
+import ColumnTop from "./droppable-column/ColumnTop";
+import DroppableColumnStore from "./droppable-column/DroppableColumnStore";
+import TeamCoopSidebar from "./team-coop-sidebar/TeamCoopSidebar";
+import {ITeamProfile} from "../../../../constants/types";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
 //tread about copy: https://github.com/atlassian/react-beautiful-dnd/issues/216
 
-const staff = [
+const initialStaff = [
     {
         id: `0-${new Date().getTime()}`,
         name: 'Мария',
@@ -101,12 +107,6 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
     return result;
 };
 
-const getListStyle = (isDraggingOver: boolean) => ({
-    background: isDraggingOver ? "lightblue" : "lightgrey",
-    padding: 8,
-    width: 300
-});
-
 
 function DraggableZone() {
 
@@ -114,7 +114,7 @@ function DraggableZone() {
         [
             {
                 label: 'STAFF',
-                items: staff
+                items: initialStaff
             },
             {
                 label: 'Команда 1',
@@ -122,6 +122,8 @@ function DraggableZone() {
             }
         ]
     )
+    const staff: ITeamProfile = state[0];
+    const teams: ITeamProfile[] = [...state].slice(1);
     const [columnsCount, setColumnsCount] = useState(2)
 
     function onDragEnd(result: DropResult) {
@@ -182,71 +184,62 @@ function DraggableZone() {
             <div className={`row`}>
                 <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
 
-                    <div className={`droppable-pool col-md-3`}>
-                        <h3>{state[0].label}</h3>
-                        <Droppable droppableId={`${0}`} isDropDisabled={true}>
-                            {(provided, snapshot) => (
-                                <div
-                                    className={`droppable-column`}
-                                    ref={provided.innerRef}
-                                    style={getListStyle(snapshot.isDraggingOver)}
-                                    {...provided.droppableProps}
-                                >
-                                    {state[0].items.map((item, index) => (
-                                        <DraggableItem
-                                            key={item.id}
-                                            index={index}
-                                            profile={item}
-                                            colIndex={0}
-                                            deleteItem={deleteItem}
-                                        />
-                                    ))}
-                                </div>
-                            )}
-                        </Droppable>
+                    <div className={`droppable-pool col-md-2`}>
+                        <Box title={state[0].label}>
+
+                            <DroppableColumnStore
+                                items={staff.items}
+                                deleteItem={deleteItem}
+                                id={`${0}`}
+                                isDropDisabled={true}
+                            />
+
+                        </Box>
                     </div>
 
-                    <div className={`col-md-6`}>
-                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                            <h3>Команды</h3>
-                            <Button handle={() => {addColumn(columnsCount)}} btnClass={'btn btn-outlined'} title={'New team'} startIcon={<span>+</span>} />
-                        </div>
-                        <div style={{display: "flex"}}>
-                            {[...state].slice(1).map((column, i) => (
-                                <div key={i}>
-                                    <div style={{display: 'flex'}}>
-                                        <h4>{column.label}</h4>
-                                        <button
-                                            className={style.delete}
-                                            onClick={() => {deleteColumn(i + 1)}}
-                                        >
-                                            <FaTrashAlt/>
-                                        </button>
+                    <div className={`col-md-8`}>
+                        <Box title={'Команды'}>
+
+                            <Button
+                                handle={() => {
+                                    addColumn(columnsCount)
+                                }}
+                                btnClass={'btn btn-outlined add-command-btn'}
+                                title={'Добавить команду'}
+                                startIcon={<span>+</span>}
+                            />
+
+                            <div style={{display: "flex", height: '100%'}}>
+                                {teams.map((column, i) => (
+                                    <div key={i}>
+
+                                        <ColumnTop
+                                            label={column.label}
+                                            deleteHandler={deleteColumn}
+                                            columnIndex={i + 1}
+                                        />
+
+                                        <DroppableColumn
+                                            items={column.items}
+                                            deleteItem={deleteItem}
+                                            id={`${i + 1}`}
+                                            hasPlaceholder={true}
+                                        />
+
                                     </div>
-                                    <Droppable droppableId={`${i + 1}`}>
-                                        {(provided, snapshot) => (
-                                            <div
-                                                className={`droppable-column`}
-                                                ref={provided.innerRef}
-                                                style={getListStyle(snapshot.isDraggingOver)}
-                                                {...provided.droppableProps}
-                                            >
-                                                {column.items.map((item, index) => (
-                                                    <DraggableItem
-                                                        key={item.id}
-                                                        index={index}
-                                                        profile={item}
-                                                        colIndex={i + 1}
-                                                        deleteItem={deleteItem}
-                                                    />
-                                                ))}
-                                                {provided.placeholder}
-                                            </div>
-                                        )}
-                                    </Droppable>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        </Box>
+                    </div>
+
+                    <div className={`col-md-2`}>
+                        <Box title={'Статус'}>
+
+                            <TeamCoopSidebar
+                                teams={teams}
+                            />
+
+                        </Box>
                     </div>
 
                 </DragDropContext>
@@ -254,27 +247,28 @@ function DraggableZone() {
         </div>
     );
 
-    function deleteItem (colIndex: number, itemIndex: number): void {
+    function deleteItem(colIndex: number, itemIndex: number): void {
+        console.log(`${colIndex} - ${itemIndex}`)
         const newState = [...state];
         newState[colIndex].items.splice(itemIndex, 1);
         setState(newState);
     }
 
     //TODO need to fix naming
-    function addColumn (count: number): void {
+    function addColumn(count: number): void {
         const columnName = `Команда ${count}`
         setState([...state, {label: columnName, items: []}]);
         setColumnsCount(columnsCount + 1)
     }
 
     //TODO need to fix
-    function deleteColumn (colIndex: number): void {
+    function deleteColumn(colIndex: number): void {
         const newState = [...state];
         setState(newState.filter((group, i) => i !== colIndex));
     }
 
     //if one team includes this member
-    function checkDuplicate (columnIndex: number, sourceIndex: number, destIndex: number): boolean {
+    function checkDuplicate(columnIndex: number, sourceIndex: number, destIndex: number): boolean {
         const sourceItemData = state[columnIndex].items[sourceIndex].encData
         const destItemsData = state[destIndex].items.map(item => item.encData)
         const includesNum = destItemsData.filter(item => item === sourceItemData).length

@@ -346,7 +346,13 @@ th, td {
 
 /*===== TEAM COOPERATION =====*/
 .droppable-pool {
-  margin-right: 2rem;
+  //margin-right: 2rem;
+}
+
+.add-command-btn {
+  position: absolute !important;
+  top: .5rem;
+  right: 1rem;
 }
 
 
