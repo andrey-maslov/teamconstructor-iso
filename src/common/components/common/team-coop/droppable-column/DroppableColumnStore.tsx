@@ -1,9 +1,9 @@
 import React from "react"
 import {Droppable} from "react-beautiful-dnd"
+import {IDroppableColumn} from "./DroppableColumn"
 import DraggableItem from "../draggable-item/DraggableItem"
 
 import style from './droppable-column.module.scss'
-import {IDroppableColumn} from "./DroppableColumn";
 
 
 const DroppableColumnStore: React.FC<IDroppableColumn> = (
@@ -19,7 +19,7 @@ const DroppableColumnStore: React.FC<IDroppableColumn> = (
         <Droppable droppableId={id} isDropDisabled={isDropDisabled}>
             {(provided, snapshot) => (
                 <div
-                    className={`${style.wrapper} ${style.store} ${snapshot.isDraggingOver ? style.dragging : style.fixed}`}
+                    className={`${style.wrapper} ${style.store}`}
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                 >

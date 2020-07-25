@@ -9,9 +9,10 @@ type HeaderProps = {
     isLoggedIn: boolean
     setLoginModal: (bool: boolean) => {}
     userEmail: string
-    clearUserData: () => {}
+    clearUserData: () => void
 }
 
+//TODO change to Redux hooks
 const Header: React.FC<HeaderProps> = ({isLoggedIn, setLoginModal, userEmail, clearUserData}) => {
 
     const isTablet = useMediaPredicate('(max-width: 992px)');

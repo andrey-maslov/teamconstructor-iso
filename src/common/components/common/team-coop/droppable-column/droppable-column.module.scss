@@ -2,12 +2,19 @@
 
 .wrapper {
   user-select: none;
-  padding: .5rem;
-  margin: 0 .5rem;
   width: 300px;
   min-height: 40rem;
-  transition: background-color .1s ease-in-out;
-  //height: 100%;
+
+  &.store {
+    border: 0;
+    //background-color: $overlay-light;
+  }
+
+  &.team {
+    transition: background-color .1s ease-in-out;
+    padding: .5rem;
+    margin: 0 .5rem;
+  }
 
   &.fixed {
     //background-color: $text-light;
@@ -17,11 +24,6 @@
   &.dragging {
     background-color: rgba($accent, .3);
 
-  }
-
-  &.store {
-    border: 0;
-    background-color: $overlay-light;
   }
 }
 

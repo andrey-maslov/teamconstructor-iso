@@ -1,0 +1,17 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.bottom {
+
+  button {
+    margin-bottom: 0;
+    max-width: unset;
+    width: 100%;
+  }
+}

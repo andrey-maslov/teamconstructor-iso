@@ -33,6 +33,7 @@ const WebNav = ({handleLoginBtn, isLoggedIn, userEmail}: Navigation) => {
     return (
         <div className={style.nav}>
             <LangSwitcher/>
+            <NavLink className={'btn btn-outlined'} to={'/team'}>TEAM</NavLink>
             <Button
                 handle={handleLoginBtn}
                 btnClass='btn-link'

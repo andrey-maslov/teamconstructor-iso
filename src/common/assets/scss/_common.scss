@@ -355,6 +355,10 @@ th, td {
   right: 1rem;
 }
 
+.box-store > div {
+  background-color: rgba($text-light, .5);
+}
+
 
 /*===== FORMS =====*/
 //input.input:focus, input.input.active, select:focus, select.active, textarea:focus, textarea.active {

@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {useHistory} from 'react-router-dom'
 import Button from "../../common/buttons/button/Button"
 import {FiRefreshCw} from "react-icons/fi"
-import {clearUsersResults} from '../../../actions/actionCreator'
+import {clearPairData} from '../../../actions/actionCreator'
 import CompareLoader from "../../common/loaders/compare-loader/CompareLoader"
 
 const PairCoopPage: React.FC = () => {
@@ -32,7 +32,7 @@ const PairCoopPage: React.FC = () => {
     }
 
     const newComparisonHandler = () => {
-        dispatch(clearUsersResults(true))
+        dispatch(clearPairData())
         history.push('/')
     }
 

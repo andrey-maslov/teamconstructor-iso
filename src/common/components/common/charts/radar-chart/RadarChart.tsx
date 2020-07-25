@@ -1,11 +1,10 @@
-import React  from 'react'
+import React from 'react'
 import {Radar} from 'react-chartjs-2'
-import {getChartLabels, getRealData} from '../../../../../../helper/helper'
-import {COLORS} from '../../../../../../constants/constants'
-import hexToRgba from '../../../../../../helper/hexToRgba'
+import {getChartLabels, getRealData} from '../../../../../helper/helper'
+import {COLORS} from '../../../../../constants/constants'
+import hexToRgba from '../../../../../helper/hexToRgba'
 import {useMediaPredicate} from 'react-media-hook'
-import style from './charts.module.scss'
-import CircleDiagram from "./circle-diagram/CircleDiagram"
+import style from './radar-chart.module.scss'
 
 const chartColors = [
     COLORS.orange,
@@ -13,11 +12,10 @@ const chartColors = [
 ]
 
 type ChartsPropsType = {
-    profiles: {name: string, data: [string, number][]}[]
-    keyValues: {title: string, description: string, value: number}[]
+    profiles: { name: string, data: [string, number][] }[]
 }
 
-const Charts: React.FC<ChartsPropsType> = ({profiles, keyValues}) => {
+const RadarChart: React.FC<ChartsPropsType> = ({profiles}) => {
 
     const chartLabels = getChartLabels(profiles[0].data);
 
@@ -77,33 +75,18 @@ const Charts: React.FC<ChartsPropsType> = ({profiles, keyValues}) => {
     };
 
     return (
-        <>
-            <div className={style.top}>
-                <h4 className={style.title}>{`Результаты анализа совместимости пары ${profiles[0].name} и ${profiles[1].name}`}</h4>
-                {/*<PopoverMore data={log}/>*/}
+        <div className={`${style.wrapper} radar-chart block-wrapper`}>
+            <div className={style.radar}>
+                <Radar
+                    data={data}
+                    options={options}
+                    width={currentOptions.width}
+                    height={currentOptions.height}
+                />
             </div>
-            <div className={`${style.wrapper} radar-chart block-wrapper`}>
-                <div className={style.radar}>
-                    <Radar
-                        data={data}
-                        options={options}
-                        width={currentOptions.width}
-                        height={currentOptions.height}
-                    />
-                </div>
-                <div>
-                    {keyValues.map((item, i) => (
-                        <div className={style.comp} key={i}>
-                            <h5>{item.title}</h5>
-                            <CircleDiagram value={item.value}/>
-                            <small>{item.description}</small>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </>
+        </div>
     );
 
 };
 
-export default Charts;
+export default RadarChart;

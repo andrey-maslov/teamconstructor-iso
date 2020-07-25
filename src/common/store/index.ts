@@ -1,7 +1,7 @@
-import { createStore, compose, applyMiddleware } from 'redux';
+import {createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
-import {loadState, saveState} from './sessionStorage';
+import {saveState} from './sessionStorage';
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers =
@@ -38,8 +38,9 @@ const index = configureStore({});
 
 index.subscribe(() => {
     saveState('terms', index.getState().termsReducer)
-    saveState('userData', index.getState().userData)
+    // saveState('userData', index.getState().userData)
     saveState('pair', index.getState().pairCoopReducer)
+    saveState('team', index.getState().teamCoopReducer)
 });
 
 export default index;

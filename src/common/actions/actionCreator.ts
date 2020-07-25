@@ -1,59 +1,60 @@
 import {
+    SET_PAIR_DATA,
+    CLEAR_PAIR_DATA,
+    SET_TEAMS_DATA,
+    SET_ACTIVE_TEAM,
+    SET_ROW_DATA1,
+    SET_ROW_DATA2,
     ADD_AUTH_DATA,
-    SAVE_PERSONAL_INFO,
-    COOKIES_CONSENT,
-    SAVE_ANSWERS,
-    LOGIN_MODAL,
-    ONLY_LOGGED_MODAL,
-    STATUS_MODAL,
     CLEAR_USER_DATA,
     SET_LANG,
     FETCH_TERMS,
-    SAVE_RESULT,
-    SAVE_TEST_DATA,
     SET_COMPARISON_READY,
-    SET_USERS_RESULTS,
-    CLEAR_USERS_RESULTS,
-    COMPARE_PROCESS,
-    SET_ROW_DATA1,
-    SET_ROW_DATA2,
-    SAVE_LOG,
+    COMPARISON_IN_PROCESS,
+    T_SET_COMPARISON_READY,
+    T_COMPARISON_IN_PROCESS
 } from './actionTypes';
-// import axios from "axios";
-// import { REQUEST_BASE_ROUTE } from 'constants/constants';
-import {AnswerType} from '../../constants/types';
+import {ITeamProfile} from "../../constants/types";
 
-export const addUserData = (name: string, email: string) => {
+
+/*
+USER AUTHORIZATION
+ */
+export function addUserData(name: string, email: string): { type: string, name: string, email: string } {
     return {
         type: ADD_AUTH_DATA,
         name,
         email,
     };
-};
+}
 
-export const setLanguage = (language: string) => {
+export function setLanguage(language: string): { type: string, language: string } {
     return {
         type: SET_LANG,
         language,
     };
-};
+}
 
-
-export const setComparisonProcess = (isComparisonInProcess: boolean) => {
+export function clearUserData (): {type: string} {
     return {
-        type: COMPARE_PROCESS,
-        isComparisonInProcess
-    };
-};
-
-export const saveLog = (log:  any) => {
-    return {
-        type: SAVE_LOG,
-        log
+        type: CLEAR_USER_DATA,
     };
 }
 
-export const setComparisonResult = (isComparisonResultReady: boolean) => {
+
+/*
+COMPARISON PROCESS
+ */
+
+export function setComparisonProcess(isComparisonInProcess: boolean): { type: string, isComparisonInProcess: boolean } {
+    return {
+        type: COMPARISON_IN_PROCESS,
+        isComparisonInProcess
+    };
+}
+
+
+export function setComparisonResult(isComparisonResultReady: boolean): any {
 
     return (dispatch: any) => {
         dispatch({
@@ -61,104 +62,88 @@ export const setComparisonResult = (isComparisonResultReady: boolean) => {
             isComparisonResultReady
         });
         dispatch({
-            type: COMPARE_PROCESS,
+            type: COMPARISON_IN_PROCESS,
             isComparisonInProcess: true
         });
         setTimeout(() => {
             dispatch({
-                type: COMPARE_PROCESS,
+                type: COMPARISON_IN_PROCESS,
                 isComparisonInProcess: false
             })
-        }, 5000)
+        }, 3000)
     }
-};
+}
 
-export const setUsersResults = (userData1: [] | string, userData2: [] | string, name1: string, name2: string) => {
+
+/*
+PAIR COMPARISON PROCESS
+ */
+
+export function setPairData (data1: [] | string, data2: [] | string, name1: string, name2: string): {
+    type: string, data1: [] | string, data2: [] | string, name1: string, name2: string } {
     return {
-        type: SET_USERS_RESULTS,
-        userData1,
-        userData2,
+        type: SET_PAIR_DATA,
+        data1,
+        data2,
         name1,
         name2
     };
-};
+}
 
-export const setRowData = (rowData1: string, rowData2: string) => {
+export function clearPairData(): {type: string} {
+    return {
+        type: CLEAR_PAIR_DATA,
+    };
+}
 
-    if (rowData1.length !== 0) {
+export function setRowData(encData1: string, encData2: string) {
+
+    if (encData1.length !== 0) {
         return {
             type: SET_ROW_DATA1,
-            rowData1: rowData1,
+            encData1,
         };
-    } else if (rowData2.length !== 0) {
+    } else if (encData2.length !== 0) {
         return {
             type: SET_ROW_DATA2,
-            rowData2: rowData2,
+            encData2,
         };
     }
     console.log('default')
     return {
         type: SET_ROW_DATA1,
     }
-};
+}
 
 
-export const clearUserData = (bool = true) => {
+/*
+TEAM COOPERATION PROCESS
+ */
+export function setTeamsData(teamsData: ITeamProfile[]): {type: string, teams: ITeamProfile[]} {
+    console.log(teamsData)
     return {
-        type: CLEAR_USER_DATA,
+        type: SET_TEAMS_DATA,
+        teams: teamsData
     };
-};
+}
 
-export const clearUsersResults = (bool = true) => {
+export function setActiveTeam(teamIndex: number): {type: string, activeTeam: number} {
     return {
-        type: CLEAR_USERS_RESULTS,
-    };
-};
-
-type AnyAnswersType = any
-
-export const saveAnswers = (answers: Array<AnswerType> | AnyAnswersType) => {
-    return {
-        type: SAVE_ANSWERS,
-        answers
-    };
-};
+        type: SET_ACTIVE_TEAM,
+        activeTeam: teamIndex
+    }
+}
 
 
-export const savePersonalInfo = (personalInfo: number[]) => {
-    return {
-        type: SAVE_PERSONAL_INFO,
-        personalInfo,
-    };
-};
+/*
+MODALS and ALERTS
+ */
 
-export const saveTestData = (testData: number[][]) => {
-    return {
-        type: SAVE_TEST_DATA,
-        testData,
-    };
-};
 
-export const setOnlyLoggedModal = (bool: boolean) => {
-    return {
-        type: ONLY_LOGGED_MODAL,
-        isLoginModal: bool,
-    };
-};
 
-export const setStatusModal = (bool: boolean) => {
-    return {
-        type: STATUS_MODAL,
-        isStatusModal: bool,
-    };
-};
-
-export const setCookiesConsent = (bool: boolean) => {
-    return {
-        type: COOKIES_CONSENT,
-        isCookiesConsented: bool
-    };
-};
+/*
+FETCHING DATA
+ */
 
 export const fetchTerms = (lang: string) => {
     // const url = `/psychology_${lang}.json`;

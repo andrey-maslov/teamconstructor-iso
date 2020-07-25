@@ -11,7 +11,7 @@ if (!PSYCHO) {
 
 export type TermsReducerType = {
     type: string
-    terms: null | {}
+    terms: null | any
 };
 
 export const termsReducer = (state = PSYCHO, {

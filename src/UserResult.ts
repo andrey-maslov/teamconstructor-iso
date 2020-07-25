@@ -21,7 +21,7 @@ export interface SchemeType {
 //     [number, number, number, number, number],
 // ]
 
-type resultType = number[][];
+export type resultType = number[][];
 
 export class UserResult {
 
