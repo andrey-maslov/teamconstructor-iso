@@ -22,13 +22,16 @@
     "plugins": [
         "react",
         "@typescript-eslint",
-        "jsx-a11y"
+        "jsx-a11y",
+        "react-hooks"
     ],
     "rules": {
         "semi": 0,
         "react/prop-types": 0,
         "ban-ts-comment": 0,
         "@typescript-eslint/no-explicit-any": 1,
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
+        "react-hooks/rules-of-hooks": "error", // Проверяем правила хуков
+        "react-hooks/exhaustive-deps": "warn" // Проверяем зависимости эффекта
     }
 }

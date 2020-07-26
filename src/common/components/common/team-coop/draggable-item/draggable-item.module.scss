@@ -1,11 +1,9 @@
 @import 'src/common/assets/scss/_vars.scss';
 
-$gutter: 10px;
-
 .wrapper {
   user-select: none;
-  padding: 1rem;
-  margin: 0 0 $gutter 0;
+  padding: .7rem;
+  margin: 0 0 .5rem 0;
   box-shadow: $box-shadow-md;
 
   &.fixed {
@@ -50,10 +48,11 @@ $gutter: 10px;
 .position {
   color: $text-light;
   opacity: .8;
+  font-size: .8rem;
 }
 
 .delete {
-  width: 20px;
+  width: 2rem;
   border: 0;
   background-color: transparent;
   color: $text-light;

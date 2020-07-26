@@ -5,73 +5,17 @@ import Box from '../layout/box/Box'
 import DroppableColumn from "./droppable-column/DroppableColumn"
 import ColumnTop from "./droppable-column/ColumnTop"
 import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
-import TeamCoopSidebar from "./team-coop-sidebar/TeamCoopSidebar"
-import {ITeamProfile} from "../../../../constants/types"
+import {GlobalStateType, IEmployeeProfile, ITeamProfile} from "../../../../constants/types"
+import {useDispatch, useSelector} from "react-redux";
+import {setTeamsData} from "../../../actions/actionCreator";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
 //tread about copy: https://github.com/atlassian/react-beautiful-dnd/issues/216
 
-const initialStaff = [
-    {
-        id: `0-${new Date().getTime()}`,
-        name: 'Мария',
-        position: 'Manager',
-        encData: 'W1syLDMsMF0sW1stMSwtMSw1LDMsLTFdLFstNCwtMywtMywtMiwtMV0sWzEsMCwtNCwzLC0xXSxbLTIsNiwwLDEsLTRdLFs0LDEsMSwtNCwtM11dXQ==',
-        decData: [[2,3,0],[[-1,-1,5,3,-1],[-4,-3,-3,-2,-1],[1,0,-4,3,-1],[-2,6,0,1,-4],[4,1,1,-4,-3]]]
-    },
-    {
-        id: `1-${new Date().getTime()}`,
-        name: 'Павел',
-        position: 'Designer',
-        encData: 'W1sxLDQsMV0sW1sxLDMsMywtMywxXSxbLTQsLTIsLTIsNCwtMl0sWy0xLDEsLTMsMCwtNF0sWy0zLC00LC0yLDUsLTNdLFsxLC0yLC0yLC0yLDFdXV0=',
-        decData: [[1,4,1],[[1,3,3,-3,1],[-4,-2,-2,4,-2],[-1,1,-3,0,-4],[-3,-4,-2,5,-3],[1,-2,-2,-2,1]]]
-    },
-    {
-        id: `2-${new Date().getTime()}`,
-        name: 'Таня',
-        position: 'QA engineer',
-        encData: 'W1sxLDEsMV0sW1szLC0yLDIsNSwxXSxbLTQsLTIsLTIsMSwtMV0sWy00LDUsLTUsMSwtMV0sWzAsMSwtMSwxLC00XSxbMSwtNCwtMiwxLC0xXV1d',
-        decData: [[1,1,1],[[3,-2,2,5,1],[-4,-2,-2,1,-1],[-4,5,-5,1,-1],[0,1,-1,1,-4],[1,-4,-2,1,-1]]]
-    },
-    {
-        id: `3-${new Date().getTime()}`,
-        name: 'Лаврик',
-        position: 'Business Analyst',
-        encData: 'W1sxLDEsMF0sW1s0LC01LC02LC0yLDBdLFstMiwtMywtNCwwLDNdLFs2LDQsMiwtMSwyXSxbNCw0LDIsMywtNl0sWy0yLC0xLDIsMywwXV1d',
-        decData: [[1,1,0],[[4,-5,-6,-2,0],[-2,-3,-4,0,3],[6,4,2,-1,2],[4,4,2,3,-6],[-2,-1,2,3,0]]]
-    },
-    {
-        id: `4-${new Date().getTime()}`,
-        name: 'Andrey Maslov',
-        position: 'Web Developer',
-        encData: 'W1sxLDEsMV0sW1stMiwtMywtMSwyLC0xXSxbLTIsLTIsLTIsLTQsLTFdLFstMiwtMSwtMiwxLC02XSxbLTEsMSwxLC0yLC0zXSxbMSwtMywyLDEsLTJdXV0=',
-        decData: [[1,1,1],[[-2,-3,-1,2,-1],[-2,-2,-2,-4,-1],[-2,-1,-2,1,-6],[-1,1,1,-2,-3],[1,-3,2,1,-2]]]
-    },
-    {
-        id: `5-${new Date().getTime()}`,
-        name: 'Julia Sobal',
-        position: 'QA junior',
-        encData: 'W1sxLDEsMV0sW1stNCwxLDEsLTMsLTFdLFswLC0yLDAsLTUsLTJdLFstNCwwLC0zLC0yLC0yXSxbLTEsMCwxLC0xLC00XSxbMSwtNCw0LDEsLTRdXV0=',
-        decData: [[1,1,1],[[-4,1,1,-3,-1],[0,-2,0,-5,-2],[-4,0,-3,-2,-2],[-1,0,1,-1,-4],[1,-4,4,1,-4]]]
-    },
-    {
-        id: `6-${new Date().getTime()}`,
-        name: 'Паша',
-        position: 'Tech Writer',
-        encData: 'W1swLDEsMF0sW1stMiw0LDAsLTEsMF0sWy0xLDEsLTMsMSwtMV0sWy00LDAsLTIsMSw0XSxbLTYsLTIsLTIsLTQsMl0sWzAsLTIsLTEsLTEsLTJdXV0=',
-        decData: [[0,1,0],[[-2,4,0,-1,0],[-1,1,-3,1,-1],[-4,0,-2,1,4],[-6,-2,-2,-4,2],[0,-2,-1,-1,-2]]]
-    },
-    {
-        id: `7-${new Date().getTime()}`,
-        name: 'Маша',
-        position: 'Backend Developer',
-        encData: 'W1swLDAsMV0sW1stMSwxLDAsLTMsLTNdLFsyLC0yLC0zLC0xLDNdLFstNCwwLDEsLTEsM10sWzEsMCwzLDEsLTRdLFstMSwxLC0xLDMsLTNdXV0=',
-        decData: [[0,0,1],[[-1,1,0,-3,-3],[2,-2,-3,-1,3],[-4,0,1,-1,3],[1,0,3,1,-4],[-1,1,-1,3,-3]]]
-    },
-
-]
-
+/**
+ * Reorder items on the same list.
+ */
 const reorder = (list: any, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -115,20 +59,10 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 
 const DraggableZone: React.FC = () => {
 
-    const [state, setState] = useState(
-        [
-            {
-                label: 'STAFF',
-                items: initialStaff
-            },
-            {
-                label: 'Команда 1',
-                items: []
-            }
-        ]
-    )
-    const staff: ITeamProfile = state[0];
-    const teams: ITeamProfile[] = [...state].slice(1);
+    const staff: ITeamProfile = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams[0])
+    const columns: Array<ITeamProfile> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    const dispatch = useDispatch();
+
     const [columnsCount, setColumnsCount] = useState(2)
 
     function onDragEnd(result: DropResult) {
@@ -142,35 +76,37 @@ const DraggableZone: React.FC = () => {
         const dInd = +destination.droppableId;
 
         if (sInd === dInd) {
-            const items = reorder(state[sInd].items, source.index, destination.index);
-            const newState: any = [...state];
-            newState[sInd].items = items;
-            setState(newState);
+            const items = reorder(columns[sInd].items, source.index, destination.index);
+            const newColumns: any = [...columns];
+            newColumns[sInd].items = items;
+            dispatch(setTeamsData(newColumns))
         } else if (sInd === 0) {
-            const result = copy(state[0].items, state[dInd].items, source, destination); //new destination column array
+
+            const result = copy(columns[0].items, columns[dInd].items, source, destination); //new destination column array
+
             //check double items
             if (!checkDuplicate(0, source.index, dInd)) {
                 alert('Такой пользователь есть в команде!')
                 return
             } else {
-                const newState: any = [...state];
-                newState[dInd].items = result;
-                setState(newState);
+                const newColumns: ITeamProfile[] = [...columns];
+                newColumns[dInd].items = result;
+                dispatch(setTeamsData(newColumns))
             }
 
         } else {
-            const result = move(state[sInd].items, state[dInd].items, source, destination); //new destination column array
-
+            const result = move(columns[sInd].items, columns[dInd].items, source, destination); //new destination column array
+            console.log('result', result)
             //check double items
             if (!checkDuplicate(sInd, source.index, dInd)) {
                 alert('Такой пользователь есть в команде!')
                 return
             } else {
-                const newState = [...state];
-                newState[sInd].items = result[sInd];
-                newState[dInd].items = result[dInd];
+                const newTeams = [...columns];
+                newTeams[sInd].items = result[sInd];
+                newTeams[dInd].items = result[dInd];
 
-                setState(newState);
+                dispatch(setTeamsData([...newTeams]))
             }
         }
     }
@@ -180,111 +116,94 @@ const DraggableZone: React.FC = () => {
         // console.log('update')
     }
 
-    // console.log('state', state)
 
     return (
-        <div className={`draggable-wrapper`}>
+        <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
+            <div className="row">
+                <div className={`droppable-pool col-md-2`}>
+                    <Box title={staff.label} addClass={'box-store'}>
+                        <Button
+                            handle={addItemModal}
+                            btnClass={'btn btn-outlined add-command-btn'}
+                            title={'Добавить'}
+                        />
 
-            <div className={`row`}>
-                <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
+                        <DroppableColumnStore
+                            items={staff.items}
+                            deleteItem={deleteItem}
+                            id={`${0}`}
+                            isDropDisabled={true}
+                        />
 
-                    <div className={`droppable-pool col-md-2`}>
-                        <Box title={state[0].label} addClass={'box-store'}>
+                    </Box>
+                </div>
 
-                            <Button
-                                handle={addItemModal}
-                                btnClass={'btn btn-outlined add-command-btn'}
-                                title={'Добавить'}
-                                startIcon={<span>+</span>}
-                            />
+                <div className={`col-md-10`}>
+                    <Box title={'Команды'}>
+                        <Button
+                            handle={() => {
+                                addColumn(columnsCount)
+                            }}
+                            btnClass={'btn btn-outlined add-command-btn'}
+                            title={'Добавить команду'}
+                        />
 
-                            <DroppableColumnStore
-                                items={staff.items}
-                                deleteItem={deleteItem}
-                                id={`${0}`}
-                                isDropDisabled={true}
-                            />
+                        <div style={{display: "flex", height: '100%'}}>
+                            {columns.slice(1).map((column, i) => (
+                                <div key={i}>
 
-                        </Box>
-                    </div>
+                                    <ColumnTop
+                                        label={column.label}
+                                        deleteHandler={deleteColumn}
+                                        columnIndex={i + 1}
+                                    />
 
-                    <div className={`col-md-8`}>
-                        <Box title={'Команды'}>
+                                    <DroppableColumn
+                                        items={column.items}
+                                        deleteItem={deleteItem}
+                                        id={`${i + 1}`}
+                                        hasPlaceholder={true}
+                                    />
 
-                            <Button
-                                handle={() => {
-                                    addColumn(columnsCount)
-                                }}
-                                btnClass={'btn btn-outlined add-command-btn'}
-                                title={'Добавить команду'}
-                                startIcon={<span>+</span>}
-                            />
-
-                            <div style={{display: "flex", height: '100%'}}>
-                                {teams.map((column, i) => (
-                                    <div key={i}>
-
-                                        <ColumnTop
-                                            label={column.label}
-                                            deleteHandler={deleteColumn}
-                                            columnIndex={i + 1}
-                                        />
-
-                                        <DroppableColumn
-                                            items={column.items}
-                                            deleteItem={deleteItem}
-                                            id={`${i + 1}`}
-                                            hasPlaceholder={true}
-                                        />
-
-                                    </div>
-                                ))}
-                            </div>
-                        </Box>
-                    </div>
-
-                    <div className={`col-md-2`}>
-                        <Box title={'Статус'}>
-
-                            <TeamCoopSidebar
-                                teams={teams}
-                            />
-
-                        </Box>
-                    </div>
-
-                </DragDropContext>
+                                </div>
+                            ))}
+                        </div>
+                    </Box>
+                </div>
             </div>
-        </div>
+        </DragDropContext>
     );
 
-    function addItemModal():void {
+    function addItemModal(): void {
         alert('Add new employee')
     }
 
+    //TODO what about staff column
     function deleteItem(colIndex: number, itemIndex: number): void {
-        const newState = [...state];
-        newState[colIndex].items.splice(itemIndex, 1);
-        setState(newState);
+        const newColumns = [...columns];
+        newColumns[colIndex].items.splice(itemIndex, 1);
+        dispatch(setTeamsData(newColumns))
     }
 
+    //TODO need to fix column coun
     function addColumn(count: number): void {
         const columnName = `Команда ${count}`
-        setState([...state, {label: columnName, items: []}]);
+        dispatch(setTeamsData([...columns, {label: columnName, items: []}]))
         setColumnsCount(columnsCount + 1)
     }
 
-    //TODO need to fix
     function deleteColumn(colIndex: number): void {
-        const newState = [...state];
-        setState(newState.filter((group, i) => i !== colIndex));
+        const newColumns = [...columns];
+        dispatch(setTeamsData(newColumns.filter((group, i) => i !== colIndex)));
     }
 
     //if one team includes this member
     function checkDuplicate(columnIndex: number, sourceIndex: number, destIndex: number): boolean {
-        const sourceItemData = state[columnIndex].items[sourceIndex].encData
-        const destItemsData = state[destIndex].items.map(item => item.encData)
-        const includesNum = destItemsData.filter(item => item === sourceItemData).length
+
+        const sourceItemData = columns[columnIndex].items[sourceIndex].encData;
+        const destItemsData = columns[destIndex].items.map((item: IEmployeeProfile) => item.encData)
+
+        const includesNum = destItemsData.filter((item: string) => item === sourceItemData).length
         return includesNum === 0
     }
 }

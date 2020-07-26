@@ -21,7 +21,7 @@ export interface IEmployeeProfile {
 
 export interface ITeamProfile {
     label: string,
-    items: IEmployeeProfile[] | any
+    items: Array<IEmployeeProfile> | any
 }
 
 export interface IModalProps {

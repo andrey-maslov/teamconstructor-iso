@@ -49,10 +49,8 @@ const PairCoopOutput: React.FC = () => {
         return null;
     }
 
-    console.log(decodedData1)
-
-    const fullResult1 = useMemo(() => new UserResult(decodedData1[1], schemeCurrent), [decodedData1, schemeCurrent])
-    const fullResult2 = useMemo(() => new UserResult(decodedData2[1], schemeCurrent), [decodedData2, schemeCurrent])
+    const fullResult1 = new UserResult(decodedData1[1], schemeCurrent)
+    const fullResult2 = new UserResult(decodedData2[1], schemeCurrent)
 
     const octants1 = fullResult1.getCalculatedOctants();
     const octants2 = fullResult2.getCalculatedOctants();
@@ -220,6 +218,10 @@ const PairCoopOutput: React.FC = () => {
         const maxVal1 = sortedProfile1[0][1]
         const maxVal2 = sortedProfile2[0][1]
 
+        if (maxVal1 === 0 || maxVal2 === 0) {
+            return 0
+        }
+
         return (maxVal1 < maxVal2 ? maxVal1 / maxVal2 : maxVal2 / maxVal1) * unit.factor;
     }
 
@@ -247,6 +249,10 @@ const PairCoopOutput: React.FC = () => {
 
         const oppositeVals1 = [oppositeSegmentForUser1.value, leadSegment1.value]
         const oppositeVals2 = [oppositeSegmentForUser2.value, leadSegment2.value]
+
+        if ((oppositeVals1[0] === 0 && oppositeVals1[1] === 0) || oppositeVals2[0] === 0 && oppositeVals2[1] === 0) {
+            return [0, 0];
+        }
 
         const ratio1 = oppositeVals1[0] < oppositeVals1[1] ? oppositeVals1[0] / oppositeVals1[1] : oppositeVals1[1] / oppositeVals1[0]
         const ratio2 = oppositeVals2[0] < oppositeVals2[1] ? oppositeVals2[0] / oppositeVals2[1] : oppositeVals2[1] / oppositeVals2[0]

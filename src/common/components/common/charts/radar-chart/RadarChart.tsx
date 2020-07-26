@@ -8,7 +8,12 @@ import style from './radar-chart.module.scss'
 
 const chartColors = [
     COLORS.orange,
-    COLORS.accent
+    COLORS.accent,
+    COLORS.accent,
+    COLORS.accent,
+    COLORS.accent,
+    COLORS.accent,
+    COLORS.accent,
 ]
 
 type ChartsPropsType = {

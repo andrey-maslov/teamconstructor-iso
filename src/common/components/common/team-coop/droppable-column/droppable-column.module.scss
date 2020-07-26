@@ -2,7 +2,7 @@
 
 .wrapper {
   user-select: none;
-  width: 300px;
+  min-width: 250px;
   min-height: 40rem;
 
   &.store {

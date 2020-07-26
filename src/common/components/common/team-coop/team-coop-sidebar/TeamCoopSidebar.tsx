@@ -1,18 +1,16 @@
 import React from 'react'
 import Button from "../../buttons/button/Button"
-import {ITeamProfile} from "../../../../../constants/types"
-import {useDispatch} from "react-redux"
+import {GlobalStateType, ITeamProfile} from "../../../../../constants/types"
+import {useDispatch, useSelector} from "react-redux"
 import style from './team-coop-sidebar.module.scss'
 import {GoRocket} from "react-icons/go"
 import {setActiveTeam, setTeamsData} from "../../../../actions/actionCreator"
 
-interface ITeamCoopSidebar {
-    teams: ITeamProfile[]
-}
+const TeamCoopSidebar: React.FC = () => {
 
-const TeamCoopSidebar: React.FC<ITeamCoopSidebar> = ({teams}) => {
-
+    const teams: ITeamProfile[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams.slice(1))
     const dispatch = useDispatch();
+
 
     return (
         <aside className={style.aside}>
@@ -38,7 +36,7 @@ const TeamCoopSidebar: React.FC<ITeamCoopSidebar> = ({teams}) => {
     );
 
     function calculateHandler() {
-        dispatch(setTeamsData(teams))
+        // dispatch(setTeamsData(teams))
         dispatch(setActiveTeam(0))
     }
 }
