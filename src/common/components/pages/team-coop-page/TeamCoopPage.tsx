@@ -11,15 +11,14 @@ const TeamCoopPage: React.FC = () => {
         <main className='section page-team main'>
             <div className="container-wide">
                 <div className="row">
-                    <div className="col-lg-10">
+                    <div className="drag-area">
                         <DraggableZone/>
                         <TeamCoopResult/>
                     </div>
-                    <div className="col-lg-2">
-                        <Box title={'Статус'}>
-                            <TeamCoopSidebar/>
-                        </Box>
-                    </div>
+
+                    <Box title={'Статус'} addClass={'team-sidebar'}>
+                        <TeamCoopSidebar/>
+                    </Box>
                 </div>
             </div>
         </main>

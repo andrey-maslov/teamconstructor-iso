@@ -6,14 +6,16 @@ import hexToRgba from '../../../../../helper/hexToRgba'
 import {useMediaPredicate} from 'react-media-hook'
 import style from './radar-chart.module.scss'
 
-const chartColors = [
+const colors = [
     COLORS.orange,
     COLORS.accent,
+    COLORS.yellow,
+    COLORS.orange,
     COLORS.accent,
+    COLORS.yellow,
+    COLORS.orange,
     COLORS.accent,
-    COLORS.accent,
-    COLORS.accent,
-    COLORS.accent,
+    COLORS.yellow,
 ]
 
 type ChartsPropsType = {
@@ -23,6 +25,7 @@ type ChartsPropsType = {
 const RadarChart: React.FC<ChartsPropsType> = ({profiles}) => {
 
     const chartLabels = getChartLabels(profiles[0].data);
+    const chartColors = colors;
 
     const chartRadarOptions: any = {
         desktop: {

@@ -5,6 +5,7 @@ export const CLEAR_PAIR_DATA = 'CLEAR_PAIR_DATA'
 //Teams data
 export const SET_TEAMS_DATA = 'SET_TEAMS'
 export const SET_ACTIVE_TEAM = 'SET_ACTIVE_TEAM'
+export const SET_RANDOM = 'SET_RANDOM'
 
 //tmp
 export const SET_ROW_DATA1 = 'SET_ROW_DATA1'

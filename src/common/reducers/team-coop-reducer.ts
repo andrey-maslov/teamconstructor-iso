@@ -2,7 +2,7 @@ import {
     T_COMPARISON_IN_PROCESS,
     T_SET_COMPARISON_READY,
     SET_TEAMS_DATA,
-    SET_ACTIVE_TEAM
+    SET_ACTIVE_TEAM, SET_RANDOM
 
 } from "../actions/actionTypes";
 import {loadState} from "../store/sessionStorage";
@@ -92,7 +92,8 @@ if (!STATE) {
                 items: []
             }
         ],
-        activeTeam: 0
+        activeTeam: 0,
+        randomNum: 0,
     }
 }
 
@@ -104,6 +105,7 @@ export const teamCoopReducer = (state = STATE, {
     isComparisonInProcess,
     teams,
     activeTeam,
+    randomNum,
 }: any) => {
     switch (type) {
         case T_SET_COMPARISON_READY :
@@ -125,6 +127,11 @@ export const teamCoopReducer = (state = STATE, {
             return {
                 ...state,
                 activeTeam
+            }
+        case SET_RANDOM :
+            return {
+                ...state,
+                randomNum
             }
         default:
             return state;

@@ -7,34 +7,46 @@ import RadarChart from "../../charts/radar-chart/RadarChart";
 
 const TeamCoopResult: React.FC = () => {
 
-    const teams: ITeamProfile[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams.slice(1))
+    const activeTeamInd: number = useSelector((state: GlobalStateType) => state.teamCoopReducer.activeTeam)
+    const randomNum: number = useSelector((state: GlobalStateType) => state.teamCoopReducer.randomNum)
+    const activeTeam: ITeamProfile = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams[activeTeamInd + 1])
     const schemeCurrent: SchemeType = useSelector((state: GlobalStateType) => state.termsReducer.terms)
 
-    console.log('from result')
+    const [isReady, setReady] = useState(false)
 
-    if (teams.length === 0) {
-        return null
-    }
-    if (!schemeCurrent) {
-        return null
+    useEffect(() => {
+        if (activeTeam.items.length !== 0 && schemeCurrent) {
+            setReady(true)
+        }
+    }, [activeTeam, randomNum, schemeCurrent, activeTeamInd])
+
+    if (activeTeam.items.length > 9) {
+        return <div className="section" style={{textAlign: 'center'}}>Too much members</div>
     }
 
-    const testResults = teams[0].items.map((item: IEmployeeProfile, i: number) => {
+    const testResults = activeTeam.items.map((item: IEmployeeProfile, i: number) => {
         return item.decData[1]
     })
 
+    console.log(activeTeam.items.length)
     const fullProfiles = testResults.map((item: resultType) => {
         return new UserResult(item, schemeCurrent)
     })
 
-    const profiles = fullProfiles.map((profile: any, i: number) => ({name: `${teams[0].items[i].name}`, data: profile.profile}))
+    const profiles = fullProfiles.map((profile: any, i: number) => ({
+        name: `${activeTeam.items[i].name}`,
+        data: profile.profile
+    }))
 
     return (
-        <div>
-            <Box>
-                {profiles.length !== 0 && <RadarChart profiles={profiles}/>}
-            </Box>
-        </div>
+        <>
+            {isReady &&
+            <div>
+                <Box>
+                    {profiles.length !== 0 && <RadarChart profiles={profiles}/>}
+                </Box>
+            </div>}
+        </>
     );
 }
 

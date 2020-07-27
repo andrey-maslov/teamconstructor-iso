@@ -1,4 +1,5 @@
 @import './vars.scss';
+@import './flexgridcustom.scss';
 
 body {
   font-family: $font-default;
@@ -170,12 +171,18 @@ body {
 }
 
 .mb {
+  &-none {
+    margin-bottom: 0 !important;
+  }
+
   &-sm {
     margin-bottom: 1rem;
   }
+
   &-md {
     margin-bottom: 2rem;
   }
+
   &-lg {
     margin-bottom: 3rem;
   }
@@ -345,20 +352,48 @@ th, td {
 }
 
 /*===== TEAM COOPERATION =====*/
-.droppable-pool {
-  //margin-right: 2rem;
+
+.top {
+
+  .btn-widget {
+    margin-bottom: 0;
+    min-width: unset;
+  }
 }
 
-.add-command-btn {
-  position: absolute !important;
-  top: .5rem;
-  right: 1rem;
+.box-store {
+  min-width: 320px;
+  margin-left: $gutter-width/2;
+  margin-right: $gutter-width/2;
+
+  & > div:nth-of-type(2) {
+    background-color: rgba($text-light, .5);
+  }
 }
 
-.box-store > div {
-  background-color: rgba($text-light, .5);
+.box-teams {
+  margin-left: $gutter-width/2;
+  margin-right: $gutter-width/2;
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
+.drag-area {
+  flex-grow: 1;
+  flex-shrink: 0;
+  margin-left: $gutter-width/2;
+  margin-right: $gutter-width/2;
+}
+
+div.team-sidebar {
+  min-width: 320px;
+  margin-bottom: 30px;
+  margin-left: $gutter-width/2;
+  margin-right: $gutter-width/2;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 30px;
+}
 
 /*===== FORMS =====*/
 //input.input:focus, input.input.active, select:focus, select.active, textarea:focus, textarea.active {
@@ -376,7 +411,15 @@ input, textarea {
 }
 
 //Media
-@media (max-width: 992px) {
+
+@media (max-width: 1920px) {
+
+  .container-wide {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: $lg-breakpoint) {
 
   .section {
     padding-top: 30px;

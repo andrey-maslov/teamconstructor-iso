@@ -45,12 +45,12 @@ button.btn-link {
 }
 
 .btn-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border: 1px solid $text-light;
   color: $text-light;
 
   &:hover {
-    background-color: $overlay-dark;
+    background-color: rgba($overlay-dark, .6);
   }
 }
 

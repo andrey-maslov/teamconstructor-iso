@@ -2,7 +2,6 @@
 
 .wrapper {
   box-sizing: border-box;
-  margin: 0 0 1rem;
   color: currentColor;
   position: relative;
   background: rgba($overlay-light, .3);
@@ -13,11 +12,19 @@
   height: 100%;
 }
 
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 .5rem 0 1.75rem;
+  @include gradient-accent(176deg, .3, .3);
+}
+
 .title {
   color: lighten($text-light, 10%);
-  padding: 1.25rem 1.75rem;
+  padding: 1.25rem 0;
   margin-bottom: 0;
-  @include gradient-accent(176deg, .3, .3);
+  //@include gradient-accent(176deg, .3, .3);
 
   svg {
     position: relative;

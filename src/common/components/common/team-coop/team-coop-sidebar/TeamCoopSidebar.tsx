@@ -4,23 +4,27 @@ import {GlobalStateType, ITeamProfile} from "../../../../../constants/types"
 import {useDispatch, useSelector} from "react-redux"
 import style from './team-coop-sidebar.module.scss'
 import {GoRocket} from "react-icons/go"
-import {setActiveTeam, setTeamsData} from "../../../../actions/actionCreator"
+import {setActiveTeam, setRandomNum} from "../../../../actions/actionCreator"
+import TeamModule from "./team-module/TeamModule";
 
 const TeamCoopSidebar: React.FC = () => {
 
     const teams: ITeamProfile[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams.slice(1))
+    const activeTeam: number = useSelector((state: GlobalStateType) => state.teamCoopReducer.activeTeam)
     const dispatch = useDispatch();
-
 
     return (
         <aside className={style.aside}>
             <div className={`${style.body}`}>
-                {teams.map((team) => {
+                {teams.map((team, i) => {
+                    const isActive = i === activeTeam;
                     return (
-                        <div key={team.label} className={`${style.block}`}>
-                            <h5>{team.label}</h5>
-                            <div><span>Members</span>: {team.items.length}</div>
-                        </div>
+                        <TeamModule
+                            key={team.label}
+                            team={team}
+                            isActive={isActive}
+                            handler={() => dispatch(setActiveTeam(i))}
+                        />
                     )
                 })}
             </div>
@@ -36,8 +40,8 @@ const TeamCoopSidebar: React.FC = () => {
     );
 
     function calculateHandler() {
-        // dispatch(setTeamsData(teams))
-        dispatch(setActiveTeam(0))
+        dispatch(setRandomNum(Math.random()))
+        // dispatch(setActiveTeam(0))
     }
 }
 

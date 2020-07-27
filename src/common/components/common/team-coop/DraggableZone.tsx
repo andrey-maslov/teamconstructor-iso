@@ -116,60 +116,61 @@ const DraggableZone: React.FC = () => {
         // console.log('update')
     }
 
+    const storeWidget = (
+        <Button
+            handle={addItemModal}
+            btnClass={'btn btn-outlined btn-widget'}
+            title={'Добавить'}
+        />
+    )
+
+    const teamsWidget = (
+        <Button
+            handle={() => {
+                addColumn(columnsCount)
+            }}
+            btnClass={'btn btn-outlined btn-widget'}
+            title={'Добавить команду'}
+        />
+    )
+
 
     return (
         <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
-            <div className="row">
-                <div className={`droppable-pool col-md-2`}>
-                    <Box title={staff.label} addClass={'box-store'}>
-                        <Button
-                            handle={addItemModal}
-                            btnClass={'btn btn-outlined add-command-btn'}
-                            title={'Добавить'}
-                        />
+            <div className="row mb-md">
 
-                        <DroppableColumnStore
-                            items={staff.items}
-                            deleteItem={deleteItem}
-                            id={`${0}`}
-                            isDropDisabled={true}
-                        />
+                <Box title={staff.label} addClass={'box-store'} widget={storeWidget}>
+                    <DroppableColumnStore
+                        items={staff.items}
+                        deleteItem={deleteItem}
+                        id={`${0}`}
+                        isDropDisabled={true}
+                    />
+                </Box>
 
-                    </Box>
-                </div>
+                <Box title={'Команды'} addClass={'box-teams'} widget={teamsWidget}>
+                    <div style={{display: "flex", height: '100%'}}>
+                        {columns.slice(1).map((column, i) => (
+                            <div key={i}>
 
-                <div className={`col-md-10`}>
-                    <Box title={'Команды'}>
-                        <Button
-                            handle={() => {
-                                addColumn(columnsCount)
-                            }}
-                            btnClass={'btn btn-outlined add-command-btn'}
-                            title={'Добавить команду'}
-                        />
+                                <ColumnTop
+                                    label={column.label}
+                                    deleteHandler={deleteColumn}
+                                    columnIndex={i + 1}
+                                />
 
-                        <div style={{display: "flex", height: '100%'}}>
-                            {columns.slice(1).map((column, i) => (
-                                <div key={i}>
+                                <DroppableColumn
+                                    items={column.items}
+                                    deleteItem={deleteItem}
+                                    id={`${i + 1}`}
+                                    hasPlaceholder={true}
+                                />
 
-                                    <ColumnTop
-                                        label={column.label}
-                                        deleteHandler={deleteColumn}
-                                        columnIndex={i + 1}
-                                    />
+                            </div>
+                        ))}
+                    </div>
+                </Box>
 
-                                    <DroppableColumn
-                                        items={column.items}
-                                        deleteItem={deleteItem}
-                                        id={`${i + 1}`}
-                                        hasPlaceholder={true}
-                                    />
-
-                                </div>
-                            ))}
-                        </div>
-                    </Box>
-                </div>
             </div>
         </DragDropContext>
     );

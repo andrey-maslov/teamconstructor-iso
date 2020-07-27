@@ -12,7 +12,8 @@ import {
     SET_COMPARISON_READY,
     COMPARISON_IN_PROCESS,
     T_SET_COMPARISON_READY,
-    T_COMPARISON_IN_PROCESS
+    T_COMPARISON_IN_PROCESS,
+    SET_RANDOM,
 } from './actionTypes';
 import {ITeamProfile} from "../../constants/types";
 
@@ -120,7 +121,6 @@ export function setRowData(encData1: string, encData2: string) {
 TEAM COOPERATION PROCESS
  */
 export function setTeamsData(teamsData: ITeamProfile[]): {type: string, teams: ITeamProfile[]} {
-    console.log(teamsData)
     return {
         type: SET_TEAMS_DATA,
         teams: teamsData
@@ -131,6 +131,13 @@ export function setActiveTeam(teamIndex: number): {type: string, activeTeam: num
     return {
         type: SET_ACTIVE_TEAM,
         activeTeam: teamIndex
+    }
+}
+
+export function setRandomNum(randomNum: number): {type: string, randomNum: number} {
+    return {
+        type: SET_RANDOM,
+        randomNum
     }
 }
 

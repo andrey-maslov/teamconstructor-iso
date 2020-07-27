@@ -1,0 +1,21 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.block {
+  margin-bottom: 1rem;
+  padding: .8rem;
+  border: 1px solid $overlay-light;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: $box-shadow-md;
+  }
+
+  &.active {
+    border-color: $orange;
+  }
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
