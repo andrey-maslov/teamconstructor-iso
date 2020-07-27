@@ -2,30 +2,26 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FiHome, FiDollarSign } from 'react-icons/fi';
 import { SITE_TITLE } from '../../../../../constants/constants';
-import { Navigation } from '../../../../components/web/header/nav/WebNav';
 import style from './mobi-nav.module.scss';
+import {INavRoute} from "../../../../../constants/types";
 
 type MobiNavigation = {
     isLoggedIn: boolean
     close: () => void
     isOpened: boolean
+    routes: INavRoute[]
 }
 
-const MobiNav = ({isLoggedIn, close, isOpened}: MobiNavigation) => {
+const MobiNav = ({isLoggedIn, close, isOpened, routes}: MobiNavigation) => {
 
-    let isOpenedClass = isOpened ? 'opened' : 'closed';
-
-    const navLinks = [
-        {title: 'Main', path: '/', access: 'all', icon: <FiHome/>},
-        {title: 'Results', path: '/results', access: 'authorized', icon: <FiDollarSign/>},
-    ];
+    const isOpenedClass = isOpened ? 'opened' : 'closed';
 
     return (
         <div className={`${style.overlay} ${style[isOpenedClass]} mobile-nav-overlay`} onClick={close}>
             <nav className={`${style.wrapper} mobile-nav-wrapper`}>
                 <h5 className={style.title}>Some title</h5>
                 <ul className={style.nav}>
-                    {navLinks.map(({title, path, access, icon}) => {
+                    {routes.map(({title, path, access, icon}) => {
                         return (
                             <li className={style.item} key={title}>
                                 <NavLink exact

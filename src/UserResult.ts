@@ -21,7 +21,7 @@ export interface SchemeType {
 //     [number, number, number, number, number],
 // ]
 
-type resultType = number[][];
+export type resultType = number[][];
 
 export class UserResult {
 
@@ -65,9 +65,9 @@ export class UserResult {
     }
 
     getPsyProfileData(): [string, number][] {
-        let data = this.correctedResult.map(item => {
-            let pos: number = 0;
-            let neg: number = 0;
+        const data = this.correctedResult.map(item => {
+            let pos = 0;
+            let neg = 0;
             item.forEach(value => {
                 if (value > 0) {
                     pos += value;
@@ -390,7 +390,7 @@ export class UserResult {
             ee = profile[1][1] + profile[2][1], // extraversion + emotiveness
             value = as + ee,
             probably = (profile[3][1] < 5 || profile[4][1] < 5 || profile[1][1] < 5 || profile[2][1] < 5) ? `${data.values[5]}, ` : '';
-        let text: string = '';
+        let text = '';
 
         if (value < data.checkValues[0]) {
             text = `${probably}${data.values[0]}`;
@@ -450,8 +450,8 @@ export class UserResult {
         const data = this.scheme.descriptions.psychoTypes;
 
         // percent of difference of 1st and 2nd max values
-        const checkValue: number = 0.1;
-        let range = [20, 35];
+        const checkValue = 0.1;
+        const range = [20, 35];
 
         const psychoTypeIndex = [...this.letterIndexes].indexOf(sortedOctants[0].index); // get psycho type group index
         const descIndex = this.getIndexByRange(sortedOctants[0].value, range); // get psycho type sub group index
@@ -481,7 +481,7 @@ export class UserResult {
     }
 
     //sex: 0 - male, 1 - female, 2 - some else
-    getFamous(sex: number = 0): string | null {
+    getFamous(sex = 0): string | null {
         const sortedOctants = [...this.sortedOctants];
         const data = this.scheme.descriptions.famous;
         const value = sortedOctants[0].value;

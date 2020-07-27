@@ -23,6 +23,10 @@ body {
 }
 
 
+.container-wide {
+  padding: 0 80px;
+}
+
 //focus visible polyfill
 .js-focus-visible :focus:not(.focus-visible) {
   outline: none;
@@ -38,6 +42,7 @@ body {
   min-height: 100vh;
 
   .main {
+    position: relative;
     flex: 1 0 auto;
     min-height: auto;
   }
@@ -58,7 +63,7 @@ body {
 
   .page {
 
-    &-compare {
+    &-compare, {
       position: relative;
 
     }
@@ -338,6 +343,22 @@ th, td {
     }
   }
 }
+
+/*===== TEAM COOPERATION =====*/
+.droppable-pool {
+  //margin-right: 2rem;
+}
+
+.add-command-btn {
+  position: absolute !important;
+  top: .5rem;
+  right: 1rem;
+}
+
+.box-store > div {
+  background-color: rgba($text-light, .5);
+}
+
 
 /*===== FORMS =====*/
 //input.input:focus, input.input.active, select:focus, select.active, textarea:focus, textarea.active {

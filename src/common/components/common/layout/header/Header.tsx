@@ -4,15 +4,22 @@ import { useMediaPredicate } from 'react-media-hook';
 import { clearUserData } from '../../../../actions/actionCreator';
 import MobiHeader from '../../../mobi/header/MobiHeader';
 import WebHeader from '../../../web/header/WebHeader';
+import {FiDollarSign, FiHome} from "react-icons/fi";
 
 type HeaderProps = {
     isLoggedIn: boolean
-    setLoginModal: (bool: boolean) => {}
+    setLoginModal: (bool: boolean) => void
     userEmail: string
-    clearUserData: () => {}
+    clearUserData: () => void
 }
 
+//TODO change to Redux hooks
 const Header: React.FC<HeaderProps> = ({isLoggedIn, setLoginModal, userEmail, clearUserData}) => {
+
+    const routes = [
+        {title: 'Пара', path: '/', access: 'all', icon: <FiHome/>},
+        {title: 'Команда', path: '/team', access: 'auth', icon: <FiDollarSign/>},
+    ];
 
     const isTablet = useMediaPredicate('(max-width: 992px)');
 
@@ -29,12 +36,14 @@ const Header: React.FC<HeaderProps> = ({isLoggedIn, setLoginModal, userEmail, cl
             isLoggedIn={isLoggedIn}
             handleLoginBtn={handleLoginBtn}
             userEmail={userEmail}
+            routes={routes}
         />;
     }
     return <WebHeader
         isLoggedIn={isLoggedIn}
         handleLoginBtn={handleLoginBtn}
         userEmail={userEmail}
+        routes={routes}
     />;
 
 };

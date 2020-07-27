@@ -1,24 +1,24 @@
 import React, {useState} from "react"
 import InputField from "./input-field/InputField"
 import {useDispatch, useSelector} from "react-redux"
-import {setComparisonResult, setUsersResults,} from "../../../../actions/actionCreator"
+import {setComparisonResult, setPairData,} from "../../../../actions/actionCreator"
 import {getAndDecodeData} from "encoded-data-parser"
 import Button from "../../buttons/button/Button"
 import {FaReact} from "react-icons/fa"
 import {GoRocket} from "react-icons/go"
 import ProfileGenerator from "./profile-generator/ProfileGenerator"
 import style from './pair-coop-input.module.scss'
-// import Loader from "../../loaders/loader/Loader"
+import {GlobalStateType} from "../../../../../constants/types";
 
 //EXAMPLE SEE HERE https://www.carlrippon.com/building-super-simple-react-form-component-typescript-basics/
 
 
-interface IUsersLocalState {
-    user1: {
+interface IPairLocalState {
+    partner1: {
         data: string
         isError: boolean
     }
-    user2: {
+    partner2: {
         data: string
         isError: boolean
     },
@@ -28,50 +28,35 @@ interface IUsersLocalState {
 
 const PairCoopInput: React.FC = () => {
     const dispatch = useDispatch();
-    const rowData1 = useSelector((state: any) => state.pairCoopReducer.user1.rowData);
-    const rowData2 = useSelector((state: any) => state.pairCoopReducer.user2.rowData);
+    const encData1 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.encData);
+    const encData2 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.encData);
 
-    const userDataFromURL = getAndDecodeData().encoded;
+    const encDataFromURL = getAndDecodeData().encoded;
 
-    const userData1 = userDataFromURL ? userDataFromURL : rowData1;
-
-    const [localState, setLocalState] = useState<IUsersLocalState>({
-        user1: {
-            data: userData1,
+    const [localState, setLocalState] = useState<IPairLocalState>({
+        partner1: {
+            data: encDataFromURL ? encDataFromURL : encData1,
             isError: false,
         },
-        user2: {
-            data: rowData2,
+        partner2: {
+            data: encData2,
             isError: false
         },
         isGenerator: false
     })
 
-    const generateAndSet1 = (data: any) => {
+
+    const onChangeHandler1 = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLocalState({
             ...localState,
-            user1: {...localState.user1, data: data},
+            partner1: {...localState.partner1, data: e.target.value, isError: false},
         })
     }
 
-    const onChangeHandler1 = (e: any) => {
+    const onChangeHandler2 = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLocalState({
             ...localState,
-            user1: {...localState.user1, data: e.target.value, isError: false},
-        })
-    }
-
-    const generateAndSet2 = (data: any) => {
-        setLocalState({
-            ...localState,
-            user2: {...localState.user2, data: data},
-        })
-    }
-
-    const onChangeHandler2 = (e: any) => {
-        setLocalState({
-            ...localState,
-            user2: {...localState.user2, data: e.target.value, isError: false},
+            partner2: {...localState.partner2, data: e.target.value, isError: false},
         })
     }
 
@@ -89,25 +74,26 @@ const PairCoopInput: React.FC = () => {
                     getRowData={generateAndSet2}
                 />
             </div>}
+
             <form onSubmit={submitCompare}>
                 <div className={`row between-xs ${style.fields}`}>
                     <div className="col-lg-6 mb-md">
                         <InputField
                             label={'Профиль 1'}
-                            name={'user1'}
-                            value={localState.user1.data}
+                            name={'partner1'}
+                            value={localState.partner1.data}
                             placeholder={'Внесите в это поле зашифрованный результат для пользователя 1'}
-                            hasErrored={localState.user1.isError}
+                            hasErrored={localState.partner1.isError}
                             onChangeHandler={onChangeHandler1}
                         />
                     </div>
                     <div className="col-lg-6 mb-md">
                         <InputField
                             label={'Профиль 2'}
-                            name={'user2'}
-                            value={localState.user2.data}
+                            name={'partner2'}
+                            value={localState.partner2.data}
                             placeholder={'Внесите в это поле зашифрованный результат для пользователя 2'}
-                            hasErrored={localState.user2.isError}
+                            hasErrored={localState.partner2.isError}
                             onChangeHandler={onChangeHandler2}
                         />
                     </div>
@@ -116,14 +102,18 @@ const PairCoopInput: React.FC = () => {
                     <Button
                         title={'Сравнить'}
                         startIcon={<GoRocket/>}
-                        handle={() => void(0)}
+                        handle={() => void (0)}
                         btnClass={'btn-outlined'}
                     />
                 </div>
             </form>
-            <button className={style.floatBtn} onClick={() => {
-                setLocalState({...localState, isGenerator: !localState.isGenerator})
-            }}>
+
+            <button
+                className={style.floatBtn}
+                onClick={() => {
+                    setLocalState({...localState, isGenerator: !localState.isGenerator})
+                }}
+            >
                 <FaReact/>
             </button>
         </>
@@ -132,54 +122,72 @@ const PairCoopInput: React.FC = () => {
     function submitCompare(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        const userValue1 = e.target['user1'].value;
-        const userValue2 = e.target['user2'].value;
-        const userName1 = e.target['name_user1'].value;
-        const userName2 = e.target['name_user2'].value;
+        const encValue1 = e.target['partner1'].value;
+        const encValue2 = e.target['partner2'].value;
+        const name1 = e.target['name_partner1'].value;
+        const name2 = e.target['name_partner2'].value;
 
-        const {user1, user2} = decodeAndValidateUsersData(userValue1, userValue2)
+        const {partner1, partner2} = decodeAndValidatePairData(encValue1, encValue2)
 
-        decodeAndValidateUsersData(userValue1, userValue2)
+        // decodeAndValidatePairData(partnerValue1, partnerValue2)
 
         setLocalState({
             ...localState,
-            user1: {...localState.user1, data: userValue1, isError: !user1.isValid},
-            user2: {...localState.user2, data: userValue2, isError: !user2.isValid}
+            partner1: {...localState.partner1, data: encValue1, isError: !partner1.isValid},
+            partner2: {...localState.partner2, data: encValue2, isError: !partner2.isValid}
         })
 
-        if (user1.isValid && user2.isValid) {
+        console.log(localState)
+
+        if (partner1.isValid && partner2.isValid) {
             dispatch(setComparisonResult(true))
-            dispatch(setUsersResults(user1.data, user2.data, userName1, userName2))
+            dispatch(setPairData(partner1.data, partner2.data, name1, name2))
             return;
-        } else if (!user1.isValid && !user2.isValid) {
-            dispatch(setUsersResults([], [], '', ''))
+        } else if (!partner1.isValid && !partner2.isValid) {
+            dispatch(setPairData([], [], '', ''))
             return;
-        } else if (!user1.isValid && user2.isValid) {
-            dispatch(setUsersResults([], [], '', ''))
+        } else if (!partner1.isValid && partner2.isValid) {
+            dispatch(setPairData([], [], '', ''))
             return;
-        } else if (user1.isValid && !user2.isValid) {
-            dispatch(setUsersResults([], [], '', ''))
+        } else if (partner1.isValid && !partner2.isValid) {
+            dispatch(setPairData([], [], '', ''))
             return;
         }
 
         dispatch(setComparisonResult(false))
     }
 
-    function decodeAndValidateUsersData(value1: string, value2: string): any {
 
-        const userDataArr1: [] | null = getAndDecodeData('', value1).data
-        const userDataArr2: [] | null = getAndDecodeData('', value2).data
+    function decodeAndValidatePairData(value1: string, value2: string): any {
+
+        const partnerDataArr1: [] | null = getAndDecodeData('', value1).data
+        const partnerDataArr2: [] | null = getAndDecodeData('', value2).data
 
         return {
-            user1: {
-                data: userDataArr1,
-                isValid: userDataArr1 !== null
+            partner1: {
+                data: partnerDataArr1,
+                isValid: partnerDataArr1 !== null
             },
-            user2: {
-                data: userDataArr2,
-                isValid: userDataArr2 !== null
+            partner2: {
+                data: partnerDataArr2,
+                isValid: partnerDataArr2 !== null
             }
         }
+    }
+
+    //Profiles generator handlers
+    function generateAndSet1(data: string) {
+        setLocalState({
+            ...localState,
+            partner1: {...localState.partner1, data: data},
+        })
+    }
+
+    function generateAndSet2 (data: string) {
+        setLocalState({
+            ...localState,
+            partner2: {...localState.partner2, data: data},
+        })
     }
 }
 

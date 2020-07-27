@@ -1,4 +1,4 @@
-export const SITE_TITLE: string = 'Teamconstructor';
+export const SITE_TITLE = 'Teamconstructor';
 // export const LANGS = ['ru', 'en', 'pl', 'es', 'de', 'fr', 'it'];
 export const LANGS = [
     ['ru', 'Русский'],

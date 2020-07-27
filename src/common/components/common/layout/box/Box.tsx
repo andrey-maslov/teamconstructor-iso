@@ -1,17 +1,21 @@
 import React from 'react';
 import style from './box.module.scss'
 
-// interface BoxProps {
-//
-// }
+interface IBoxProps {
+    title?: string
+    icon?: React.ReactNode
+    addClass?: string
+    children: React.ReactNode
+}
 
-const Box: React.FC<any> = ({...props}) => {
-
-    let addClassNames = props.className ? props.className : '';
+const Box: React.FC<any> = ({title, icon, addClass = '', children}) => {
 
     return (
-        <div {...props} className={`${style.wrapper} ${addClassNames}`}>
-            {props.children}
+        <div className={`${style.wrapper} ${addClass}`}>
+            {title && <h3 className={style.title}>{icon}{title}</h3>}
+            <div className={style.content}>
+                {children}
+            </div>
         </div>
     );
 }

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import TopLogo from '../../common/layout/header/top-logo/TopLogo';
 import MobiNav from '../../mobi/header/nav/MobiNav';
 import MobileNavToggle from '../../mobi/header/nav-toggle/NavToggle';
-import { Header } from '../../web/header/WebHeader';
+import { IHeaderProps } from '../../web/header/WebHeader';
 import style from './mobi-header.module.scss';
 import LangSwitcher from '../../common/buttons/lang-switcher/LangSwitcher';
 
-const MobiHeader = ({isLoggedIn, handleLoginBtn, userEmail}: Header) => {
+const MobiHeader = ({isLoggedIn, handleLoginBtn, userEmail, routes}: IHeaderProps) => {
 
     const [isMobiNavOpened, setMobiNav] = useState(false);
 
@@ -36,6 +36,7 @@ const MobiHeader = ({isLoggedIn, handleLoginBtn, userEmail}: Header) => {
                 isLoggedIn={isLoggedIn}
                 close={mobileNavClose}
                 isOpened={isMobiNavOpened}
+                routes={routes}
             />
         </header>
     );

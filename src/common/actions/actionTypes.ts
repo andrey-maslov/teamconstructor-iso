@@ -1,26 +1,32 @@
-export const SAVE_ANSWERS: string = 'SAVE_ANSWERS';
-export const SAVE_PERSONAL_INFO: string = 'SAVE_PERSONAL_INFO';
+//Pair data
+export const SET_PAIR_DATA = 'SET_PAIR_DATA'
+export const CLEAR_PAIR_DATA = 'CLEAR_PAIR_DATA'
 
-export const SET_COMPARISON_READY: string = 'SET_COMPARISON_READY';
-export const SET_USERS_RESULTS: string = 'SET_USERS_RESULTS';
-export const CLEAR_USERS_RESULTS: string = 'CLEAR_USERS_RESULTS';
-export const COMPARE_PROCESS: string = 'COMPARE_PROCESS';
+//Teams data
+export const SET_TEAMS_DATA = 'SET_TEAMS'
+export const SET_ACTIVE_TEAM = 'SET_ACTIVE_TEAM'
 
-export const SET_ROW_DATA1: string = 'SET_ROW_DATA1'; //tmp
-export const SET_ROW_DATA2: string = 'SET_ROW_DATA2'; //tmp
-export const SAVE_LOG: string = 'SAVE_LOG'; //tmp
+//tmp
+export const SET_ROW_DATA1 = 'SET_ROW_DATA1'
+export const SET_ROW_DATA2 = 'SET_ROW_DATA2'
 
-export const ADD_AUTH_DATA = 'ADD_AUTH_DATA';
-export const SUBSCRIPTION = 'SUBSCRIPTION';
-export const COOKIES_CONSENT = 'COOKIES_CONSENT';
-export const CLEAR_USER_DATA = 'CLEAR_USER_DATA';
-export const USER_IN_BASE = 'USER_IN_BASE';
-export const SET_LANG = 'SET_LANG';
-export const SAVE_RESULT = 'SAVE_RESULT';
-export const SAVE_TEST_DATA = 'SAVE_TEST_DATA';
+//User data
+export const ADD_AUTH_DATA = 'ADD_AUTH_DATA'
+export const SUBSCRIPTION = 'SUBSCRIPTION'
+export const COOKIES_CONSENT = 'COOKIES_CONSENT'
+export const CLEAR_USER_DATA = 'CLEAR_USER_DATA'
+export const SET_LANG = 'SET_LANG'
 
-export const LOGIN_MODAL = 'LOGIN_MODAL';
-export const ONLY_LOGGED_MODAL = 'ONLY_LOGGED_MODAL';
-export const STATUS_MODAL = 'STATUS_MODAL';
+//Modals
+// export const LOGIN_MODAL = 'LOGIN_MODAL'
+// export const ONLY_LOGGED_MODAL = 'ONLY_LOGGED_MODAL'
+// export const STATUS_MODAL = 'STATUS_MODAL'
 
-export const FETCH_TERMS = 'FETCH_TERMS';
+//Processes
+export const SET_COMPARISON_READY = 'SET_COMPARISON_READY'
+export const COMPARISON_IN_PROCESS = 'COMPARE_PROCESS'
+export const T_SET_COMPARISON_READY = 'TEAM_SET_COMPARISON_READY'
+export const T_COMPARISON_IN_PROCESS = 'TEAM_COMPARE_PROCESS'
+
+//Fetching data
+export const FETCH_TERMS = 'FETCH_TERMS'

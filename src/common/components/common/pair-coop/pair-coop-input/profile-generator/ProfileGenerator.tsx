@@ -6,7 +6,7 @@ import {setRowData} from "../../../../../actions/actionCreator";
 interface ProfileGeneratorProps {
     label: string
     id: string
-    getRowData: any
+    getRowData: (p: string) => void
 }
 
 const ProfileGenerator: React.FC<ProfileGeneratorProps> = ({label, id, getRowData}) => {
@@ -19,7 +19,7 @@ const ProfileGenerator: React.FC<ProfileGeneratorProps> = ({label, id, getRowDat
     const generate = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        let arr: any = [[],[],[],[],[]];
+        const arr: number[][] = [[],[],[],[],[]];
 
         for (let i = 1; i < 6; i++) {
 
@@ -30,16 +30,15 @@ const ProfileGenerator: React.FC<ProfileGeneratorProps> = ({label, id, getRowDat
             }
         }
 
-        const encResult = btoa(JSON.stringify([[1,1,1], arr]))
+        const encData = btoa(JSON.stringify([[1,1,1], arr]))
 
         if (id === 'profile_1') {
-            dispatch(setRowData(encResult, ''))
-            getRowData(encResult)
+            dispatch(setRowData(encData, ''))
+            getRowData(encData)
             return
         }
-        dispatch(setRowData('', encResult))
-        getRowData(encResult)
-        return
+        dispatch(setRowData('', encData))
+        getRowData(encData)
     }
 
 

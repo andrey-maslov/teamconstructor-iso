@@ -1,0 +1,26 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.comp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid $overlay-light;
+  border-radius:$border-radius-sm;
+  padding: 2rem;
+  max-width: 20rem;
+
+  &:not(:last-of-type) {
+    margin-bottom: 20px;
+  }
+
+  h5 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  small {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+}
