@@ -1,3 +1,5 @@
+import React from "react";
+
 export type DecodedDataType = [number[], number[][]]
 
 export type AnswerType = {
@@ -27,6 +29,13 @@ export interface ITeamProfile {
 export interface IModalProps {
     isModalShown: boolean
     closeModal: () => void
+}
+
+export interface INavRoute {
+    title: string
+    path: string
+    access: string
+    icon: React.ReactNode
 }
 
 export type GlobalStateType = any
