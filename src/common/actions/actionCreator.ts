@@ -11,9 +11,8 @@ import {
     FETCH_TERMS,
     SET_COMPARISON_READY,
     COMPARISON_IN_PROCESS,
-    T_SET_COMPARISON_READY,
-    T_COMPARISON_IN_PROCESS,
     SET_RANDOM,
+    SET_ADD_MEMBER_MODAL,
 } from './actionTypes';
 import {ITeamProfile} from "../../constants/types";
 
@@ -141,11 +140,15 @@ export function setRandomNum(randomNum: number): {type: string, randomNum: numbe
     }
 }
 
-
 /*
 MODALS and ALERTS
  */
-
+export function setAddMemberModal(isAddMemberModal: boolean): {type: string, isAddMemberModal: boolean} {
+    return {
+        type: SET_ADD_MEMBER_MODAL,
+        isAddMemberModal
+    }
+}
 
 
 /*

@@ -20,8 +20,12 @@ const TeamCoopResult: React.FC = () => {
         }
     }, [activeTeam, randomNum, schemeCurrent, activeTeamInd])
 
-    if (activeTeam.items.length > 9) {
-        return <div className="section" style={{textAlign: 'center'}}>Too much members</div>
+    if (activeTeam.items.length  === 0) {
+        return null
+    }
+
+    if (activeTeam.items.length < 2 || activeTeam.items.length > 9) {
+        return <div className="" style={{textAlign: 'center'}}>Количество участников команды должно быть от 2 до 9</div>
     }
 
     const testResults = activeTeam.items.map((item: IEmployeeProfile, i: number) => {

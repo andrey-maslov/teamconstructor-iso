@@ -1,0 +1,37 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.content {
+  padding-top: 2rem;
+
+  button {
+
+    svg {
+      path {
+        stroke: $text-light
+      }
+      color: $text-light ;
+    }
+  }
+}
+
+.group {
+  margin-bottom: 1rem;
+
+  textarea {
+    resize: none;
+    margin: 0;
+    height: 100px;
+  }
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: .5rem;
+}
+
+.error {
+  font-size: .8rem;
+  color: $danger;
+}
+

@@ -7,7 +7,7 @@ import ColumnTop from "./droppable-column/ColumnTop"
 import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
 import {GlobalStateType, IEmployeeProfile, ITeamProfile} from "../../../../constants/types"
 import {useDispatch, useSelector} from "react-redux";
-import {setTeamsData} from "../../../actions/actionCreator";
+import {setAddMemberModal, setTeamsData} from "../../../actions/actionCreator";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -118,7 +118,7 @@ const DraggableZone: React.FC = () => {
 
     const storeWidget = (
         <Button
-            handle={addItemModal}
+            handle={addMemberModal}
             btnClass={'btn btn-outlined btn-widget'}
             title={'Добавить'}
         />
@@ -142,7 +142,7 @@ const DraggableZone: React.FC = () => {
                 <Box title={staff.label} addClass={'box-store'} widget={storeWidget}>
                     <DroppableColumnStore
                         items={staff.items}
-                        deleteItem={deleteItem}
+                        deleteItem={deleteMember}
                         id={`${0}`}
                         isDropDisabled={true}
                     />
@@ -161,7 +161,7 @@ const DraggableZone: React.FC = () => {
 
                                 <DroppableColumn
                                     items={column.items}
-                                    deleteItem={deleteItem}
+                                    deleteItem={deleteMember}
                                     id={`${i + 1}`}
                                     hasPlaceholder={true}
                                 />
@@ -175,12 +175,12 @@ const DraggableZone: React.FC = () => {
         </DragDropContext>
     );
 
-    function addItemModal(): void {
-        alert('Add new employee')
+    function addMemberModal(): void {
+        dispatch(setAddMemberModal(true))
     }
 
     //TODO what about staff column
-    function deleteItem(colIndex: number, itemIndex: number): void {
+    function deleteMember(colIndex: number, itemIndex: number): void {
         const newColumns = [...columns];
         newColumns[colIndex].items.splice(itemIndex, 1);
         dispatch(setTeamsData(newColumns))

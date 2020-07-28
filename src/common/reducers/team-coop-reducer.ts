@@ -64,13 +64,13 @@ const initialStaff = [
         encData: 'W1swLDAsMV0sW1stMSwxLDAsLTMsLTNdLFsyLC0yLC0zLC0xLDNdLFstNCwwLDEsLTEsM10sWzEsMCwzLDEsLTRdLFstMSwxLC0xLDMsLTNdXV0=',
         decData: [[0, 0, 1], [[-1, 1, 0, -3, -3], [2, -2, -3, -1, 3], [-4, 0, 1, -1, 3], [1, 0, 3, 1, -4], [-1, 1, -1, 3, -3]]]
     },
-    {
-        id: `8-${new Date().getTime()}`,
-        name: 'Зодиак',
-        position: 'Serial killer',
-        encData: 'W1sxLDQsMV0sW1stMiwwLDEsLTIsMl0sWy0xLDEsMSwyLC01XSxbMiwzLDAsMywwXSxbMSw0LDAsLTIsMV0sWzIsLTMsLTIsLTMsMV1dXQ==',
-        decData: [[1, 4, 1], [[-2, 0, 1, -2, 2], [-1, 1, 1, 2, -5], [2, 3, 0, 3, 0], [1, 4, 0, -2, 1], [2, -3, -2, -3, 1]]]
-    },
+    // {
+    //     id: `8-${new Date().getTime()}`,
+    //     name: 'Зодиак',
+    //     position: 'Serial killer',
+    //     encData: 'W1sxLDQsMV0sW1stMiwwLDEsLTIsMl0sWy0xLDEsMSwyLC01XSxbMiwzLDAsMywwXSxbMSw0LDAsLTIsMV0sWzIsLTMsLTIsLTMsMV1dXQ==',
+    //     decData: [[1, 4, 1], [[-2, 0, 1, -2, 2], [-1, 1, 1, 2, -5], [2, 3, 0, 3, 0], [1, 4, 0, -2, 1], [2, -3, -2, -3, 1]]]
+    // },
 
 ]
 
@@ -79,7 +79,6 @@ let STATE: any = null;
 
 if (!STATE) {
     STATE = {
-        type: '',
         isComparisonResultReady: false,
         isComparisonInProcess: false,
         teams: [

@@ -23,8 +23,9 @@ export const COLORS = {
     accent: '#36a9e0',
     yellow: '#FFC734',
     orange: '#FF5E34',
-    text: '#203152',
-    accent2: '#36A9E0',
+    textLight: '#b9b9b0',
+    green: '#2FE77F',
+    accent2: '#525DAC',
     grey: '#7D7D7D',
     greyBg: '#EFF1F4',
 };

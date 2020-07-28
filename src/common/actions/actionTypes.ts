@@ -6,6 +6,7 @@ export const CLEAR_PAIR_DATA = 'CLEAR_PAIR_DATA'
 export const SET_TEAMS_DATA = 'SET_TEAMS'
 export const SET_ACTIVE_TEAM = 'SET_ACTIVE_TEAM'
 export const SET_RANDOM = 'SET_RANDOM'
+export const ADD_MEMBER = 'ADD_MEMBER'
 
 //tmp
 export const SET_ROW_DATA1 = 'SET_ROW_DATA1'
@@ -19,6 +20,8 @@ export const CLEAR_USER_DATA = 'CLEAR_USER_DATA'
 export const SET_LANG = 'SET_LANG'
 
 //Modals
+export const SET_ADD_MEMBER_MODAL = 'SET_ADD_MEMBER_MODAL'
+
 // export const LOGIN_MODAL = 'LOGIN_MODAL'
 // export const ONLY_LOGGED_MODAL = 'ONLY_LOGGED_MODAL'
 // export const STATUS_MODAL = 'STATUS_MODAL'

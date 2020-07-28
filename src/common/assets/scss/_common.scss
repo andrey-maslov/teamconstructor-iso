@@ -358,6 +358,8 @@ th, td {
   .btn-widget {
     margin-bottom: 0;
     min-width: unset;
+    height: auto;
+    text-transform: none;
   }
 }
 
@@ -393,6 +395,14 @@ div.team-sidebar {
   position: -webkit-sticky;
   position: sticky;
   top: 30px;
+}
+
+.add-member-modal {
+  .rodal-dialog {
+    background-color: $overlay-dark;
+    box-shadow: 1px 3px 32px rgba(#fff, .4);
+    border-radius: $border-radius;
+  }
 }
 
 /*===== FORMS =====*/

@@ -26,16 +26,16 @@ export interface ITeamProfile {
     items: Array<IEmployeeProfile> | any
 }
 
-export interface IModalProps {
-    isModalShown: boolean
-    closeModal: () => void
-}
-
 export interface INavRoute {
     title: string
     path: string
     access: string
     icon: React.ReactNode
+}
+
+export interface IModalProps {
+    visible: boolean
+    closeModal: () => void
 }
 
 export type GlobalStateType = any

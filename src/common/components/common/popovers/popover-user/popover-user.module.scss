@@ -15,7 +15,7 @@
   border: 1px solid rgba($orange, .2);
   line-height: 37px;
   width: 70px;
-  border-radius: 3px;
+  border-radius: $border-radius-sm;
   align-self: stretch;
   color: $orange;
   font-size: 16px;
