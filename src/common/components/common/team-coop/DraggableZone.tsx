@@ -137,9 +137,9 @@ const DraggableZone: React.FC = () => {
 
     return (
         <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
-            <div className="row mb-md">
+            <div className="flex-row mb-md">
 
-                <Box title={staff.label} addClass={'box-store'} widget={storeWidget}>
+                <Box title={staff.label} addClass={'store-area'} widget={storeWidget}>
                     <DroppableColumnStore
                         items={staff.items}
                         deleteItem={deleteMember}
@@ -148,7 +148,7 @@ const DraggableZone: React.FC = () => {
                     />
                 </Box>
 
-                <Box title={'Команды'} addClass={'box-teams'} widget={teamsWidget}>
+                <Box title={'Команды'} addClass={'teams-area'} widget={teamsWidget}>
                     <div style={{display: "flex", height: '100%'}}>
                         {columns.slice(1).map((column, i) => (
                             <div key={i}>

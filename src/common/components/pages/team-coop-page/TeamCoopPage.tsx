@@ -10,7 +10,7 @@ const TeamCoopPage: React.FC = () => {
     return (
         <main className='section page-team main'>
             <div className="container-wide">
-                <div className="row">
+                <div className="flex-row">
                     <div className="drag-area">
                         <DraggableZone/>
                         <TeamCoopResult/>

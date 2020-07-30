@@ -15,12 +15,12 @@ const TeamCoopResult: React.FC = () => {
     const [isReady, setReady] = useState(false)
 
     useEffect(() => {
-        if (activeTeam.items.length !== 0 && schemeCurrent) {
+        if (activeTeam && (activeTeam.items.length !== 0 && schemeCurrent)) {
             setReady(true)
         }
     }, [activeTeam, randomNum, schemeCurrent, activeTeamInd])
 
-    if (activeTeam.items.length  === 0) {
+    if (!activeTeam || activeTeam.items.length  === 0) {
         return null
     }
 

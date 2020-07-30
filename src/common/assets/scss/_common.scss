@@ -23,17 +23,40 @@ body {
   }
 }
 
-
+/*===== LAYOUT =====*/
 .container-wide {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
   padding: 0 80px;
 }
 
-//focus visible polyfill
-.js-focus-visible :focus:not(.focus-visible) {
-  outline: none;
+.flex-row {
+  display: flex;
+  //margin-left: -$gutter-width / 2;
+  //margin-right: -$gutter-width / 2;
 }
 
-//Dark color theme
+.section {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+
+  &-page {
+    padding: 60px 0;
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
 .app-wrapper {
   position: relative;
   display: flex;
@@ -46,6 +69,7 @@ body {
     position: relative;
     flex: 1 0 auto;
     min-height: auto;
+    width: 100%;
   }
 
   &:before {
@@ -71,6 +95,10 @@ body {
   }
 }
 
+
+
+/*===== DISPLAY =====*/
+
 .visible {
   display: block;
 }
@@ -80,6 +108,60 @@ body {
   display: none;
 }
 
+
+.img-fluid {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.fade-in {
+  animation: fadeIn ease .5s;
+}
+
+.box-top {
+
+  .btn-widget {
+    margin-bottom: 0;
+    min-width: unset;
+    height: auto;
+    text-transform: none;
+  }
+}
+
+html::-webkit-scrollbar,
+html::-webkit-scrollbar-track,
+body *::-webkit-scrollbar,
+body *::-webkit-scrollbar-track {
+  background-color: $overlay-dark;
+  height: 10px;
+}
+html::-webkit-scrollbar-corner,
+body *::-webkit-scrollbar-corner {
+  background-color: $overlay-dark;
+}
+html::-webkit-scrollbar-thumb,
+body *::-webkit-scrollbar-thumb {
+  background-color: lighten($overlay-light, 5%);
+  width: 2px;
+  border-radius: 5px;
+  border: 2px solid transparent;
+}
+html::-webkit-scrollbar,
+body *::-webkit-scrollbar,
+html::-webkit-scrollbar-track,
+body *::-webkit-scrollbar-track {
+  background-color: $overlay-dark;
+}
+
+
+//focus visible polyfill
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
+
+
+/*===== COLORS =====*/
 .color {
 
   &-accent {
@@ -138,33 +220,6 @@ body {
   }
 }
 
-.img-fluid {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-.section {
-  padding-top: 100px;
-  padding-bottom: 100px;
-}
-
-.content {
-  max-width: 900px;
-  margin: 0 auto;
-
-  &-page {
-    padding: 60px 0;
-  }
-}
-
-.table-wrapper {
-  overflow-x: auto;
-}
-
-.fade-in {
-  animation: fadeIn ease .5s;
-}
 
 .divider {
   border-top: 1px solid $grey-bg;
@@ -254,20 +309,7 @@ th, td {
   line-height: 1.4;
 }
 
-.login {
 
-  &-modal {
-
-    &-content {
-
-      .tooltip {
-        display: block;
-        line-height: inherit;
-        cursor: not-allowed;
-      }
-    }
-  }
-}
 
 
 /*===== Modals =====*/
@@ -305,8 +347,24 @@ th, td {
   right: 0;
 }
 
+.login {
+
+  &-modal {
+
+    &-content {
+
+      .tooltip {
+        display: block;
+        line-height: inherit;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+
 /*===== CHARTS =====*/
-//Radar chart
+
 .shape {
   //fill: $orange;
   //stroke: $orange;
@@ -353,48 +411,53 @@ th, td {
 
 /*===== TEAM COOPERATION =====*/
 
-.top {
+$sidebar-width: 20rem;
 
-  .btn-widget {
-    margin-bottom: 0;
-    min-width: unset;
-    height: auto;
-    text-transform: none;
+.page-team {
+
+  .store-area {
+    width: $sidebar-width;
+    //margin-left: $gutter-width/2;
+    //margin-right: $gutter-width/2;
+
+    & > div:nth-of-type(2) {
+      background-color: rgba($text-light, .5);
+    }
   }
-}
 
-.box-store {
-  min-width: 320px;
-  margin-left: $gutter-width/2;
-  margin-right: $gutter-width/2;
+  .teams-area {
+    //margin-left: $gutter-width/2;
+    //margin-right: $gutter-width/2;
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin-left: $gutter-width;
+    margin-right: $gutter-width;
+    width: calc(100% - (#{$sidebar-width} + #{$gutter-width * 2}));
 
-  & > div:nth-of-type(2) {
-    background-color: rgba($text-light, .5);
+    .box-content {
+      overflow-x: auto;
+    }
   }
-}
 
-.box-teams {
-  margin-left: $gutter-width/2;
-  margin-right: $gutter-width/2;
-  flex-grow: 1;
-  flex-shrink: 0;
-}
+  .drag-area {
+    flex-grow: 1;
+    flex-shrink: 0;
+    //padding-left: $gutter-width/2;
+    //padding-right: $gutter-width/2;
+    overflow-x: auto;
+    width: calc(100% - #{$sidebar-width});
+  }
 
-.drag-area {
-  flex-grow: 1;
-  flex-shrink: 0;
-  margin-left: $gutter-width/2;
-  margin-right: $gutter-width/2;
-}
-
-div.team-sidebar {
-  min-width: 320px;
-  margin-bottom: 30px;
-  margin-left: $gutter-width/2;
-  margin-right: $gutter-width/2;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 30px;
+  .team-sidebar {
+    width: $sidebar-width;
+    min-width: $sidebar-width;
+    margin-bottom: $gutter-width;
+    //margin-left: $gutter-width/2;
+    //margin-right: $gutter-width/2;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 30px;
+  }
 }
 
 .add-member-modal {

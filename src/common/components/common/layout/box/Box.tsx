@@ -14,12 +14,12 @@ const Box: React.FC<any> = ({title, icon, addClass = '', widget, children}) => {
     return (
         <div className={`${style.wrapper} ${addClass}`}>
             {(title || widget) &&
-                <div className={`${style.top} top`}>
+                <div className={`${style.top} box-top`}>
                     {title && <h3 className={style.title}>{icon}{title}</h3>}
                     {widget}
                 </div>
             }
-            <div className={style.content}>
+            <div className={`${style.content} box-content`}>
                 {children}
             </div>
         </div>
