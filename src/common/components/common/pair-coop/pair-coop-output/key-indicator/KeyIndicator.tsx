@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../../../charts/radar-chart/radar-chart.module.scss";
+import style from "./key-indicator.module.scss";
 import CircleDiagram from "../../../charts/circle-diagram/CircleDiagram";
 
 export interface IKeyIndicator {

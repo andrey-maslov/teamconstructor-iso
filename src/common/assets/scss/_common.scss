@@ -95,6 +95,22 @@ body {
   }
 }
 
+.result-box {
+  margin-bottom: $gutter-width;
+}
+
+.result-area {
+  margin-right: $gutter-width;
+  margin-bottom: $gutter-width;
+}
+
+.team-keys {
+  flex: 1;
+}
+
+.team-radar {
+  margin-right: $gutter-width;
+}
 
 
 /*===== DISPLAY =====*/
