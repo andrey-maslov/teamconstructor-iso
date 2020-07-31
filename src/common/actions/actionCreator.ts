@@ -157,7 +157,7 @@ FETCHING DATA
 
 export const fetchTerms = (lang: string) => {
     // const url = `/psychology_${lang}.json`;
-    const url = `https://strapi.nobugs.today/psychologies?slug=${lang}`;
+    const url = `https://api.salary2.me/psychologies?lang=${lang}`;
 // console.log(lang)
     return (dispatch: any) => {
         fetch(url)
