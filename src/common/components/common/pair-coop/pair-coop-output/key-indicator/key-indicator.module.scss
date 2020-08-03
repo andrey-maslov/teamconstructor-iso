@@ -7,11 +7,11 @@
   border: 1px solid $overlay-light;
   border-radius: $border-radius-sm;
   padding: 2rem;
-  max-width: 20rem;
+ width: 20rem;
 
-  &:not(:last-of-type) {
-    margin-bottom: 20px;
-  }
+  //&:not(:last-of-type) {
+  //  margin-bottom: 20px;
+  //}
 
   h5 {
     margin-top: 0;

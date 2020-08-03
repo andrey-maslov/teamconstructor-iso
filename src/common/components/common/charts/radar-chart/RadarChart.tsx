@@ -19,12 +19,13 @@ const colors = [
 ]
 
 type ChartsPropsType = {
-    profiles: { name: string, data: [string, number][] }[]
+    profiles: [string, number][][]
+    names: string[]
 }
 
-const RadarChart: React.FC<ChartsPropsType> = ({profiles}) => {
+const RadarChart: React.FC<ChartsPropsType> = ({profiles, names}) => {
 
-    const chartLabels = getChartLabels(profiles[0].data);
+    const chartLabels = getChartLabels(profiles[0]);
     const chartColors = colors;
 
     const chartRadarOptions: any = {
@@ -47,12 +48,12 @@ const RadarChart: React.FC<ChartsPropsType> = ({profiles}) => {
     const data = {
         labels: currentOptions.labels,
         datasets: profiles.map((profile, i) => ({
-            label: profile.name,
+            label: names[i],
             backgroundColor: hexToRgba(chartColors[i], .5),
             pointBackgroundColor: chartColors[i],
             borderColor: chartColors[i],
             pointRadius: 7,
-            data: getRealData(profile.data)
+            data: getRealData(profile)
         })),
     };
 

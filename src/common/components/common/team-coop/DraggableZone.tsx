@@ -149,7 +149,7 @@ const DraggableZone: React.FC = () => {
                 </Box>
 
                 <Box title={'Команды'} addClass={'teams-area'} widget={teamsWidget}>
-                    <div style={{display: "flex", height: '100%'}}>
+                    <div className={'teams-wrapper'}>
                         {columns.slice(1).map((column, i) => (
                             <div key={i}>
 

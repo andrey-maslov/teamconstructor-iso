@@ -40,8 +40,8 @@ const PairCoopOutput: React.FC = () => {
     const isResultReady: boolean        = useSelector((state: GlobalStateType) => state.pairCoopReducer.isComparisonResultReady)
     const decodedData1: DecodedDataType = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.data)
     const decodedData2: DecodedDataType = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.data)
-    const parnterName1: string          = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.name)
-    const parnterName2: string          = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.name)
+    const name1: string                 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.name)
+    const name2: string                 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.name)
 
     const unit = {factor: 100, sign: '%'}
 
@@ -90,16 +90,14 @@ const PairCoopOutput: React.FC = () => {
         }
     ]
 
-    const profiles = [
-        {name: parnterName1, data: profile1},
-        {name: parnterName2, data: profile2},
-    ]
-
     return (
         <>
-            <Box title={`Результаты анализа совместимости пары ${parnterName1} и ${parnterName2}`}>
+            <Box title={`Результаты анализа совместимости пары ${name1} и ${name2}`}>
                 <div className="row around-md">
-                    <RadarChart profiles={profiles} />
+                    <RadarChart
+                        profiles={[profile1, profile2]}
+                        names={[name1, name2]}
+                    />
                     <div>
                         {keyValues.map((item, i) => (
                             <KeyIndicator
@@ -129,7 +127,7 @@ const PairCoopOutput: React.FC = () => {
                 <div className="row center-md">
                     <div className="col-md-11">
                         <Table
-                            tableData={[[parnterName1, ...decodedData1[1][3]], [parnterName2, ...decodedData2[1][3]]]}
+                            tableData={[[name1, ...decodedData1[1][3]], [name2, ...decodedData2[1][3]]]}
                             tableHeader={['', ...(schemeCurrent.axes[3].subAxes).map(item => item.join(' - '))]}
                         />
                     </div>
@@ -139,13 +137,13 @@ const PairCoopOutput: React.FC = () => {
             <Box addClass='result-box full-profile' title={'Профили пользователей'}>
                 <div className="row around-md">
                     <div className="col-md-6 col-lg-5">
-                        <strong>{parnterName1}</strong>
+                        <strong>{name1}</strong>
                         <Table
                             tableData={profile1}
                         />
                     </div>
                     <div className="col-md-6 col-lg-5">
-                        <strong>{parnterName2}</strong>
+                        <strong>{name2}</strong>
                         <Table
                             tableData={profile2}
                         />
@@ -156,14 +154,14 @@ const PairCoopOutput: React.FC = () => {
             <Box addClass='result-box additional-profile' title={'Отсортированные психотипы'}>
                 <div className="row around-md">
                     <div className="col-md-6 col-lg-5">
-                        <strong>{parnterName1}</strong>
+                        <strong>{name1}</strong>
                         <Table
                             tableData={fullResult1.sortedOctants.map(item => [item.title, item.value])}
                             tableHeader={['октант', 'значение']}
                         />
                     </div>
                     <div className="col-md-6 col-lg-5">
-                        <strong>{parnterName2}</strong><br/>
+                        <strong>{name2}</strong><br/>
                         <Table
                             tableData={fullResult2.sortedOctants.map(item => [item.title, item.value])}
                             tableHeader={['октант', 'значение']}
@@ -174,6 +172,7 @@ const PairCoopOutput: React.FC = () => {
         </>
     );
 
+    //TODO fix to work with different numbers of descs/checkpoints
     function getKeyDesc(value: number, descArr: string[], factor?: number): string {
 
         const ratio = factor ? factor : 1
@@ -198,12 +197,12 @@ const PairCoopOutput: React.FC = () => {
         return [
             ['Принятие особенностей партнера', `${intensityRatio.toFixed()}${unit.sign}`],
             ['Взаимное понимание', `${understanding.toFixed()}${unit.sign}`],
-            ['Бессознательное притяжение', `${parnterName1} - ${attraction[0].toFixed()}${unit.sign},</br>${parnterName2} - ${attraction[1].toFixed()}${unit.sign}`],
+            ['Бессознательное притяжение', `${name1} - ${attraction[0].toFixed()}${unit.sign},</br>${name2} - ${attraction[1].toFixed()}${unit.sign}`],
             ['Схожесть жизненных установок', `${lifeAttitudes.toFixed()}${unit.sign}`],
             ['Схожесть мышления', `${similarityThinking.toFixed()}${unit.sign}`],
             ['Эмоциональная совместимость', `${emotionalCompatibility.toFixed()}${unit.sign}`],
             ['Дополняемость', complementarity],
-            ['Психологическая взрослость', `${parnterName1} - ${maturity[0].toFixed()}${unit.sign},</br>${parnterName2} - ${maturity[1].toFixed()}${unit.sign}`],
+            ['Психологическая взрослость', `${name1} - ${maturity[0].toFixed()}${unit.sign},</br>${name2} - ${maturity[1].toFixed()}${unit.sign}`],
             ['Эффективность совместной деятельности', `${efficiency.toFixed(2)}${unit.sign}`],
             ['Взаимное принятие', `${compatibility.toFixed(2)}${unit.sign}`]
         ]
@@ -330,10 +329,10 @@ const PairCoopOutput: React.FC = () => {
         const indexOfSegment2 = indexes.indexOf(fullResult2.sortedOctants[0].index)
 
         if (fullResult1.sortedOctants[0].index === fullResult2.sortedOctants[0].index) {
-            return `И ${parnterName1}, и ${parnterName2} дают паре ${complementarityDesc[indexOfSegment1]}`
+            return `И ${name1}, и ${name2} дают паре ${complementarityDesc[indexOfSegment1]}`
         }
 
-        return `${parnterName1} привносит в пару ${complementarityDesc[indexOfSegment1]}.</br> ${parnterName2}  привносит в пару ${complementarityDesc[indexOfSegment2]}`
+        return `${name1} привносит в пару ${complementarityDesc[indexOfSegment1]}.</br> ${name2}  привносит в пару ${complementarityDesc[indexOfSegment2]}`
     }
 
     //Психологическая взрослость
