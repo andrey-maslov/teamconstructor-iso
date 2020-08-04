@@ -63,6 +63,18 @@
   border-bottom: 2px solid transparent;
   background-color: $overlay-dark;
 
+  &:hover {
+    background-color: $overlay-light;
+  }
+
+  &:first-child {
+    border-radius: $border-radius $border-radius 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 $border-radius $border-radius;
+  }
+
   .switcher {
     display: inline-block;
     user-select: none;
@@ -72,11 +84,8 @@
     text-decoration: none;
     background-color: transparent;
     border: 0;
+    cursor: pointer;
 
-    &:hover {
-      cursor: pointer;
-      background-color: $overlay-light;
-    }
     &:focus {
       outline: solid 3px rgba($orange, .5);
       outline-offset: -1px;

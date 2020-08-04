@@ -102,6 +102,7 @@
     display: inline-block;
     color: $text-light;
     padding: .5rem 1rem;
+    border-radius: $border-radius;
 
     &:hover {
       background-color: $overlay-light;

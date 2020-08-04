@@ -31,7 +31,7 @@ const initialStaff = [
     },
     {
         id: `3-${new Date().getTime()}`,
-        name: 'Лаврик',
+        name: 'Сергей Лавриненко',
         position: 'Business Analyst',
         encData: 'W1sxLDEsMF0sW1s0LC01LC02LC0yLDBdLFstMiwtMywtNCwwLDNdLFs2LDQsMiwtMSwyXSxbNCw0LDIsMywtNl0sWy0yLC0xLDIsMywwXV1d',
         decData: [[1, 1, 0], [[4, -5, -6, -2, 0], [-2, -3, -4, 0, 3], [6, 4, 2, -1, 2], [4, 4, 2, 3, -6], [-2, -1, 2, 3, 0]]]

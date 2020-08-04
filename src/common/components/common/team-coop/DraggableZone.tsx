@@ -83,7 +83,7 @@ const DraggableZone: React.FC = () => {
         } else if (sInd === 0) {
 
             const result = copy(columns[0].items, columns[dInd].items, source, destination); //new destination column array
-
+            console.log('copy')
             //check double items
             if (!checkDuplicate(0, source.index, dInd)) {
                 alert('Такой пользователь есть в команде!')
@@ -139,7 +139,7 @@ const DraggableZone: React.FC = () => {
         <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
             <div className="flex-row mb-md">
 
-                <Box title={staff.label} addClass={'store-area'} widget={storeWidget}>
+                <Box title="Пул работников" addClass={'store-area'} widget={storeWidget}>
                     <DroppableColumnStore
                         items={staff.items}
                         deleteItem={deleteMember}

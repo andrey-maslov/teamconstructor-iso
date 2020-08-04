@@ -9,7 +9,7 @@ import {DecodedDataType, GlobalStateType, OctantType} from "../../../../../const
 import {BsTable} from "react-icons/bs";
 import KeyIndicator from "./key-indicator/KeyIndicator";
 
-const complementarityDesc = [
+export const complementarityDesc = [
     "спонтанность, импульсивность, некоторую агрессивность, умение добиваться целей",
     "спонтанность, стремление к новизне, общительность, умение организовать команду, стремление к новизне",
     "общительность, гибкость, артистизм, подстройку под внешние обстоятельства и окружающих людей",
