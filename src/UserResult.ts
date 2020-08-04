@@ -221,9 +221,9 @@ export class UserResult {
         return params.map((param, i) => ({data: methods[i], title: param.title, desc: param.desc}));
     }
 
-    getCalculatedOctants(): { title: string, value: number, index: string }[] {
+    getCalculatedOctants(profileValues?: [string, number][]): { title: string, value: number, index: string }[] {
 
-        const axisValues = this.getPsyProfileData().map(item => item[1]);
+        const axisValues = profileValues ? [...profileValues].map(item => item[1]) : this.getPsyProfileData().map(item => item[1]);
         const axisValuesReversed = [...axisValues.reverse()];
 
         const octantsValues: number[] = [];

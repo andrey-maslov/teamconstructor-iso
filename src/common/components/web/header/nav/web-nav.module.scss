@@ -30,6 +30,7 @@
   color: $text-light;
   padding: .5rem 1rem;
   border: 1px solid transparent;
+  border-radius: $border-radius;
 
   &:hover {
     background-color: $overlay-light;

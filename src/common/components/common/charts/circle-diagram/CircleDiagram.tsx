@@ -21,7 +21,7 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
         } else if (val === roundValue) {
             setFinish(true)
         }
-    }, [val])
+    }, [val, value])
 
     function increment() {
         setVal(val + 1)
@@ -43,19 +43,19 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
                     <path className={style.half} d="M5 50a45 45 0 1 1 90 0" />
                     <path
                         className={style.shadow}
-                        strokeDashoffset={142 - (val * 142 / 100)}
+                        strokeDashoffset={142 - (roundValue * 142 / 100)}
                         d="M5 50a45 45 0 1 1 90 0"
                         stroke="url(#gradient)"
                     />
                     <path
                         className={style.progress}
-                        strokeDashoffset={142 - (val * 142 / 100)}
+                        strokeDashoffset={142 - (roundValue * 142 / 100)}
                         d="M5 50a45 45 0 1 1 90 0"
                         stroke="url(#gradient)"
                     />
                 </g>
             </svg>
-            <div className={`${style.value} ${isFinish ? style[color] : ''}`}>{val}%</div>
+            <div className={`${style.value} ${isFinish ? style[color] : ''}`}>{roundValue}%</div>
         </div>
     );
 }

@@ -13,12 +13,12 @@
   &.team {
     transition: background-color .1s ease-in-out;
     padding: .5rem;
-    margin: 0 .5rem;
   }
 
   &.fixed {
     //background-color: $text-light;
     border: 2px dashed rgba($overlay-light, 1);
+    border-radius: $border-radius;
   }
 
   &.dragging {

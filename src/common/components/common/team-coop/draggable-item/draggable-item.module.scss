@@ -5,6 +5,7 @@
   padding: .7rem;
   margin: 0 0 .5rem 0;
   box-shadow: $box-shadow-md;
+  border-radius: $border-radius;
 
   &.fixed {
     background-color: $overlay-dark;
@@ -43,6 +44,7 @@
 .name {
   font-weight: 700;
   color: $text-light;
+  font-size: 17px;
 }
 
 .position {
