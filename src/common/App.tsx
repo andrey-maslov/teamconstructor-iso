@@ -1,6 +1,7 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { SVGSource } from './components/common/media/svgflag/SVGFlag';
+import {Route, Switch} from 'react-router-dom';
+import {SVGSource} from './components/common/media/svgflag/SVGFlag';
+import {ToastProvider} from 'react-toast-notifications'
 
 import './index.scss';
 
@@ -17,18 +18,20 @@ import Header from './components/common/layout/header/Header';
 const App: React.FC = () => {
 
     return (
-        <div className="app-wrapper">
-            <Header/>
-            <ScrollToTop/>
-            <Switch>
-                <Route exact path="/" render={() => <PairCoopPage/>}/>
-                <Route exact path="/team" render={() => <TeamCoopPage/>}/>
-                <Route path="*" render={() => <ErrorPage/>}/>
-            </Switch>
-            <Footer/>
-            <SVGSource/>
-            <Modals/>
-        </div>
+        <ToastProvider>
+            <div className="app-wrapper">
+                <Header/>
+                <ScrollToTop/>
+                <Switch>
+                    <Route exact path="/" render={() => <PairCoopPage/>}/>
+                    <Route exact path="/team" render={() => <TeamCoopPage/>}/>
+                    <Route path="*" render={() => <ErrorPage/>}/>
+                </Switch>
+                <Footer/>
+                <SVGSource/>
+                <Modals/>
+            </div>
+        </ToastProvider>
     );
 };
 

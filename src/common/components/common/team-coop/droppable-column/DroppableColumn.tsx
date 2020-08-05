@@ -38,6 +38,7 @@ const DroppableColumn: React.FC<IDroppableColumn> = (
                             profile={item}
                             colIndex={+id}
                             deleteItem={deleteItem}
+                            isStore={false}
                         />
                     ))}
                     {hasPlaceholder && provided.placeholder}

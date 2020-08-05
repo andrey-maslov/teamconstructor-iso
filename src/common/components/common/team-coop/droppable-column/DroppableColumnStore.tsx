@@ -30,6 +30,7 @@ const DroppableColumnStore: React.FC<IDroppableColumn> = (
                             profile={item}
                             colIndex={+id}
                             deleteItem={deleteItem}
+                            isStore={true}
                         />
                     ))}
                 </div>

@@ -9,6 +9,10 @@
 
   &.fixed {
     background-color: $overlay-dark;
+
+    &.store {
+      transform: translateY(0) !important;
+    }
   }
 
   &.dragging {
@@ -16,8 +20,11 @@
     box-shadow: $box-shadow-lg;
   }
 
-  &.clone + div {
-    //display: none !important;
+  &.clone {
+    //color: green;
+    //& + div {
+    //  transform: translate(0, 0) !important;
+    //}
   }
 }
 

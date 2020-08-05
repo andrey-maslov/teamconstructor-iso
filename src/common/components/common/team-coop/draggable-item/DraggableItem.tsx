@@ -11,10 +11,13 @@ export interface IDraggableItem {
     profile: IEmployeeProfile,
     colIndex: number,
     deleteItem: (colIndex: number, itemIndex: number) => void
+    isStore: boolean
 }
 
 
 const DraggableItem: React.FC<IDraggableItem> = (props) => {
+
+    const itemClasses = `${style.wrapper} ${props.isStore ? style.store : ''}`
 
     return (
         <Draggable
@@ -24,14 +27,15 @@ const DraggableItem: React.FC<IDraggableItem> = (props) => {
             {(provided, snapshot) => (
                 <>
                     <div
-                        className={`${style.wrapper} ${snapshot.isDragging ? style.dragging : style.fixed}`}
+                        className={`${itemClasses} ${snapshot.isDragging ? style.dragging : style.fixed}`}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
+
                     >
                         <ItemContent {...props}/>
                     </div>
-                    {snapshot.isDragging && (
+                    {(snapshot.isDragging && props.isStore) && (
                         <div
                             className={`${style.wrapper} ${style.fixed} ${style.clone}`}
                         >

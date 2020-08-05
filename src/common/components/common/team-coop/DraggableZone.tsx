@@ -8,6 +8,7 @@ import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
 import {GlobalStateType, IEmployeeProfile, ITeamProfile} from "../../../../constants/types"
 import {useDispatch, useSelector} from "react-redux";
 import {setAddMemberModal, setTeamsData} from "../../../actions/actionCreator";
+import { useToasts } from 'react-toast-notifications'
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -59,11 +60,13 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 
 const DraggableZone: React.FC = () => {
 
-    const staff: ITeamProfile = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams[0])
-    const columns: Array<ITeamProfile> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
-    const dispatch = useDispatch();
+    const staff: ITeamProfile     = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams[0])
+    const columns: ITeamProfile[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    const dispatch                = useDispatch();
+    const { addToast }            = useToasts()
 
     const [columnsCount, setColumnsCount] = useState(2)
+
 
     function onDragEnd(result: DropResult) {
         const {source, destination} = result;
@@ -76,17 +79,19 @@ const DraggableZone: React.FC = () => {
         const dInd = +destination.droppableId;
 
         if (sInd === dInd) {
+
             const items = reorder(columns[sInd].items, source.index, destination.index);
             const newColumns: any = [...columns];
             newColumns[sInd].items = items;
             dispatch(setTeamsData(newColumns))
+
         } else if (sInd === 0) {
 
             const result = copy(columns[0].items, columns[dInd].items, source, destination); //new destination column array
-            console.log('copy')
-            //check double items
+
             if (!checkDuplicate(0, source.index, dInd)) {
-                alert('Такой пользователь есть в команде!')
+                const currName = columns[0].items[source.index].name
+                addToast(`Работник ${currName} есть в команде!`, { appearance: 'error' })
                 return
             } else {
                 const newColumns: ITeamProfile[] = [...columns];
@@ -96,10 +101,10 @@ const DraggableZone: React.FC = () => {
 
         } else {
             const result = move(columns[sInd].items, columns[dInd].items, source, destination); //new destination column array
-            console.log('result', result)
-            //check double items
+
             if (!checkDuplicate(sInd, source.index, dInd)) {
-                alert('Такой пользователь есть в команде!')
+                const currName = columns[sInd].items[source.index].name
+                addToast(`Работник ${currName} есть в команде!`, { appearance: 'error', autoDismiss: true })
                 return
             } else {
                 const newTeams = [...columns];
@@ -113,7 +118,6 @@ const DraggableZone: React.FC = () => {
 
     const onDragUpdate = (result: DropResult) => {
         if (!result.destination) return
-        // console.log('update')
     }
 
     const storeWidget = (
@@ -181,21 +185,33 @@ const DraggableZone: React.FC = () => {
 
     //TODO what about staff column
     function deleteMember(colIndex: number, itemIndex: number): void {
-        const newColumns = [...columns];
-        newColumns[colIndex].items.splice(itemIndex, 1);
-        dispatch(setTeamsData(newColumns))
+        if (colIndex === 0) {
+            if (confirm('Вы действительно хотите удалить работника из пула?')) {
+                const newColumns = [...columns];
+                newColumns[colIndex].items.splice(itemIndex, 1);
+                dispatch(setTeamsData(newColumns))
+                addToast(`Работник удален из команды`, { appearance: 'success', autoDismiss: true })
+            }
+        } else {
+            const newColumns = [...columns];
+            newColumns[colIndex].items.splice(itemIndex, 1);
+            dispatch(setTeamsData(newColumns))
+            addToast(`Работник удален из команды`, { appearance: 'success', autoDismiss: true })
+        }
     }
 
-    //TODO need to fix column coun
+    //TODO need to fix column count
     function addColumn(count: number): void {
         const columnName = `Команда ${count}`
         dispatch(setTeamsData([...columns, {label: columnName, items: []}]))
         setColumnsCount(columnsCount + 1)
+        addToast(`Команда добавлена`, { appearance: 'success', autoDismiss: true })
     }
 
     function deleteColumn(colIndex: number): void {
         const newColumns = [...columns];
         dispatch(setTeamsData(newColumns.filter((group, i) => i !== colIndex)));
+        addToast(`Команда удалена из списка`, { appearance: 'success', autoDismiss: true })
     }
 
     //if one team includes this member
