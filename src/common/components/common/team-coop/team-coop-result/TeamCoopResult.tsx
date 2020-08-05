@@ -1,31 +1,70 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux"
-import {GlobalStateType, IEmployeeProfile, ITeamProfile, OctantType} from "../../../../../constants/types"
+import {
+    GlobalStateType,
+    IDescWithRange,
+    IEmployeeProfile,
+    ITeamProfile,
+    OctantType
+} from "../../../../../constants/types"
 import Box from "../../layout/box/Box"
 import {SchemeType, UserResult, resultType} from "../../../../../UserResult"
 import RadarChart from "../../charts/radar-chart/RadarChart"
 import KeyIndicator from "../../pair-coop/pair-coop-output/key-indicator/KeyIndicator"
 import ComparisonTable from "../../pair-coop/pair-coop-output/comparison-table/ComparisonTable"
 import {complementarityDesc} from '../../pair-coop/pair-coop-output/PairCoopOutput'
+import {getDescByRange, toPercent} from "../../../../../helper/helper";
 
+const commitmentDesc: Array<IDescWithRange> = [
+    {
+        desc: 'Ответственность команды выражена слабо',
+        range: [-Infinity, 0]
+    },
+    {
+        desc: 'Ответственность есть',
+        range: [0, 3]
+    },
+    {
+        desc: 'Ответсвенность повышенная',
+        range: [3, 6]
+    },
+    {
+        desc: 'Ответственность большая',
+        range: [6, Infinity]
+    }
+]
 
-const loyaltyDesc = [
-    "Группа не управляемая, конфликтная",
-    "Группа нестабильная, сложноуправляемая, не сплоченная",
-    "Группа сплоченная, неконфликтная, управляемая",
-    "Группа пассивная, требует постоянного управления",
-    "Группа, требующая включения лидера"
+const loyaltyDesc: Array<IDescWithRange> = [
+    {
+        desc: 'Группа не управляемая, конфликтная',
+        range: [-Infinity, .3],
+    },
+    {
+        desc: 'Группа нестабильная, сложноуправляемая, не сплоченная',
+        range: [.3, .7],
+    },
+    {
+        desc: 'Группа сплоченная, неконфликтная, управляемая',
+        range: [.7, 1.2],
+    },
+    {
+        desc: 'Группа пассивная, требует постоянного управления',
+        range: [1.2, 1.5],
+    },
+    {
+        desc: 'Группа, требующая включения лидера',
+        range: [1.5, Infinity],
+    }
 ]
 
 const TeamCoopResult: React.FC = () => {
 
-    const activeTeamInd: number = useSelector((state: GlobalStateType) => state.teamCoopReducer.activeTeam)
-    const randomNum: number = useSelector((state: GlobalStateType) => state.teamCoopReducer.randomNum)
-    const activeTeam: ITeamProfile = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams[activeTeamInd + 1])
+    const activeTeamInd: number     = useSelector((state: GlobalStateType) => state.teamCoopReducer.activeTeam)
+    const randomNum: number         = useSelector((state: GlobalStateType) => state.teamCoopReducer.randomNum)
+    const activeTeam: ITeamProfile  = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams[activeTeamInd + 1])
     const schemeCurrent: SchemeType = useSelector((state: GlobalStateType) => state.termsReducer.terms)
-    const [isReady, setReady] = useState(false)
 
-    const unit = {factor: 100, sign: '%'}
+    const [isReady, setReady]       = useState(false)
 
     useEffect(() => {
         if (activeTeam && (activeTeam.items.length !== 0 && schemeCurrent)) {
@@ -49,23 +88,23 @@ const TeamCoopResult: React.FC = () => {
         return new UserResult(item, schemeCurrent)
     })
 
-    const profiles = fullProfiles.map((profile: any) => profile.profile)
-    const names = activeTeam.items.map((item: IEmployeeProfile) => item.name);
+    const profiles         = fullProfiles.map((profile: any) => profile.profile)
+    const names            = activeTeam.items.map((item: IEmployeeProfile) => item.name);
 
-    const teamProfile = getTeamProfile(profiles)
-    const teamOctants = fullProfiles[0].getCalculatedOctants(teamProfile)
+    const teamProfile      = getTeamProfile(profiles)
+    const teamOctants      = fullProfiles[0].getCalculatedOctants(teamProfile)
     const sortedOctantsArr = fullProfiles.map((item: any) => item.sortedOctants)
-    const maxSectorSq = getMaxSectorSquare(teamProfile)
+    const maxSectorSq      = getMaxSectorSquare(teamProfile)
 
-    const stability = getStability(teamOctants, maxSectorSq)
-    const interaction = getInteraction(sortedOctantsArr)
-    const emotionalComp = getEmotionalComp(teamOctants)
-    const loyalty = getLoyalty(teamProfile)
-    const leader = getRoleByType(1)
-    const opinionLeader = getRoleByType(2)
-    const responsibility = getResponsibility()
-    const psyProfile = getTeamPsyProfile(maxSectorSq, complementarityDesc)
-    const needList = getNeed(maxSectorSq)
+    const stability        = getStability(teamOctants, maxSectorSq)
+    const interaction      = getInteraction(sortedOctantsArr)
+    const emotionalComp    = getEmotionalComp(teamOctants)
+    const loyalty          = getLoyalty(teamProfile)
+    const leader           = getRoleByType(1)
+    const opinionLeader    = getRoleByType(2)
+    const commitment       = getCommitment()
+    const psyProfile       = getTeamPsyProfile(maxSectorSq, complementarityDesc)
+    const needList         = getNeed(maxSectorSq)
 
     const keyValues = [
         {
@@ -90,7 +129,7 @@ const TeamCoopResult: React.FC = () => {
     return (
         <>
             {isReady &&
-            <div className={'result-wrapper'}>
+            <div className={'result-wrapper'} id="teamResult">
 
                 <div className={'result-area flex-row'}>
                     <Box
@@ -164,14 +203,14 @@ const TeamCoopResult: React.FC = () => {
         const maxCircleSquare = maxSectorSq * 8 // 8 -> number of octants in full circle
         const factCircleSquare = octants.map(item => item.value).reduce((a, b) => a + b);
 
-        return factCircleSquare / maxCircleSquare * unit.factor
+        return factCircleSquare / maxCircleSquare
     }
 
     function getInteraction(sortedProfiles: OctantType[][]): number {
         const allMaxValues = sortedProfiles.map(item => item[0].value)
         const max = Math.max.apply(null, allMaxValues)
         const min = Math.min.apply(null, allMaxValues)
-        return min / max * unit.factor
+        return min / max
     }
 
     function getEmotionalComp(octants: OctantType[]): number {
@@ -184,37 +223,20 @@ const TeamCoopResult: React.FC = () => {
         if (rightSum === 0) {
             return -1
         }
-        return (leftSum <= rightSum) ? leftSum / rightSum * unit.factor : rightSum / leftSum * unit.factor
+        return (leftSum <= rightSum) ? leftSum / rightSum : rightSum / leftSum
     }
 
-    // get loyalty value
-    function getLoyalty(profile: [string, number][]): string {
-        const checkPoints = [.3, .7, 1.2, 1.5]
+    function getLoyalty(profile: [string, number][]): number {
 
         const values = profile.map(item => item[1])
         const topSum = [values[0], values[1], values[7]].reduce((a, b) => a + b)
         const bottomSum = values.slice(3, 6).reduce((a, b) => a + b)
 
-        let value = 0
-
         if (bottomSum === 0) {
-            value = topSum / 0.1
+            return topSum / 0.1
         }
-        value = Number((topSum / bottomSum).toFixed(2))
+        return topSum / bottomSum
 
-        if(value < checkPoints[0]) {
-            return `Значение = ${value}. ${loyaltyDesc[0]}`
-        }
-        if(value >= checkPoints[0] && value < checkPoints[1]) {
-            return `Значение = ${value}. ${loyaltyDesc[1]}`
-        }
-        if(value >= checkPoints[1] && value < checkPoints[2]) {
-            return `Значение = ${value}. ${loyaltyDesc[2]}`
-        }
-        if(value >= checkPoints[2] && value < checkPoints[3]) {
-            return `Значение = ${value}. ${loyaltyDesc[3]}`
-        }
-        return `Значение = ${value}. ${loyaltyDesc[4]}`
     }
 
     //typeInd = number from 1 to 8 of octants. Leader role equals Innovator type, for example
@@ -231,36 +253,10 @@ const TeamCoopResult: React.FC = () => {
         return names[indexOfMax]
     }
 
-    function getResponsibility(): string {
-        const checkPoints: number[] = [0,3,6]
+    function getCommitment(): number {
         //list item = value of responsibility of one member from data block "Привязанность-отдельность"
-        const respList: number[] = activeTeam.items.map((item: IEmployeeProfile) => item.decData[1][3][0])
-        const respSum: number = respList.reduce((a, b) => a + b)
-
-        if (respSum <= checkPoints[0]) {
-            return `Общая ответственность = ${respSum}. <br>Ответственность команды выражена слабо`
-        }
-        if(respSum > checkPoints[0] && respSum < checkPoints[1]) {
-            return `Общая ответственность = ${respSum}.<br>Ответственность есть`
-        }
-        if(respSum > checkPoints[1] && respSum < checkPoints[2]) {
-            return `Общая ответственность = ${respSum}.<br>Ответсвенность повышенная`
-        }
-        return `Общая ответственность = ${respSum}.<br>Ответственность большая`
-    }
-
-    function getResultTableData() {
-        return [
-            ['Стабильность', `${stability.toFixed()}${unit.sign}`],
-            ['Способность к взаимодействию (коммуникации)', `${interaction.toFixed()}${unit.sign}`],
-            ['Эмоциональная совместимость', `${emotionalComp.toFixed()}${unit.sign}`],
-            ['Лояльность к внешнему руководству', loyalty],
-            ['Ответственность команды', responsibility],
-            ['Психологический профиль команды', psyProfile],
-            ['Лидер команды', leader],
-            ['Альтернативный лидер', opinionLeader],
-            ['Типы, рекомендуемые в команду', needList.join(', ')],
-        ]
+        const respValsList: number[] = activeTeam.items.map((item: IEmployeeProfile) => item.decData[1][3][0])
+        return respValsList.reduce((a, b) => a + b)
     }
 
     function getTeamPsyProfile(maxSectorSq: number, descList: string[]): string {
@@ -282,6 +278,20 @@ const TeamCoopResult: React.FC = () => {
     function getNeed(maxSectorSq: number): string[] {
         const minorOctants: OctantType[] = teamOctants.filter((item: OctantType) => item.value < maxSectorSq * .15)
         return minorOctants.map(item => item.title)
+    }
+
+    function getResultTableData() {
+        return [
+            ['Стабильность',                                toPercent(stability).str],
+            ['Способность к взаимодействию (коммуникации)', toPercent(interaction).str],
+            ['Эмоциональная совместимость',                 toPercent(emotionalComp).str],
+            ['Лояльность к внешнему руководству',           getDescByRange(loyalty, loyaltyDesc)],
+            ['Ответственность команды',                     getDescByRange(commitment, commitmentDesc)],
+            ['Психологический профиль команды',             psyProfile],
+            ['Лидер команды',                               leader],
+            ['Альтернативный лидер',                        opinionLeader],
+            ['Типы, рекомендуемые в команду',               needList.join(', ')],
+        ]
     }
 
 }

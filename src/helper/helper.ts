@@ -1,3 +1,5 @@
+import {IDescWithRange} from "../constants/types";
+
 export const stringToBoolean = (string: string) => {
     switch (string.toLowerCase().trim()) {
         case 'true':
@@ -124,5 +126,26 @@ export const isBase64 = (str: string) => {
         return btoa(atob(str)) == str;
     } catch (err) {
         return false;
+    }
+}
+
+export const getDescByRange = (value: number, descList: IDescWithRange[], factor?: number): string => {
+
+    const ratio = factor ? factor : 1
+    let desc = '';
+
+    for (const item of descList) {
+        if (value > (item.range[0] * ratio) && value <= (item.range[1] * ratio)) {
+            desc = item.desc
+        }
+    }
+    return desc
+}
+
+export const toPercent = (value: number, digits?: number): {num: number, str: string} => {
+    const val = Number((value * 100).toFixed(digits))
+    return {
+        num: val,
+        str: `${val}%`
     }
 }

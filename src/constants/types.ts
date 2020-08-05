@@ -38,4 +38,9 @@ export interface IModalProps {
     closeModal: () => void
 }
 
+export interface IDescWithRange {
+    desc: string
+    range: [number, number]
+}
+
 export type GlobalStateType = any

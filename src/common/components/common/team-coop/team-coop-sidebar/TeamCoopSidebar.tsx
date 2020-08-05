@@ -41,6 +41,11 @@ const TeamCoopSidebar: React.FC = () => {
 
     function calculateHandler() {
         dispatch(setRandomNum(Math.random()))
+        if(typeof window !== 'undefined' && document.getElementById('teamResult')) {
+            const el = document.getElementById('teamResult')
+            el && el.scrollIntoView()
+            // window.scrollTo(0, 900);
+        }
         // dispatch(setActiveTeam(0))
     }
 }

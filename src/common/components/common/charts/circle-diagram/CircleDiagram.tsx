@@ -8,9 +8,9 @@ interface CircleDiagramProps {
 
 const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
 
-    const roundValue = Math.round(value)
+    const roundValue = Math.round(value * 100)
 
-    const color = roundValue > 33 ? (roundValue < 66 ? 'warning' : 'success' ) : 'danger';
+    const color = roundValue > 30 ? (roundValue < 60 ? 'warning' : 'success' ) : 'danger';
 
     const [val, setVal] = useState(0)
     const [isFinish, setFinish] = useState(false)
@@ -20,11 +20,16 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
            setTimeout( increment, 20)
         } else if (val === roundValue) {
             setFinish(true)
+        } else if (val > roundValue) {
+            setTimeout( decrement, 20)
         }
-    }, [val, value])
+    }, [val, roundValue])
 
     function increment() {
         setVal(val + 1)
+    }
+    function decrement() {
+        setVal(val - 1)
     }
 
 
@@ -43,19 +48,19 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
                     <path className={style.half} d="M5 50a45 45 0 1 1 90 0" />
                     <path
                         className={style.shadow}
-                        strokeDashoffset={142 - (roundValue * 142 / 100)}
+                        strokeDashoffset={142 - (val * 142 / 100)}
                         d="M5 50a45 45 0 1 1 90 0"
                         stroke="url(#gradient)"
                     />
                     <path
                         className={style.progress}
-                        strokeDashoffset={142 - (roundValue * 142 / 100)}
+                        strokeDashoffset={142 - (val * 142 / 100)}
                         d="M5 50a45 45 0 1 1 90 0"
                         stroke="url(#gradient)"
                     />
                 </g>
             </svg>
-            <div className={`${style.value} ${isFinish ? style[color] : ''}`}>{roundValue}%</div>
+            <div className={`${style.value} ${isFinish ? style[color] : ''}`}>{val}%</div>
         </div>
     );
 }

@@ -1,6 +1,11 @@
 @import './vars.scss';
 @import './flexgridcustom.scss';
 
+
+//html {
+//  scroll-behavior: smooth;
+//}
+
 body {
   font-family: $font-default;
   font-size: 18px;

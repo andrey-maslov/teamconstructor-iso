@@ -1,13 +1,14 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {useSelector} from 'react-redux';
 import {UserResult, SchemeType} from '../../../../../UserResult';
 import RadarChart from "../../charts/radar-chart/RadarChart";
 import Box from "../../layout/box/Box";
 import Table from "../../tables/table/Table";
 import ComparisonTable from "./comparison-table/ComparisonTable";
-import {DecodedDataType, GlobalStateType, OctantType} from "../../../../../constants/types";
+import {DecodedDataType, GlobalStateType, IDescWithRange, OctantType} from "../../../../../constants/types";
 import {BsTable} from "react-icons/bs";
 import KeyIndicator from "./key-indicator/KeyIndicator";
+import {getDescByRange, toPercent} from "../../../../../helper/helper";
 
 export const complementarityDesc = [
     "спонтанность, импульсивность, некоторую агрессивность, умение добиваться целей",
@@ -20,17 +21,42 @@ export const complementarityDesc = [
     "напор и способность постоять за себя и партнера. Стабильность и устойчивость"
 ]
 
-const efficiencyDesc = [
-    'Прогноз тяжелый. Вам необходимо внимательно обходить острые углы',
-    'Вероятно, вы сможете выполнить то, ради чего объединились. Но, что будет легко, не обещаем',
-    'Поздравляем! Вы удивительно хорошие соратники',
-    '100% гармоничное сочетание психологических характеристик',
+const efficiencyDesc: IDescWithRange[] = [
+    {
+        desc: 'Прогноз тяжелый. Вам необходимо внимательно обходить острые углы',
+        range: [-Infinity, .5]
+    },
+    {
+        desc: 'Вероятно, вы сможете выполнить то, ради чего объединились. Но, что будет легко, не обещаем',
+        range: [.5, .8]
+    },
+    {
+        desc: 'Поздравляем! Вы удивительно хорошие соратники',
+        range: [.8, .95]
+    },
+    {
+        desc: '100% гармоничное сочетание психологических характеристик',
+        range: [.95, Infinity]
+    },
 ]
-const compatibilityDesc = [
-    'Прогноз тяжелый. Вам необходимо внимательно обходить острые углы',
-    'Вероятно, вы сможете сохранить ваш союз.Что будет легко, не обещаем',
-    'Поздравляем! Вы удивительно друг другу подходите',
-    '100% гармоничное сочетание психологических характеристик',
+
+const compatibilityDesc: IDescWithRange[] = [
+    {
+        desc: 'Прогноз тяжелый. Вам необходимо внимательно обходить острые углы',
+        range: [-Infinity, .5]
+    },
+    {
+        desc: 'Вероятно, вы сможете сохранить ваш союз.Что будет легко, не обещаем',
+        range: [.5, .8]
+    },
+    {
+        desc: 'Поздравляем! Вы удивительно друг другу подходите',
+        range: [.8, .95]
+    },
+    {
+        desc: '100% гармоничное сочетание психологических характеристик',
+        range: [.95, Infinity]
+    },
 ]
 
 const PairCoopOutput: React.FC = () => {
@@ -43,8 +69,6 @@ const PairCoopOutput: React.FC = () => {
     const name1: string                 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.name)
     const name2: string                 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.name)
 
-    const unit = {factor: 100, sign: '%'}
-
     if (!isResultReady) {
         return null;
     }
@@ -52,12 +76,12 @@ const PairCoopOutput: React.FC = () => {
     const fullResult1 = new UserResult(decodedData1[1], schemeCurrent)
     const fullResult2 = new UserResult(decodedData2[1], schemeCurrent)
 
-    const octants1 = fullResult1.getCalculatedOctants();
-    const octants2 = fullResult2.getCalculatedOctants();
+    const octants1    = fullResult1.getCalculatedOctants();
+    const octants2    = fullResult2.getCalculatedOctants();
 
     //tmp
-    const profile1 = fullResult1.profile
-    const profile2 = fullResult2.profile
+    const profile1    = fullResult1.profile
+    const profile2    = fullResult2.profile
 
     //All calculated values for comparison table
     const intensityRatio: number         = getIntensityRatio()
@@ -67,25 +91,25 @@ const PairCoopOutput: React.FC = () => {
     const similarityThinking: number     = getSimilarityThinking()
     const emotionalCompatibility: number = getEmotionalCompatibility()
     const complementarity: string        = getComplementarity()
-    const maturity: number[]             = getPsychologicalMaturity()
+    const maturity: number[]             = getPsyMaturity()
 
-    const valuesForEfficiency: number[] = [intensityRatio, understanding, lifeAttitudes, similarityThinking, emotionalCompatibility];
-    const efficiency: number = valuesForEfficiency.reduce((a, b) => a + b) / valuesForEfficiency.length;
+    const valuesForEfficiency: number[]  = [intensityRatio, understanding, lifeAttitudes, similarityThinking, emotionalCompatibility];
+    const efficiency: number             = valuesForEfficiency.reduce((a, b) => a + b) / valuesForEfficiency.length;
 
     const valuesForCompatibility: number[] = [intensityRatio, understanding, ...maturity, lifeAttitudes, similarityThinking, emotionalCompatibility, ...maturity];
-    const compatibility: number = valuesForCompatibility.reduce((a, b) => a + b) / valuesForCompatibility.length;
+    const compatibility: number            = valuesForCompatibility.reduce((a, b) => a + b) / valuesForCompatibility.length;
 
     const comparisonTableData = getComparisonTableData()
 
     const keyValues = [
         {
             title: 'Взаимное принятие',
-            description: getKeyDesc(compatibility, compatibilityDesc, unit.factor),
+            description: getDescByRange(compatibility, compatibilityDesc),
             value: compatibility
         },
         {
             title: 'Эффективность совместной деятельности',
-            description: getKeyDesc(efficiency, efficiencyDesc, unit.factor),
+            description: getDescByRange(efficiency, efficiencyDesc),
             value: efficiency
         }
     ]
@@ -172,39 +196,19 @@ const PairCoopOutput: React.FC = () => {
         </>
     );
 
-    //TODO fix to work with different numbers of descs/checkpoints
-    function getKeyDesc(value: number, descArr: string[], factor?: number): string {
-
-        const ratio = factor ? factor : 1
-
-        if (value < 0) {
-            return 'Error, value < zero'
-        }
-        if (value < .5 * ratio) {
-            return descArr[0]
-        }
-        if (value >= .5 * ratio && value <= .8 * ratio) {
-            return descArr[1]
-        }
-        if (value > .8 * ratio && value <= .95 * ratio) {
-            return descArr[2]
-        }
-        return descArr[3]
-    }
-
     function getComparisonTableData() {
 
         return [
-            ['Принятие особенностей партнера', `${intensityRatio.toFixed()}${unit.sign}`],
-            ['Взаимное понимание', `${understanding.toFixed()}${unit.sign}`],
-            ['Бессознательное притяжение', `${name1} - ${attraction[0].toFixed()}${unit.sign},</br>${name2} - ${attraction[1].toFixed()}${unit.sign}`],
-            ['Схожесть жизненных установок', `${lifeAttitudes.toFixed()}${unit.sign}`],
-            ['Схожесть мышления', `${similarityThinking.toFixed()}${unit.sign}`],
-            ['Эмоциональная совместимость', `${emotionalCompatibility.toFixed()}${unit.sign}`],
+            ['Принятие особенностей партнера', toPercent(intensityRatio).str],
+            ['Взаимное понимание', toPercent(understanding).str],
+            ['Бессознательное притяжение', `${name1} - ${toPercent(attraction[0]).str},</br>${name2} - ${toPercent(attraction[1]).str}`],
+            ['Схожесть жизненных установок', toPercent(lifeAttitudes).str],
+            ['Схожесть мышления', toPercent(similarityThinking).str],
+            ['Эмоциональная совместимость', toPercent(emotionalCompatibility).str],
             ['Дополняемость', complementarity],
-            ['Психологическая взрослость', `${name1} - ${maturity[0].toFixed()}${unit.sign},</br>${name2} - ${maturity[1].toFixed()}${unit.sign}`],
-            ['Эффективность совместной деятельности', `${efficiency.toFixed(2)}${unit.sign}`],
-            ['Взаимное принятие', `${compatibility.toFixed(2)}${unit.sign}`]
+            ['Психологическая взрослость', `${name1} - ${toPercent(maturity[0]).str},</br>${name2} - ${toPercent(maturity[1]).str}`],
+            ['Эффективность совместной деятельности', toPercent(efficiency).str],
+            ['Взаимное принятие', toPercent(compatibility).str]
         ]
     }
 
@@ -221,7 +225,7 @@ const PairCoopOutput: React.FC = () => {
             return 0
         }
 
-        return (maxVal1 < maxVal2 ? maxVal1 / maxVal2 : maxVal2 / maxVal1) * unit.factor;
+        return (maxVal1 < maxVal2 ? maxVal1 / maxVal2 : maxVal2 / maxVal1);
     }
 
     //Взаимное понимание
@@ -234,7 +238,7 @@ const PairCoopOutput: React.FC = () => {
                 result -= fraction
             }
         }
-        return result * unit.factor
+        return result
     }
 
     //Бессознательное притяжение
@@ -256,7 +260,7 @@ const PairCoopOutput: React.FC = () => {
         const ratio1 = oppositeVals1[0] < oppositeVals1[1] ? oppositeVals1[0] / oppositeVals1[1] : oppositeVals1[1] / oppositeVals1[0]
         const ratio2 = oppositeVals2[0] < oppositeVals2[1] ? oppositeVals2[0] / oppositeVals2[1] : oppositeVals2[1] / oppositeVals2[0]
 
-        return [ratio1 * unit.factor, ratio2 * unit.factor];
+        return [ratio1, ratio2];
     }
 
     //Находим индекс противоположного сегмента (октанта)
@@ -281,15 +285,15 @@ const PairCoopOutput: React.FC = () => {
         const leadSegment2 = fullResult2.sortedOctants[0]
 
         if (leadSegment1.index === leadSegment2.index) {
-            return unit.factor
+            return 1
         }
 
         if (leadSegment1.index[0] === leadSegment2.index[0]) {
-            return 0.5 * unit.factor
+            return 0.5
         }
 
         if ((indexes[0].includes(leadSegment1.index) && indexes[0].includes(leadSegment2.index)) || (indexes[1].includes(leadSegment1.index) && indexes[1].includes(leadSegment2.index))) {
-            return 0.25 * unit.factor
+            return 0.25
         }
 
         return 0
@@ -306,12 +310,12 @@ const PairCoopOutput: React.FC = () => {
 
         //Ведущие сегменты совпадают или в одной четверти; 100%'
         if (leadSegment1.index === leadSegment2.index || leadSegment1.index[0] === leadSegment2.index[0]) {
-            return unit.factor
+            return 1
         }
 
         //Ведущие сегменты в одном полушарии; 50%
         if ((indexes[0].includes(leadSegment1.index) && indexes[0].includes(leadSegment2.index)) || (indexes[1].includes(leadSegment1.index) && indexes[1].includes(leadSegment2.index))) {
-            return 0.5 * unit.factor
+            return 0.5
         }
 
         return 0
@@ -336,7 +340,7 @@ const PairCoopOutput: React.FC = () => {
     }
 
     //Психологическая взрослость
-    function getPsychologicalMaturity() {
+    function getPsyMaturity() {
         const allOctants = [octants1, octants2]
 
         //init
@@ -351,7 +355,7 @@ const PairCoopOutput: React.FC = () => {
             }
         }
 
-        return counter.map(item => item / 8 * unit.factor)
+        return counter.map(item => item / 8)
     }
 }
 

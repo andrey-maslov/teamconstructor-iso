@@ -2,7 +2,7 @@
 @import '../../../../assets/scss/animations.scss';
 
 .wrapper {
-  width: 13rem;
+  width: 10rem;
   position: relative;
 }
 
@@ -60,7 +60,7 @@
   bottom: 0;
   transform: translateX(-50%);
   font-family: $font-mono;
-  font-size: 2rem;
+  font-size: 1.75rem;
   //background-color: $overlay-light;
   //padding: 0 .8rem;
 }
