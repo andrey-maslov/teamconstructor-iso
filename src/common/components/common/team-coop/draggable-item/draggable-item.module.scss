@@ -3,7 +3,6 @@
 .wrapper {
   user-select: none;
   padding: .7rem;
-  margin: 0 0 .5rem 0;
   box-shadow: $box-shadow-md;
   border-radius: $border-radius;
 
@@ -36,8 +35,10 @@
 .avatar {
   max-width: 30%;
   width: 30%;
-  margin-right: 1rem;
-  opacity: .5;
+  margin-right: .5rem;
+  opacity: .7;
+  border-radius: 50%;
+  border: 1px solid $text-light;
 
   svg {
     font-size: 50px;

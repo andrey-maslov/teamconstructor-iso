@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import OutsideClickHandler from 'react-outside-click-handler';
-import {fetchTerms} from '../../../../actions/actionCreator';
+import {fetchContent, fetchTerms} from '../../../../actions/actionCreator';
 import {LANGS} from '../../../../../constants/constants';
 import {Popover} from '../../popovers/Popover';
 import style from './lang-switcher-alt.module.scss';
 import {useTranslation} from "react-i18next";
-import {stripCountry} from "../../../../../helper/helper";
+import {isBrowser, stripCountry} from "../../../../../helper/helper";
 
 const LangSwitcherAlt: React.FC = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch()
-    const {i18n} = useTranslation();
+    const {i18n, t} = useTranslation();
 
     const currentLang = stripCountry(i18n.language);
     const currentLangLabel = LANGS.filter(item => item[0] === currentLang)[0][1];
@@ -27,7 +27,9 @@ const LangSwitcherAlt: React.FC = () => {
 
         i18n.changeLanguage(lng)
             .then(res => {
-                dispatch(fetchTerms(lng));
+                dispatch(fetchTerms(lng))
+                dispatch(fetchContent(lng))
+                localizeMeta(lng)
                 if (isOpen) {
                     setIsOpen(false)
                 }
@@ -35,7 +37,8 @@ const LangSwitcherAlt: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchTerms(currentLang);
+        fetchTerms(currentLang)
+        dispatch(fetchContent(currentLang))
     }, [])
 
     return (
@@ -81,6 +84,18 @@ const LangSwitcherAlt: React.FC = () => {
             </div>
         </OutsideClickHandler>
     );
+
+    function localizeMeta(lang: string) {
+        if (isBrowser) {
+            document.title = t('common:meta.title')
+            const descEl = document.querySelector('meta[name="description"]')
+            if (descEl) {
+                descEl.setAttribute('content', t('common:meta.description'))
+            }
+        } else {
+            console.log('server')
+        }
+    }
 }
 
 export default LangSwitcherAlt;

@@ -34,7 +34,7 @@ const InputField: React.FC<InputFieldProps> = (
                 onChange={onChangeHandler}
             />
             {hasErrored &&
-            <div className={style.error}>Вы допустили ошибку. Возможно, неправильный формат ввода</div>}
+            <div className={`msg-error`}>Вы допустили ошибку. Возможно, неправильный формат ввода</div>}
         </div>
     );
 }

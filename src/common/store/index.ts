@@ -38,7 +38,7 @@ const index = configureStore({});
 
 index.subscribe(() => {
     saveState('terms', index.getState().termsReducer)
-    // saveState('userData', index.getState().userData)
+    saveState('userData', index.getState().userData)
     saveState('pair', index.getState().pairCoopReducer)
     // saveState('teams', index.getState().teamCoopReducer)
 });

@@ -42,6 +42,7 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.3.2",
     "react-i18next": "^11.5.0",
     "react-icons": "^3.10.0",
     "react-media-hook": "^0.4.7",

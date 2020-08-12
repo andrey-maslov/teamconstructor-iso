@@ -20,7 +20,7 @@ const TeamCoopSidebar: React.FC = () => {
                     const isActive = i === activeTeam;
                     return (
                         <TeamModule
-                            key={team.label}
+                            key={i}
                             team={team}
                             isActive={isActive}
                             handler={() => dispatch(setActiveTeam(i))}

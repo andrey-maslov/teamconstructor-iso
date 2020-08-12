@@ -105,8 +105,8 @@ body {
 }
 
 .result-area {
-  margin-right: $gutter-width;
-  margin-bottom: $gutter-width;
+  margin-right: $gutter-width / 2;
+  margin-bottom: $gutter-width / 2;
 }
 
 .team-keys {
@@ -114,16 +114,17 @@ body {
 
   .box-content {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
     & > div {
-
+      margin-bottom: 1rem;
     }
   }
 }
 
 .team-radar {
-  margin-right: $gutter-width;
+  margin-right: $gutter-width / 2;
 }
 
 
@@ -448,21 +449,22 @@ $sidebar-width: 20rem;
 
   .store-area {
     width: $sidebar-width;
-    //margin-left: $gutter-width/2;
-    //margin-right: $gutter-width/2;
 
     & > div:nth-of-type(2) {
       background-color: rgba($text-light, .5);
     }
+
+    .box-content {
+      max-height: 740px;
+      overflow-y: auto;
+    }
   }
 
   .teams-area {
-    //margin-left: $gutter-width/2;
-    //margin-right: $gutter-width/2;
     flex-grow: 1;
     flex-shrink: 0;
-    margin-left: $gutter-width;
-    margin-right: $gutter-width;
+    margin-left: $gutter-width / 2;
+    margin-right: $gutter-width / 2;
     width: calc(100% - (#{$sidebar-width} + #{$gutter-width * 2}));
 
     .box-content {
@@ -473,8 +475,6 @@ $sidebar-width: 20rem;
   .drag-area {
     flex-grow: 1;
     flex-shrink: 0;
-    //padding-left: $gutter-width/2;
-    //padding-right: $gutter-width/2;
     overflow-x: auto;
     width: calc(100% - #{$sidebar-width});
   }
@@ -483,9 +483,6 @@ $sidebar-width: 20rem;
     width: $sidebar-width;
     min-width: $sidebar-width;
     margin-bottom: $gutter-width;
-    //margin-left: $gutter-width/2;
-    //margin-right: $gutter-width/2;
-    position: -webkit-sticky;
     position: sticky;
     top: 30px;
   }
@@ -504,9 +501,11 @@ $sidebar-width: 20rem;
   }
 }
 
-.add-member-modal {
+.add-member-modal,
+.auth-modal {
 
   .rodal-dialog {
+    padding: 2rem;
     background-color: $overlay-dark;
     box-shadow: 1px 3px 32px rgba(#fff, .4);
     border-radius: $border-radius;
@@ -520,12 +519,30 @@ $sidebar-width: 20rem;
 //}
 
 input, textarea {
+  display: block;
+  width: 100%;
+  padding: .8rem;
   background-color: $overlay-light;
   border: 0;
   caret-color: $text-light;
   color: $text-light;
   font-family: $font-mono;
   border-radius: $border-radius-sm;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+
+  textarea {
+    resize: none;
+    margin: 0;
+    height: 100px;
+  }
+}
+
+.msg-error {
+  font-size: .8rem;
+  color: $danger;
 }
 
 //Media

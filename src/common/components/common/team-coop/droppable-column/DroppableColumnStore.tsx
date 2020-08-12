@@ -25,9 +25,9 @@ const DroppableColumnStore: React.FC<IDroppableColumn> = (
                 >
                     {items.map((item, index) => (
                         <DraggableItem
-                            key={item.id}
+                            key={`${item.id}`}
                             index={index}
-                            profile={item}
+                            employeeProfile={item}
                             colIndex={+id}
                             deleteItem={deleteItem}
                             isStore={true}

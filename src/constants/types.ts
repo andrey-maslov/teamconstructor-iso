@@ -7,14 +7,16 @@ export type AnswerType = {
     value: string
 }
 
-export type OctantType = {
-    title: string
-    value: number
-    index: string
-}
-
 export interface IEmployeeProfile {
     id: string,
+    name: string,
+    position: string,
+    encData: string,
+    decData: DecodedDataType
+    baseID: string | number
+}
+
+export interface IMember {
     name: string,
     position: string,
     encData: string,
@@ -22,7 +24,8 @@ export interface IEmployeeProfile {
 }
 
 export interface ITeamProfile {
-    label: string,
+    id: number | null,
+    title: string,
     items: Array<IEmployeeProfile> | any
 }
 
@@ -42,5 +45,16 @@ export interface IDescWithRange {
     desc: string
     range: [number, number]
 }
+
+export interface IRegisterData {
+    username: string
+    email: string
+    password: string
+}
+export interface ILoginData {
+    identifier: string
+    password: string
+}
+
 
 export type GlobalStateType = any

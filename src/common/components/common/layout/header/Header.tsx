@@ -1,20 +1,18 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { useMediaPredicate } from 'react-media-hook';
-import { clearUserData } from '../../../../actions/actionCreator';
-import MobiHeader from '../../../mobi/header/MobiHeader';
-import WebHeader from '../../../web/header/WebHeader';
-import {FiDollarSign, FiHome} from "react-icons/fi";
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useMediaPredicate } from 'react-media-hook'
+import {clearUserData, setAuthModal} from '../../../../actions/actionCreator'
+import MobiHeader from '../../../mobi/header/MobiHeader'
+import WebHeader from '../../../web/header/WebHeader'
+import {FiDollarSign, FiHome} from "react-icons/fi"
+import {GlobalStateType} from "../../../../../constants/types"
 
-type HeaderProps = {
-    isLoggedIn: boolean
-    setLoginModal: (bool: boolean) => void
-    userEmail: string
-    clearUserData: () => void
-}
+const Header: React.FC = () => {
 
-//TODO change to Redux hooks
-const Header: React.FC<HeaderProps> = ({isLoggedIn, setLoginModal, userEmail, clearUserData}) => {
+    const dispatch = useDispatch()
+    const userData = useSelector((state: GlobalStateType) => state.userData)
+    const isLoggedIn = userData.isLoggedIn
+    const userEmail = userData.userEmail
 
     const routes = [
         {title: 'Пара', path: '/', access: 'all', icon: <FiHome/>},
@@ -25,9 +23,9 @@ const Header: React.FC<HeaderProps> = ({isLoggedIn, setLoginModal, userEmail, cl
 
     const handleLoginBtn = () => {
         if (isLoggedIn) {
-            clearUserData();
+            dispatch(clearUserData())
         } else {
-            console.log('xc')
+            dispatch(setAuthModal(true))
         }
     };
 
@@ -48,14 +46,4 @@ const Header: React.FC<HeaderProps> = ({isLoggedIn, setLoginModal, userEmail, cl
 
 };
 
-interface HeaderState {
-    userData: {
-        isLoggedIn: boolean
-        email: string
-    }
-}
-
-export default connect((state: HeaderState) => ({
-    isLoggedIn: state.userData.isLoggedIn,
-    userEmail: state.userData.email,
-}), {clearUserData})(Header);
+export default Header

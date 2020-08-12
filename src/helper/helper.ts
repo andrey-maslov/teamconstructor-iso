@@ -149,3 +149,5 @@ export const toPercent = (value: number, digits?: number): {num: number, str: st
         str: `${val}%`
     }
 }
+
+export const isBrowser: boolean = typeof window !== 'undefined'

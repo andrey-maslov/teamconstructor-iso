@@ -19,7 +19,7 @@ const TeamModule: React.FC<TeamModuleProps> = ({team, isActive, handler}) => {
             onClick={handler}
             onKeyPress={handler}
         >
-            <h5 className={style.title}>{team.label}</h5>
+            <h5 className={style.title}>{team.title}</h5>
             <div><span>Размер:</span> {team.items.length}</div>
         </div>
     );

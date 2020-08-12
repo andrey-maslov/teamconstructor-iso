@@ -13,8 +13,15 @@ import {
     COMPARISON_IN_PROCESS,
     SET_RANDOM,
     SET_ADD_MEMBER_MODAL,
+    ADD_MEMBER,
+    SET_AUTH_MODAL,
+    FETCH_CONTENT, FETCH_TEAMS,
+    SET_ERROR,
+    CLEAR_ERROR,
 } from './actionTypes';
-import {ITeamProfile} from "../../constants/types";
+import {ILoginData, IMember, IRegisterData, ITeamProfile,} from "../../constants/types";
+import axios from 'axios'
+import {API_URL} from "../../constants/constants";
 
 
 /*
@@ -149,6 +156,12 @@ export function setAddMemberModal(isAddMemberModal: boolean): {type: string, isA
         isAddMemberModal
     }
 }
+export function setAuthModal(isAuthModal: boolean): {type: string, isAuthModal: boolean} {
+    return {
+        type: SET_AUTH_MODAL,
+        isAuthModal
+    }
+}
 
 
 /*
@@ -156,9 +169,10 @@ FETCHING DATA
  */
 
 export const fetchTerms = (lang: string) => {
-    // const url = `/psychology_${lang}.json`;
-    const url = `https://api.salary2.me/psychologies?lang=${lang}`;
-// console.log(lang)
+
+    // const url = `https://api.salary2.me/psychologies?lang=${lang}`;
+    const url = `${API_URL}/psychologies/1`;
+
     return (dispatch: any) => {
         fetch(url)
             .then(response => response.json())
@@ -166,9 +180,202 @@ export const fetchTerms = (lang: string) => {
                 // console.log(data)
                 dispatch({
                     type: FETCH_TERMS,
-                    terms: data[0].terms
+                    terms: data[`content_${lang}`]
                 });
             });
     };
 };
 
+export const fetchContent = (lang: string) => {
+
+    // const url = `https://api.salary2.me/psychologies/3`;
+    const url = `${API_URL}/psychologies/3`;
+
+    return (dispatch: any) => {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                dispatch({
+                    type: FETCH_CONTENT,
+                    descriptions: data[`content_${lang}`]
+                });
+            });
+    };
+};
+
+
+//TODO fixe me
+// export const fetchPool = (userID: number, token: string) => {
+//
+//     const url = `${API_URL}/pools?user.id=${userID}`;
+//
+//     return (dispatch: any) => {
+//         fetch(url, {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${token}`
+//             }
+//         })
+//             .then(response => response.json())
+//             .then(data => {
+//                 // dispatch({
+//                 //     type: FETCH_TEAMS,
+//                 //     teams: data
+//                 // });
+//             });
+//     };
+// }
+
+
+
+
+/*===== AUTH =====*/
+
+export const authUser = (userData: IRegisterData | ILoginData, authType: 'register' | 'login') => {
+
+    const url = (authType === 'register') ? `${API_URL}/auth/local/register` : `${API_URL}/auth/local`
+
+    return async (dispatch: any) => {
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(userData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const data = await response.json();
+            if (data.statusCode === 400) {
+                const msg = data.message[0].messages[0].message
+                console.log('ERROR 400', msg)
+                dispatch({
+                    type: SET_ERROR,
+                    errorMessage: msg
+                })
+                return
+            } else {
+                console.log('SUCCESS', data)
+                const user = data.user;
+                dispatch(clearApiError())
+                dispatch(setUser(user.id, user.username, user.email, user.role, user.boards, data.jwt))
+            }
+        } catch (error) {
+            console.error('ERROR', error)
+        }
+    }
+}
+
+export const clearApiError = (): {type: string} => {
+    return {
+        type: CLEAR_ERROR,
+    }
+}
+
+function setUser(id: number, username: string, email: string, role: number, boards: any, token: string) {
+    return {
+        type: ADD_AUTH_DATA,
+        id,
+        username,
+        email,
+        role,
+        boards,
+        token,
+    }
+}
+
+//TODO fixme
+function createBoard(title: string, userId: number, token: string) {
+
+    const url = `${API_URL}/boards`
+    const boardData = {
+        "title": "staff",
+        "user": userId
+    }
+
+    return async (dispatch: any) => {
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(boardData),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+            const data = await response.json();
+            if (data.statusCode === 400) {
+                const msg = data.message[0].messages[0].message
+                console.log('ERROR 400', msg)
+                dispatch({
+                    type: SET_ERROR,
+                    errorMessage: msg
+                })
+                return
+            } else {
+                console.log('SUCCESS', data)
+                dispatch(clearApiError())
+            }
+        } catch (error) {
+            console.error('ERROR', error)
+        }
+    }
+}
+
+//TODO fixme
+export function createMember(memberData: IMember, userId: number, boardId: number, token: string) {
+
+    const url = `${API_URL}/members`
+
+    return (dispatch: any) => {
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                ...memberData,
+                user: userId,
+                board: boardId
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(res => {
+                const data = res.json()
+                return data
+            })
+            .then(data => {
+                console.log(data)
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }
+
+    // return async (dispatch: any) => {
+    //     try {
+    //         const response = await fetch(url, {
+    //             method: 'POST',
+    //             body: JSON.stringify(memberData),
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${token}`
+    //             },
+    //         })
+    //         const data = await response.json();
+    //         if (data.statusCode === 400) {
+    //             const msg = data.message[0].messages[0].message
+    //             console.log('ERROR 400', msg)
+    //             dispatch({
+    //                 type: SET_ERROR,
+    //                 errorMessage: msg
+    //             })
+    //             return
+    //         } else {
+    //             console.log('SUCCESS', data)
+    //             dispatch(clearApiError())
+    //         }
+    //     } catch (error) {
+    //         console.error('ERROR', error)
+    //     }
+    // }
+}

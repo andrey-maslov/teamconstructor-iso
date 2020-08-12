@@ -1,4 +1,4 @@
-export const SITE_TITLE = 'Teamconstructor';
+export const SITE_TITLE = 'Teamconstructor'
 // export const LANGS = ['ru', 'en', 'pl', 'es', 'de', 'fr', 'it'];
 // export const LANGS = [
 //     ['ru', 'Русский'],
@@ -14,16 +14,18 @@ export const LANGS = [
     ['ru', 'Русский'],
     ['en', 'English'],
 ];
-export const LANG_DEFAULT = LANGS[0][0];
-// export const LANGS = ['ru', 'en', 'pl'];
+export const LANG_DEFAULT = LANGS[0][0]
 
 export const ROUTES = ['/', '/result'];
 
 export const unit = {factor: 100, sign: '%'}
 
-export const REQUEST_BASE_URL = 'https://base.teamconstructor.com';
-export const REQUEST_BASE_ROUTE = `${REQUEST_BASE_URL}/api/Predict`;
-export const LINKEDIN_REDIRECT_URI = `${REQUEST_BASE_URL}/callbacklinkedin`;
+export const REQUEST_BASE_URL = 'https://base.teamconstructor.com'
+export const REQUEST_BASE_ROUTE = `${REQUEST_BASE_URL}/api/Predict`
+export const LINKEDIN_REDIRECT_URI = `${REQUEST_BASE_URL}/callbacklinkedin`
+
+// export const API_URL = 'https://strapi.nobugs.today'
+export const API_URL = 'http://localhost:1337'
 
 export const COLORS = {
     // accent: '#556587',

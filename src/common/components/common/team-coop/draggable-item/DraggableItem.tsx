@@ -8,7 +8,7 @@ import style from './draggable-item.module.scss'
 
 export interface IDraggableItem {
     index: number,
-    profile: IEmployeeProfile,
+    employeeProfile: IEmployeeProfile,
     colIndex: number,
     deleteItem: (colIndex: number, itemIndex: number) => void
     isStore: boolean
@@ -21,7 +21,7 @@ const DraggableItem: React.FC<IDraggableItem> = (props) => {
 
     return (
         <Draggable
-            draggableId={props.profile.id}
+            draggableId={props.employeeProfile.id}
             index={props.index}
         >
             {(provided, snapshot) => (

@@ -2,7 +2,6 @@ import React from 'react'
 import PairCoopInput from "../../common/pair-coop/pair-coop-input/PairCoopInput"
 import PairCoopOutput from "../../common/pair-coop/pair-coop-output/PairCoopOutput"
 import Loader from "../../common/loaders/loader/Loader"
-import {SchemeType} from "../../../../UserResult"
 import {useDispatch, useSelector} from "react-redux"
 import {useHistory} from 'react-router-dom'
 import Button from "../../common/buttons/button/Button"
@@ -12,13 +11,13 @@ import CompareLoader from "../../common/loaders/compare-loader/CompareLoader"
 
 const PairCoopPage: React.FC = () => {
 
-    const schemeCurrent: SchemeType = useSelector((state: any) => state.termsReducer.terms);
+    const scheme = useSelector((state: any) => state.termsReducer.terms);
     const isCompareReady: boolean = useSelector((state: any) => state.pairCoopReducer.isComparisonResultReady);
     const isComparisonInProcess: boolean = useSelector((state: any) => state.pairCoopReducer.isComparisonInProcess);
     const dispatch = useDispatch();
     const history = useHistory();
 
-    if (!schemeCurrent) {
+    if (!scheme) {
         return <main className='section page-pair main'>
             <div className="container">
                 <Loader/>

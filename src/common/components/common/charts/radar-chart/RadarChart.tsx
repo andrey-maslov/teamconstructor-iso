@@ -1,10 +1,10 @@
 import React from 'react'
 import {Radar} from 'react-chartjs-2'
-import {getChartLabels, getRealData} from '../../../../../helper/helper'
 import {COLORS} from '../../../../../constants/constants'
 import hexToRgba from '../../../../../helper/hexToRgba'
 import {useMediaPredicate} from 'react-media-hook'
 import style from './radar-chart.module.scss'
+import {ITendency} from "../../../../../UserResult"
 
 const colors = [
     COLORS.orange,
@@ -19,13 +19,14 @@ const colors = [
 ]
 
 type ChartsPropsType = {
-    profiles: [string, number][][]
+    profiles: ITendency[][]
     names: string[]
+    labels: string[]
 }
 
-const RadarChart: React.FC<ChartsPropsType> = ({profiles, names}) => {
+const RadarChart: React.FC<ChartsPropsType> = ({profiles, names, labels}) => {
 
-    const chartLabels = getChartLabels(profiles[0]);
+    const chartLabels = labels;
     const chartColors = colors;
 
     const chartRadarOptions: any = {
@@ -53,7 +54,7 @@ const RadarChart: React.FC<ChartsPropsType> = ({profiles, names}) => {
             pointBackgroundColor: chartColors[i],
             borderColor: chartColors[i],
             pointRadius: 7,
-            data: getRealData(profile)
+            data: profile.map(item => item.value)
         })),
     };
 

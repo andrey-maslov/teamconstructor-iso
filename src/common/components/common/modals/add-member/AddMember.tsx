@@ -6,14 +6,22 @@ import {GlobalStateType, IModalProps, ITeamProfile} from "../../../../../constan
 import Button from "../../buttons/button/Button"
 import {GrUserAdd} from "react-icons/gr"
 import {getAndDecodeData} from "encoded-data-parser"
-import {setTeamsData} from "../../../../actions/actionCreator";
+import {createMember} from "../../../../actions/actionCreator"
+import {useForm} from 'react-hook-form'
+
+interface IForm {
+    name: string
+    position: string;
+    encData: string;
+}
 
 export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
 
-    const [state, setState] = useState({isError: false})
-
     const dispatch = useDispatch()
-    const teams: Array<ITeamProfile> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    // const teams: Array<ITeamProfile> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    // const errorApiMsg = useSelector((state: GlobalStateType) => state.teamsReducer.errorMessage)
+    const user = useSelector((state: GlobalStateType) => state.userData)
+    const {register, handleSubmit, reset, errors} = useForm<IForm>()
 
     return (
         <Rodal
@@ -22,32 +30,56 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
             onClose={() => {
                 closeModal()
             }}
-            height={460}
+            height={500}
         >
             <div className={style.content}>
-                <form action="" onSubmit={submitForm}>
-                    <div className={style.group}>
+                <form onSubmit={handleSubmit(submitForm)}>
+                    <div className={`form-group`}>
                         <label htmlFor="">
-                            <span>Имя</span>
-                            <input className={style.input} type="text" name="name" required/>
+                            <span>Имя работника</span>
+                            <input
+                                className={style.input}
+                                type="text"
+                                name="name"
+                                ref={register({
+                                    required: 'Это обязательное поле'
+                                })}
+                            />
                         </label>
+                        {errors.name && <div className={`msg-error`}>{errors.name.message}</div>}
                     </div>
-                    <div className={style.group}>
+                    <div className={`form-group`}>
                         <label htmlFor="">
-                            <span>Должность</span>
-                            <input className={style.input} type="text" name="position" required/>
+                            <span>Должность работника</span>
+                            <input
+                                className={style.input}
+                                type="text"
+                                name="position"
+                                ref={register({
+                                    required: 'Это обязательное поле'
+                                })}
+                            />
                         </label>
-
+                        {errors.position && <div className={`msg-error`}>{errors.position.message}</div>}
                     </div>
-                    <div className={style.group}>
+                    <div className={`form-group`}>
                         <label htmlFor="">
                             <span>Результат теста</span>
                             <textarea
                                 className={style.input}
                                 name="encData"
-                                required
+                                ref={register({
+                                    required: 'Это обязательное поле',
+                                    validate: {
+                                        decode: value => getAndDecodeData('', value).data !== null
+                                    }
+                                })}
                             />
                         </label>
+                        {errors.encData && errors.encData.type === 'decode' && (
+                            <div className={`msg-error`}>Значение невалидно</div>
+                        )}
+                        {errors.encData && <div className={`msg-error`}>{errors.encData.message}</div>}
                     </div>
                     <Button
                         title={'Добавить'}
@@ -55,48 +87,43 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                         handle={() => void (0)}
                         btnClass={'btn-outlined'}
                     />
-                    {state.isError &&
-                    <div className={style.error}>Вы допустили ошибку. Возможно, неправильный формат ввода</div>}
+
                 </form>
             </div>
         </Rodal>
     )
 
-    function submitForm(e: React.FormEvent<HTMLFormElement>): void {
-        e.preventDefault();
+    function submitForm(formData: IForm): void {
 
-        const name = e.target['name'].value;
-        const position = e.target['position'].value;
-        const encData = e.target['encData'].value;
+        const data = getAndDecodeData('', formData.encData)
 
-        const {data} = getAndDecodeData('', encData)
-
-        if (!data) {
-            setState({isError: true})
-            return
+        const memberData = {
+            name: formData.name,
+            position: formData.position,
+            encData: data.encoded,
+            decData: data.data,
         }
-        setState({isError: false})
-        console.log(data)
-        updateStaff(name, position, encData, data, teams)
-        closeModal()
+
+        dispatch(createMember(memberData, user.id, 1, user.token))
+        // closeModal()
     }
 
 
-    function updateStaff(name: string, position: string, encData: string, decData: any, teams: ITeamProfile[]): void {
-
-        const id = `666-${new Date().getTime()}`
-        const newMember = {
-            id,
-            name,
-            position,
-            encData,
-            decData
-        }
-
-        const newTeams = [...teams]
-        newTeams[0].items.push(newMember)
-        dispatch(setTeamsData(newTeams))
-    }
+    // function addMemberToPool(name: string, position: string, encData: string, decData: any, teams: ITeamProfile[]): void {
+    //
+    //     const id = `${new Date().getTime()}`
+    //     const newMember = {
+    //         id,
+    //         name,
+    //         position,
+    //         encData,
+    //         decData
+    //     }
+    //
+    //     const newTeams = [...teams]
+    //     newTeams[0].items.push(newMember)
+    //     dispatch(setTeamsData(newTeams))
+    // }
 
 
 };

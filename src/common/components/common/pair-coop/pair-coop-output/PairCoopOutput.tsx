@@ -1,68 +1,20 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {UserResult, SchemeType} from '../../../../../UserResult';
+import {UserResult, IDescWithRange, IOctant, ITendency, IUserResult} from '../../../../../UserResult';
 import RadarChart from "../../charts/radar-chart/RadarChart";
 import Box from "../../layout/box/Box";
 import Table from "../../tables/table/Table";
 import ComparisonTable from "./comparison-table/ComparisonTable";
-import {DecodedDataType, GlobalStateType, IDescWithRange, OctantType} from "../../../../../constants/types";
+import {DecodedDataType, GlobalStateType} from "../../../../../constants/types";
 import {BsTable} from "react-icons/bs";
 import KeyIndicator from "./key-indicator/KeyIndicator";
 import {getDescByRange, toPercent} from "../../../../../helper/helper";
 
-export const complementarityDesc = [
-    "спонтанность, импульсивность, некоторую агрессивность, умение добиваться целей",
-    "спонтанность, стремление к новизне, общительность, умение организовать команду, стремление к новизне",
-    "общительность, гибкость, артистизм, подстройку под внешние обстоятельства и окружающих людей",
-    "общительность, гибкость, подстройку под внешние обстоятельства и тех людей, которые считаются современными, «продвинутыми»",
-    "чувствительность к требованиям социума, внимательность, логику и последовательность",
-    "чувствительность к партнеру, внимательность, умение рассуждать, анализировать",
-    "умение работать без контроля, способность к синтетическому восприятию действительности, логику в поступках, планирование",
-    "напор и способность постоять за себя и партнера. Стабильность и устойчивость"
-]
-
-const efficiencyDesc: IDescWithRange[] = [
-    {
-        desc: 'Прогноз тяжелый. Вам необходимо внимательно обходить острые углы',
-        range: [-Infinity, .5]
-    },
-    {
-        desc: 'Вероятно, вы сможете выполнить то, ради чего объединились. Но, что будет легко, не обещаем',
-        range: [.5, .8]
-    },
-    {
-        desc: 'Поздравляем! Вы удивительно хорошие соратники',
-        range: [.8, .95]
-    },
-    {
-        desc: '100% гармоничное сочетание психологических характеристик',
-        range: [.95, Infinity]
-    },
-]
-
-const compatibilityDesc: IDescWithRange[] = [
-    {
-        desc: 'Прогноз тяжелый. Вам необходимо внимательно обходить острые углы',
-        range: [-Infinity, .5]
-    },
-    {
-        desc: 'Вероятно, вы сможете сохранить ваш союз.Что будет легко, не обещаем',
-        range: [.5, .8]
-    },
-    {
-        desc: 'Поздравляем! Вы удивительно друг другу подходите',
-        range: [.8, .95]
-    },
-    {
-        desc: '100% гармоничное сочетание психологических характеристик',
-        range: [.95, Infinity]
-    },
-]
-
 const PairCoopOutput: React.FC = () => {
 
     //Initial data
-    const schemeCurrent: SchemeType     = useSelector((state: GlobalStateType) => state.termsReducer.terms)
+    const scheme                        = useSelector((state: GlobalStateType) => state.termsReducer.terms)
+    const descriptions                  = useSelector((state: GlobalStateType) => state.termsReducer.descriptions)
     const isResultReady: boolean        = useSelector((state: GlobalStateType) => state.pairCoopReducer.isComparisonResultReady)
     const decodedData1: DecodedDataType = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.data)
     const decodedData2: DecodedDataType = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.data)
@@ -73,15 +25,15 @@ const PairCoopOutput: React.FC = () => {
         return null;
     }
 
-    const fullResult1 = new UserResult(decodedData1[1], schemeCurrent)
-    const fullResult2 = new UserResult(decodedData2[1], schemeCurrent)
+    const fullResult1: IUserResult = new UserResult(decodedData1[1])
+    const fullResult2: IUserResult = new UserResult(decodedData2[1])
 
-    const octants1    = fullResult1.getCalculatedOctants();
-    const octants2    = fullResult2.getCalculatedOctants();
+    const portrait1 = fullResult1.portrait;
+    const portrait2 = fullResult2.portrait;
 
     //tmp
-    const profile1    = fullResult1.profile
-    const profile2    = fullResult2.profile
+    const profile1 = fullResult1.profile
+    const profile2 = fullResult2.profile
 
     //All calculated values for comparison table
     const intensityRatio: number         = getIntensityRatio()
@@ -99,7 +51,7 @@ const PairCoopOutput: React.FC = () => {
     const valuesForCompatibility: number[] = [intensityRatio, understanding, ...maturity, lifeAttitudes, similarityThinking, emotionalCompatibility, ...maturity];
     const compatibility: number            = valuesForCompatibility.reduce((a, b) => a + b) / valuesForCompatibility.length;
 
-    const comparisonTableData = getComparisonTableData()
+    const {compatibilityDesc, efficiencyDesc, complementarityDesc} = descriptions
 
     const keyValues = [
         {
@@ -121,6 +73,7 @@ const PairCoopOutput: React.FC = () => {
                     <RadarChart
                         profiles={[profile1, profile2]}
                         names={[name1, name2]}
+                        labels={scheme.tendencies}
                     />
                     <div>
                         {keyValues.map((item, i) => (
@@ -142,7 +95,7 @@ const PairCoopOutput: React.FC = () => {
             >
                 <div className="row center-md">
                     <div className="col-md-11">
-                        <ComparisonTable tableData={comparisonTableData}/>
+                        <ComparisonTable tableData={getComparisonTableData()}/>
                     </div>
                 </div>
             </Box>
@@ -152,7 +105,7 @@ const PairCoopOutput: React.FC = () => {
                     <div className="col-md-11">
                         <Table
                             tableData={[[name1, ...decodedData1[1][3]], [name2, ...decodedData2[1][3]]]}
-                            tableHeader={['', ...(schemeCurrent.axes[3].subAxes).map(item => item.join(' - '))]}
+                            tableHeader={['', ...(scheme.subAxes[3])]}
                         />
                     </div>
                 </div>
@@ -163,13 +116,13 @@ const PairCoopOutput: React.FC = () => {
                     <div className="col-md-6 col-lg-5">
                         <strong>{name1}</strong>
                         <Table
-                            tableData={profile1}
+                            tableData={profile1.map((item, i) => [scheme.tendencies[i], item.value])}
                         />
                     </div>
                     <div className="col-md-6 col-lg-5">
                         <strong>{name2}</strong>
                         <Table
-                            tableData={profile2}
+                            tableData={profile2.map((item, i) => [scheme.tendencies[i], item.value])}
                         />
                     </div>
                 </div>
@@ -180,14 +133,14 @@ const PairCoopOutput: React.FC = () => {
                     <div className="col-md-6 col-lg-5">
                         <strong>{name1}</strong>
                         <Table
-                            tableData={fullResult1.sortedOctants.map(item => [item.title, item.value])}
+                            tableData={fullResult1.sortedOctants.map((item, i) => [scheme.psychoTypes[i], item.value])}
                             tableHeader={['октант', 'значение']}
                         />
                     </div>
                     <div className="col-md-6 col-lg-5">
                         <strong>{name2}</strong><br/>
                         <Table
-                            tableData={fullResult2.sortedOctants.map(item => [item.title, item.value])}
+                            tableData={fullResult2.sortedOctants.map((item, i) => [scheme.psychoTypes[i], item.value])}
                             tableHeader={['октант', 'значение']}
                         />
                     </div>
@@ -215,11 +168,8 @@ const PairCoopOutput: React.FC = () => {
     //Вывод о соотношении интенсивности ведущих тенденций (у каждого профиля по одной)
     function getIntensityRatio() {
 
-        const sortedProfile1 = [...fullResult1.profile].sort((a, b) => b[1] - a[1]);
-        const sortedProfile2 = [...fullResult2.profile].sort((a, b) => b[1] - a[1]);
-
-        const maxVal1 = sortedProfile1[0][1]
-        const maxVal2 = sortedProfile2[0][1]
+        const maxVal1 = profile1[fullResult1.mainTendencyList[0]].value
+        const maxVal2 = profile2[fullResult2.mainTendencyList[0]].value
 
         if (maxVal1 === 0 || maxVal2 === 0) {
             return 0
@@ -234,7 +184,7 @@ const PairCoopOutput: React.FC = () => {
         const fraction = 0.125
 
         for (let i = 0; i < 8; i++) {
-            if ((octants1[i].value === 0 && octants2[i].value !== 0) || (octants1[i].value !== 0 && octants2[i].value === 0)) {
+            if ((portrait1[i].value === 0 && portrait2[i].value !== 0) || (portrait1[i].value !== 0 && portrait2[i].value === 0)) {
                 result -= fraction
             }
         }
@@ -244,11 +194,11 @@ const PairCoopOutput: React.FC = () => {
     //Бессознательное притяжение
     function getAttraction(): number[] {
 
-        const leadSegment1: OctantType = fullResult1.sortedOctants[0]
-        const leadSegment2: OctantType = fullResult2.sortedOctants[0]
+        const leadSegment1 = fullResult1.mainOctant
+        const leadSegment2 = fullResult2.mainOctant
 
-        const oppositeSegmentForUser1 = octants2[getOppositeSegmentIndex(leadSegment1.index)];
-        const oppositeSegmentForUser2 = octants1[getOppositeSegmentIndex(leadSegment2.index)];
+        const oppositeSegmentForUser1 = portrait2[getOppositeSegmentIndex(leadSegment1.code)];
+        const oppositeSegmentForUser2 = portrait1[getOppositeSegmentIndex(leadSegment2.code)];
 
         const oppositeVals1 = [oppositeSegmentForUser1.value, leadSegment1.value]
         const oppositeVals2 = [oppositeSegmentForUser2.value, leadSegment2.value]
@@ -264,11 +214,11 @@ const PairCoopOutput: React.FC = () => {
     }
 
     //Находим индекс противоположного сегмента (октанта)
-    function getOppositeSegmentIndex(segmentLetterIndex: string): number {
-        const allIndexes = fullResult1.letterIndexes
+    function getOppositeSegmentIndex(code: string): number {
+        const allIndexes = fullResult1.octantCodeList
 
         //get place of out lead letter index in letter indexes list
-        const commonIndex = allIndexes.indexOf(segmentLetterIndex)
+        const commonIndex = allIndexes.indexOf(code)
         if (commonIndex < 4) {
             return commonIndex + 4
         }
@@ -279,20 +229,20 @@ const PairCoopOutput: React.FC = () => {
     function getLifeAttitudes() {
 
         //Получаем буквенные индексы в разрезе полушарий
-        const indexes = [[...fullResult1.letterIndexes.slice(0, 4)], [...fullResult1.letterIndexes.slice(4)]];
+        const indexes = [[...fullResult1.octantCodeList.slice(0, 4)], [...fullResult1.octantCodeList.slice(4)]];
 
-        const leadSegment1 = fullResult1.sortedOctants[0]
-        const leadSegment2 = fullResult2.sortedOctants[0]
+        const leadSegment1 = fullResult1.mainOctant
+        const leadSegment2 = fullResult2.mainOctant
 
-        if (leadSegment1.index === leadSegment2.index) {
+        if (leadSegment1.code === leadSegment2.code) {
             return 1
         }
 
-        if (leadSegment1.index[0] === leadSegment2.index[0]) {
+        if (leadSegment1.code[0] === leadSegment2.code[0]) {
             return 0.5
         }
 
-        if ((indexes[0].includes(leadSegment1.index) && indexes[0].includes(leadSegment2.index)) || (indexes[1].includes(leadSegment1.index) && indexes[1].includes(leadSegment2.index))) {
+        if ((indexes[0].includes(leadSegment1.code) && indexes[0].includes(leadSegment2.code)) || (indexes[1].includes(leadSegment1.code) && indexes[1].includes(leadSegment2.code))) {
             return 0.25
         }
 
@@ -303,18 +253,18 @@ const PairCoopOutput: React.FC = () => {
     function getSimilarityThinking() {
 
         //Получаем буквенные индексы в разрезе полушарий
-        const indexes = [[...fullResult1.letterIndexes.slice(0, 4)], [...fullResult1.letterIndexes.slice(4)]];
+        const indexes = [[...fullResult1.octantCodeList.slice(0, 4)], [...fullResult1.octantCodeList.slice(4)]];
 
-        const leadSegment1 = fullResult1.sortedOctants[0]
-        const leadSegment2 = fullResult2.sortedOctants[0]
+        const leadSegment1 = fullResult1.mainOctant
+        const leadSegment2 = fullResult2.mainOctant
 
         //Ведущие сегменты совпадают или в одной четверти; 100%'
-        if (leadSegment1.index === leadSegment2.index || leadSegment1.index[0] === leadSegment2.index[0]) {
+        if (leadSegment1.code === leadSegment2.code || leadSegment1.code[0] === leadSegment2.code[0]) {
             return 1
         }
 
         //Ведущие сегменты в одном полушарии; 50%
-        if ((indexes[0].includes(leadSegment1.index) && indexes[0].includes(leadSegment2.index)) || (indexes[1].includes(leadSegment1.index) && indexes[1].includes(leadSegment2.index))) {
+        if ((indexes[0].includes(leadSegment1.code) && indexes[0].includes(leadSegment2.code)) || (indexes[1].includes(leadSegment1.code) && indexes[1].includes(leadSegment2.code))) {
             return 0.5
         }
 
@@ -328,11 +278,11 @@ const PairCoopOutput: React.FC = () => {
 
     //Дополняемость
     function getComplementarity(): string {
-        const indexes = fullResult1.letterIndexes
-        const indexOfSegment1 = indexes.indexOf(fullResult1.sortedOctants[0].index)
-        const indexOfSegment2 = indexes.indexOf(fullResult2.sortedOctants[0].index)
 
-        if (fullResult1.sortedOctants[0].index === fullResult2.sortedOctants[0].index) {
+        const indexOfSegment1 = fullResult1.mainOctant.index
+        const indexOfSegment2 = fullResult2.mainOctant.index
+
+        if (fullResult1.mainOctant.code === fullResult2.mainOctant.code) {
             return `И ${name1}, и ${name2} дают паре ${complementarityDesc[indexOfSegment1]}`
         }
 
@@ -341,7 +291,8 @@ const PairCoopOutput: React.FC = () => {
 
     //Психологическая взрослость
     function getPsyMaturity() {
-        const allOctants = [octants1, octants2]
+
+        const allOctants = [portrait1, portrait2]
 
         //init
         const counter = Array(allOctants.length).fill(0);

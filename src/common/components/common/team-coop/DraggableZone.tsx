@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {DragDropContext, DropResult} from "react-beautiful-dnd"
 import Button from "../buttons/button/Button"
 import Box from '../layout/box/Box'
@@ -9,6 +9,7 @@ import {GlobalStateType, IEmployeeProfile, ITeamProfile} from "../../../../const
 import {useDispatch, useSelector} from "react-redux";
 import {setAddMemberModal, setTeamsData} from "../../../actions/actionCreator";
 import { useToasts } from 'react-toast-notifications'
+import Loader from "../loaders/loader/Loader";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -29,13 +30,12 @@ const reorder = (list: any, startIndex: number, endIndex: number) => {
  * Copy an item from one list to another list.
  */
 const copy = (source: any, destination: any, droppableSource: any, droppableDestination: any) => {
-    // console.log('==> dest', destination);
-
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const item = new Object(sourceClone[droppableSource.index])
 
-    destClone.splice(droppableDestination.index, 0, {...item, id: `0-${new Date().getTime()}`});
+    destClone.splice(droppableDestination.index, 0, {...item, id: `${new Date().getTime()}`});
+
     return destClone;
 };
 
@@ -60,13 +60,23 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 
 const DraggableZone: React.FC = () => {
 
-    const staff: ITeamProfile     = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams[0])
     const columns: ITeamProfile[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    const staff: ITeamProfile     = columns[0]
     const dispatch                = useDispatch();
     const { addToast }            = useToasts()
 
     const [columnsCount, setColumnsCount] = useState(2)
+    const [isReady, setReady] = useState(false)
 
+    useEffect(() => {
+        if (staff && staff.items !== 0) {
+            setReady(true)
+        }
+    }, [staff])
+
+    // console.log(columns)
+
+    // return null
 
     function onDragEnd(result: DropResult) {
         const {source, destination} = result;
@@ -141,24 +151,24 @@ const DraggableZone: React.FC = () => {
 
     return (
         <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
-            <div className="flex-row mb-md">
+            <div className="flex-row mb-sm">
 
                 <Box title="Пул работников" addClass={'store-area'} widget={storeWidget}>
-                    <DroppableColumnStore
+                    {isReady && <DroppableColumnStore
                         items={staff.items}
                         deleteItem={deleteMember}
                         id={`${0}`}
                         isDropDisabled={true}
-                    />
+                    />}
                 </Box>
 
                 <Box title={'Команды'} addClass={'teams-area'} widget={teamsWidget}>
                     <div className={'teams-wrapper'}>
-                        {columns.slice(1).map((column, i) => (
+                        {isReady && columns.slice(1).map((column, i) => (
                             <div key={i}>
 
                                 <ColumnTop
-                                    label={column.label}
+                                    label={column.title}
                                     deleteHandler={deleteColumn}
                                     columnIndex={i + 1}
                                 />
@@ -203,7 +213,7 @@ const DraggableZone: React.FC = () => {
     //TODO need to fix column count
     function addColumn(count: number): void {
         const columnName = `Команда ${count}`
-        dispatch(setTeamsData([...columns, {label: columnName, items: []}]))
+        dispatch(setTeamsData([...columns, {title: columnName, id: null, items: []}]))
         setColumnsCount(columnsCount + 1)
         addToast(`Команда добавлена`, { appearance: 'success', autoDismiss: true })
     }
@@ -217,8 +227,8 @@ const DraggableZone: React.FC = () => {
     //if one team includes this member
     function checkDuplicate(columnIndex: number, sourceIndex: number, destIndex: number): boolean {
 
-        const sourceItemData = columns[columnIndex].items[sourceIndex].encData;
-        const destItemsData = columns[destIndex].items.map((item: IEmployeeProfile) => item.encData)
+        const sourceItemData = columns[columnIndex].items[sourceIndex].baseID;
+        const destItemsData = columns[destIndex].items.map((item: IEmployeeProfile) => item.baseID)
 
         const includesNum = destItemsData.filter((item: string) => item === sourceItemData).length
         return includesNum === 0
@@ -226,4 +236,4 @@ const DraggableZone: React.FC = () => {
 }
 
 
-export default DraggableZone;
+export default DraggableZone

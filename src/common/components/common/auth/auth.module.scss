@@ -1,0 +1,35 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+
+.tabs {
+  display: flex;
+  margin-bottom: 2rem;
+
+  button {
+    background-color: #fff;
+    border: 1px solid $text-light;
+    width: 150px;
+    height: 50px;
+    opacity: .5;
+
+    &:hover {
+      background-color: rgba($accent, .2);
+      cursor: pointer;
+    }
+
+    &.active {
+      background-color: $accent;
+      color: #fff;
+      opacity: 1;
+
+      &:hover {
+        background-color: darken($accent, 10);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+
+
+
