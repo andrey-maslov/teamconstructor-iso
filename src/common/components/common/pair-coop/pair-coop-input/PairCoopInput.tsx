@@ -137,7 +137,7 @@ const PairCoopInput: React.FC = () => {
             partner2: {...localState.partner2, data: encValue2, isError: !partner2.isValid}
         })
 
-        console.log(localState)
+        // console.log(localState)
 
         if (partner1.isValid && partner2.isValid) {
             dispatch(setComparisonResult(true))

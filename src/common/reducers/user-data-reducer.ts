@@ -16,6 +16,7 @@ if (!USER_DATA) {
         email: '',
         role: null,
         token: '',
+        boards: [],
         isLoggedIn: false,
         isSubscribed: false,
         language: '',
@@ -34,6 +35,7 @@ export const userData = (state = USER_DATA, {
     email,
     token,
     isLoggedIn,
+    boards,
     errorMessage,
     isSubscribed,
     language,
@@ -49,6 +51,7 @@ export const userData = (state = USER_DATA, {
                 email,
                 role,
                 token,
+                boards,
                 isLoggedIn: true
             };
         case SUBSCRIPTION :
@@ -84,8 +87,8 @@ export const userData = (state = USER_DATA, {
                 email: '',
                 role: null,
                 token: '',
+                boards: [],
                 isLoggedIn: false,
-                isUserInBase: false,
                 isSubscribed: false,
             };
         default:

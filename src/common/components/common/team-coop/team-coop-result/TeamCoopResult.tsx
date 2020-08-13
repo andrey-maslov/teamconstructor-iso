@@ -14,12 +14,12 @@ import {getDescByRange, toPercent} from "../../../../../helper/helper"
 
 const TeamCoopResult: React.FC = () => {
 
-    const activeTeamInd: number    = useSelector((state: GlobalStateType) => state.teamCoopReducer.activeTeam)
-    const randomNum: number        = useSelector((state: GlobalStateType) => state.teamCoopReducer.randomNum)
-    const activeTeam: ITeamProfile = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams[activeTeamInd + 1])
-    const scheme                   = useSelector((state: GlobalStateType) => state.termsReducer.terms)
-    const descriptions             = useSelector((state: GlobalStateType) => state.termsReducer.descriptions)
+    const activeTeamInd: number         = useSelector((state: GlobalStateType) => state.teamCoopReducer.activeTeam)
+    const randomNum: number             = useSelector((state: GlobalStateType) => state.teamCoopReducer.randomNum)
+    const activeTeam: ITeamProfile      = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams[activeTeamInd + 1])
+    const {terms: scheme, descriptions} = useSelector((state: GlobalStateType) => state.termsReducer)
 
+    //if all resources are fetched, calculated and ready to display
     const [isReady, setReady]      = useState(false)
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const TeamCoopResult: React.FC = () => {
         }
     }, [activeTeam, randomNum, scheme, activeTeamInd])
 
-    if (!activeTeam || activeTeam.items.length === 0) {
+    if (!isReady) {
         return null
     }
 
@@ -61,8 +61,6 @@ const TeamCoopResult: React.FC = () => {
     const commitment        = getCommitment()
     const teamProfileDesc   = getProfileDesc(maxSectorSq, descriptions.complementarityDesc)
     const needList          = getNeed(maxSectorSq)
-
-    console.log(descriptions)
 
     const keyValues = [
         {

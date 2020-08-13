@@ -73,9 +73,6 @@ const Login: React.FC = () => {
     );
 
     function submitForm(data: IForm): void {
-
-        console.log('login front OK')
-
         dispatch(authUser(data, 'login'))
         dispatch(clearApiError())
         reset()

@@ -20,12 +20,12 @@ export const ROUTES = ['/', '/result'];
 
 export const unit = {factor: 100, sign: '%'}
 
-export const REQUEST_BASE_URL = 'https://base.teamconstructor.com'
-export const REQUEST_BASE_ROUTE = `${REQUEST_BASE_URL}/api/Predict`
-export const LINKEDIN_REDIRECT_URI = `${REQUEST_BASE_URL}/callbacklinkedin`
+// export const REQUEST_BASE_URL = 'https://base.teamconstructor.com'
+// export const REQUEST_BASE_ROUTE = `${REQUEST_BASE_URL}/api/Predict`
 
 // export const API_URL = 'https://strapi.nobugs.today'
-export const API_URL = 'http://localhost:1337'
+export const BASE_API = 'http://localhost:1337'
+export const CONTENT_API = 'https://api.salary2.me'
 
 export const COLORS = {
     // accent: '#556587',

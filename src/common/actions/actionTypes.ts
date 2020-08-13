@@ -7,7 +7,7 @@ export const SET_TEAMS_DATA = 'SET_TEAMS'
 export const SET_ACTIVE_TEAM = 'SET_ACTIVE_TEAM'
 export const SET_RANDOM = 'SET_RANDOM'
 export const ADD_MEMBER = 'ADD_MEMBER'
-export const FETCH_TEAMS = 'FETCH_TEAMS'
+export const SET_TEAMS = 'FETCH_TEAMS'
 export const PUSH_MEMBER = 'PUSH_MEMBER'
 
 //tmp

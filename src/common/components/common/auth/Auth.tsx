@@ -5,17 +5,31 @@ import Register from "./Register";
 import style from './auth.module.scss'
 
 
+interface IAuthMode {
+    mode: 'login' | 'register'
+}
+
 const Auth: React.FC = () => {
 
-    const [isLogin, setLogin] = useState(false)
+    const [authMode, setAuthMode] = useState<IAuthMode>({mode: 'login'})
 
     return (
         <div className={style.wrapper}>
             <div className={style.tabs}>
-                <button className={`${isLogin ? style.active : ''}`} onClick={() => setLogin(true)}>Login</button>
-                <button className={`${!isLogin ? style.active : ''}`} onClick={() => setLogin(false)}>Register</button>
+                <button
+                    className={`${authMode.mode === 'login' ? style.active : ''}`}
+                    onClick={() => setAuthMode({mode: 'login'})}
+                >
+                    Login
+                </button>
+                <button
+                    className={`${authMode.mode === 'register' ? style.active : ''}`}
+                    onClick={() => setAuthMode({mode: 'register'})}
+                >
+                    Register
+                </button>
             </div>
-            {isLogin ?
+            {authMode.mode === 'login' ?
                 <Login/> :
                 <Register/>}
         </div>

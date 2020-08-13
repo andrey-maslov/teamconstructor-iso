@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
-import {UserResult, IDescWithRange, IOctant, ITendency, IUserResult} from '../../../../../UserResult';
+import {UserResult, IUserResult} from '../../../../../UserResult';
 import RadarChart from "../../charts/radar-chart/RadarChart";
 import Box from "../../layout/box/Box";
 import Table from "../../tables/table/Table";
@@ -13,45 +13,56 @@ import {getDescByRange, toPercent} from "../../../../../helper/helper";
 const PairCoopOutput: React.FC = () => {
 
     //Initial data
-    const scheme                        = useSelector((state: GlobalStateType) => state.termsReducer.terms)
-    const descriptions                  = useSelector((state: GlobalStateType) => state.termsReducer.descriptions)
-    const isResultReady: boolean        = useSelector((state: GlobalStateType) => state.pairCoopReducer.isComparisonResultReady)
-    const decodedData1: DecodedDataType = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.data)
-    const decodedData2: DecodedDataType = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.data)
-    const name1: string                 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.name)
-    const name2: string                 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.name)
+    const {terms: scheme, descriptions}    = useSelector((state: GlobalStateType) => state.termsReducer)
+    const pairStore                 = useSelector((state: GlobalStateType) => state.pairCoopReducer)
+    const isResultReady: boolean    = pairStore.isComparisonResultReady
+    const decData1: DecodedDataType = pairStore.partner1.data
+    const decData2: DecodedDataType = pairStore.partner2.data
+    const name1: string             = pairStore.partner1.name
+    const name2: string             = pairStore.partner2.name
 
-    if (!isResultReady) {
+    //if all resources are fetched, calculated and ready to display
+    const [isReady, setReady]           = useState(false)
+
+    useEffect(() => {
+        if (isResultReady &&  scheme && descriptions) {
+            setReady(true)
+        }
+    }, [isResultReady, scheme])
+
+    console.log(isResultReady, scheme, descriptions)
+
+    if (!isReady) {
         return null;
     }
 
-    const fullResult1: IUserResult = new UserResult(decodedData1[1])
-    const fullResult2: IUserResult = new UserResult(decodedData2[1])
+    const {compatibilityDesc, efficiencyDesc, complementarityDesc} = descriptions
 
-    const portrait1 = fullResult1.portrait;
-    const portrait2 = fullResult2.portrait;
+    const fullResult1: IUserResult = new UserResult(decData1[1])
+    const fullResult2: IUserResult = new UserResult(decData2[1])
 
-    //tmp
-    const profile1 = fullResult1.profile
-    const profile2 = fullResult2.profile
+    const portrait1    = fullResult1.portrait;
+    const portrait2    = fullResult2.portrait;
+    const profile1     = fullResult1.profile
+    const profile2     = fullResult2.profile
+    const leadSegment1 = fullResult1.mainOctant
+    const leadSegment2 = fullResult2.mainOctant
 
     //All calculated values for comparison table
-    const intensityRatio: number         = getIntensityRatio()
-    const understanding: number          = getUnderstanding()
-    const attraction: number[]           = getAttraction()
-    const lifeAttitudes: number          = getLifeAttitudes()
-    const similarityThinking: number     = getSimilarityThinking()
-    const emotionalCompatibility: number = getEmotionalCompatibility()
-    const complementarity: string        = getComplementarity()
-    const maturity: number[]             = getPsyMaturity()
+    const intensityRatio: number           = getIntensityRatio()
+    const understanding: number            = getUnderstanding()
+    const attraction: number[]             = getAttraction()
+    const lifeAttitudes: number            = getLifeAttitudes()
+    const similarityThinking: number       = getSimilarityThinking()
+    const emotionalCompatibility: number   = getEmotionalCompatibility()
+    const complementarity: string          = getComplementarity()
+    const maturity: number[]               = getPsyMaturity()
 
-    const valuesForEfficiency: number[]  = [intensityRatio, understanding, lifeAttitudes, similarityThinking, emotionalCompatibility];
-    const efficiency: number             = valuesForEfficiency.reduce((a, b) => a + b) / valuesForEfficiency.length;
+    const valuesForEfficiency: number[]    = [intensityRatio, understanding, lifeAttitudes, similarityThinking, emotionalCompatibility];
+    const efficiency: number               = valuesForEfficiency.reduce((a, b) => a + b) / valuesForEfficiency.length;
 
     const valuesForCompatibility: number[] = [intensityRatio, understanding, ...maturity, lifeAttitudes, similarityThinking, emotionalCompatibility, ...maturity];
     const compatibility: number            = valuesForCompatibility.reduce((a, b) => a + b) / valuesForCompatibility.length;
-
-    const {compatibilityDesc, efficiencyDesc, complementarityDesc} = descriptions
 
     const keyValues = [
         {
@@ -104,7 +115,7 @@ const PairCoopOutput: React.FC = () => {
                 <div className="row center-md">
                     <div className="col-md-11">
                         <Table
-                            tableData={[[name1, ...decodedData1[1][3]], [name2, ...decodedData2[1][3]]]}
+                            tableData={[[name1, ...decData1[1][3]], [name2, ...decData2[1][3]]]}
                             tableHeader={['', ...(scheme.subAxes[3])]}
                         />
                     </div>
@@ -194,9 +205,6 @@ const PairCoopOutput: React.FC = () => {
     //Бессознательное притяжение
     function getAttraction(): number[] {
 
-        const leadSegment1 = fullResult1.mainOctant
-        const leadSegment2 = fullResult2.mainOctant
-
         const oppositeSegmentForUser1 = portrait2[getOppositeSegmentIndex(leadSegment1.code)];
         const oppositeSegmentForUser2 = portrait1[getOppositeSegmentIndex(leadSegment2.code)];
 
@@ -231,9 +239,6 @@ const PairCoopOutput: React.FC = () => {
         //Получаем буквенные индексы в разрезе полушарий
         const indexes = [[...fullResult1.octantCodeList.slice(0, 4)], [...fullResult1.octantCodeList.slice(4)]];
 
-        const leadSegment1 = fullResult1.mainOctant
-        const leadSegment2 = fullResult2.mainOctant
-
         if (leadSegment1.code === leadSegment2.code) {
             return 1
         }
@@ -254,9 +259,6 @@ const PairCoopOutput: React.FC = () => {
 
         //Получаем буквенные индексы в разрезе полушарий
         const indexes = [[...fullResult1.octantCodeList.slice(0, 4)], [...fullResult1.octantCodeList.slice(4)]];
-
-        const leadSegment1 = fullResult1.mainOctant
-        const leadSegment2 = fullResult2.mainOctant
 
         //Ведущие сегменты совпадают или в одной четверти; 100%'
         if (leadSegment1.code === leadSegment2.code || leadSegment1.code[0] === leadSegment2.code[0]) {

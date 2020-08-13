@@ -11,7 +11,6 @@ export interface IEmployeeProfile {
     id: string,
     name: string,
     position: string,
-    encData: string,
     decData: DecodedDataType
     baseID: string | number
 }

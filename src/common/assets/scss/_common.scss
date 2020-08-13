@@ -363,10 +363,16 @@ th, td {
 /*===== POPOVERS =====*/
 .user-popover {
   width: 280px;
-  padding: 20px 0;
+  padding: 0;
   top: 50px;
   right: 0;
   font-size: 16px;
+
+  svg {
+    position: relative;
+    bottom: -3px;
+    margin-right: 10px;
+  }
 }
 
 .lang-popover {

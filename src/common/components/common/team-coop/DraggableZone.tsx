@@ -74,9 +74,6 @@ const DraggableZone: React.FC = () => {
         }
     }, [staff])
 
-    // console.log(columns)
-
-    // return null
 
     function onDragEnd(result: DropResult) {
         const {source, destination} = result;

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import Rodal from "rodal"
 import {useSelector, useDispatch} from "react-redux"
 import style from "./add-member.module.scss"
@@ -6,7 +6,7 @@ import {GlobalStateType, IModalProps, ITeamProfile} from "../../../../../constan
 import Button from "../../buttons/button/Button"
 import {GrUserAdd} from "react-icons/gr"
 import {getAndDecodeData} from "encoded-data-parser"
-import {createMember} from "../../../../actions/actionCreator"
+import {clearApiError, createMember} from "../../../../actions/actionCreator"
 import {useForm} from 'react-hook-form'
 
 interface IForm {
@@ -16,6 +16,13 @@ interface IForm {
 }
 
 export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
+
+    useEffect(() => {
+        if (!visible) {
+            dispatch(clearApiError())
+            reset()
+        }
+    }, [visible])
 
     const dispatch = useDispatch()
     // const teams: Array<ITeamProfile> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
@@ -104,26 +111,8 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
             decData: data.data,
         }
 
-        dispatch(createMember(memberData, user.id, 1, user.token))
-        // closeModal()
+        dispatch(createMember(memberData, user.id, user.boards[0].id, user.token))
+        closeModal()
+        reset()
     }
-
-
-    // function addMemberToPool(name: string, position: string, encData: string, decData: any, teams: ITeamProfile[]): void {
-    //
-    //     const id = `${new Date().getTime()}`
-    //     const newMember = {
-    //         id,
-    //         name,
-    //         position,
-    //         encData,
-    //         decData
-    //     }
-    //
-    //     const newTeams = [...teams]
-    //     newTeams[0].items.push(newMember)
-    //     dispatch(setTeamsData(newTeams))
-    // }
-
-
 };

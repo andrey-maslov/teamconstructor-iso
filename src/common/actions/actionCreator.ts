@@ -15,13 +15,12 @@ import {
     SET_ADD_MEMBER_MODAL,
     ADD_MEMBER,
     SET_AUTH_MODAL,
-    FETCH_CONTENT, FETCH_TEAMS,
+    FETCH_CONTENT, SET_TEAMS,
     SET_ERROR,
     CLEAR_ERROR,
 } from './actionTypes';
 import {ILoginData, IMember, IRegisterData, ITeamProfile,} from "../../constants/types";
-import axios from 'axios'
-import {API_URL} from "../../constants/constants";
+import {CONTENT_API, BASE_API} from "../../constants/constants";
 
 
 /*
@@ -42,7 +41,7 @@ export function setLanguage(language: string): { type: string, language: string 
     };
 }
 
-export function clearUserData (): {type: string} {
+export function clearUserData(): { type: string } {
     return {
         type: CLEAR_USER_DATA,
     };
@@ -77,7 +76,7 @@ export function setComparisonResult(isComparisonResultReady: boolean): any {
                 type: COMPARISON_IN_PROCESS,
                 isComparisonInProcess: false
             })
-        }, 3000)
+        }, 500)
     }
 }
 
@@ -86,8 +85,9 @@ export function setComparisonResult(isComparisonResultReady: boolean): any {
 PAIR COMPARISON PROCESS
  */
 
-export function setPairData (data1: [] | string, data2: [] | string, name1: string, name2: string): {
-    type: string, data1: [] | string, data2: [] | string, name1: string, name2: string } {
+export function setPairData(data1: [] | string, data2: [] | string, name1: string, name2: string): {
+    type: string, data1: [] | string, data2: [] | string, name1: string, name2: string
+} {
     return {
         type: SET_PAIR_DATA,
         data1,
@@ -97,7 +97,7 @@ export function setPairData (data1: [] | string, data2: [] | string, name1: stri
     };
 }
 
-export function clearPairData(): {type: string} {
+export function clearPairData(): { type: string } {
     return {
         type: CLEAR_PAIR_DATA,
     };
@@ -126,21 +126,21 @@ export function setRowData(encData1: string, encData2: string) {
 /*
 TEAM COOPERATION PROCESS
  */
-export function setTeamsData(teamsData: ITeamProfile[]): {type: string, teams: ITeamProfile[]} {
+export function setTeamsData(teamsData: ITeamProfile[]): { type: string, teams: ITeamProfile[] } {
     return {
         type: SET_TEAMS_DATA,
         teams: teamsData
     };
 }
 
-export function setActiveTeam(teamIndex: number): {type: string, activeTeam: number} {
+export function setActiveTeam(teamIndex: number): { type: string, activeTeam: number } {
     return {
         type: SET_ACTIVE_TEAM,
         activeTeam: teamIndex
     }
 }
 
-export function setRandomNum(randomNum: number): {type: string, randomNum: number} {
+export function setRandomNum(randomNum: number): { type: string, randomNum: number } {
     return {
         type: SET_RANDOM,
         randomNum
@@ -150,13 +150,14 @@ export function setRandomNum(randomNum: number): {type: string, randomNum: numbe
 /*
 MODALS and ALERTS
  */
-export function setAddMemberModal(isAddMemberModal: boolean): {type: string, isAddMemberModal: boolean} {
+export function setAddMemberModal(isAddMemberModal: boolean): { type: string, isAddMemberModal: boolean } {
     return {
         type: SET_ADD_MEMBER_MODAL,
         isAddMemberModal
     }
 }
-export function setAuthModal(isAuthModal: boolean): {type: string, isAuthModal: boolean} {
+
+export function setAuthModal(isAuthModal: boolean): { type: string, isAuthModal: boolean } {
     return {
         type: SET_AUTH_MODAL,
         isAuthModal
@@ -171,7 +172,7 @@ FETCHING DATA
 export const fetchTerms = (lang: string) => {
 
     // const url = `https://api.salary2.me/psychologies?lang=${lang}`;
-    const url = `${API_URL}/psychologies/1`;
+    const url = `${CONTENT_API}/psychologies/1`;
 
     return (dispatch: any) => {
         fetch(url)
@@ -189,7 +190,7 @@ export const fetchTerms = (lang: string) => {
 export const fetchContent = (lang: string) => {
 
     // const url = `https://api.salary2.me/psychologies/3`;
-    const url = `${API_URL}/psychologies/3`;
+    const url = `${CONTENT_API}/psychologies/3`;
 
     return (dispatch: any) => {
         fetch(url)
@@ -204,36 +205,78 @@ export const fetchContent = (lang: string) => {
 };
 
 
-//TODO fixe me
-// export const fetchPool = (userID: number, token: string) => {
-//
-//     const url = `${API_URL}/pools?user.id=${userID}`;
-//
-//     return (dispatch: any) => {
-//         fetch(url, {
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${token}`
-//             }
-//         })
-//             .then(response => response.json())
-//             .then(data => {
-//                 // dispatch({
-//                 //     type: FETCH_TEAMS,
-//                 //     teams: data
-//                 // });
-//             });
-//     };
-// }
+//TODO fixme
+export function fetchBoard(boardId: number, token: string) {
+
+    const url = `${BASE_API}/boards/${boardId}`;
+
+    return (dispatch: any) => {
+        fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('fetch board', data)
+                const teams = boardToTeams(data)
+                console.log(teams)
+                dispatch({
+                    type: SET_TEAMS_DATA,
+                    teams: teams
+                });
+            });
+    };
+}
 
 
+export function boardToTeams(board: any): any {
+
+    //if members pool is empty
+    if (!board.members && board.members.length === 0) {
+        return [{title: 'staff', items: []}, {title: 'init team', items: []}]
+    }
+
+    const staff = {
+        title: 'staff',
+        items: board.members.map((member: any, i: number) => ({
+            id: `${0}${i}-${new Date().getTime()}`,
+            name: member.name,
+            position: member.position,
+            decData: member.decData,
+            baseID: member.id
+        }))
+    }
+
+    //if no teams saved
+    if (!board.teamSet || board.teamSet.length === 0) {
+        return [staff, {title: 'init team', items: []}]
+    }
+
+    const teams = board.teamSet.map((team: any, i: number) => {
+        return {
+            title: team.title,
+            items: team.items.map((num: number, j: number) => {
+                const members = staff.items.filter((item: any) => item.baseID == num)
+                const member = members[0]
+                return {
+                    ...member,
+                    id: `${i + 1}${j}-${new Date().getTime()}`
+                }
+            })
+        }
+    })
+
+    return [staff, ...teams]
+}
 
 
 /*===== AUTH =====*/
 
 export const authUser = (userData: IRegisterData | ILoginData, authType: 'register' | 'login') => {
 
-    const url = (authType === 'register') ? `${API_URL}/auth/local/register` : `${API_URL}/auth/local`
+    const url = (authType === 'register') ? `${BASE_API}/auth/local/register` : `${BASE_API}/auth/local`
 
     return async (dispatch: any) => {
         try {
@@ -256,8 +299,12 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
             } else {
                 console.log('SUCCESS', data)
                 const user = data.user;
+                const boardsList: { id: number, title: string }[] = user.boards.map((item: any) => ({
+                    id: item.id, title: item.title
+                }))
                 dispatch(clearApiError())
-                dispatch(setUser(user.id, user.username, user.email, user.role, user.boards, data.jwt))
+                dispatch(setUser(user.id, user.username, user.email, user.role, boardsList, data.jwt))
+                dispatch(fetchBoard(boardsList[0].id, data.jwt))
             }
         } catch (error) {
             console.error('ERROR', error)
@@ -265,7 +312,7 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
     }
 }
 
-export const clearApiError = (): {type: string} => {
+export const clearApiError = (): { type: string } => {
     return {
         type: CLEAR_ERROR,
     }
@@ -278,53 +325,59 @@ function setUser(id: number, username: string, email: string, role: number, boar
         username,
         email,
         role,
-        boards,
         token,
+        boards,
     }
 }
 
 //TODO fixme
 function createBoard(title: string, userId: number, token: string) {
 
-    const url = `${API_URL}/boards`
+    const url = `${BASE_API}/boards`
     const boardData = {
-        "title": "staff",
+        "title": title,
         "user": userId
     }
 
     return async (dispatch: any) => {
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(boardData),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(boardData),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(res => {
+                const data = res.json()
+                return data
             })
-            const data = await response.json();
-            if (data.statusCode === 400) {
-                const msg = data.message[0].messages[0].message
-                console.log('ERROR 400', msg)
-                dispatch({
-                    type: SET_ERROR,
-                    errorMessage: msg
-                })
-                return
-            } else {
-                console.log('SUCCESS', data)
-                dispatch(clearApiError())
-            }
-        } catch (error) {
-            console.error('ERROR', error)
-        }
+            .then(data => {
+                console.log('after create member', data)
+                if (data.statusCode === 400) {
+                    const msg = data.message[0].messages[0].message
+                    console.log('ERROR 400', msg)
+                    dispatch({
+                        type: SET_ERROR,
+                        errorMessage: msg
+                    })
+                    return
+                } else {
+                    console.log('SUCCESS', data)
+                    dispatch(clearApiError())
+                    dispatch(fetchBoard(data.id, token))
+                }
+            })
+            .catch(err => {
+                console.error(err)
+            })
     }
 }
 
 //TODO fixme
 export function createMember(memberData: IMember, userId: number, boardId: number, token: string) {
 
-    const url = `${API_URL}/members`
+    const url = `${BASE_API}/members`
 
     return (dispatch: any) => {
         fetch(url, {
@@ -344,38 +397,23 @@ export function createMember(memberData: IMember, userId: number, boardId: numbe
                 return data
             })
             .then(data => {
-                console.log(data)
+                console.log('after create member', data)
+                if (data.statusCode === 400) {
+                    const msg = data.message[0].messages[0].message
+                    console.log('ERROR 400', msg)
+                    dispatch({
+                        type: SET_ERROR,
+                        errorMessage: msg
+                    })
+                    return
+                } else {
+                    console.log('SUCCESS', data)
+                    dispatch(clearApiError())
+                    dispatch(fetchBoard(boardId, token))
+                }
             })
             .catch(err => {
                 console.error(err)
             })
     }
-
-    // return async (dispatch: any) => {
-    //     try {
-    //         const response = await fetch(url, {
-    //             method: 'POST',
-    //             body: JSON.stringify(memberData),
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${token}`
-    //             },
-    //         })
-    //         const data = await response.json();
-    //         if (data.statusCode === 400) {
-    //             const msg = data.message[0].messages[0].message
-    //             console.log('ERROR 400', msg)
-    //             dispatch({
-    //                 type: SET_ERROR,
-    //                 errorMessage: msg
-    //             })
-    //             return
-    //         } else {
-    //             console.log('SUCCESS', data)
-    //             dispatch(clearApiError())
-    //         }
-    //     } catch (error) {
-    //         console.error('ERROR', error)
-    //     }
-    // }
 }
