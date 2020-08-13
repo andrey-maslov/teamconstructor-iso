@@ -24,7 +24,7 @@ export const unit = {factor: 100, sign: '%'}
 // export const REQUEST_BASE_ROUTE = `${REQUEST_BASE_URL}/api/Predict`
 
 // export const API_URL = 'https://strapi.nobugs.today'
-export const BASE_API = 'http://localhost:1337'
+export const BASE_API = 'http://strapi.nobugs.today'
 export const CONTENT_API = 'https://api.salary2.me'
 
 export const COLORS = {
