@@ -223,7 +223,7 @@ export function fetchBoard(boardId: number, token: string) {
                 const teams = boardToTeams(data)
                 console.log(teams)
                 dispatch({
-                    type: SET_TEAMS_DATA,
+                    type: SET_TEAMS,
                     teams: teams
                 });
             });
@@ -416,7 +416,7 @@ export function createMember(memberData: IMember, userId: number, boardId: numbe
                         baseID: data.id
                     }
                     dispatch(clearApiError())
-                    fetchBoard(boardId, token)
+                    dispatch(fetchBoard(boardId, token))
                     // dispatch(addMemberToPool(newMember))
                 }
             })
