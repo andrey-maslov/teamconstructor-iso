@@ -19,7 +19,7 @@ import {
     SET_ERROR,
     CLEAR_ERROR,
 } from './actionTypes';
-import {ILoginData, IMember, IRegisterData, ITeamProfile,} from "../../constants/types";
+import {IEmployeeProfile, ILoginData, IMember, IRegisterData, ITeamProfile,} from "../../constants/types";
 import {CONTENT_API, BASE_API} from "../../constants/constants";
 
 
@@ -408,12 +408,28 @@ export function createMember(memberData: IMember, userId: number, boardId: numbe
                     return
                 } else {
                     console.log('SUCCESS', data)
+                    const newMember = {
+                        id: `00-${new Date().getTime()}`,
+                        name: data.name,
+                        position: data.position,
+                        decData: data.decData,
+                        baseID: data.id
+                    }
                     dispatch(clearApiError())
-                    dispatch(fetchBoard(boardId, token))
+                    fetchBoard(boardId, token)
+                    // dispatch(addMemberToPool(newMember))
                 }
             })
             .catch(err => {
                 console.error(err)
             })
+    }
+}
+
+export function addMemberToPool(member: IEmployeeProfile) {
+    console.log(member)
+    return {
+        type: ADD_MEMBER,
+        member
     }
 }
