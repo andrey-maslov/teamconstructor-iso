@@ -206,9 +206,9 @@ export const fetchContent = (lang: string) => {
 
 
 //TODO fixme
-export function fetchBoard(boardId: number, token: string) {
+export function fetchBoard(projectId: number, token: string) {
 
-    const url = `${BASE_API}/boards/${boardId}`;
+    const url = `${BASE_API}/projects/${projectId}`;
 
     return (dispatch: any) => {
         fetch(url, {
@@ -219,56 +219,34 @@ export function fetchBoard(boardId: number, token: string) {
         })
             .then(response => response.json())
             .then(data => {
-                console.log('fetch board', data)
-                const teams = boardToTeams(data)
-                console.log(teams)
-                dispatch({
-                    type: SET_TEAMS,
-                    teams: teams
-                });
+                console.log('fetch project', data)
+                // const teams = getMembersByOrder(data)
+                // console.log(teams)
+                // dispatch({
+                //     type: SET_TEAMS,
+                //     teams: teams
+                // });
             });
     };
 }
 
 
-export function boardToTeams(board: any): any {
+export function getMembersByOrder(idList: number[], teamId: number, members: any): any {
 
-    //if members pool is empty
-    if (!board.members && board.members.length === 0) {
-        return [{title: 'staff', items: []}, {title: 'init team', items: []}]
+    //if team or pool is empty
+    if (!idList || idList.length === 0) {
+        return []
     }
 
-    const staff = {
-        title: 'staff',
-        items: board.members.map((member: any, i: number) => ({
-            id: `${0}${i}-${new Date().getTime()}`,
-            name: member.name,
-            position: member.position,
-            decData: member.decData,
-            baseID: member.id
-        }))
-    }
-
-    //if no teams saved
-    if (!board.teamSet || board.teamSet.length === 0) {
-        return [staff, {title: 'init team', items: []}]
-    }
-
-    const teams = board.teamSet.map((team: any, i: number) => {
+    return idList.map((num, i) => {
+        const teamMember = members.items.filter((item: any) => item.baseID == num)
         return {
-            title: team.title,
-            items: team.items.map((num: number, j: number) => {
-                const members = staff.items.filter((item: any) => item.baseID == num)
-                const member = members[0]
-                return {
-                    ...member,
-                    id: `${i + 1}${j}-${new Date().getTime()}`
-                }
-            })
+            id: `${teamId}${i}-${new Date().getTime()}`,
+            name: teamMember.name,
+            position: teamMember.position,
+            decData: teamMember.decData
         }
     })
-
-    return [staff, ...teams]
 }
 
 
@@ -278,39 +256,40 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
 
     const url = (authType === 'register') ? `${BASE_API}/auth/local/register` : `${BASE_API}/auth/local`
 
-    return async (dispatch: any) => {
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(userData),
-                headers: {
-                    'Content-Type': 'application/json'
+    return (dispatch: any) => {
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(userData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                const data = res.json()
+                return data
+            })
+            .then(data => {
+                if (data.statusCode === 400) {
+                    const msg = data.message[0].messages[0].message
+                    console.log('ERROR 400', msg)
+                    dispatch({
+                        type: SET_ERROR,
+                        errorMessage: msg
+                    })
+                } else {
+                    console.log(`SUCCESS ${authType}`, data)
+                    const user = data.user;
+                    const projects: { id: number, title: string }[] = user.projects.map((item: any) => ({
+                        id: item.id, title: item.title
+                    }))
+                    dispatch(clearApiError())
+                    dispatch(setUser(user.id, user.username, user.email, user.role, projects, data.jwt))
+                    // dispatch(fetchBoard(projects[0].id, data.jwt))
                 }
             })
-            const data = await response.json();
-            if (data.statusCode === 400) {
-                const msg = data.message[0].messages[0].message
-                console.log('ERROR 400', msg)
-                dispatch({
-                    type: SET_ERROR,
-                    errorMessage: msg
-                })
-                return
-            } else {
-                console.log('SUCCESS', data)
-                const user = data.user;
-                const boardsList: { id: number, title: string }[] = user.boards.map((item: any) => ({
-                    id: item.id, title: item.title
-                }))
-                dispatch(clearApiError())
-                dispatch(setUser(user.id, user.username, user.email, user.role, boardsList, data.jwt))
-                dispatch(fetchBoard(boardsList[0].id, data.jwt))
-            }
-        } catch (error) {
-            console.error('ERROR', error)
-        }
     }
 }
+
 
 export const clearApiError = (): { type: string } => {
     return {
@@ -318,7 +297,7 @@ export const clearApiError = (): { type: string } => {
     }
 }
 
-function setUser(id: number, username: string, email: string, role: number, boards: any, token: string) {
+function setUser(id: number, username: string, email: string, role: number, projects: any, token: string) {
     return {
         type: ADD_AUTH_DATA,
         id,
@@ -326,15 +305,15 @@ function setUser(id: number, username: string, email: string, role: number, boar
         email,
         role,
         token,
-        boards,
+        projects,
     }
 }
 
 //TODO fixme
 function createBoard(title: string, userId: number, token: string) {
 
-    const url = `${BASE_API}/boards`
-    const boardData = {
+    const url = `${BASE_API}/projects`
+    const projectData = {
         "title": title,
         "user": userId
     }
@@ -342,7 +321,7 @@ function createBoard(title: string, userId: number, token: string) {
     return async (dispatch: any) => {
         fetch(url, {
             method: 'POST',
-            body: JSON.stringify(boardData),
+            body: JSON.stringify(projectData),
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -375,7 +354,7 @@ function createBoard(title: string, userId: number, token: string) {
 }
 
 //TODO fixme
-export function createMember(memberData: IMember, userId: number, boardId: number, token: string) {
+export function createMember(memberData: IMember, userId: number, projectId: number, token: string) {
 
     const url = `${BASE_API}/members`
 
@@ -385,7 +364,7 @@ export function createMember(memberData: IMember, userId: number, boardId: numbe
             body: JSON.stringify({
                 ...memberData,
                 user: userId,
-                board: boardId
+                project: projectId
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -405,7 +384,6 @@ export function createMember(memberData: IMember, userId: number, boardId: numbe
                         type: SET_ERROR,
                         errorMessage: msg
                     })
-                    return
                 } else {
                     console.log('SUCCESS', data)
                     const newMember = {
@@ -416,8 +394,49 @@ export function createMember(memberData: IMember, userId: number, boardId: numbe
                         baseID: data.id
                     }
                     dispatch(clearApiError())
-                    dispatch(fetchBoard(boardId, token))
+                    dispatch(fetchBoard(projectId, token))
                     // dispatch(addMemberToPool(newMember))
+                }
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }
+}
+
+
+export function createProject(userId: number, title: string, token: string) {
+
+    const url = `${BASE_API}/projects`
+
+    return (dispatch: any) => {
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                user: userId,
+                title
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(res => {
+                const data = res.json()
+                return data
+            })
+            .then(data => {
+                console.log('after create project', data)
+                if (data.statusCode === 400) {
+                    const msg = data.message[0].messages[0].message
+                    console.log('ERROR 400', msg)
+                    dispatch({
+                        type: SET_ERROR,
+                        errorMessage: msg
+                    })
+                } else {
+                    console.log('SUCCESS create project', data)
+                    dispatch(clearApiError())
                 }
             })
             .catch(err => {

@@ -16,7 +16,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
 
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
-    const boards: {id: number, title: string}[] = useSelector((state: GlobalStateType) => state.userData.boards)
+    const projects: {id: number, title: string}[] = useSelector((state: GlobalStateType) => state.userData.projects)
     const token: string = useSelector((state: GlobalStateType) => state.userData.token)
 
     const outsideClickHandler = () => {
@@ -53,10 +53,10 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
                         <span>Мои проекты</span>
                     </div>
                     <ul className={style.links}>
-                        {boards.map(board => (
-                            <li key={board.id} onClick={() => {changeBoard(board.id)}}>
+                        {projects.map(project => (
+                            <li key={project.id} onClick={() => {changeBoard(project.id)}}>
                                 <button className={style.item}>
-                                    <span>{board.title}</span>
+                                    <span>{project.title}</span>
                                 </button>
                             </li>
                         ))}

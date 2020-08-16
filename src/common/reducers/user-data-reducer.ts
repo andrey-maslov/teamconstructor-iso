@@ -16,7 +16,8 @@ if (!USER_DATA) {
         email: '',
         role: null,
         token: '',
-        boards: [],
+        projects: [],
+        activeProject: null,
         isLoggedIn: false,
         isSubscribed: false,
         language: '',
@@ -35,7 +36,7 @@ export const userData = (state = USER_DATA, {
     email,
     token,
     isLoggedIn,
-    boards,
+    projects,
     errorMessage,
     isSubscribed,
     language,
@@ -51,7 +52,7 @@ export const userData = (state = USER_DATA, {
                 email,
                 role,
                 token,
-                boards,
+                projects,
                 isLoggedIn: true
             };
         case SUBSCRIPTION :
@@ -87,7 +88,7 @@ export const userData = (state = USER_DATA, {
                 email: '',
                 role: null,
                 token: '',
-                boards: [],
+                projects: [],
                 isLoggedIn: false,
                 isSubscribed: false,
             };
