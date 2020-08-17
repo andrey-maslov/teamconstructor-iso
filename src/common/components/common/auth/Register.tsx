@@ -33,7 +33,7 @@ const Register: React.FC = () => {
                 <form onSubmit={handleSubmit(submitForm)}>
 
                     <div className={`form-group`}>
-                        <label htmlFor="">
+                        <label>
                             <span>Имя</span>
                             <input
                                 className={style.input}
@@ -49,7 +49,7 @@ const Register: React.FC = () => {
                     </div>
 
                     <div className={`form-group`}>
-                        <label htmlFor="">
+                        <label>
                             <span>Email</span>
                             <input
                                 className={style.input}
@@ -65,7 +65,7 @@ const Register: React.FC = () => {
                     </div>
 
                     <div className={`form-group`}>
-                        <label htmlFor="">
+                        <label>
                             <span>Пароль</span>
                             <input
                                 className={style.input}
@@ -82,7 +82,7 @@ const Register: React.FC = () => {
                     </div>
 
                     <div className={`form-group`}>
-                        <label htmlFor="">
+                        <label>
                             <span>Повторите пароль</span>
                             <input
                                 className={style.input}

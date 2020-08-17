@@ -1,3 +1,5 @@
+@import 'src/common/assets/scss/_animations.scss';
+
 // shadanger styles
 input[type=submit],
 .btn {
@@ -53,6 +55,23 @@ button.btn-link {
     background-color: rgba($overlay-dark, .6);
   }
 }
+
+.btn-loader {
+
+  svg {
+    animation: loader 1s linear infinite;
+  }
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 
 // Small button
 .btn-small {

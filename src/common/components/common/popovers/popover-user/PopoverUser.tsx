@@ -53,13 +53,17 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
                         <span>Мои проекты</span>
                     </div>
                     <ul className={style.links}>
-                        {projects.map(project => (
-                            <li key={project.id} onClick={() => {changeBoard(project.id)}}>
-                                <button className={style.item}>
+                        {projects.length > 0 ?
+                            projects.map(project => (
+                            <li key={project.id}>
+                                <button className={style.item} onClick={() => {changeBoard(project.id)}}>
                                     <span>{project.title}</span>
                                 </button>
                             </li>
-                        ))}
+                        )) :
+                            <li>
+                                <span>У вас нет проектов</span>
+                            </li>}
                     </ul>
 
                     <button className={style.item} onClick={logoutHandle}>

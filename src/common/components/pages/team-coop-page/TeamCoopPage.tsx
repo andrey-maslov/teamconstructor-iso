@@ -7,12 +7,15 @@ import Box from "../../common/layout/box/Box"
 import TeamCoopSidebar from "../../common/team-coop/team-coop-sidebar/TeamCoopSidebar"
 // import {} from '../../../actions/actionCreator'
 import {GlobalStateType} from "../../../../constants/types";
+import CreateProject from "../../common/team-coop/create-project/CreateProject";
 
 const TeamCoopPage: React.FC = () => {
 
     const dispatch = useDispatch()
     const userData = useSelector((state: GlobalStateType) => state.userData)
     const {isLoggedIn, id} = userData
+
+    const {projects} = userData
 
     // useEffect(() => {
     //     if(userData.isLoggedIn && userData.id) {
@@ -22,6 +25,14 @@ const TeamCoopPage: React.FC = () => {
 
     if (!isLoggedIn) {
         return <main className="section main text-center">Пожалуйста, авторизируйтесь</main>
+    }
+
+    if (projects.length === 0) {
+        return (
+            <main className="flex-centered page-team">
+                <CreateProject />
+            </main>
+        )
     }
 
     return (

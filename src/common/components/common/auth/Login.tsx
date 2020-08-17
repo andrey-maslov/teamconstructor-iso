@@ -8,7 +8,7 @@ import {useForm} from 'react-hook-form'
 
 interface IForm {
     identifier: string
-    password: string;
+    password: string
 }
 
 const Login: React.FC = () => {
@@ -31,11 +31,12 @@ const Login: React.FC = () => {
             <form onSubmit={handleSubmit(submitForm)}>
 
                 <div className={`form-group`}>
-                    <label htmlFor="">
+                    <label>
                         <span>Имя или Email</span>
                         <input
                             className={style.input}
-                            type="text" name="identifier"
+                            type="text"
+                            name="identifier"
                             onChange={() => dispatch(clearApiError())}
                             ref={register({
                                 required: 'Это обязательное поле'
@@ -45,7 +46,7 @@ const Login: React.FC = () => {
                     {errors.identifier && <div className={`msg-error`}>{errors.identifier.message}</div>}
                 </div>
                 <div className={`form-group`}>
-                    <label htmlFor="">
+                    <label>
                         <span>Пароль</span>
                         <input
                             className={style.input}

@@ -21,9 +21,6 @@ export const COOKIES_CONSENT = 'COOKIES_CONSENT'
 export const CLEAR_USER_DATA = 'CLEAR_USER_DATA'
 export const SET_LANG = 'SET_LANG'
 
-export const SET_ERROR = 'SET_ERROR'
-export const CLEAR_ERROR = 'CLEAR_ERROR'
-
 //Modals
 export const SET_ADD_MEMBER_MODAL = 'SET_ADD_MEMBER_MODAL'
 export const SET_AUTH_MODAL = 'SET_AUTH_MODAL'
@@ -41,3 +38,8 @@ export const T_COMPARISON_IN_PROCESS = 'TEAM_COMPARE_PROCESS'
 //Fetching data
 export const FETCH_TERMS = 'FETCH_TERMS'
 export const FETCH_CONTENT = 'FETCH_CONTENT'
+
+//APPLICATION MODE
+export const LOADING = 'LOADING'
+export const SET_ERROR = 'SET_ERROR'
+export const CLEAR_ERROR = 'CLEAR_ERROR'

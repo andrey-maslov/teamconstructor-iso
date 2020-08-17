@@ -1,21 +1,23 @@
-import React, {useEffect} from 'react';
-import 'rodal/lib/rodal.css';
-import {AddMember} from "./add-member/AddMember";
-import {setAddMemberModal, setAuthModal} from "../../../actions/actionCreator";
+import React, {useEffect} from 'react'
+import 'rodal/lib/rodal.css'
+import {AddMember} from "./add-member/AddMember"
+import {setAddMemberModal, setAuthModal} from "../../../actions/actionCreator"
 import {useSelector, useDispatch} from "react-redux"
-import {GlobalStateType} from "../../../../constants/types";
-import AuthModal from "./auth-modal/AuthModal";
+import {GlobalStateType} from "../../../../constants/types"
+import AuthModal from "./auth-modal/AuthModal"
+import LoaderRequest from "../loaders/loader-request/LoaderRequest";
 
-// import { CookiesConsent } from '../cookies-consent/CookiesConsent';
+// import { CookiesConsent } from '../cookies-consent/CookiesConsent'
 
 
 const Modals: React.FC = () => {
 
     const dispatch = useDispatch();
+    const appMode = useSelector((state: GlobalStateType) => state.appReducer)
     const isLoggedIn = useSelector((state: GlobalStateType) => state.userData.isLoggedIn)
     const modals = useSelector((state: GlobalStateType) => state.modalsReducer)
-    const isAddMemberModal = modals.isAddMemberModal
-    const isAuthModal = modals.isAuthModal
+    const {isLoading} = appMode
+    const {isAddMemberModal, isAuthModal} = modals
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -39,6 +41,8 @@ const Modals: React.FC = () => {
                     dispatch(setAuthModal(false))
                 }}
             />
+
+            {/*{isLoading && <LoaderRequest/>}*/}
 
             {/*<CookiesConsent*/}
             {/*    handleCookies={handleCookiesConsent}*/}

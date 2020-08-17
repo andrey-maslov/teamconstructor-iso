@@ -4,6 +4,7 @@ import {termsReducer} from "./terms-reducer";
 import {pairCoopReducer} from "./pair-coop-reducer";
 import {teamCoopReducer} from "./team-coop-reducer";
 import {modalsReducer} from "./modals-reducer";
+import {appReducer} from "./app-reducer";
 
 const rootReducer = combineReducers({
     pairCoopReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     userData,
     termsReducer,
     modalsReducer,
+    appReducer,
 });
 
 export default rootReducer;

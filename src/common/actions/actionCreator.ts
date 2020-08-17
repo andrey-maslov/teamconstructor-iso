@@ -17,7 +17,7 @@ import {
     SET_AUTH_MODAL,
     FETCH_CONTENT, SET_TEAMS,
     SET_ERROR,
-    CLEAR_ERROR,
+    CLEAR_ERROR, LOADING,
 } from './actionTypes';
 import {IEmployeeProfile, ILoginData, IMember, IRegisterData, ITeamProfile,} from "../../constants/types";
 import {CONTENT_API, BASE_API} from "../../constants/constants";
@@ -205,32 +205,6 @@ export const fetchContent = (lang: string) => {
 };
 
 
-//TODO fixme
-export function fetchBoard(projectId: number, token: string) {
-
-    const url = `${BASE_API}/projects/${projectId}`;
-
-    return (dispatch: any) => {
-        fetch(url, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('fetch project', data)
-                // const teams = getMembersByOrder(data)
-                // console.log(teams)
-                // dispatch({
-                //     type: SET_TEAMS,
-                //     teams: teams
-                // });
-            });
-    };
-}
-
-
 export function getMembersByOrder(idList: number[], teamId: number, members: any): any {
 
     //if team or pool is empty
@@ -309,7 +283,45 @@ function setUser(id: number, username: string, email: string, role: number, proj
     }
 }
 
+
+/*===== APPLICATION MODE (app reducer) =====*/
+
+export function setLoading(isLoading: boolean): {type: string, isLoading: boolean} {
+    return {
+        type: LOADING,
+        isLoading
+    }
+}
+
+/*===== FETCH PROJECTS and MEMBERS =====*/
+
 //TODO fixme
+export function fetchBoard(projectId: number, token: string) {
+
+    const url = `${BASE_API}/projects/${projectId}`;
+
+    return (dispatch: any) => {
+        fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('fetch project', data)
+                // const teams = getMembersByOrder(data)
+                // console.log(teams)
+                // dispatch({
+                //     type: SET_TEAMS,
+                //     teams: teams
+                // });
+            });
+    };
+}
+
+
+//TODO delete me
 function createBoard(title: string, userId: number, token: string) {
 
     const url = `${BASE_API}/projects`
@@ -404,17 +416,18 @@ export function createMember(memberData: IMember, userId: number, projectId: num
     }
 }
 
-
 export function createProject(userId: number, title: string, token: string) {
 
     const url = `${BASE_API}/projects`
 
     return (dispatch: any) => {
+        dispatch(setLoading(true))
+
         fetch(url, {
             method: 'POST',
             body: JSON.stringify({
                 user: userId,
-                title
+                title: title
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -436,6 +449,45 @@ export function createProject(userId: number, title: string, token: string) {
                     })
                 } else {
                     console.log('SUCCESS create project', data)
+                    dispatch(clearApiError())
+                }
+            })
+            .catch(err => {
+                console.error(err)
+                dispatch(setLoading(false))
+            })
+            .finally(() => dispatch(setLoading(false)))
+    }
+}
+
+export function deleteProject(id: number, token: string) {
+
+    const url = `${BASE_API}/projects`
+
+    return (dispatch: any) => {
+        fetch(url, {
+            method: 'DELETE',
+            body: JSON.stringify({id}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(res => {
+                const data = res.json()
+                return data
+            })
+            .then(data => {
+                console.log('after delete project', data)
+                if (data.statusCode === 400) {
+                    const msg = data.message[0].messages[0].message
+                    console.log('ERROR 400', msg)
+                    dispatch({
+                        type: SET_ERROR,
+                        errorMessage: msg
+                    })
+                } else {
+                    console.log('SUCCESS вудуеу project', data)
                     dispatch(clearApiError())
                 }
             })

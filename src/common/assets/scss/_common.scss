@@ -62,6 +62,15 @@ body {
   overflow-x: auto;
 }
 
+.flex-centered {
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+
 .app-wrapper {
   position: relative;
   display: flex;
@@ -98,6 +107,10 @@ body {
 
     }
   }
+}
+
+main {
+  z-index: 1;
 }
 
 .result-box {
