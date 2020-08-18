@@ -1,4 +1,4 @@
-import {FETCH_CONTENT, FETCH_TERMS, LOADING} from "../actions/actionTypes"
+import {FETCH_CONTENT, FETCH_TERMS, LOADING, SET_ERROR} from "../actions/actionTypes"
 
 
 const APP = {
@@ -24,6 +24,11 @@ export const appReducer = (state = APP, {
                 ...state,
                 isLoading,
             }
+        case SET_ERROR :
+            return {
+                ...state,
+                errorMessage
+            };
         default:
             return state
     }

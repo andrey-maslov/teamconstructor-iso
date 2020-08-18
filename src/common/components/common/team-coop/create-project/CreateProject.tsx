@@ -1,12 +1,13 @@
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form'
-import {FaCircleNotch} from 'react-icons/fa'
+import {AiOutlineLoading} from 'react-icons/ai'
 import {GlobalStateType} from "../../../../../constants/types"
-import {clearApiError, createProject} from "../../../../actions/actionCreator"
+import {createProject} from "../../../../actions/actionCreator"
 import Button from "../../buttons/button/Button"
 
 import style from './create-project.module.scss'
+import {SET_ERROR} from "../../../../actions/actionTypes";
 
 interface IForm {
     title: string
@@ -18,16 +19,16 @@ const CreateProject: React.FC = () => {
     const appMode = useSelector((state: GlobalStateType) => state.appReducer)
     const dispatch = useDispatch()
     const {register, handleSubmit, reset, errors} = useForm<IForm>()
-    const {errorApiMsg, id, token} = userData
+    const {errorApiMsg, id, token, projects} = userData
     const {isLoading} = appMode
 
 
     return (
         <div className={style.wrapper}>
             <div>
-                <div className={style.title}>
+                {!projects || projects.length === 0 && <div className={style.title}>
                     <p>У вас еще нет ниодного проекта. <br/>Создайте свой первый проект</p>
-                </div>
+                </div>}
                 <form onSubmit={handleSubmit(submitForm)}>
                     <div className={`form-group`}>
                         <label>
@@ -35,7 +36,7 @@ const CreateProject: React.FC = () => {
                             <input
                                 type="text"
                                 name="title"
-                                onChange={() => dispatch(clearApiError())}
+                                onChange={() => dispatch({type: SET_ERROR, errorMessage: ''})}
                                 ref={register({
                                     required: 'Это обязательное поле'
                                 })}
@@ -47,7 +48,7 @@ const CreateProject: React.FC = () => {
                     </div>
                     <Button
                         title={'Создать'}
-                        startIcon={isLoading && <FaCircleNotch/>}
+                        startIcon={isLoading && <AiOutlineLoading/>}
                         handle={() => void (0)}
                         btnClass={'btn-outlined btn-loader'}
                     />

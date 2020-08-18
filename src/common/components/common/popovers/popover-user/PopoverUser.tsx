@@ -5,7 +5,7 @@ import {FiUser, FiUserCheck, FiLogOut, FiChevronDown, FiStar} from "react-icons/
 import {Popover} from "../Popover"
 import OutsideClickHandler from 'react-outside-click-handler'
 import {GlobalStateType} from "../../../../../constants/types";
-import {fetchBoard} from "../../../../actions/actionCreator";
+import {deleteProject, fetchProject, setCreateProjectModal} from "../../../../actions/actionCreator";
 
 interface PopoverUserProps {
     userEmail: string
@@ -49,15 +49,32 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
                     </ul>
 
                     <div className={style.title}>
-                        <FiStar/>
-                        <span>Мои проекты</span>
+                        <div>
+                            <FiStar/>
+                            <span>Мои проекты</span>
+                        </div>
+                        <button
+                            className={style.create}
+                            onClick={handlerCreate}
+                        >
+                            +
+                        </button>
                     </div>
                     <ul className={style.links}>
                         {projects.length > 0 ?
                             projects.map(project => (
                             <li key={project.id}>
-                                <button className={style.item} onClick={() => {changeBoard(project.id)}}>
+                                <button
+                                    className={style.item}
+                                    onClick={() => {changeBoard(project.id)}}
+                                >
                                     <span>{project.title}</span>
+                                </button>
+                                <button
+                                    className={style.delete}
+                                    onClick={() => handlerDelete(project.id)}
+                                >
+                                    -
                                 </button>
                             </li>
                         )) :
@@ -75,8 +92,24 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
         </OutsideClickHandler>
     );
 
+    function handlerCreate() {
+        dispatch(setCreateProjectModal(true))
+    }
+
+
+    function handlerDelete(projectId: number) {
+        if (window.confirm("Вы действительно хотите удалить проект?")){
+            const newProjects = projects.filter(item => item.id !== projectId)
+            const newActiveProject = newProjects.length > 0 ? newProjects[0].id : null
+            console.log('newProjects', newProjects)
+            console.log('newActiveProject', newActiveProject)
+            dispatch(deleteProject(projectId, newProjects, newActiveProject, token))
+        }
+    }
+
+
     function changeBoard(id: number) {
-        dispatch(fetchBoard(id, token))
+        dispatch(fetchProject(id, token))
     }
 }
 

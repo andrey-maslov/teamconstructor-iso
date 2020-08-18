@@ -1,0 +1,19 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.content {
+  padding-top: 2rem;
+
+  button {
+
+    svg {
+      path {
+        stroke: $text-light
+      }
+      color: $text-light ;
+    }
+  }
+}
+
+
+
+

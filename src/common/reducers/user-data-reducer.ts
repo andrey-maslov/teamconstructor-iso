@@ -3,7 +3,7 @@ import {
     SUBSCRIPTION,
     COOKIES_CONSENT,
     CLEAR_USER_DATA,
-    SET_LANG, SET_ERROR, CLEAR_ERROR,
+    SET_LANG, SET_ERROR, CLEAR_ERROR, SET_ACTIVE_PROJECT, ADD_PROJECT, SET_PROJECTS,
 } from '../actions/actionTypes';
 import { loadState } from '../store/sessionStorage';
 
@@ -35,7 +35,9 @@ export const userData = (state = USER_DATA, {
     username,
     email,
     token,
+    activeProject,
     isLoggedIn,
+    project,
     projects,
     errorMessage,
     isSubscribed,
@@ -70,16 +72,21 @@ export const userData = (state = USER_DATA, {
                 ...state,
                 language
             };
-        case SET_ERROR :
+        case SET_ACTIVE_PROJECT :
             return {
                 ...state,
-                errorMessage
-            };
-        case CLEAR_ERROR :
+                activeProject
+            }
+        case ADD_PROJECT :
             return {
                 ...state,
-                errorMessage: ''
-            };
+                projects: [...state.projects, project]
+            }
+        case SET_PROJECTS :
+            return {
+                ...state,
+                projects: projects
+            }
         case CLEAR_USER_DATA :
             return {
                 ...state,
@@ -89,6 +96,7 @@ export const userData = (state = USER_DATA, {
                 role: null,
                 token: '',
                 projects: [],
+                activeProject: null,
                 isLoggedIn: false,
                 isSubscribed: false,
             };

@@ -3,8 +3,9 @@ import style from "./auth.module.scss"
 import Button from "../buttons/button/Button"
 import {useDispatch, useSelector} from "react-redux"
 import {GlobalStateType} from "../../../../constants/types"
-import {authUser, clearApiError} from "../../../actions/actionCreator"
+import {authUser} from "../../../actions/actionCreator"
 import {useForm} from 'react-hook-form'
+import {SET_ERROR} from "../../../actions/actionTypes"
 
 interface IForm {
     identifier: string
@@ -13,7 +14,7 @@ interface IForm {
 
 const Login: React.FC = () => {
 
-    const errorApiMsg = useSelector((state: GlobalStateType) => state.userData.errorMessage)
+    const errorApiMsg = useSelector((state: GlobalStateType) => state.appReducer.errorMessage)
     const isModalVisible = useSelector((state: GlobalStateType) => state.modalsReducer.isAuthModal)
     const dispatch = useDispatch()
     const {register, handleSubmit, reset, errors} = useForm<IForm>()
@@ -21,7 +22,7 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         if (!isModalVisible) {
-            dispatch(clearApiError())
+            dispatch({type: SET_ERROR, errorMessage: ''})
             reset()
         }
     }, [isModalVisible])
@@ -37,7 +38,7 @@ const Login: React.FC = () => {
                             className={style.input}
                             type="text"
                             name="identifier"
-                            onChange={() => dispatch(clearApiError())}
+                            onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
                             ref={register({
                                 required: 'Это обязательное поле'
                             })}
@@ -56,7 +57,7 @@ const Login: React.FC = () => {
                                 required: 'Это обязательное поле',
                                 minLength: {value: 3, message: 'Слишком короткий пароль'}
                             })}
-                            onChange={() => dispatch(clearApiError())}
+                            onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
                         />
                     </label>
                     {errors.password && <div className={`msg-error`}>{errors.password.message}</div>}
@@ -75,8 +76,7 @@ const Login: React.FC = () => {
 
     function submitForm(data: IForm): void {
         dispatch(authUser(data, 'login'))
-        dispatch(clearApiError())
-        reset()
+        // dispatch({type: SET_ERROR, errorMessage: ''})
     }
 
 }

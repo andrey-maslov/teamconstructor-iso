@@ -1,10 +1,11 @@
 import {
     SET_ADD_MEMBER_MODAL,
-    SET_AUTH_MODAL,
+    SET_AUTH_MODAL, SET_CREATE_PROJECT_MODAL,
 } from "../actions/actionTypes";
 
 const APP_STATE = {
     isAddMemberModal: false,
+    isCreateProjectModal: false,
     isAuthModal: false,
     isStatusModal: false,
     statusType: '',
@@ -16,6 +17,7 @@ type ModalsReducerType = typeof APP_STATE;
 export const modalsReducer = (state = APP_STATE, {
     type,
     isAddMemberModal,
+    isCreateProjectModal,
     isAuthModal,
 }: any) => {
     switch (type) {
@@ -23,6 +25,11 @@ export const modalsReducer = (state = APP_STATE, {
             return {
                 ...state,
                 isAddMemberModal,
+            };
+        case SET_CREATE_PROJECT_MODAL :
+            return {
+                ...state,
+                isCreateProjectModal,
             };
         case SET_AUTH_MODAL :
             return {

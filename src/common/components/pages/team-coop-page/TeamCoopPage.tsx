@@ -17,11 +17,11 @@ const TeamCoopPage: React.FC = () => {
 
     const {projects} = userData
 
-    // useEffect(() => {
-    //     if(userData.isLoggedIn && userData.id) {
-    //         dispatch(fetchTeams(userData.id, userData.token))
-    //     }
-    // }, [userData.isLoggedIn, userData.id])
+    useEffect(() => {
+        if(userData.isLoggedIn && userData.id) {
+            // dispatch(fetchTeams(userData.id, userData.token))
+        }
+    }, [userData.isLoggedIn, userData.id])
 
     if (!isLoggedIn) {
         return <main className="section main text-center">Пожалуйста, авторизируйтесь</main>

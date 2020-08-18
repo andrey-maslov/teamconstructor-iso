@@ -3,8 +3,9 @@ import style from "./auth.module.scss"
 import Button from "../buttons/button/Button"
 import {useDispatch, useSelector} from "react-redux"
 import {GlobalStateType} from "../../../../constants/types"
-import {authUser, clearApiError} from "../../../actions/actionCreator"
+import {authUser} from "../../../actions/actionCreator"
 import {useForm} from 'react-hook-form'
+import {SET_ERROR} from "../../../actions/actionTypes";
 
 interface IForm {
     name: string
@@ -15,14 +16,14 @@ interface IForm {
 
 const Register: React.FC = () => {
 
-    const errorApiMsg = useSelector((state: GlobalStateType) => state.userData.errorMessage)
+    const errorApiMsg = useSelector((state: GlobalStateType) => state.appReducer.errorMessage)
     const isModalVisible = useSelector((state: GlobalStateType) => state.modalsReducer.isAuthModal)
     const dispatch = useDispatch()
     const {register, handleSubmit, reset, getValues, errors} = useForm<IForm>()
 
     useEffect(() => {
         if (!isModalVisible) {
-            dispatch(clearApiError())
+            dispatch({type: SET_ERROR, errorMessage: ''})
             reset()
         }
     }, [isModalVisible])
@@ -39,7 +40,7 @@ const Register: React.FC = () => {
                                 className={style.input}
                                 type="text"
                                 name="name"
-                                onChange={() => dispatch(clearApiError())}
+                                onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
                                 ref={register({
                                     required: 'Это обязательное поле'
                                 })}
@@ -55,7 +56,7 @@ const Register: React.FC = () => {
                                 className={style.input}
                                 type="email"
                                 name="email"
-                                onChange={() => dispatch(clearApiError())}
+                                onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
                                 ref={register({
                                     required: 'Это обязательное поле'
                                 })}
@@ -71,7 +72,7 @@ const Register: React.FC = () => {
                                 className={style.input}
                                 type="password"
                                 name="password"
-                                onChange={() => dispatch(clearApiError())}
+                                onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
                                 ref={register({
                                     required: 'Это обязательное поле',
                                     minLength: {value: 3, message: 'Слишком короткий пароль'}
@@ -88,7 +89,7 @@ const Register: React.FC = () => {
                                 className={style.input}
                                 type="password"
                                 name="passwordConfirm"
-                                onChange={() => dispatch(clearApiError())}
+                                onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
                                 ref={register({
                                     required: "Пожалуйста, подтвердите пароль!",
                                     validate: {
@@ -126,7 +127,6 @@ const Register: React.FC = () => {
         }
 
         dispatch(authUser(userData, 'register'))
-        reset()
     }
 
 }

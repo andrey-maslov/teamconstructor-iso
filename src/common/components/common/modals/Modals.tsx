@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react'
 import 'rodal/lib/rodal.css'
 import {AddMember} from "./add-member/AddMember"
-import {setAddMemberModal, setAuthModal} from "../../../actions/actionCreator"
+import {setAddMemberModal, setAuthModal, setCreateProjectModal} from "../../../actions/actionCreator"
 import {useSelector, useDispatch} from "react-redux"
 import {GlobalStateType} from "../../../../constants/types"
 import AuthModal from "./auth-modal/AuthModal"
 import LoaderRequest from "../loaders/loader-request/LoaderRequest";
+import {CreateProjectModal} from "./create-project-modal/CreateProjectModal";
 
 // import { CookiesConsent } from '../cookies-consent/CookiesConsent'
 
@@ -17,7 +18,7 @@ const Modals: React.FC = () => {
     const isLoggedIn = useSelector((state: GlobalStateType) => state.userData.isLoggedIn)
     const modals = useSelector((state: GlobalStateType) => state.modalsReducer)
     const {isLoading} = appMode
-    const {isAddMemberModal, isAuthModal} = modals
+    const {isAddMemberModal, isAuthModal, isCreateProjectModal} = modals
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -32,6 +33,13 @@ const Modals: React.FC = () => {
                 visible={isAddMemberModal}
                 closeModal={() => {
                     dispatch(setAddMemberModal(false))
+                }}
+            />
+
+            <CreateProjectModal
+                visible={isCreateProjectModal}
+                closeModal={() => {
+                    dispatch(setCreateProjectModal(false))
                 }}
             />
 

@@ -2,12 +2,13 @@ import React, {useEffect, useState} from "react"
 import Rodal from "rodal"
 import {useSelector, useDispatch} from "react-redux"
 import style from "./add-member.module.scss"
-import {GlobalStateType, IModalProps, ITeamProfile} from "../../../../../constants/types"
+import {GlobalStateType, IModalProps} from "../../../../../constants/types"
 import Button from "../../buttons/button/Button"
 import {GrUserAdd} from "react-icons/gr"
 import {getAndDecodeData} from "encoded-data-parser"
-import {clearApiError, createMember} from "../../../../actions/actionCreator"
+import {createMember} from "../../../../actions/actionCreator"
 import {useForm} from 'react-hook-form'
+import {SET_ERROR} from "../../../../actions/actionTypes";
 
 interface IForm {
     name: string
@@ -19,7 +20,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
 
     useEffect(() => {
         if (!visible) {
-            dispatch(clearApiError())
+            dispatch({type: SET_ERROR, errorMessage: ''})
             reset()
         }
     }, [visible])
@@ -115,4 +116,4 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
         closeModal()
         reset()
     }
-};
+}
