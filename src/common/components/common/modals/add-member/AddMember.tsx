@@ -113,7 +113,5 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
         }
 
         dispatch(createMember(memberData, user.id, user.projects[0].id, user.token))
-        closeModal()
-        reset()
     }
 }

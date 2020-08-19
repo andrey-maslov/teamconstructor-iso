@@ -74,20 +74,14 @@ export const teamCoopReducer = (state = STATE, {
                 ...state,
                 randomNum
             }
-        // case ADD_MEMBER :
-        //     return {
-        //         ...state,
-        //         teams: [
-        //             {
-        //                 title: 'new',
-        //                 items: [member, ...state.teams[0].items]
-        //             },
-        //             {
-        //                 title: '',
-        //                 items: []
-        //             }
-        //         ]
-        //     }
+        case ADD_MEMBER : {
+            const newTeams = [...state.teams]
+            newTeams[0].items.push(member)
+            return {
+                ...state,
+                teams: newTeams
+            }
+        }
         case SET_TEAMS :
             return {
                 ...state,

@@ -16,7 +16,8 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
 
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
-    const projects: {id: number, title: string}[] = useSelector((state: GlobalStateType) => state.userData.projects)
+    const userData = useSelector((state: GlobalStateType) => state.userData)
+    const {projects, activeProject, email} = userData
     const token: string = useSelector((state: GlobalStateType) => state.userData.token)
 
     const outsideClickHandler = () => {
@@ -62,11 +63,11 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
                     </div>
                     <ul className={style.links}>
                         {projects.length > 0 ?
-                            projects.map(project => (
-                            <li key={project.id}>
+                            projects.map((project: {id: number, title: string}) => (
+                            <li key={project.id} className={`${activeProject === project.id ? style.active : ''}`}>
                                 <button
                                     className={style.item}
-                                    onClick={() => {changeBoard(project.id)}}
+                                    onClick={() => {changeProject(project.id)}}
                                 >
                                     <span>{project.title}</span>
                                 </button>
@@ -99,16 +100,14 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
 
     function handlerDelete(projectId: number) {
         if (window.confirm("Вы действительно хотите удалить проект?")){
-            const newProjects = projects.filter(item => item.id !== projectId)
+            const newProjects = projects.filter((item: {id: number, title: string}) => item.id !== projectId)
             const newActiveProject = newProjects.length > 0 ? newProjects[0].id : null
-            console.log('newProjects', newProjects)
-            console.log('newActiveProject', newActiveProject)
             dispatch(deleteProject(projectId, newProjects, newActiveProject, token))
         }
     }
 
 
-    function changeBoard(id: number) {
+    function changeProject(id: number) {
         dispatch(fetchProject(id, token))
     }
 }

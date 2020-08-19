@@ -127,6 +127,7 @@ export function setRowData(encData1: string, encData2: string) {
 TEAM COOPERATION PROCESS
  */
 export function setTeamsData(teamsData: ITeamProfile[]): { type: string, teams: ITeamProfile[] } {
+    console.log('teamsData')
     return {
         type: SET_TEAMS_DATA,
         teams: teamsData
@@ -156,6 +157,7 @@ export function setAddMemberModal(isAddMemberModal: boolean): { type: string, is
         isAddMemberModal
     }
 }
+
 export function setCreateProjectModal(isCreateProjectModal: boolean): { type: string, isCreateProjectModal: boolean } {
     return {
         type: SET_CREATE_PROJECT_MODAL,
@@ -259,7 +261,6 @@ function setUser(id: number, username: string, email: string, role: number, proj
     }
 }
 
-
 /*===== APPLICATION MODE (app reducer) =====*/
 
 export function setLoading(isLoading: boolean): { type: string, isLoading: boolean } {
@@ -272,71 +273,43 @@ export function setLoading(isLoading: boolean): { type: string, isLoading: boole
 /*===== FETCH PROJECTS and MEMBERS =====*/
 
 //TODO fixme
-export function fetchProject(projectId: number, token: string) {
-
-    const url = `${BASE_API}/projects/${projectId}`;
-
-    return (dispatch: any) => {
-        dispatch(setLoading(true))
-
-        axios.get(url, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(data => {
-                console.log('SUCCESS fetching project', data)
-                dispatch({type: SET_ACTIVE_PROJECT, activeProject: projectId})
-            })
-            .catch(error => apiErrorHandling(error, dispatch))
-            .finally(() => dispatch(setLoading(false)))
-    };
-}
-
-//TODO fixme
 export function createMember(memberData: IMember, userId: number, projectId: number, token: string) {
 
     const url = `${BASE_API}/members`
 
     return (dispatch: any) => {
-        fetch(url, {
+        dispatch(setLoading(true))
+
+        axios(url, {
             method: 'POST',
-            body: JSON.stringify({
+            data: {
                 ...memberData,
                 user: userId,
                 project: projectId
-            }),
+            },
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
         })
-            .then(res => {
-                const data = res.json()
-                return data
-            })
+            .then(res => res.data)
             .then(data => {
-                console.log('after create member', data)
-                if (data.statusCode === 400) {
-                    setApiErrorMsg(data, dispatch)
-                } else {
-                    console.log('SUCCESS', data)
-                    const newMember = {
-                        id: `00-${new Date().getTime()}`,
-                        name: data.name,
-                        position: data.position,
-                        decData: data.decData,
-                        baseID: data.id
-                    }
-                    dispatch({type: SET_ERROR, errorMessage: ''})
-                    dispatch(fetchProject(projectId, token))
-                    // dispatch(addMemberToPool(newMember))
+                console.log('SUCCESS create member', data)
+
+                const newMember = {
+                    id: `00-${new Date().getTime()}`,
+                    name: data.name,
+                    position: data.position,
+                    decData: data.decData,
+                    baseID: data.id
                 }
+                dispatch(updateProject(projectId, token, [...data.project.pool, data.id], null))
+                dispatch({type: SET_ADD_MEMBER_MODAL, isAddMemberModal: false})
+                dispatch({type: ADD_MEMBER, member: newMember})
+                dispatch({type: SET_ERROR, errorMessage: ''})
             })
-            .catch(err => {
-                console.error(err)
-            })
+            .catch(error => apiErrorHandling(error, dispatch))
+            .finally(() => dispatch(setLoading(false)))
     }
 }
 
@@ -355,10 +328,11 @@ export function createProject(userId: number, title: string, token: string) {
                 'Authorization': `Bearer ${token}`
             },
         })
-            .then(res => {
-                console.log('SUCCESS create project', res)
-                dispatch({type: ADD_PROJECT, project: {id: res.data.id, title: res.data.title}})
-                dispatch({type: SET_ACTIVE_PROJECT, activeProject: res.data.id})
+            .then(res => res.data)
+            .then(data => {
+                console.log('SUCCESS create project', data)
+                dispatch({type: ADD_PROJECT, project: {id: data.id, title: data.title}})
+                dispatch({type: SET_ACTIVE_PROJECT, activeProject: data.id})
                 dispatch({type: SET_ERROR, errorMessage: ''})
                 dispatch(setCreateProjectModal(false))
             })
@@ -367,7 +341,7 @@ export function createProject(userId: number, title: string, token: string) {
     }
 }
 
-export function deleteProject(id: number, projects: {id: number, title: string}[] | [], activeProject: number | null, token: string,) {
+export function deleteProject(id: number, projects: { id: number, title: string }[] | [], activeProject: number | null, token: string,) {
     const url = `${BASE_API}/projects/${id}`
     return (dispatch: any) => {
         dispatch(setLoading(true))
@@ -389,14 +363,72 @@ export function deleteProject(id: number, projects: {id: number, title: string}[
     }
 }
 
-export function addMemberToPool(member: IEmployeeProfile) {
-    return {
-        type: ADD_MEMBER,
-        member
+export function fetchProject(id: number, token: string) {
+
+    const url = `${BASE_API}/projects/${id}`;
+
+    return (dispatch: any) => {
+        dispatch(setLoading(true))
+
+        axios(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(res => res.data)
+            .then(data => {
+                const teams = getTeamsFromProject(data.pool, data.teamsOrder, data.members)
+                dispatch({type: SET_ACTIVE_PROJECT, activeProject: id})
+                dispatch(setTeamsData(teams))
+            })
+            .catch(error => apiErrorHandling(error, dispatch))
+            .finally(() => dispatch(setLoading(false)))
+    };
+}
+
+export function updateProject(id: number, token: string, pool: number[] | null, teamsOrder: number[] | null) {
+    const url = `${BASE_API}/projects/${id}`
+
+    let data = {}
+    if (pool && teamsOrder) {
+        data = {pool, teamsOrder}
+    }
+    if (!pool && teamsOrder) {
+        data = { teamsOrder }
+    }
+    if (pool && !teamsOrder) {
+        data = { pool }
+    }
+
+    console.log('new pool: ', data)
+
+    return (dispatch: any) => {
+        dispatch(setLoading(true))
+        axios(url, {
+            method: 'PUT',
+            data: data,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(res => {
+                dispatch({type: SET_ERROR, errorMessage: ''})
+            })
+            .catch(error => apiErrorHandling(error, dispatch))
+            .finally(() => dispatch(setLoading(false)))
     }
 }
 
-export function getMembersByOrder(idList: number[], teamId: number, members: any): any {
+// export function addMemberToPool(member: IEmployeeProfile) {
+//     return {
+//         type: ADD_MEMBER,
+//         member
+//     }
+// }
+
+export function getMembersByOrder(idList: number[], teamId: number, members: any[]): any {
 
     //if team or pool is empty
     if (!idList || idList.length === 0) {
@@ -404,7 +436,18 @@ export function getMembersByOrder(idList: number[], teamId: number, members: any
     }
 
     return idList.map((num, i) => {
-        const teamMember = members.items.filter((item: any) => item.baseID == num)
+        const teamMember = members.filter((member: any) => member.id == num)[0]
+
+        //Check if error and member doesn`t exist in members list
+        if (!teamMember) {
+            return {
+                id: `${teamId}${i}-${new Date().getTime()}`,
+                name: 'empty',
+                position: 'empty',
+                decData: [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
+            }
+        }
+
         return {
             id: `${teamId}${i}-${new Date().getTime()}`,
             name: teamMember.name,
@@ -414,6 +457,30 @@ export function getMembersByOrder(idList: number[], teamId: number, members: any
     })
 }
 
+function getTeamsFromProject(pool: number[], teamsOrder: number[], members: IEmployeeProfile[]): any {
+    if (!pool || pool.length === 0) {
+        return [
+            {title: 'pool', items: []},
+            {title: 'team 1', items: []}
+        ]
+    }
+    const filledPool = getMembersByOrder(pool, 0, members)
+    if (!teamsOrder || teamsOrder.length === 0) {
+        return [
+            {title: 'pool', items: filledPool},
+            {title: 'team 1', items: []}
+        ]
+    }
+
+    return [
+        {title: 'pool', items: filledPool},
+        {title: 'team 1', items: []}
+    ]
+
+    // const filledTeams = teamsOrder.map(team)
+}
+
+//TODO delete me after transfer logic to new function
 function setApiErrorMsg(data: any, dispatch: any): boolean {
 
     if (data.statusCode === 400) {
