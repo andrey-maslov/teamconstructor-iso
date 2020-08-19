@@ -23,6 +23,10 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
         } else if (val > roundValue) {
             setTimeout( decrement, 20)
         }
+
+        return function cleanUp() {
+            const x = 0
+        }
     }, [val, roundValue])
 
     function increment() {

@@ -5,10 +5,10 @@ import Box from '../layout/box/Box'
 import DroppableColumn from "./droppable-column/DroppableColumn"
 import ColumnTop from "./droppable-column/ColumnTop"
 import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
-import {GlobalStateType, IEmployeeProfile, ITeamProfile} from "../../../../constants/types"
+import {GlobalStateType, IEmployeeProfile, IMember, ITeamProfile} from "../../../../constants/types"
 import {useDispatch, useSelector} from "react-redux";
 import {setAddMemberModal, setTeamsData} from "../../../actions/actionCreator";
-import { useToasts } from 'react-toast-notifications'
+import {useToasts} from 'react-toast-notifications'
 import Loader from "../loaders/loader/Loader";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
@@ -60,12 +60,11 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 
 const DraggableZone: React.FC = () => {
 
-    const columns: ITeamProfile[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
-    const staff: ITeamProfile     = columns[0]
-    const dispatch                = useDispatch();
-    const { addToast }            = useToasts()
+    const teams: ITeamProfile[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    const staff: ITeamProfile = teams[0]
+    const dispatch = useDispatch();
+    const {addToast} = useToasts()
 
-    const [columnsCount, setColumnsCount] = useState(2)
     const [isReady, setReady] = useState(false)
 
     useEffect(() => {
@@ -87,34 +86,34 @@ const DraggableZone: React.FC = () => {
 
         if (sInd === dInd) {
 
-            const items = reorder(columns[sInd].items, source.index, destination.index);
-            const newColumns: any = [...columns];
-            newColumns[sInd].items = items;
-            dispatch(setTeamsData(newColumns))
+            const items = reorder(teams[sInd].items, source.index, destination.index);
+            const newTeams: ITeamProfile[] = [...teams];
+            newTeams[sInd].items = items;
+            dispatch(setTeamsData(newTeams))
 
         } else if (sInd === 0) {
 
-            const result = copy(columns[0].items, columns[dInd].items, source, destination); //new destination column array
+            const result = copy(teams[0].items, teams[dInd].items, source, destination); //new destination team array
 
             if (!checkDuplicate(0, source.index, dInd)) {
-                const currName = columns[0].items[source.index].name
-                addToast(`Работник ${currName} есть в команде!`, { appearance: 'error' })
+                const currName = teams[0].items[source.index].name
+                addToast(`Работник ${currName} есть в команде!`, {appearance: 'error'})
                 return
             } else {
-                const newColumns: ITeamProfile[] = [...columns];
-                newColumns[dInd].items = result;
-                dispatch(setTeamsData(newColumns))
+                const newTeams: ITeamProfile[] = [...teams];
+                newTeams[dInd].items = result;
+                dispatch(setTeamsData(newTeams))
             }
 
         } else {
-            const result = move(columns[sInd].items, columns[dInd].items, source, destination); //new destination column array
+            const result = move(teams[sInd].items, teams[dInd].items, source, destination); //new destination teams array
 
             if (!checkDuplicate(sInd, source.index, dInd)) {
-                const currName = columns[sInd].items[source.index].name
-                addToast(`Работник ${currName} есть в команде!`, { appearance: 'error', autoDismiss: true })
+                const currName = teams[sInd].items[source.index].name
+                addToast(`Работник ${currName} есть в команде!`, {appearance: 'error', autoDismiss: true})
                 return
             } else {
-                const newTeams = [...columns];
+                const newTeams = [...teams];
                 newTeams[sInd].items = result[sInd];
                 newTeams[dInd].items = result[dInd];
 
@@ -137,9 +136,7 @@ const DraggableZone: React.FC = () => {
 
     const teamsWidget = (
         <Button
-            handle={() => {
-                addColumn(columnsCount)
-            }}
+            handle={addTeam}
             btnClass={'btn btn-outlined btn-widget'}
             title={'Добавить команду'}
         />
@@ -153,7 +150,7 @@ const DraggableZone: React.FC = () => {
                 <Box title="Пул работников" addClass={'store-area'} widget={storeWidget}>
                     {isReady && <DroppableColumnStore
                         items={staff.items}
-                        deleteItem={deleteMember}
+                        deleteItem={deleteMemberHandler}
                         id={`${0}`}
                         isDropDisabled={true}
                     />}
@@ -161,18 +158,18 @@ const DraggableZone: React.FC = () => {
 
                 <Box title={'Команды'} addClass={'teams-area'} widget={teamsWidget}>
                     <div className={'teams-wrapper'}>
-                        {isReady && columns.slice(1).map((column, i) => (
+                        {isReady && teams.slice(1).map((team, i) => (
                             <div key={i}>
 
                                 <ColumnTop
-                                    label={column.title}
-                                    deleteHandler={deleteColumn}
+                                    label={team.title}
+                                    deleteHandler={deleteTeam}
                                     columnIndex={i + 1}
                                 />
 
                                 <DroppableColumn
-                                    items={column.items}
-                                    deleteItem={deleteMember}
+                                    items={team.items}
+                                    deleteItem={deleteMemberHandler}
                                     id={`${i + 1}`}
                                     hasPlaceholder={true}
                                 />
@@ -190,42 +187,51 @@ const DraggableZone: React.FC = () => {
         dispatch(setAddMemberModal(true))
     }
 
-    //TODO what about staff column
-    function deleteMember(colIndex: number, itemIndex: number): void {
-        if (colIndex === 0) {
-            if (confirm('Вы действительно хотите удалить работника из пула?')) {
-                const newColumns = [...columns];
-                newColumns[colIndex].items.splice(itemIndex, 1);
-                dispatch(setTeamsData(newColumns))
-                addToast(`Работник удален из команды`, { appearance: 'success', autoDismiss: true })
-            }
+    //TODO what about pool
+    function deleteMemberHandler(colIndex: number, itemIndex: number): void {
+        if (colIndex === 0 && confirm('Вы действительно хотите удалить работника из проекта?')) {
+            deleteMemberFromPool(colIndex, itemIndex)
         } else {
-            const newColumns = [...columns];
-            newColumns[colIndex].items.splice(itemIndex, 1);
-            dispatch(setTeamsData(newColumns))
-            addToast(`Работник удален из команды`, { appearance: 'success', autoDismiss: true })
+            deleteMemberFromTeam(colIndex, itemIndex)
         }
     }
 
-    //TODO need to fix column count
-    function addColumn(count: number): void {
-        const columnName = `Команда ${count}`
-        dispatch(setTeamsData([...columns, {title: columnName, id: null, items: []}]))
-        setColumnsCount(columnsCount + 1)
-        addToast(`Команда добавлена`, { appearance: 'success', autoDismiss: true })
+    function deleteMemberFromTeam(colIndex: number, itemIndex: number) {
+        const newTeams = [...teams];
+        newTeams[colIndex].items.splice(itemIndex, 1);
+        dispatch(setTeamsData(newTeams))
+        addToast(`Работник удален из команды`, {appearance: 'success', autoDismiss: true})
     }
 
-    function deleteColumn(colIndex: number): void {
-        const newColumns = [...columns];
-        dispatch(setTeamsData(newColumns.filter((group, i) => i !== colIndex)));
-        addToast(`Команда удалена из списка`, { appearance: 'success', autoDismiss: true })
+
+    function deleteMemberFromPool(colIndex: number, itemIndex: number) {
+        const baseId = teams[colIndex].items[itemIndex].baseID
+        const newTeams = teams.map(team => ({
+            ...team,
+            items: team.items.filter((item: IMember) => item.baseID !== baseId)
+        }))
+        dispatch(setTeamsData(newTeams))
+        addToast(`Работник удален из пула`, {appearance: 'success', autoDismiss: true})
+    }
+
+    function addTeam(): void {
+        const idList = teams.map((team: ITeamProfile) => team.id)
+        const newId = Math.max.apply(null, idList) + 1
+        dispatch(setTeamsData([...teams, {title: `Команда ${newId}`, id: newId, items: []}]))
+        addToast(`Команда добавлена`, {appearance: 'success', autoDismiss: true})
+    }
+
+    function deleteTeam(colIndex: number): void {
+        const newTeams = [...teams];
+        dispatch(setTeamsData(newTeams.filter((group, i) => i !== colIndex)));
+        addToast(`Команда удалена из списка`, {appearance: 'success', autoDismiss: true})
     }
 
     //if one team includes this member
     function checkDuplicate(columnIndex: number, sourceIndex: number, destIndex: number): boolean {
 
-        const sourceItemData = columns[columnIndex].items[sourceIndex].baseID;
-        const destItemsData = columns[destIndex].items.map((item: IEmployeeProfile) => item.baseID)
+        const sourceItemData = teams[columnIndex].items[sourceIndex].baseID;
+        const destItemsData = teams[destIndex].items.map((item: IEmployeeProfile) => item.baseID)
 
         const includesNum = destItemsData.filter((item: string) => item === sourceItemData).length
         return includesNum === 0

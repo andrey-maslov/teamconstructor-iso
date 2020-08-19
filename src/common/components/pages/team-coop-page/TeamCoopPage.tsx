@@ -8,6 +8,7 @@ import TeamCoopSidebar from "../../common/team-coop/team-coop-sidebar/TeamCoopSi
 // import {} from '../../../actions/actionCreator'
 import {GlobalStateType} from "../../../../constants/types";
 import CreateProject from "../../common/team-coop/create-project/CreateProject";
+import BoardInfo from "../../common/team-coop/board-info/BoardInfo";
 
 const TeamCoopPage: React.FC = () => {
 
@@ -38,6 +39,7 @@ const TeamCoopPage: React.FC = () => {
     return (
         <main className='section page-team main'>
             <div className="container-wide">
+                <BoardInfo />
                 <div className="flex-row">
                     <div className="drag-area">
                         <DraggableZone/>

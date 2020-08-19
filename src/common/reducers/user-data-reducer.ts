@@ -55,6 +55,7 @@ export const userData = (state = USER_DATA, {
                 role,
                 token,
                 projects,
+                activeProject,
                 isLoggedIn: true
             };
         case SUBSCRIPTION :

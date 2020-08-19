@@ -26,6 +26,8 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
         }
     }
 
+    console.log(activeProject)
+
     return (
         <OutsideClickHandler
             onOutsideClick={outsideClickHandler}
@@ -62,12 +64,14 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
                         </button>
                     </div>
                     <ul className={style.links}>
-                        {projects.length > 0 ?
+                        {projects.length > 0 && activeProject ?
                             projects.map((project: {id: number, title: string}) => (
-                            <li key={project.id} className={`${activeProject === project.id ? style.active : ''}`}>
+                            <li key={project.id} className={`${activeProject.id === project.id ? style.active : ''}`}>
                                 <button
                                     className={style.item}
-                                    onClick={() => {changeProject(project.id)}}
+                                    onClick={() => {
+                                        activeProject.id !== project.id ? changeProject(project.id) : console.log('active project is current')
+                                    }}
                                 >
                                     <span>{project.title}</span>
                                 </button>
@@ -100,8 +104,9 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
 
     function handlerDelete(projectId: number) {
         if (window.confirm("Вы действительно хотите удалить проект?")){
-            const newProjects = projects.filter((item: {id: number, title: string}) => item.id !== projectId)
-            const newActiveProject = newProjects.length > 0 ? newProjects[0].id : null
+            const newProjects = projects.length === 1 ? [] : projects.filter((item: {id: number, title: string}) => item.id !== projectId)
+            console.log('newProjects', newProjects)
+            const newActiveProject = newProjects.length > 0 ? {id: newProjects[0].id, title: newProjects[0].title} : null
             dispatch(deleteProject(projectId, newProjects, newActiveProject, token))
         }
     }

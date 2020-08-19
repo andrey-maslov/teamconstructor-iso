@@ -2,13 +2,12 @@ import React, {useEffect, useState} from "react"
 import Rodal from "rodal"
 import {useSelector, useDispatch} from "react-redux"
 import style from "./add-member.module.scss"
-import {GlobalStateType, IModalProps} from "../../../../../constants/types"
+import {GlobalStateType, IModalProps, ITeamProfile, IMember} from "../../../../../constants/types"
 import Button from "../../buttons/button/Button"
 import {GrUserAdd} from "react-icons/gr"
 import {getAndDecodeData} from "encoded-data-parser"
-import {createMember} from "../../../../actions/actionCreator"
 import {useForm} from 'react-hook-form'
-import {SET_ERROR} from "../../../../actions/actionTypes";
+import {setAddMemberModal, setTeamsData} from "../../../../actions/actionCreator";
 
 interface IForm {
     name: string
@@ -20,14 +19,12 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
 
     useEffect(() => {
         if (!visible) {
-            dispatch({type: SET_ERROR, errorMessage: ''})
             reset()
         }
     }, [visible])
 
     const dispatch = useDispatch()
-    // const teams: Array<ITeamProfile> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
-    // const errorApiMsg = useSelector((state: GlobalStateType) => state.teamsReducer.errorMessage)
+    const teams: Array<ITeamProfile> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
     const user = useSelector((state: GlobalStateType) => state.userData)
     const {register, handleSubmit, reset, errors} = useForm<IForm>()
 
@@ -105,13 +102,22 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
 
         const data = getAndDecodeData('', formData.encData)
 
-        const memberData = {
+        //generate new base id as max of list of ids + 1
+        const baseIdList = teams[0].items.map((item: IMember) => item.baseID)
+        const newBaseID = baseIdList.length !== 0 ? Math.max.apply(null, baseIdList) + 1 : 0
+
+        const newMember: IMember = {
+            id: `0-${new Date().getTime()}`,
             name: formData.name,
             position: formData.position,
-            encData: data.encoded,
             decData: data.data,
+            baseID: newBaseID
         }
 
-        dispatch(createMember(memberData, user.id, user.projects[0].id, user.token))
+        const newTeams = [...teams]
+        newTeams[0].items.push(newMember)
+        dispatch(setTeamsData(newTeams))
+
+        setTimeout(()=> {dispatch(setAddMemberModal(false))}, 500)
     }
 }

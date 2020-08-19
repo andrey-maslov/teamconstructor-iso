@@ -12,18 +12,24 @@ export interface IEmployeeProfile {
     name: string,
     position: string,
     decData: DecodedDataType
-    baseID: string | number
+    baseID: number
 }
 
 export interface IMember {
+    id: string
     name: string,
     position: string,
-    encData: string,
     decData: DecodedDataType
+    baseID: number
+}
+
+export interface IProject {
+    id: number
+    title: string
 }
 
 export interface ITeamProfile {
-    id: number | null,
+    id: number,
     title: string,
     items: Array<IEmployeeProfile> | any
 }
