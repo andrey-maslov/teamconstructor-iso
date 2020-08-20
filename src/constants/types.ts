@@ -7,14 +7,6 @@ export type AnswerType = {
     value: string
 }
 
-export interface IEmployeeProfile {
-    id: string,
-    name: string,
-    position: string,
-    decData: DecodedDataType
-    baseID: number
-}
-
 export interface IMember {
     id: string
     name: string,
@@ -31,7 +23,7 @@ export interface IProject {
 export interface ITeamProfile {
     id: number,
     title: string,
-    items: Array<IEmployeeProfile> | any
+    items: Array<IMember> | any
 }
 
 export interface INavRoute {

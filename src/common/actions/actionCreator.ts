@@ -13,13 +13,12 @@ import {
     COMPARISON_IN_PROCESS,
     SET_RANDOM,
     SET_ADD_MEMBER_MODAL,
-    ADD_MEMBER,
     SET_AUTH_MODAL,
-    FETCH_CONTENT, SET_TEAMS,
+    FETCH_CONTENT,
     SET_ERROR,
-    CLEAR_ERROR, LOADING, ADD_PROJECT, SET_ACTIVE_PROJECT, SET_PROJECTS, SET_CREATE_PROJECT_MODAL,
+    LOADING, ADD_PROJECT, SET_ACTIVE_PROJECT, SET_PROJECTS, SET_CREATE_PROJECT_MODAL, SET_EDITED_MEMBER,
 } from './actionTypes';
-import {IEmployeeProfile, ILoginData, IMember, IProject, IRegisterData, ITeamProfile,} from "../../constants/types";
+import { ILoginData,  IProject, IRegisterData, ITeamProfile,} from "../../constants/types";
 import {CONTENT_API, BASE_API} from "../../constants/constants";
 import axios from 'axios'
 
@@ -157,6 +156,13 @@ export function setAddMemberModal(isAddMemberModal: boolean): { type: string, is
     }
 }
 
+export function setEditedMember(editedMember: number | null): { type: string, editedMember: number | null } {
+    return {
+        type: SET_EDITED_MEMBER,
+        editedMember
+    }
+}
+
 export function setCreateProjectModal(isCreateProjectModal: boolean): { type: string, isCreateProjectModal: boolean } {
     return {
         type: SET_CREATE_PROJECT_MODAL,
@@ -172,13 +178,9 @@ export function setAuthModal(isAuthModal: boolean): { type: string, isAuthModal:
 }
 
 
-/*
-FETCHING DATA
- */
-
+/*===== FETCHING DATA =====*/
 export const fetchTerms = (lang: string) => {
 
-    // const url = `https://api.salary2.me/psychologies?lang=${lang}`;
     const url = `${CONTENT_API}/psychologies/1`;
 
     return (dispatch: any) => {
@@ -196,7 +198,6 @@ export const fetchTerms = (lang: string) => {
 
 export const fetchContent = (lang: string) => {
 
-    // const url = `https://api.salary2.me/psychologies/3`;
     const url = `${CONTENT_API}/psychologies/3`;
 
     return (dispatch: any) => {
@@ -213,7 +214,6 @@ export const fetchContent = (lang: string) => {
 
 
 /*===== AUTH =====*/
-
 export const authUser = (userData: IRegisterData | ILoginData, authType: 'register' | 'login') => {
 
     const url = (authType === 'register') ? `${BASE_API}/auth/local/register` : `${BASE_API}/auth/local`
@@ -366,8 +366,6 @@ export function deleteProject(id: number, projects: IProject[] | [], activeProje
     }
 }
 
-
-/*===== MEMBERS CRUD - APP =====*/
 /*===== UTILS =====*/
 
 //TODO delete me after transfer logic to new function

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux"
 import {
     GlobalStateType,
-    IEmployeeProfile,
+    IMember,
     ITeamProfile,
 } from "../../../../../constants/types"
 import Box from "../../layout/box/Box"
@@ -36,7 +36,7 @@ const TeamCoopResult: React.FC = () => {
         return <div className="" style={{textAlign: 'center'}}>Количество участников команды должно быть от 3 до 9</div>
     }
 
-    const testResultList = activeTeam.items.map((item: IEmployeeProfile) => {
+    const testResultList = activeTeam.items.map((item: IMember) => {
         return item.decData[1]
     })
 
@@ -45,7 +45,7 @@ const TeamCoopResult: React.FC = () => {
     })
 
     const profiles          = fullProfiles.map((profile: any) => profile.profile)
-    const names             = activeTeam.items.map((item: IEmployeeProfile) => item.name);
+    const names             = activeTeam.items.map((item: IMember) => item.name);
 
     const teamProfile       = getTeamProfile(profiles)
     const teamPortrait      = UserResult.getPortrait(teamProfile)
@@ -217,7 +217,7 @@ const TeamCoopResult: React.FC = () => {
 
     function getCommitment(): number {
         //list item = value of responsibility of one member from data block "Привязанность-отдельность"
-        const respValsList: number[] = activeTeam.items.map((item: IEmployeeProfile) => item.decData[1][3][0])
+        const respValsList: number[] = activeTeam.items.map((item: IMember) => item.decData[1][3][0])
         return respValsList.reduce((a, b) => a + b)
     }
 

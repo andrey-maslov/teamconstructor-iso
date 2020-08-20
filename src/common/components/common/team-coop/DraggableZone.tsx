@@ -5,7 +5,7 @@ import Box from '../layout/box/Box'
 import DroppableColumn from "./droppable-column/DroppableColumn"
 import ColumnTop from "./droppable-column/ColumnTop"
 import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
-import {GlobalStateType, IEmployeeProfile, IMember, ITeamProfile} from "../../../../constants/types"
+import {GlobalStateType, IMember, ITeamProfile} from "../../../../constants/types"
 import {useDispatch, useSelector} from "react-redux";
 import {setAddMemberModal, setTeamsData} from "../../../actions/actionCreator";
 import {useToasts} from 'react-toast-notifications'
@@ -231,7 +231,7 @@ const DraggableZone: React.FC = () => {
     function checkDuplicate(columnIndex: number, sourceIndex: number, destIndex: number): boolean {
 
         const sourceItemData = teams[columnIndex].items[sourceIndex].baseID;
-        const destItemsData = teams[destIndex].items.map((item: IEmployeeProfile) => item.baseID)
+        const destItemsData = teams[destIndex].items.map((item: IMember) => item.baseID)
 
         const includesNum = destItemsData.filter((item: string) => item === sourceItemData).length
         return includesNum === 0

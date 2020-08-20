@@ -1,14 +1,16 @@
 import React from 'react'
+import {useDispatch} from 'react-redux'
 import {Draggable} from "react-beautiful-dnd"
-import {IEmployeeProfile} from "../../../../../constants/types"
+import {IMember} from "../../../../../constants/types"
 import ItemContent from "./ItemContent"
 
 import style from './draggable-item.module.scss'
+import {setAddMemberModal, setEditedMember} from "../../../../actions/actionCreator";
 
 
 export interface IDraggableItem {
     index: number,
-    employeeProfile: IEmployeeProfile,
+    employeeProfile: IMember,
     colIndex: number,
     deleteItem: (colIndex: number, itemIndex: number) => void
     isStore: boolean
@@ -17,6 +19,7 @@ export interface IDraggableItem {
 
 const DraggableItem: React.FC<IDraggableItem> = (props) => {
 
+    const dispatch = useDispatch()
     const itemClasses = `${style.wrapper} ${props.isStore ? style.store : ''}`
 
     return (
@@ -31,7 +34,7 @@ const DraggableItem: React.FC<IDraggableItem> = (props) => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-
+                        onClick={() => editMember(props.employeeProfile.baseID)}
                     >
                         <ItemContent {...props}/>
                     </div>
@@ -46,6 +49,11 @@ const DraggableItem: React.FC<IDraggableItem> = (props) => {
             )}
         </Draggable>
     );
+
+    function editMember(id: number) {
+        dispatch(setEditedMember(id))
+        dispatch(setAddMemberModal(true))
+    }
 }
 
 export default DraggableItem;

@@ -1,5 +1,5 @@
-import React from 'react';
-import style from './input-field.module.scss';
+import React, {useRef} from 'react'
+import style from './input-field.module.scss'
 
 interface InputFieldProps {
     label: string
@@ -8,10 +8,11 @@ interface InputFieldProps {
     placeholder?: string
     hasErrored: boolean
     onChangeHandler: any
+    nameRef: any
 }
 
 const InputField: React.FC<InputFieldProps> = (
-    {label, name, value, placeholder, hasErrored, onChangeHandler}
+    {label, name, value, placeholder, hasErrored, onChangeHandler, nameRef}
 ) => {
 
     return (
@@ -21,7 +22,7 @@ const InputField: React.FC<InputFieldProps> = (
                     type="text"
                     name={`name_${name}`}
                     defaultValue={label}
-                    required
+                    ref={nameRef}
                     onFocus={(e: any) => e.target.select()}
                     placeholder={label}
                     autoComplete={'off'}
@@ -33,8 +34,8 @@ const InputField: React.FC<InputFieldProps> = (
                 placeholder={placeholder}
                 onChange={onChangeHandler}
             />
-            {hasErrored &&
-            <div className={`msg-error`}>Вы допустили ошибку. Возможно, неправильный формат ввода</div>}
+            {/*{hasErrored &&*/}
+            {/*<div className={`msg-error`}>Вы допустили ошибку. Возможно, неправильный формат ввода</div>}*/}
         </div>
     );
 }

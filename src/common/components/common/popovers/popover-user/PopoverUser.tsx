@@ -17,7 +17,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
     const userData = useSelector((state: GlobalStateType) => state.userData)
-    const {projects, activeProject, email} = userData
+    const {projects, activeProject, email, username} = userData
     const token: string = useSelector((state: GlobalStateType) => state.userData.token)
 
     const outsideClickHandler = () => {
@@ -25,8 +25,6 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
             setIsOpen(false)
         }
     }
-
-    console.log(activeProject)
 
     return (
         <OutsideClickHandler
@@ -46,7 +44,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
                         <li>
                             <p className={`${style.item} ${style.creds}`}>
                                 <FiUserCheck/>
-                                <span>{userEmail}</span>
+                                <span>{username ? username : email}</span>
                             </p>
                         </li>
                     </ul>
@@ -104,16 +102,19 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
 
     function handlerDelete(projectId: number) {
         if (window.confirm("Вы действительно хотите удалить проект?")){
+
             const newProjects = projects.length === 1 ? [] : projects.filter((item: {id: number, title: string}) => item.id !== projectId)
-            console.log('newProjects', newProjects)
             const newActiveProject = newProjects.length > 0 ? {id: newProjects[0].id, title: newProjects[0].title} : null
+
             dispatch(deleteProject(projectId, newProjects, newActiveProject, token))
+            setIsOpen(false)
         }
     }
 
 
     function changeProject(id: number) {
         dispatch(fetchProject(id, token))
+        setIsOpen(false)
     }
 }
 
