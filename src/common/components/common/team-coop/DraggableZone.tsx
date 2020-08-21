@@ -5,7 +5,7 @@ import Box from '../layout/box/Box'
 import DroppableColumn from "./droppable-column/DroppableColumn"
 import ColumnTop from "./droppable-column/ColumnTop"
 import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
-import {GlobalStateType, IMember, ITeamProfile} from "../../../../constants/types"
+import {GlobalStateType, IMember, ITeam} from "../../../../constants/types"
 import {useDispatch, useSelector} from "react-redux";
 import {setAddMemberModal, setTeamsData} from "../../../actions/actionCreator";
 import {useToasts} from 'react-toast-notifications'
@@ -60,8 +60,8 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 
 const DraggableZone: React.FC = () => {
 
-    const teams: ITeamProfile[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
-    const staff: ITeamProfile = teams[0]
+    const teams: ITeam[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    const staff: ITeam = teams[0]
     const dispatch = useDispatch();
     const {addToast} = useToasts()
 
@@ -87,7 +87,7 @@ const DraggableZone: React.FC = () => {
         if (sInd === dInd) {
 
             const items = reorder(teams[sInd].items, source.index, destination.index);
-            const newTeams: ITeamProfile[] = [...teams];
+            const newTeams: ITeam[] = [...teams];
             newTeams[sInd].items = items;
             dispatch(setTeamsData(newTeams))
 
@@ -100,7 +100,7 @@ const DraggableZone: React.FC = () => {
                 addToast(`Работник ${currName} есть в команде!`, {appearance: 'error'})
                 return
             } else {
-                const newTeams: ITeamProfile[] = [...teams];
+                const newTeams: ITeam[] = [...teams];
                 newTeams[dInd].items = result;
                 dispatch(setTeamsData(newTeams))
             }
@@ -215,7 +215,7 @@ const DraggableZone: React.FC = () => {
     }
 
     function addTeam(): void {
-        const idList = teams.map((team: ITeamProfile) => team.id)
+        const idList = teams.map((team: ITeam) => team.id)
         const newId = Math.max.apply(null, idList) + 1
         dispatch(setTeamsData([...teams, {title: `Команда ${newId}`, id: newId, items: []}]))
         addToast(`Команда добавлена`, {appearance: 'success', autoDismiss: true})

@@ -18,7 +18,7 @@ import {
     SET_ERROR,
     LOADING, ADD_PROJECT, SET_ACTIVE_PROJECT, SET_PROJECTS, SET_CREATE_PROJECT_MODAL, SET_EDITED_MEMBER,
 } from './actionTypes';
-import { ILoginData,  IProject, IRegisterData, ITeamProfile,} from "../../constants/types";
+import { ILoginData,  IProject, IRegisterData, ITeam,} from "../../constants/types";
 import {CONTENT_API, BASE_API} from "../../constants/constants";
 import axios from 'axios'
 
@@ -125,7 +125,7 @@ export function setRowData(encData1: string, encData2: string) {
 /*
 TEAM COOPERATION PROCESS
  */
-export function setTeamsData(teamsData: ITeamProfile[]): { type: string, teams: ITeamProfile[] } {
+export function setTeamsData(teamsData: ITeam[]): { type: string, teams: ITeam[] } {
     return {
         type: SET_TEAMS_DATA,
         teams: teamsData
@@ -271,7 +271,7 @@ export function setLoading(isLoading: boolean): { type: string, isLoading: boole
 
 /*===== PROJECTS CRUD - DB =====*/
 
-export function createProject(user: number, title: string, teams: ITeamProfile[], token: string) {
+export function createProject(user: number, title: string, teams: ITeam[], token: string) {
     const url = `${BASE_API}/projects`
     return (dispatch: any) => {
         dispatch(setLoading(true))
@@ -323,7 +323,7 @@ export function fetchProject(id: number, token: string) {
     };
 }
 
-export function updateProject(id: number, teams: ITeamProfile[], token: string) {
+export function updateProject(id: number, teams: ITeam[], token: string) {
     const url = `${BASE_API}/projects/${id}`
     return (dispatch: any) => {
         dispatch(setLoading(true))

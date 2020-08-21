@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import Rodal from "rodal"
 import {useSelector, useDispatch} from "react-redux"
 import style from "./add-member.module.scss"
-import {GlobalStateType, IModalProps, ITeamProfile, IMember, DecodedDataType} from "../../../../../constants/types"
+import {GlobalStateType, IModalProps, ITeam, IMember, DecodedDataType} from "../../../../../constants/types"
 import Button from "../../buttons/button/Button"
 import {GrUserAdd} from "react-icons/gr"
 import {getAndDecodeData} from "encoded-data-parser"
@@ -25,7 +25,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
     }, [visible])
 
     const dispatch = useDispatch()
-    const teams: Array<ITeamProfile> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    const teams: Array<ITeam> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
     const editedMember: number | null = useSelector((state: GlobalStateType) => state.teamCoopReducer.editedMember)
     const {register, handleSubmit, reset, errors} = useForm<IForm>()
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []

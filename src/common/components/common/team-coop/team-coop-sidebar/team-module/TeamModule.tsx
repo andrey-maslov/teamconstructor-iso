@@ -1,10 +1,10 @@
 import React from 'react';
-import {ITeamProfile} from "../../../../../../constants/types";
+import {ITeam} from "../../../../../../constants/types";
 
 import style from './team-module.module.scss';
 
 interface TeamModuleProps {
-    team: ITeamProfile
+    team: ITeam
     isActive: boolean
     handler: () => void
 }

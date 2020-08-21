@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from "../../buttons/button/Button"
-import {GlobalStateType, ITeamProfile} from "../../../../../constants/types"
+import {GlobalStateType, ITeam} from "../../../../../constants/types"
 import {useDispatch, useSelector} from "react-redux"
 import style from './team-coop-sidebar.module.scss'
 import {GoRocket} from "react-icons/go"
@@ -12,7 +12,7 @@ import {SET_TEAM_SPEC} from "../../../../actions/actionTypes";
 const TeamCoopSidebar: React.FC = () => {
 
     const teamsState = useSelector((state: GlobalStateType) => state.teamCoopReducer)
-    const teams: ITeamProfile[] = teamsState.teams.slice(1)
+    const teams: ITeam[] = teamsState.teams.slice(1)
     const activeTeam: number = teamsState.activeTeam
     const teamSpec: number = teamsState.teamSpec
     const dispatch = useDispatch();

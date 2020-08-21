@@ -20,7 +20,7 @@ export interface IProject {
     title: string
 }
 
-export interface ITeamProfile {
+export interface ITeam {
     id: number,
     title: string,
     items: Array<IMember> | any
@@ -52,6 +52,6 @@ export interface ILoginData {
     identifier: string
     password: string
 }
-
+export type TableRow = string[] | null
 
 export type GlobalStateType = any

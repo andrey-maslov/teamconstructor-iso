@@ -5,7 +5,7 @@ import {useForm} from 'react-hook-form'
 
 import style from './droppable-column.module.scss'
 import OutsideClickHandler from 'react-outside-click-handler'
-import {GlobalStateType, ITeamProfile} from "../../../../../constants/types";
+import {GlobalStateType, ITeam} from "../../../../../constants/types";
 import {setTeamsData} from "../../../../actions/actionCreator";
 
 interface IForm {
@@ -23,7 +23,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
     const [state, setState] = useState({
         isEdit: false,
     })
-    const teams: ITeamProfile[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    const teams: ITeam[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
     const dispatch = useDispatch()
     const {register, handleSubmit, errors, reset} = useForm<IForm>()
     const labels: string[] = teams.length > 1 ? teams.map(team => team.title) : []

@@ -1,11 +1,12 @@
 import React from 'react';
 import style from "./table.module.scss";
+import {TableRow} from "../../../../../constants/types";
 
 type Value = string | number | any
 
 interface TableProps {
-    tableHeader?: Value[]
-    tableData: Value[][]
+    tableHeader?: TableRow
+    tableData: TableRow[]
     addClasses?: ('striped' | 'small')[]
 }
 
@@ -28,7 +29,7 @@ const Table: React.FC<TableProps> = ({tableHeader, tableData, addClasses,}) => {
                 </tr>}
                 {tableData.map((item, index) => {
                     return (
-                        <tr key={index}>
+                        item && <tr key={index}>
                             {item.map((value, i) => (<td key={`${index}-${i}`}>
                                 <span dangerouslySetInnerHTML={{__html: value}}/>
                             </td>))}
