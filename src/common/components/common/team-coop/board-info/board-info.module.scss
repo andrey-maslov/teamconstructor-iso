@@ -1,0 +1,19 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  //justify-content: space-between;
+  max-width: 40rem;
+  padding-bottom: 2rem;
+}
+
+.title {
+
+  margin-right: 3rem;
+  margin-bottom: 0;
+
+  span {
+    text-transform: uppercase;
+  }
+}

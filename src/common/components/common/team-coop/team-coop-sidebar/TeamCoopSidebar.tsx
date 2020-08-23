@@ -1,21 +1,26 @@
 import React from 'react'
 import Button from "../../buttons/button/Button"
-import {GlobalStateType, ITeamProfile} from "../../../../../constants/types"
+import {GlobalStateType, ITeam} from "../../../../../constants/types"
 import {useDispatch, useSelector} from "react-redux"
 import style from './team-coop-sidebar.module.scss'
 import {GoRocket} from "react-icons/go"
 import {setActiveTeam, setRandomNum} from "../../../../actions/actionCreator"
 import TeamModule from "./team-module/TeamModule";
+import TeamSpec from "./team-spec/TeamSpec";
+import {SET_TEAM_SPEC} from "../../../../actions/actionTypes";
 
 const TeamCoopSidebar: React.FC = () => {
 
-    const teams: ITeamProfile[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams.slice(1))
-    const activeTeam: number = useSelector((state: GlobalStateType) => state.teamCoopReducer.activeTeam)
+    const teamsState = useSelector((state: GlobalStateType) => state.teamCoopReducer)
+    const teams: ITeam[] = teamsState.teams.slice(1)
+    const activeTeam: number = teamsState.activeTeam
+    const teamSpec: number = teamsState.teamSpec
     const dispatch = useDispatch();
 
     return (
         <aside className={style.aside}>
             <div className={`${style.body}`}>
+                <TeamSpec teamSpec={teamSpec} changeSpec={changeSpec}/>
                 {teams.map((team, i) => {
                     const isActive = i === activeTeam;
                     return (
@@ -47,6 +52,10 @@ const TeamCoopSidebar: React.FC = () => {
             // window.scrollTo(0, 900);
         }
         // dispatch(setActiveTeam(0))
+    }
+
+    function changeSpec(index: number): void {
+        dispatch({type: SET_TEAM_SPEC, teamSpec: index})
     }
 }
 

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useRef} from "react"
 import InputField from "./input-field/InputField"
 import {useDispatch, useSelector} from "react-redux"
 import {setComparisonResult, setPairData,} from "../../../../actions/actionCreator"
@@ -8,7 +8,8 @@ import {FaReact} from "react-icons/fa"
 import {GoRocket} from "react-icons/go"
 import ProfileGenerator from "./profile-generator/ProfileGenerator"
 import style from './pair-coop-input.module.scss'
-import {GlobalStateType} from "../../../../../constants/types";
+import {GlobalStateType} from "../../../../../constants/types"
+import {useForm} from 'react-hook-form'
 
 //EXAMPLE SEE HERE https://www.carlrippon.com/building-super-simple-react-form-component-typescript-basics/
 
@@ -30,6 +31,9 @@ const PairCoopInput: React.FC = () => {
     const dispatch = useDispatch();
     const encData1 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.encData);
     const encData2 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.encData);
+    const {register, handleSubmit, reset, errors} = useForm()
+
+    console.log(errors)
 
     const encDataFromURL = getAndDecodeData().encoded;
 
@@ -60,6 +64,8 @@ const PairCoopInput: React.FC = () => {
         })
     }
 
+    console.log(errors)
+
     return (
         <>
             {localState.isGenerator && <div className="row between-xs">
@@ -85,6 +91,9 @@ const PairCoopInput: React.FC = () => {
                             placeholder={'Внесите в это поле зашифрованный результат для пользователя 1'}
                             hasErrored={localState.partner1.isError}
                             onChangeHandler={onChangeHandler1}
+                            nameRef={register({
+                                required: 'Это обязательное поле',
+                            })}
                         />
                     </div>
                     <div className="col-lg-6 mb-md">
@@ -95,6 +104,9 @@ const PairCoopInput: React.FC = () => {
                             placeholder={'Внесите в это поле зашифрованный результат для пользователя 2'}
                             hasErrored={localState.partner2.isError}
                             onChangeHandler={onChangeHandler2}
+                            nameRef={register({
+                                required: 'Это обязательное поле',
+                            })}
                         />
                     </div>
                 </div>

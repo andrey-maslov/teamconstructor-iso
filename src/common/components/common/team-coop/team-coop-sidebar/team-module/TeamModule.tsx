@@ -1,10 +1,10 @@
 import React from 'react';
-import {ITeamProfile} from "../../../../../../constants/types";
+import {ITeam} from "../../../../../../constants/types";
 
 import style from './team-module.module.scss';
 
 interface TeamModuleProps {
-    team: ITeamProfile
+    team: ITeam
     isActive: boolean
     handler: () => void
 }
@@ -19,7 +19,7 @@ const TeamModule: React.FC<TeamModuleProps> = ({team, isActive, handler}) => {
             onClick={handler}
             onKeyPress={handler}
         >
-            <h5 className={style.title}>{team.title}</h5>
+            <div className={style.title}>{team.title}</div>
             <div><span>Размер:</span> {team.items.length}</div>
         </div>
     );

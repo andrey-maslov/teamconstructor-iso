@@ -60,10 +60,12 @@ const CreateProject: React.FC = () => {
 
     function submitForm(data: IForm): void {
 
-        console.log('new project front OK')
+        const teams = [
+            {title: 'pool', id: 0, items: []},
+            {title: 'команда 1', id: 1, items: []},
+        ]
 
-        dispatch(createProject(id, data.title, token))
-        // reset()
+        dispatch(createProject(id, data.title, teams, token))
     }
 }
 

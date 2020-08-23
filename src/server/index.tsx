@@ -92,7 +92,6 @@ i18n
                                                 <meta name="viewport" content="width=device-width, initial-scale=1">
                                                 ${assets.client.css ? `<link rel="stylesheet" href="${assets.client.css}">` : ''}
                                                 <script src="${assets.client.js}" defer></script>
-                                                <link href="https://fonts.googleapis.com/css2?family=PT+Mono&family=PT+Sans&display=swap" rel="stylesheet">
                                                 <script>
                                                   window.initialI18nStore = JSON.parse('${JSON.stringify(initialI18nStore)}');
                                                   window.initialLanguage = '${initLang}';

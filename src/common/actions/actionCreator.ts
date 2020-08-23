@@ -13,13 +13,12 @@ import {
     COMPARISON_IN_PROCESS,
     SET_RANDOM,
     SET_ADD_MEMBER_MODAL,
-    ADD_MEMBER,
     SET_AUTH_MODAL,
-    FETCH_CONTENT, SET_TEAMS,
+    FETCH_CONTENT,
     SET_ERROR,
-    CLEAR_ERROR, LOADING, ADD_PROJECT, SET_ACTIVE_PROJECT, SET_PROJECTS, SET_CREATE_PROJECT_MODAL,
+    LOADING, ADD_PROJECT, SET_ACTIVE_PROJECT, SET_PROJECTS, SET_CREATE_PROJECT_MODAL, SET_EDITED_MEMBER,
 } from './actionTypes';
-import {IEmployeeProfile, ILoginData, IMember, IRegisterData, ITeamProfile,} from "../../constants/types";
+import { ILoginData,  IProject, IRegisterData, ITeam,} from "../../constants/types";
 import {CONTENT_API, BASE_API} from "../../constants/constants";
 import axios from 'axios'
 
@@ -126,8 +125,7 @@ export function setRowData(encData1: string, encData2: string) {
 /*
 TEAM COOPERATION PROCESS
  */
-export function setTeamsData(teamsData: ITeamProfile[]): { type: string, teams: ITeamProfile[] } {
-    console.log('teamsData')
+export function setTeamsData(teamsData: ITeam[]): { type: string, teams: ITeam[] } {
     return {
         type: SET_TEAMS_DATA,
         teams: teamsData
@@ -158,6 +156,13 @@ export function setAddMemberModal(isAddMemberModal: boolean): { type: string, is
     }
 }
 
+export function setEditedMember(editedMember: number | null): { type: string, editedMember: number | null } {
+    return {
+        type: SET_EDITED_MEMBER,
+        editedMember
+    }
+}
+
 export function setCreateProjectModal(isCreateProjectModal: boolean): { type: string, isCreateProjectModal: boolean } {
     return {
         type: SET_CREATE_PROJECT_MODAL,
@@ -173,13 +178,9 @@ export function setAuthModal(isAuthModal: boolean): { type: string, isAuthModal:
 }
 
 
-/*
-FETCHING DATA
- */
-
+/*===== FETCHING DATA =====*/
 export const fetchTerms = (lang: string) => {
 
-    // const url = `https://api.salary2.me/psychologies?lang=${lang}`;
     const url = `${CONTENT_API}/psychologies/1`;
 
     return (dispatch: any) => {
@@ -197,7 +198,6 @@ export const fetchTerms = (lang: string) => {
 
 export const fetchContent = (lang: string) => {
 
-    // const url = `https://api.salary2.me/psychologies/3`;
     const url = `${CONTENT_API}/psychologies/3`;
 
     return (dispatch: any) => {
@@ -214,7 +214,6 @@ export const fetchContent = (lang: string) => {
 
 
 /*===== AUTH =====*/
-
 export const authUser = (userData: IRegisterData | ILoginData, authType: 'register' | 'login') => {
 
     const url = (authType === 'register') ? `${BASE_API}/auth/local/register` : `${BASE_API}/auth/local`
@@ -237,27 +236,27 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
                 } else {
                     console.log(`SUCCESS ${authType}`, data)
                     const user = data.user;
-                    const projects: { id: number, title: string }[] = user.projects.map((item: any) => ({
+                    const projects: IProject[] = user.projects.map((item: any) => ({
                         id: item.id, title: item.title
                     }))
+                    const activeProject = projects.length !== 0 ? projects[0] : null
                     dispatch({type: SET_ERROR, errorMessage: ''})
-                    dispatch(setUser(user.id, user.username, user.email, user.role, projects, data.jwt))
-                    // dispatch(fetchBoard(projects[0].id, data.jwt))
+                    dispatch(setUser(user.id, user.username, user.email, user.role, projects, activeProject, data.jwt))
                 }
             })
     }
 }
 
-
-function setUser(id: number, username: string, email: string, role: number, projects: any, token: string) {
+function setUser(id: number, username: string, email: string, role: number, projects: IProject[] | [], activeProject: IProject | null, token: string) {
     return {
         type: ADD_AUTH_DATA,
         id,
         username,
         email,
         role,
-        token,
         projects,
+        activeProject,
+        token,
     }
 }
 
@@ -270,58 +269,18 @@ export function setLoading(isLoading: boolean): { type: string, isLoading: boole
     }
 }
 
-/*===== FETCH PROJECTS and MEMBERS =====*/
+/*===== PROJECTS CRUD - DB =====*/
 
-//TODO fixme
-export function createMember(memberData: IMember, userId: number, projectId: number, token: string) {
-
-    const url = `${BASE_API}/members`
-
-    return (dispatch: any) => {
-        dispatch(setLoading(true))
-
-        axios(url, {
-            method: 'POST',
-            data: {
-                ...memberData,
-                user: userId,
-                project: projectId
-            },
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        })
-            .then(res => res.data)
-            .then(data => {
-                console.log('SUCCESS create member', data)
-
-                const newMember = {
-                    id: `00-${new Date().getTime()}`,
-                    name: data.name,
-                    position: data.position,
-                    decData: data.decData,
-                    baseID: data.id
-                }
-                dispatch(updateProject(projectId, token, [...data.project.pool, data.id], null))
-                dispatch({type: SET_ADD_MEMBER_MODAL, isAddMemberModal: false})
-                dispatch({type: ADD_MEMBER, member: newMember})
-                dispatch({type: SET_ERROR, errorMessage: ''})
-            })
-            .catch(error => apiErrorHandling(error, dispatch))
-            .finally(() => dispatch(setLoading(false)))
-    }
-}
-
-export function createProject(userId: number, title: string, token: string) {
+export function createProject(user: number, title: string, teams: ITeam[], token: string) {
     const url = `${BASE_API}/projects`
     return (dispatch: any) => {
         dispatch(setLoading(true))
         axios(url, {
             method: 'POST',
             data: {
-                user: userId,
-                title: title
+                user,
+                title,
+                teams,
             },
             headers: {
                 'Content-Type': 'application/json',
@@ -330,33 +289,11 @@ export function createProject(userId: number, title: string, token: string) {
         })
             .then(res => res.data)
             .then(data => {
-                console.log('SUCCESS create project', data)
                 dispatch({type: ADD_PROJECT, project: {id: data.id, title: data.title}})
-                dispatch({type: SET_ACTIVE_PROJECT, activeProject: data.id})
+                dispatch({type: SET_ACTIVE_PROJECT, activeProject: {id: data.id, title: data.title}})
+                dispatch(setTeamsData(data.teams))
                 dispatch({type: SET_ERROR, errorMessage: ''})
                 dispatch(setCreateProjectModal(false))
-            })
-            .catch(error => apiErrorHandling(error, dispatch))
-            .finally(() => dispatch(setLoading(false)))
-    }
-}
-
-export function deleteProject(id: number, projects: { id: number, title: string }[] | [], activeProject: number | null, token: string,) {
-    const url = `${BASE_API}/projects/${id}`
-    return (dispatch: any) => {
-        dispatch(setLoading(true))
-        axios(url, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        })
-            .then(res => {
-                console.log('SUCCESS delete project', res)
-                dispatch({type: SET_ACTIVE_PROJECT, activeProject})
-                dispatch({type: SET_PROJECTS, projects})
-                dispatch({type: SET_ERROR, errorMessage: ''})
             })
             .catch(error => apiErrorHandling(error, dispatch))
             .finally(() => dispatch(setLoading(false)))
@@ -378,42 +315,29 @@ export function fetchProject(id: number, token: string) {
         })
             .then(res => res.data)
             .then(data => {
-                const teams = getTeamsFromProject(data.pool, data.teamsOrder, data.members)
-                dispatch({type: SET_ACTIVE_PROJECT, activeProject: id})
-                dispatch(setTeamsData(teams))
+                dispatch({type: SET_ACTIVE_PROJECT, activeProject: {id: data.id, title: data.title}})
+                dispatch(setTeamsData(data.teams))
             })
             .catch(error => apiErrorHandling(error, dispatch))
             .finally(() => dispatch(setLoading(false)))
     };
 }
 
-export function updateProject(id: number, token: string, pool: number[] | null, teamsOrder: number[] | null) {
+export function updateProject(id: number, teams: ITeam[], token: string) {
     const url = `${BASE_API}/projects/${id}`
-
-    let data = {}
-    if (pool && teamsOrder) {
-        data = {pool, teamsOrder}
-    }
-    if (!pool && teamsOrder) {
-        data = { teamsOrder }
-    }
-    if (pool && !teamsOrder) {
-        data = { pool }
-    }
-
-    console.log('new pool: ', data)
-
     return (dispatch: any) => {
         dispatch(setLoading(true))
         axios(url, {
             method: 'PUT',
-            data: data,
+            data: {teams},
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
         })
-            .then(res => {
+            .then(res => res.data)
+            .then(data => {
+                dispatch(setTeamsData(data.teams))
                 dispatch({type: SET_ERROR, errorMessage: ''})
             })
             .catch(error => apiErrorHandling(error, dispatch))
@@ -421,64 +345,28 @@ export function updateProject(id: number, token: string, pool: number[] | null, 
     }
 }
 
-// export function addMemberToPool(member: IEmployeeProfile) {
-//     return {
-//         type: ADD_MEMBER,
-//         member
-//     }
-// }
-
-export function getMembersByOrder(idList: number[], teamId: number, members: any[]): any {
-
-    //if team or pool is empty
-    if (!idList || idList.length === 0) {
-        return []
+export function deleteProject(id: number, projects: IProject[] | [], activeProject: IProject | null, token: string,) {
+    const url = `${BASE_API}/projects/${id}`
+    return (dispatch: any) => {
+        dispatch(setLoading(true))
+        axios(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(res => {
+                dispatch({type: SET_ACTIVE_PROJECT, activeProject})
+                dispatch({type: SET_PROJECTS, projects})
+                dispatch({type: SET_ERROR, errorMessage: ''})
+            })
+            .catch(error => apiErrorHandling(error, dispatch))
+            .finally(() => dispatch(setLoading(false)))
     }
-
-    return idList.map((num, i) => {
-        const teamMember = members.filter((member: any) => member.id == num)[0]
-
-        //Check if error and member doesn`t exist in members list
-        if (!teamMember) {
-            return {
-                id: `${teamId}${i}-${new Date().getTime()}`,
-                name: 'empty',
-                position: 'empty',
-                decData: [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
-            }
-        }
-
-        return {
-            id: `${teamId}${i}-${new Date().getTime()}`,
-            name: teamMember.name,
-            position: teamMember.position,
-            decData: teamMember.decData
-        }
-    })
 }
 
-function getTeamsFromProject(pool: number[], teamsOrder: number[], members: IEmployeeProfile[]): any {
-    if (!pool || pool.length === 0) {
-        return [
-            {title: 'pool', items: []},
-            {title: 'team 1', items: []}
-        ]
-    }
-    const filledPool = getMembersByOrder(pool, 0, members)
-    if (!teamsOrder || teamsOrder.length === 0) {
-        return [
-            {title: 'pool', items: filledPool},
-            {title: 'team 1', items: []}
-        ]
-    }
-
-    return [
-        {title: 'pool', items: filledPool},
-        {title: 'team 1', items: []}
-    ]
-
-    // const filledTeams = teamsOrder.map(team)
-}
+/*===== UTILS =====*/
 
 //TODO delete me after transfer logic to new function
 function setApiErrorMsg(data: any, dispatch: any): boolean {

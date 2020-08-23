@@ -9,6 +9,8 @@ export const SET_RANDOM = 'SET_RANDOM'
 export const ADD_MEMBER = 'ADD_MEMBER'
 export const SET_TEAMS = 'FETCH_TEAMS'
 export const PUSH_MEMBER = 'PUSH_MEMBER'
+export const SET_EDITED_MEMBER = 'SET_EDITED_MEMBER'
+export const SET_TEAM_SPEC = 'SET_TEAM_SPEC'
 
 //Project
 export const ADD_PROJECT = 'ADD_PROJECT'

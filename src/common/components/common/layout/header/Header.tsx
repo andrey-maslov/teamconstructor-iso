@@ -23,7 +23,9 @@ const Header: React.FC = () => {
 
     const handleLoginBtn = () => {
         if (isLoggedIn) {
-            dispatch(clearUserData())
+            if(confirm('Вы действительно хотиете выйти?')) {
+                dispatch(clearUserData())
+            }
         } else {
             dispatch(setAuthModal(true))
         }

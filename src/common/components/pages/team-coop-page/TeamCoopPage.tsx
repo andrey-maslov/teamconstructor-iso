@@ -8,6 +8,9 @@ import TeamCoopSidebar from "../../common/team-coop/team-coop-sidebar/TeamCoopSi
 // import {} from '../../../actions/actionCreator'
 import {GlobalStateType} from "../../../../constants/types";
 import CreateProject from "../../common/team-coop/create-project/CreateProject";
+import BoardInfo from "../../common/team-coop/board-info/BoardInfo";
+import {exitConfirmation} from "../../../../helper/helper";
+import {fetchProject} from "../../../actions/actionCreator";
 
 const TeamCoopPage: React.FC = () => {
 
@@ -18,9 +21,9 @@ const TeamCoopPage: React.FC = () => {
     const {projects} = userData
 
     useEffect(() => {
-        if(userData.isLoggedIn && userData.id) {
-            // dispatch(fetchTeams(userData.id, userData.token))
-        }
+        // if(userData.isLoggedIn && userData.id) {
+        //     dispatch(fetchProject(userData.activeProject.id, userData.token))
+        // }
     }, [userData.isLoggedIn, userData.id])
 
     if (!isLoggedIn) {
@@ -35,9 +38,12 @@ const TeamCoopPage: React.FC = () => {
         )
     }
 
+    // exitConfirmation()
+
     return (
         <main className='section page-team main'>
             <div className="container-wide">
+                <BoardInfo />
                 <div className="flex-row">
                     <div className="drag-area">
                         <DraggableZone/>

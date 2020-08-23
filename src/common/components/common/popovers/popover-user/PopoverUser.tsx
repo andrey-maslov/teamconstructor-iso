@@ -17,7 +17,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
     const userData = useSelector((state: GlobalStateType) => state.userData)
-    const {projects, activeProject, email} = userData
+    const {projects, activeProject, email, username} = userData
     const token: string = useSelector((state: GlobalStateType) => state.userData.token)
 
     const outsideClickHandler = () => {
@@ -44,7 +44,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
                         <li>
                             <p className={`${style.item} ${style.creds}`}>
                                 <FiUserCheck/>
-                                <span>{userEmail}</span>
+                                <span>{username ? username : email}</span>
                             </p>
                         </li>
                     </ul>
@@ -62,12 +62,14 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
                         </button>
                     </div>
                     <ul className={style.links}>
-                        {projects.length > 0 ?
+                        {projects.length > 0 && activeProject ?
                             projects.map((project: {id: number, title: string}) => (
-                            <li key={project.id} className={`${activeProject === project.id ? style.active : ''}`}>
+                            <li key={project.id} className={`${activeProject.id === project.id ? style.active : ''}`}>
                                 <button
                                     className={style.item}
-                                    onClick={() => {changeProject(project.id)}}
+                                    onClick={() => {
+                                        activeProject.id !== project.id ? changeProject(project.id) : console.log('active project is current')
+                                    }}
                                 >
                                     <span>{project.title}</span>
                                 </button>
@@ -100,15 +102,19 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
 
     function handlerDelete(projectId: number) {
         if (window.confirm("Вы действительно хотите удалить проект?")){
-            const newProjects = projects.filter((item: {id: number, title: string}) => item.id !== projectId)
-            const newActiveProject = newProjects.length > 0 ? newProjects[0].id : null
+
+            const newProjects = projects.length === 1 ? [] : projects.filter((item: {id: number, title: string}) => item.id !== projectId)
+            const newActiveProject = newProjects.length > 0 ? {id: newProjects[0].id, title: newProjects[0].title} : null
+
             dispatch(deleteProject(projectId, newProjects, newActiveProject, token))
+            setIsOpen(false)
         }
     }
 
 
     function changeProject(id: number) {
         dispatch(fetchProject(id, token))
+        setIsOpen(false)
     }
 }
 

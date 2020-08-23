@@ -1,23 +1,25 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux"
-import {
-    GlobalStateType,
-    IEmployeeProfile,
-    ITeamProfile,
-} from "../../../../../constants/types"
+import {GlobalStateType, IMember, ITeam, TableRow} from "../../../../../constants/types"
 import Box from "../../layout/box/Box"
 import {UserResult, baseTestResultType, IUserResult, ITendency, IOctant} from "../../../../../UserResult"
 import RadarChart from "../../charts/radar-chart/RadarChart"
 import KeyIndicator from "../../pair-coop/pair-coop-output/key-indicator/KeyIndicator"
 import ComparisonTable from "../../pair-coop/pair-coop-output/comparison-table/ComparisonTable"
-import {getDescByRange, toPercent} from "../../../../../helper/helper"
+import {getDescByRange} from "../../../../../helper/helper"
+
+const specs = ['Универсальная', 'Идея', 'Продажи', 'Реализация', 'Качество']
 
 const TeamCoopResult: React.FC = () => {
 
-    const activeTeamInd: number         = useSelector((state: GlobalStateType) => state.teamCoopReducer.activeTeam)
-    const randomNum: number             = useSelector((state: GlobalStateType) => state.teamCoopReducer.randomNum)
-    const activeTeam: ITeamProfile      = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams[activeTeamInd + 1])
     const {terms: scheme, descriptions} = useSelector((state: GlobalStateType) => state.termsReducer)
+    const teamCoop                      = useSelector((state: GlobalStateType) => state.teamCoopReducer)
+    const activeTeamInd: number         = teamCoop.activeTeam
+    const randomNum: number             = teamCoop.randomNum
+    const activeTeam: ITeam      = teamCoop.teams[activeTeamInd + 1]
+    const teamSpec                      = teamCoop.teamSpec
+    const poolMembers                   = teamCoop.teams[0].items
+    const teamMembers                   = activeTeam.items
 
     //if all resources are fetched, calculated and ready to display
     const [isReady, setReady]      = useState(false)
@@ -36,7 +38,7 @@ const TeamCoopResult: React.FC = () => {
         return <div className="" style={{textAlign: 'center'}}>Количество участников команды должно быть от 3 до 9</div>
     }
 
-    const testResultList = activeTeam.items.map((item: IEmployeeProfile) => {
+    const testResultList = activeTeam.items.map((item: IMember) => {
         return item.decData[1]
     })
 
@@ -45,12 +47,13 @@ const TeamCoopResult: React.FC = () => {
     })
 
     const profiles          = fullProfiles.map((profile: any) => profile.profile)
-    const names             = activeTeam.items.map((item: IEmployeeProfile) => item.name);
+    const names             = activeTeam.items.map((item: IMember) => item.name);
 
     const teamProfile       = getTeamProfile(profiles)
     const teamPortrait      = UserResult.getPortrait(teamProfile)
     const sortedOctantsArr  = fullProfiles.map((item: any) => item.sortedOctants)
     const maxSectorSq       = getMaxSectorSquare(teamProfile)
+    const allCandidates     = getAllCandidates(poolMembers, teamMembers)
 
     const stability         = getStability(teamPortrait, maxSectorSq)
     const interaction       = getInteraction(sortedOctantsArr)
@@ -61,8 +64,11 @@ const TeamCoopResult: React.FC = () => {
     const commitment        = getCommitment()
     const teamProfileDesc   = getProfileDesc(maxSectorSq, descriptions.complementarityDesc)
     const needList          = getNeed(maxSectorSq)
+    const candidates        = getCandidates(teamPortrait, teamSpec, allCandidates)
+    const unwanted          = getUnwanted(teamMembers, teamProfile)
+    console.log(unwanted)
 
-    const keyValues = [
+    const keyValues         = [
         {
             title: 'Стабильность',
             description: '',
@@ -79,7 +85,9 @@ const TeamCoopResult: React.FC = () => {
             value: emotionalComp
         },
     ]
-    const resultTableData = getResultTableData()
+    const resultTableData   = getResultTableData()
+
+    // console.log(candidates)
 
 
     return (
@@ -127,7 +135,7 @@ const TeamCoopResult: React.FC = () => {
                         />}
                     </Box>
                     <Box
-                        addClass="team-keys"
+                        addClass="team-table"
                         title={`${activeTeam.title}. Сводная таблица`}
                     >
                         <ComparisonTable tableData={resultTableData}/>
@@ -217,7 +225,7 @@ const TeamCoopResult: React.FC = () => {
 
     function getCommitment(): number {
         //list item = value of responsibility of one member from data block "Привязанность-отдельность"
-        const respValsList: number[] = activeTeam.items.map((item: IEmployeeProfile) => item.decData[1][3][0])
+        const respValsList: number[] = activeTeam.items.map((item: IMember) => item.decData[1][3][0])
         return respValsList.reduce((a, b) => a + b)
     }
 
@@ -242,20 +250,92 @@ const TeamCoopResult: React.FC = () => {
         return minorOctants.map(item => item.index)
     }
 
+    function getAllCandidates(poolMembers: IMember[], teamMembers: IMember[]) {
+        const teamIdList = teamMembers.map(item => item.baseID)
+        return poolMembers.filter(item => !teamIdList.includes(item.baseID))
+    }
+
+    function getCandidates(teamPortrait: IOctant[], teamSpecInd: number, allCandidates: IMember[]) {
+        const specsList = [['A1', 'A2', 'B1', 'B2', 'a1', 'a2', 'b1', 'b2'], ['A1', 'A2'], ['B1', 'B2'], ['a1', 'a2'], ['b1', 'b2']]
+        const majorOctants = teamPortrait.filter((item: IOctant) => item.value >= maxSectorSq * .3)
+        const majorCodes   = majorOctants.map(item => item.code)
+
+        if (!isNeeded(majorOctants, teamSpecInd, specsList)) {
+            return null
+        }
+        if (majorOctants.length === 8) {
+            return null
+        }
+
+        return allCandidates.filter(item => {
+
+            const profile  = UserResult.getProfile(item.decData[1])
+            const portrait = UserResult.getPortrait(profile)
+            const sortedOctants = [...portrait].sort((a, b) => (b.value - a.value))
+
+            if (!checkIntensity(profile, teamProfile)) {
+                return false
+            }
+            return (
+                (majorCodes.includes(sortedOctants[0].code) && specsList[teamSpecInd].includes(sortedOctants[1].code))
+                ||
+                (majorCodes.includes(sortedOctants[1].code) && specsList[teamSpecInd].includes(sortedOctants[0].code))
+            )
+        })
+    }
+
+    //не слишком ли расходится интенсивность кандидата и команды
+    function checkIntensity(memberProfile: ITendency[], teamProfile: ITendency[]): boolean {
+        const sortedMemberProfile = [...memberProfile].sort((a, b) => b.value - a.value)
+        const sortedTeamProfile = [...teamProfile].sort((a, b) => b.value - a.value)
+        return !(sortedMemberProfile[0].value > sortedTeamProfile[0].value * 1.2 || sortedMemberProfile[0].value < sortedTeamProfile[0].value * .8);
+    }
+
+    //for function getCandidate
+    function isNeeded(majorOctants: IOctant[], specInd: number, specsList: string[][]): boolean{
+        const majorOctantsCodes = majorOctants.map(item => item.code)
+
+        if (majorOctantsCodes.includes(specsList[specInd][0]) && majorOctantsCodes.includes(specsList[specInd][1])) {
+            const specOctants = majorOctants.filter(octant => octant.code === specsList[specInd][0] || octant.code === specsList[specInd][1])
+            const maxOctant = specOctants[0].value > specOctants[1].value ? specOctants[0] : specOctants[1]
+
+            if (Math.abs(specOctants[0].value - specOctants[1].value) < maxOctant.value * .2) {
+                return false
+            }
+        }
+        return true
+    }
+
+    function getUnwanted(teamMembers: IMember[], teamProfile: ITendency[]): IMember[] {
+        return teamMembers.filter(item => !checkIntensity(UserResult.getProfile(item.decData[1]), teamProfile))
+    }
+
     function getResultTableData() {
+
+        let candidateData: TableRow | null = []
+        if (!candidates) {
+            candidateData = null
+        } else if (candidates && candidates.length === 0) {
+            candidateData = ['Работники, рекомендуемые в команду', 'Среди ваших работников нет подходящего кандидата']
+        }
+        else {
+            candidateData = ['Работники, рекомендуемые в команду', candidates.map(item => item.name).join(', ')]
+        }
+
+        const unwantedData = unwanted.length === 0 ? null : ['Работники, напрягающие команду', unwanted.map(item => item.name).join(', ')]
+
         return [
-            ['Стабильность',                                toPercent(stability).str],
-            ['Способность к взаимодействию (коммуникации)', toPercent(interaction).str],
-            ['Эмоциональная совместимость',                 toPercent(emotionalComp).str],
             ['Лояльность к внешнему руководству',           getDescByRange(loyalty, descriptions.loyaltyDesc)],
             ['Ответственность команды',                     getDescByRange(commitment, descriptions.commitmentDesc)],
             ['Психологический профиль команды',             teamProfileDesc],
             ['Лидер команды',                               leaderName],
             ['Альтернативный лидер',                        opinionLeaderName],
             ['Типы, рекомендуемые в команду',               needList.map(i => scheme.psychoTypes[i]).join(', ')],
+            candidateData && candidateData,
+            unwantedData && unwantedData
         ]
     }
 
 }
 
-export default TeamCoopResult;
+export default TeamCoopResult

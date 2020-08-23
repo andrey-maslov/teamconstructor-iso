@@ -7,25 +7,23 @@ export type AnswerType = {
     value: string
 }
 
-export interface IEmployeeProfile {
-    id: string,
-    name: string,
-    position: string,
-    decData: DecodedDataType
-    baseID: string | number
-}
-
 export interface IMember {
+    id: string
     name: string,
     position: string,
-    encData: string,
     decData: DecodedDataType
+    baseID: number
 }
 
-export interface ITeamProfile {
-    id: number | null,
+export interface IProject {
+    id: number
+    title: string
+}
+
+export interface ITeam {
+    id: number,
     title: string,
-    items: Array<IEmployeeProfile> | any
+    items: Array<IMember> | any
 }
 
 export interface INavRoute {
@@ -54,6 +52,6 @@ export interface ILoginData {
     identifier: string
     password: string
 }
-
+export type TableRow = string[] | null
 
 export type GlobalStateType = any

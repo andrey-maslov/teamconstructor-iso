@@ -29,6 +29,7 @@
         "semi": 0,
         "react/prop-types": 0,
         "ban-ts-comment": 0,
+        "jsx-a11y/no-autofocus": 0,
         "@typescript-eslint/no-explicit-any": 1,
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
         "react-hooks/rules-of-hooks": "error", // Проверяем правила хуков
