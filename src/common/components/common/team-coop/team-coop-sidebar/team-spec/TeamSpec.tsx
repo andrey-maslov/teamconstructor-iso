@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './team-spec.module.scss'
-import {IoMdConstruct} from "react-icons/Io"
+import {IoMdConstruct} from "react-icons/io"
 import {FaLightbulb, FaAward, FaUniversalAccess, FaShoppingCart} from "react-icons/fa"
 
 const values = ['Универсальная', 'Идея', 'Продажи', 'Реализация', 'Качество']
