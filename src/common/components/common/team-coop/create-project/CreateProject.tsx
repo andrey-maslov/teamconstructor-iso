@@ -24,38 +24,32 @@ const CreateProject: React.FC = () => {
 
 
     return (
-        <div className={style.wrapper}>
-            <div>
-                {!projects || projects.length === 0 && <div className={style.title}>
-                    <p>У вас еще нет ниодного проекта. <br/>Создайте свой первый проект</p>
-                </div>}
-                <form onSubmit={handleSubmit(submitForm)}>
-                    <div className={`form-group`}>
-                        <label>
-                            <span>Название</span>
-                            <input
-                                type="text"
-                                name="title"
-                                onChange={() => dispatch({type: SET_ERROR, errorMessage: ''})}
-                                ref={register({
-                                    required: 'Это обязательное поле'
-                                })}
-                                autoComplete="off"
-                                placeholder={'Введите название проекта'}
-                            />
-                        </label>
-                        {errors.title && <div className={`msg-error`}>{errors.title.message}</div>}
-                    </div>
-                    <Button
-                        title={'Создать'}
-                        startIcon={isLoading && <AiOutlineLoading/>}
-                        handle={() => void (0)}
-                        btnClass={'btn-outlined btn-loader'}
+        <form onSubmit={handleSubmit(submitForm)} className={style.form}>
+            <div className={`form-group ${errors.title ? 'has-error' : ''}`}>
+                <label>
+                    <span>Название</span>
+                    <input
+                        type="text"
+                        name="title"
+                        onChange={() => dispatch({type: SET_ERROR, errorMessage: ''})}
+                        ref={register({
+                            required: 'Это обязательное поле'
+                        })}
+                        autoComplete="off"
+                        placeholder={'Введите название проекта'}
                     />
-                    {errorApiMsg && <div className={`msg-error`}>{errorApiMsg}</div>}
-                </form>
+                </label>
+                {errors.title && <div className={`item-explain`}>{errors.title.message}</div>}
             </div>
-        </div>
+            <Button
+                title={'Создать'}
+                startIcon={isLoading && <AiOutlineLoading/>}
+                handle={() => void (0)}
+                btnClass={'btn-outlined btn-loader'}
+            />
+            {errorApiMsg && <div className={`msg-error`}>{errorApiMsg}</div>}
+        </form>
+
     );
 
     function submitForm(data: IForm): void {

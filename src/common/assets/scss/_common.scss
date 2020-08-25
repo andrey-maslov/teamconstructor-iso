@@ -182,8 +182,26 @@ main {
     margin-bottom: 0;
     min-width: unset;
     height: auto;
+    line-height: 1;
     text-transform: none;
-    padding: 0 1rem;
+    //padding: 0 1rem;
+    border-radius: $border-radius-sm;
+    margin-right: .5rem;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    &.active {
+      color: $orange;
+      border-color: $orange;
+    }
+  }
+
+  svg {
+    position: relative;
+    bottom: -1px;
+    margin: .2rem 0;
   }
 }
 
@@ -216,6 +234,11 @@ body *::-webkit-scrollbar-track {
 //focus visible polyfill
 .js-focus-visible :focus:not(.focus-visible) {
   outline: none;
+}
+
+mark {
+  background-color: rgba($accent, .6);
+  color: currentColor;
 }
 
 
@@ -484,10 +507,11 @@ $sidebar-width: 20rem;
 
     & > div:nth-of-type(2) {
       background-color: rgba($text-light, .5);
+      border-radius: 0 0 $border-radius-sm $border-radius-sm;
     }
 
     .box-content {
-      max-height: 740px;
+      max-height: 745px;
       overflow-y: auto;
     }
   }
@@ -523,7 +547,7 @@ $sidebar-width: 20rem;
 
 .teams-wrapper {
   display: flex;
-  height: 100%;
+  height: auto;
 
   & > div {
     margin-right: 1rem;
@@ -554,7 +578,7 @@ $sidebar-width: 20rem;
 input, textarea {
   display: block;
   width: 100%;
-  padding: .8rem;
+  padding: .5rem .8rem;
   background-color: $overlay-light;
   border: 0;
   caret-color: $text-light;
@@ -564,19 +588,39 @@ input, textarea {
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   textarea {
     resize: none;
     margin: 0;
     height: 100px;
   }
+
+  .item-explain {
+    font-size: .8rem;
+    min-height: 1.5rem;
+    padding-top: 0;
+    line-height: 1.5rem;
+    transition: color .3s cubic-bezier(.215,.61,.355,1);
+  }
+
+  &.has-error {
+    margin-bottom: 0;
+
+    .item-explain {
+      color: $danger;
+    }
+
+    input,
+    textarea {
+
+      &:focus {
+        outline-color: rgba($danger, .5);
+      }
+    }
+  }
 }
 
-.msg-error {
-  font-size: .8rem;
-  color: $danger;
-}
 
 //Media
 

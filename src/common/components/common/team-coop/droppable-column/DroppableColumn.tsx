@@ -35,7 +35,7 @@ const DroppableColumn: React.FC<IDroppableColumn> = (
                         <DraggableItem
                             key={item.id}
                             index={index}
-                            employeeProfile={item}
+                            member={item}
                             colIndex={+id}
                             deleteItem={deleteItem}
                             isStore={false}

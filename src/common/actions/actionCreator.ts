@@ -18,7 +18,7 @@ import {
     SET_ERROR,
     LOADING, ADD_PROJECT, SET_ACTIVE_PROJECT, SET_PROJECTS, SET_CREATE_PROJECT_MODAL, SET_EDITED_MEMBER,
 } from './actionTypes';
-import { ILoginData,  IProject, IRegisterData, ITeam,} from "../../constants/types";
+import {ILoginData, IProject, IRegisterData, ITeam,} from "../../constants/types";
 import {CONTENT_API, BASE_API} from "../../constants/constants";
 import axios from 'axios'
 
@@ -219,31 +219,23 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
     const url = (authType === 'register') ? `${BASE_API}/auth/local/register` : `${BASE_API}/auth/local`
 
     return (dispatch: any) => {
-        fetch(url, {
+        dispatch(setLoading(true))
+        axios(url, {
             method: 'POST',
-            body: JSON.stringify(userData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            data: userData,
         })
-            .then((res) => {
-                const data = res.json()
-                return data
-            })
+            .then(res => res.data)
             .then(data => {
-                if (data.statusCode === 400) {
-                    setApiErrorMsg(data, dispatch)
-                } else {
-                    console.log(`SUCCESS ${authType}`, data)
-                    const user = data.user;
-                    const projects: IProject[] = user.projects.map((item: any) => ({
-                        id: item.id, title: item.title
-                    }))
-                    const activeProject = projects.length !== 0 ? projects[0] : null
-                    dispatch({type: SET_ERROR, errorMessage: ''})
-                    dispatch(setUser(user.id, user.username, user.email, user.role, projects, activeProject, data.jwt))
-                }
+                const user = data.user;
+                const projects: IProject[] = user.projects.map((item: any) => ({
+                    id: item.id, title: item.title
+                }))
+                const activeProject = projects.length !== 0 ? projects[0] : null
+                dispatch(setUser(user.id, user.username, user.email, user.role, projects, activeProject, data.jwt))
+                dispatch({type: SET_ERROR, errorMessage: ''})
             })
+            .catch(error => apiErrorHandling(error, dispatch))
+            .finally(() => dispatch(setLoading(false)))
     }
 }
 
@@ -368,37 +360,22 @@ export function deleteProject(id: number, projects: IProject[] | [], activeProje
 
 /*===== UTILS =====*/
 
-//TODO delete me after transfer logic to new function
-function setApiErrorMsg(data: any, dispatch: any): boolean {
+function apiErrorHandling(error: any, dispatch: any) {
 
-    if (data.statusCode === 400) {
-        const msg = data.message[0].messages[0].message
-        console.log('ERROR 400', msg)
+    if (error.response) {
+        const msg = error.response.data.message[0].messages[0].message
         dispatch({
             type: SET_ERROR,
             errorMessage: msg
         })
-        return false
-    }
-    return true
-}
-
-function apiErrorHandling(error: any, dispatch: any) {
-
-    if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.log('DATA', error.response.data)
-        console.log('STATUS', error.response.status)
-        console.log('HEADERS', error.response.headers)
     } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        console.log(error.request)
+        console.error(error.request)
     } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('ERROR', error.message)
+        console.error('ERROR', error.message)
     }
     console.log(error)
 }

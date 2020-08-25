@@ -32,7 +32,7 @@ export const CreateProjectModal: React.FC<IModalProps> = ({visible, closeModal})
             onClose={() => {
                 closeModal()
             }}
-            height={500}
+            height={220}
         >
             <CreateProject />
         </Rodal>

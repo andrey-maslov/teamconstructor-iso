@@ -26,8 +26,8 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
     const teams: ITeam[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
     const dispatch = useDispatch()
     const {register, handleSubmit, errors, reset} = useForm<IForm>()
-    const labels: string[] = teams.length > 1 ? teams.map(team => team.title) : []
-    labels.shift()
+    const labels: string[] = teams.length > 1 ? teams.map(team => team.title.toLowerCase()) : []
+    // labels.shift()
 
     return (
         <div className={style.top}>
@@ -36,7 +36,8 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
                     onOutsideClick={() => setState({...state, isEdit: !state.isEdit})}
                 >
                     <form onSubmit={handleSubmit(submit)}>
-                        <input
+                        <div className={`form-group ${errors.label ? 'has-error' : ''}`}>
+                            <input
                             type="text"
                             name="label"
                             defaultValue={label}
@@ -46,13 +47,15 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
                             ref={register({
                                 required: 'Это обязательное поле',
                                 validate: {
-                                    duplicateLabel: value => !labels.includes(value)
+                                    duplicateLabel: value => !labels.includes(value.toLowerCase())
                                 }
                             })}
+                            autoComplete="off"
                         />
-                        {errors.label && errors.label.type === 'duplicateLabel' && (
-                            <div className={`msg-error`}>Команда с таком названием уже есть</div>
-                        )}
+                            {errors.label && errors.label.type === 'duplicateLabel' && (
+                                <div className={`item-explain`}>Команда с таком названием уже есть</div>
+                            )}
+                        </div>
                     </form>
                 </OutsideClickHandler>
                 :

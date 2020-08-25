@@ -16,10 +16,7 @@ const TeamCoopResult: React.FC = () => {
     const teamCoop                      = useSelector((state: GlobalStateType) => state.teamCoopReducer)
     const activeTeamInd: number         = teamCoop.activeTeam
     const randomNum: number             = teamCoop.randomNum
-    const activeTeam: ITeam      = teamCoop.teams[activeTeamInd + 1]
-    const teamSpec                      = teamCoop.teamSpec
-    const poolMembers                   = teamCoop.teams[0].items
-    const teamMembers                   = activeTeam.items
+    const activeTeam: ITeam = teamCoop.teams[activeTeamInd + 1]
 
     //if all resources are fetched, calculated and ready to display
     const [isReady, setReady]      = useState(false)
@@ -28,11 +25,16 @@ const TeamCoopResult: React.FC = () => {
         if (activeTeam && (activeTeam.items.length !== 0 && scheme)) {
             setReady(true)
         }
-    }, [activeTeam, randomNum, scheme, activeTeamInd])
+    }, [randomNum, scheme, activeTeamInd])
 
     if (!isReady) {
         return null
     }
+
+
+    const teamSpec          = teamCoop.teamSpec
+    const poolMembers       = teamCoop.teams[0].items
+    const teamMembers       = activeTeam.items
 
     if (activeTeam.items.length < 3 || activeTeam.items.length > 9) {
         return <div className="" style={{textAlign: 'center'}}>Количество участников команды должно быть от 3 до 9</div>
@@ -66,7 +68,6 @@ const TeamCoopResult: React.FC = () => {
     const needList          = getNeed(maxSectorSq)
     const candidates        = getCandidates(teamPortrait, teamSpec, allCandidates)
     const unwanted          = getUnwanted(teamMembers, teamProfile)
-    console.log(unwanted)
 
     const keyValues         = [
         {
@@ -306,8 +307,8 @@ const TeamCoopResult: React.FC = () => {
         return true
     }
 
-    function getUnwanted(teamMembers: IMember[], teamProfile: ITendency[]): IMember[] {
-        return teamMembers.filter(item => !checkIntensity(UserResult.getProfile(item.decData[1]), teamProfile))
+    function getUnwanted(members: IMember[], teamProfile: ITendency[]): IMember[] {
+        return members.filter(item => !checkIntensity(UserResult.getProfile(item.decData[1]), teamProfile))
     }
 
     function getResultTableData() {

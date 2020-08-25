@@ -3,29 +3,32 @@ import {useDispatch} from 'react-redux'
 import {Draggable} from "react-beautiful-dnd"
 import {IMember} from "../../../../../constants/types"
 import ItemContent from "./ItemContent"
+import {setAddMemberModal, setEditedMember} from "../../../../actions/actionCreator"
+import {FaTimes} from "react-icons/fa"
+import {FiEdit3} from "react-icons/fi"
 
 import style from './draggable-item.module.scss'
-import {setAddMemberModal, setEditedMember} from "../../../../actions/actionCreator";
+
 
 
 export interface IDraggableItem {
     index: number,
-    employeeProfile: IMember,
+    member: IMember,
     colIndex: number,
     deleteItem: (colIndex: number, itemIndex: number) => void
     isStore: boolean
 }
 
 
-const DraggableItem: React.FC<IDraggableItem> = (props) => {
+const DraggableItem: React.FC<IDraggableItem> = ({index, member, colIndex, deleteItem, isStore}) => {
 
     const dispatch = useDispatch()
-    const itemClasses = `${style.wrapper} ${props.isStore ? style.store : ''}`
+    const itemClasses = `${style.wrapper} ${isStore ? style.store : ''}`
 
     return (
         <Draggable
-            draggableId={props.employeeProfile.id}
-            index={props.index}
+            draggableId={member.id}
+            index={index}
         >
             {(provided, snapshot) => (
                 <>
@@ -34,15 +37,29 @@ const DraggableItem: React.FC<IDraggableItem> = (props) => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        onClick={() => editMember(props.employeeProfile.baseID)}
+
                     >
-                        <ItemContent {...props}/>
+                        <div className={style.buttons}>
+                            <button
+                                className={`${style.btn}`}
+                                onClick={() => editMember(member.baseID)}
+                            >
+                                <FiEdit3/>
+                            </button>
+                            <button
+                                className={`${style.btn}`}
+                                onClick={() => {deleteItem(colIndex, index)}}
+                            >
+                                <FaTimes/>
+                            </button>
+                        </div>
+                        <ItemContent member={member}/>
                     </div>
-                    {(snapshot.isDragging && props.isStore) && (
+                    {(snapshot.isDragging && isStore) && (
                         <div
                             className={`${style.wrapper} ${style.fixed} ${style.clone}`}
                         >
-                            <ItemContent {...props}/>
+                            <ItemContent member={member}/>
                         </div>
                     )}
                 </>

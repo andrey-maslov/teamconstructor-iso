@@ -1,41 +1,44 @@
-import React, {useRef} from 'react'
+import React from 'react'
 import style from './input-field.module.scss'
 
-interface InputFieldProps {
+interface IInputField {
     label: string
-    name: string
     value: string
     placeholder?: string
-    hasErrored: boolean
-    onChangeHandler: any
     nameRef: any
+    dataRef: any
+    errors: any
 }
 
-const InputField: React.FC<InputFieldProps> = (
-    {label, name, value, placeholder, hasErrored, onChangeHandler, nameRef}
-) => {
+const InputField: React.FC<IInputField> = ({label, value, placeholder, nameRef, dataRef, errors}) => {
+
 
     return (
         <div className={style.wrapper}>
-            <div className={style.title}>
+            <div className={`${style.title} form-group ${errors[`name${label}`] ? 'has-error' : ''}`}>
                 <input
                     type="text"
-                    name={`name_${name}`}
-                    defaultValue={label}
+                    name={`name${label}`}
+                    defaultValue={`Профиль ${label}`}
                     ref={nameRef}
                     onFocus={(e: any) => e.target.select()}
-                    placeholder={label}
+                    placeholder={`Профиль ${label}`}
                     autoComplete={'off'}
                 />
+                {errors[`name${label}`] && <div className={`item-explain`}>{errors[`name${label}`] .message}</div>}
             </div>
-            <textarea
-                name={name}
-                value={value}
-                placeholder={placeholder}
-                onChange={onChangeHandler}
-            />
-            {/*{hasErrored &&*/}
-            {/*<div className={`msg-error`}>Вы допустили ошибку. Возможно, неправильный формат ввода</div>}*/}
+            <div className={`form-group ${errors[`data${label}`] ? 'has-error' : ''}`}>
+                <textarea
+                    name={`data${label}`}
+                    defaultValue={value}
+                    placeholder={placeholder}
+                    ref={dataRef}
+                />
+                {errors[`data${label}`] && <div className={`item-explain`}>{errors[`data${label}`].message}</div>}
+                {errors[`data${label}`] && errors[`data${label}`].type === 'decode' && (
+                    <div className={`item-explain`}>Значение невалидно</div>
+                )}
+            </div>
         </div>
     );
 }

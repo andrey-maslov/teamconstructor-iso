@@ -13,6 +13,7 @@
   &.team {
     transition: background-color .1s ease-in-out;
     padding: .5rem;
+    width: 300px;
   }
 
   &.fixed {
@@ -62,6 +63,7 @@
   line-height: 40px;
   padding: 0 .5rem;
   width: auto;
+  max-width: 210px;
 }
 
 .delete {

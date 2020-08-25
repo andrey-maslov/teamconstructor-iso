@@ -52,6 +52,6 @@ export interface ILoginData {
     identifier: string
     password: string
 }
-export type TableRow = string[] | null
+export type TableRow = (string | number)[] | null
 
 export type GlobalStateType = any

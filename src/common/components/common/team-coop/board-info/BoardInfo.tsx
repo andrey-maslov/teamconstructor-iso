@@ -16,6 +16,9 @@ const BoardInfo: React.FC = () => {
     const {activeProject} = userData
     const {isLoading} = appMode
 
+    if (!activeProject) {
+        return null
+    }
 
     return (
         <div className={style.wrapper}>

@@ -12,7 +12,7 @@ interface TableProps {
 
 const Table: React.FC<TableProps> = ({tableHeader, tableData, addClasses,}) => {
 
-    let tableClasses: string = '';
+    let tableClasses = '';
     if (addClasses) {
         tableClasses = addClasses.map(item => ` ${style[item]}`).join('')
     }
@@ -31,7 +31,7 @@ const Table: React.FC<TableProps> = ({tableHeader, tableData, addClasses,}) => {
                     return (
                         item && <tr key={index}>
                             {item.map((value, i) => (<td key={`${index}-${i}`}>
-                                <span dangerouslySetInnerHTML={{__html: value}}/>
+                                <span dangerouslySetInnerHTML={{__html: `${value}`}}/>
                             </td>))}
                         </tr>)
                 })

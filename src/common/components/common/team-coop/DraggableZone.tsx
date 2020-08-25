@@ -9,7 +9,9 @@ import {GlobalStateType, IMember, ITeam} from "../../../../constants/types"
 import {useDispatch, useSelector} from "react-redux";
 import {setAddMemberModal, setTeamsData} from "../../../actions/actionCreator";
 import {useToasts} from 'react-toast-notifications'
+import {FiPlus, FiSearch} from 'react-icons/fi'
 import Loader from "../loaders/loader/Loader";
+import SearchPanel from "./search-panel/SearchPanel";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -66,6 +68,8 @@ const DraggableZone: React.FC = () => {
     const {addToast} = useToasts()
 
     const [isReady, setReady] = useState(false)
+    const [isSearch, setSearch] = useState(false)
+    const [filteredMembers, setFilteredMembers] = useState<IMember[] | null>(null)
 
     useEffect(() => {
         if (staff && staff.items !== 0) {
@@ -127,12 +131,25 @@ const DraggableZone: React.FC = () => {
     }
 
     const storeWidget = (
-        <Button
-            handle={addMemberModal}
-            btnClass={'btn btn-outlined btn-widget'}
-            title={'Добавить'}
-        />
+        <div>
+            <button
+                onClick={addMemberModal}
+                className={'btn btn-outlined btn-widget'}
+                aria-label={'добавить пользователя в пул'}
+            >
+                <FiPlus/>
+            </button>
+            <button
+                onClick={openSearch}
+                className={`btn btn-outlined btn-widget ${isSearch ? 'active' : ''}`}
+                aria-label={'открыть поиск'}
+            >
+                <FiSearch/>
+            </button>
+            {isSearch && <SearchPanel changeHandler={filterStaff} />}
+        </div>
     )
+
 
     const teamsWidget = (
         <Button
@@ -142,14 +159,13 @@ const DraggableZone: React.FC = () => {
         />
     )
 
-
     return (
         <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
             <div className="flex-row mb-sm">
 
                 <Box title="Пул работников" addClass={'store-area'} widget={storeWidget}>
                     {isReady && <DroppableColumnStore
-                        items={staff.items}
+                        items={filteredMembers || staff.items}
                         deleteItem={deleteMemberHandler}
                         id={`${0}`}
                         isDropDisabled={true}
@@ -187,11 +203,31 @@ const DraggableZone: React.FC = () => {
         dispatch(setAddMemberModal(true))
     }
 
+    function openSearch():void {
+        setSearch(!isSearch)
+    }
+
+    function filterStaff(e: any) {
+        e.preventDefault()
+        const val = e.target.value
+        const reg = new RegExp(val, 'i')
+        const filtered = staff.items.filter((item: IMember) => (
+            item.name.match(reg) ||
+            item.position.match(reg)
+        )).map((item: IMember) => ({
+            ...item,
+            name: item.name.replace(reg, `<mark>${val}</mark>`),
+            position: item.position.replace(reg, `<mark>${val}</mark>`)
+        }))
+
+        setFilteredMembers(filtered)
+    }
+
     //TODO what about pool
     function deleteMemberHandler(colIndex: number, itemIndex: number): void {
         if (colIndex === 0 && confirm('Вы действительно хотите удалить работника из проекта?')) {
             deleteMemberFromPool(colIndex, itemIndex)
-        } else {
+        } else if (colIndex !== 0) {
             deleteMemberFromTeam(colIndex, itemIndex)
         }
     }

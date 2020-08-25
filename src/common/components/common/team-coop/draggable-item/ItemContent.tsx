@@ -1,14 +1,17 @@
 import React, {useMemo} from 'react'
-import {FaTrashAlt} from 'react-icons/fa'
-import {IDraggableItem} from "./DraggableItem"
 import { UserResult} from "../../../../../UserResult"
 import style from './draggable-item.module.scss'
 import {Radar} from "react-chartjs-2"
 import {COLORS} from '../../../../../constants/constants'
+import {IMember} from "../../../../../constants/types";
 
-const ItemContent: React.FC<IDraggableItem> = ({index, employeeProfile, colIndex, deleteItem}) => {
+interface IItemContent {
+    member: IMember
+}
 
-    const profile = useMemo(() => UserResult.getProfile(employeeProfile.decData[1]), [employeeProfile])
+const ItemContent: React.FC<IItemContent> = ({member}) => {
+
+    const profile = useMemo(() => UserResult.getProfile(member.decData[1]), [member])
 
     const data = {
         labels: ['','','','','','','','',],
@@ -68,17 +71,9 @@ const ItemContent: React.FC<IDraggableItem> = ({index, employeeProfile, colIndex
                 />
             </div>
             <div className={style.content}>
-                <div className={style.name}>{employeeProfile.name}</div>
-                <div className={style.position}>{employeeProfile.position}</div>
+                <div className={style.name} dangerouslySetInnerHTML={{__html: member.name}}/>
+                <div className={style.position} dangerouslySetInnerHTML={{__html: member.position}} />
             </div>
-
-            <button
-                className={style.delete}
-                onClick={() => {deleteItem(colIndex, index)}}
-            >
-                <FaTrashAlt/>
-            </button>
-
         </div>
     );
 }

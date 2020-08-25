@@ -1,16 +1,15 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import Loader from "../../common/loaders/loader/Loader"
 import DraggableZone from "../../common/team-coop/DraggableZone"
 import TeamCoopResult from "../../common/team-coop/team-coop-result/TeamCoopResult"
 import Box from "../../common/layout/box/Box"
 import TeamCoopSidebar from "../../common/team-coop/team-coop-sidebar/TeamCoopSidebar"
-// import {} from '../../../actions/actionCreator'
 import {GlobalStateType} from "../../../../constants/types";
 import CreateProject from "../../common/team-coop/create-project/CreateProject";
 import BoardInfo from "../../common/team-coop/board-info/BoardInfo";
 import {exitConfirmation} from "../../../../helper/helper";
 import {fetchProject} from "../../../actions/actionCreator";
+import style from "../../common/team-coop/create-project/create-project.module.scss";
 
 const TeamCoopPage: React.FC = () => {
 
@@ -33,17 +32,20 @@ const TeamCoopPage: React.FC = () => {
     if (projects.length === 0) {
         return (
             <main className="flex-centered page-team">
-                <CreateProject />
+                <div>
+                    <p style={{fontSize: '24px'}}>У вас еще нет ниодного проекта. <br/>Создайте свой первый проект</p>
+                    <CreateProject/>
+                </div>
             </main>
         )
     }
 
-    // exitConfirmation()
+    exitConfirmation()
 
     return (
         <main className='section page-team main'>
             <div className="container-wide">
-                <BoardInfo />
+                <BoardInfo/>
                 <div className="flex-row">
                     <div className="drag-area">
                         <DraggableZone/>

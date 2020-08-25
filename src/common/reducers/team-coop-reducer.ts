@@ -2,7 +2,7 @@ import {
     T_COMPARISON_IN_PROCESS,
     T_SET_COMPARISON_READY,
     SET_TEAMS_DATA,
-    SET_ACTIVE_TEAM, SET_RANDOM, SET_TEAMS, ADD_MEMBER, SET_EDITED_MEMBER, SET_TEAM_SPEC
+    SET_ACTIVE_TEAM, SET_RANDOM, SET_TEAMS, ADD_MEMBER, SET_EDITED_MEMBER, SET_TEAM_SPEC, CLEAR_USER_DATA
 
 } from "../actions/actionTypes";
 import {loadState} from "../store/sessionStorage";
@@ -93,6 +93,11 @@ export const teamCoopReducer = (state = STATE, {
             return {
                 ...state,
                 teams
+            }
+        case CLEAR_USER_DATA :
+            return {
+                ...state,
+                teams: []
             }
         default:
             return state;

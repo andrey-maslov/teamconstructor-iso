@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import style from "./popover-user.module.scss"
 import {FiUser, FiUserCheck, FiLogOut, FiChevronDown, FiStar} from "react-icons/fi"
@@ -25,6 +25,12 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
             setIsOpen(false)
         }
     }
+
+    useEffect(() => {
+        if (activeProject) {
+            changeProject(activeProject.id)
+        }
+    }, [])
 
     return (
         <OutsideClickHandler
@@ -101,11 +107,11 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
 
 
     function handlerDelete(projectId: number) {
-        if (window.confirm("Вы действительно хотите удалить проект?")){
+        if (typeof window !== 'undefined' && window.confirm("Вы действительно хотите удалить проект?")){
 
-            const newProjects = projects.length === 1 ? [] : projects.filter((item: {id: number, title: string}) => item.id !== projectId)
+            const newProjects = projects.length > 1 ? projects.filter((item: {id: number, title: string}) => item.id !== projectId) : []
             const newActiveProject = newProjects.length > 0 ? {id: newProjects[0].id, title: newProjects[0].title} : null
-
+            console.log(newProjects, newActiveProject)
             dispatch(deleteProject(projectId, newProjects, newActiveProject, token))
             setIsOpen(false)
         }

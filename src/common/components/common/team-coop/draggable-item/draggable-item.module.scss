@@ -1,8 +1,9 @@
 @import 'src/common/assets/scss/_vars.scss';
 
 .wrapper {
+  position: relative;
   user-select: none;
-  padding: .7rem;
+  padding: .8rem 1rem;
   box-shadow: $box-shadow-md;
   border-radius: $border-radius;
 
@@ -24,6 +25,10 @@
     //& + div {
     //  transform: translate(0, 0) !important;
     //}
+  }
+
+  &:hover .buttons {
+    opacity: 1;
   }
 }
 
@@ -61,22 +66,45 @@
   font-size: .8rem;
 }
 
-.delete {
-  width: 2rem;
+.buttons {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  opacity: 0;
+  transition: all .1s ease-in-out;
+}
+
+.btn {
+  width: 2.2rem;
+  height: 2.2rem;
   border: 0;
-  background-color: transparent;
+  background-color: $overlay-light;
   color: $text-light;
-  opacity: .5;
-  transition: color .2s, opacity .2s;
+  border-radius: $border-radius-sm;
+  transition: color .2s;
+  cursor: pointer;
 
   &:hover {
-    color: $danger;
-    cursor: pointer;
-    opacity: 1;
   }
 
-  //svg {
-  //  position: relative;
-  //  bottom: -3px;
-  //}
+  &:first-child {
+    margin-right: 3px;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  &:last-child {
+
+    &:hover {
+      color: $danger;
+    }
+  }
+
+  svg {
+    position: relative;
+    bottom: -3px
+  }
+
 }

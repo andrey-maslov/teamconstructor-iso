@@ -23,11 +23,13 @@ const DroppableColumnStore: React.FC<IDroppableColumn> = (
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                 >
+                    {items.length === 0 &&
+                    <span>У вас пока нет работников в пуле</span>}
                     {items.map((item, index) => (
                         <DraggableItem
                             key={`${item.id}`}
                             index={index}
-                            employeeProfile={item}
+                            member={item}
                             colIndex={+id}
                             deleteItem={deleteItem}
                             isStore={true}

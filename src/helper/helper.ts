@@ -153,7 +153,8 @@ export const toPercent = (value: number, digits?: number): {num: number, str: st
 export const isBrowser: boolean = typeof window !== 'undefined'
 
 export function exitConfirmation() {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && location.pathname === '/team') {
+        console.log(location.pathname)
         window.onunload = function () {
             return confirm('Вы хотите покинуть сайт?')
         }

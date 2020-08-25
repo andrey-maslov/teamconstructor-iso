@@ -29,26 +29,26 @@ const Modals: React.FC = () => {
     return (
         <>
 
-            <AddMember
+            {isAddMemberModal && <AddMember
                 visible={isAddMemberModal}
                 closeModal={() => {
                     dispatch(setAddMemberModal(false))
                 }}
-            />
+            />}
 
-            <CreateProjectModal
+            {isCreateProjectModal && <CreateProjectModal
                 visible={isCreateProjectModal}
                 closeModal={() => {
                     dispatch(setCreateProjectModal(false))
                 }}
-            />
+            />}
 
-            <AuthModal
+            {isAuthModal && <AuthModal
                 visible={isAuthModal}
                 closeModal={() => {
                     dispatch(setAuthModal(false))
                 }}
-            />
+            />}
 
             {/*{isLoading && <LoaderRequest/>}*/}
 

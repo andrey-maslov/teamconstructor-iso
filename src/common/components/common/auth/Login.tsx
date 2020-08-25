@@ -6,6 +6,7 @@ import {GlobalStateType} from "../../../../constants/types"
 import {authUser} from "../../../actions/actionCreator"
 import {useForm} from 'react-hook-form'
 import {SET_ERROR} from "../../../actions/actionTypes"
+import {AiOutlineLoading} from 'react-icons/ai'
 
 interface IForm {
     identifier: string
@@ -14,24 +15,24 @@ interface IForm {
 
 const Login: React.FC = () => {
 
-    const errorApiMsg = useSelector((state: GlobalStateType) => state.appReducer.errorMessage)
-    const isModalVisible = useSelector((state: GlobalStateType) => state.modalsReducer.isAuthModal)
+    const appMode = useSelector((state: GlobalStateType) => state.appReducer)
     const dispatch = useDispatch()
     const {register, handleSubmit, reset, errors} = useForm<IForm>()
+    const {isLoading, errorApiMsg} = appMode
 
 
     useEffect(() => {
-        if (!isModalVisible) {
-            dispatch({type: SET_ERROR, errorMessage: ''})
+        return function clearAll() {
             reset()
+            dispatch({type: SET_ERROR, errorMessage: ''})
         }
-    }, [isModalVisible])
+    }, [])
 
     return (
         <div className={`${style.content} ${style.login}`}>
             <form onSubmit={handleSubmit(submitForm)}>
 
-                <div className={`form-group`}>
+                <div className={`form-group ${errors.identifier ? 'has-error' : ''}`}>
                     <label>
                         <span>Имя или Email</span>
                         <input
@@ -44,9 +45,9 @@ const Login: React.FC = () => {
                             })}
                         />
                     </label>
-                    {errors.identifier && <div className={`msg-error`}>{errors.identifier.message}</div>}
+                    {errors.identifier && <div className={`item-explain`}>{errors.identifier.message}</div>}
                 </div>
-                <div className={`form-group`}>
+                <div className={`form-group ${errors.password ? 'has-error' : ''}`}>
                     <label>
                         <span>Пароль</span>
                         <input
@@ -55,28 +56,32 @@ const Login: React.FC = () => {
                             name="password"
                             ref={register({
                                 required: 'Это обязательное поле',
-                                minLength: {value: 3, message: 'Слишком короткий пароль'}
                             })}
                             onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
                         />
                     </label>
-                    {errors.password && <div className={`msg-error`}>{errors.password.message}</div>}
+                    {errors.password && <div className={`item-explain`}>{errors.password.message}</div>}
                 </div>
 
-                <Button
-                    title={'Войти'}
-                    startIcon={null}
-                    handle={() => void (0)}
-                    btnClass={'btn-outlined'}
-                />
-                {errorApiMsg && <div className={`msg-error`}>{errorApiMsg}</div>}
+                <div className={`form-group ${errorApiMsg ? 'has-error' : ''}`}>
+                    <Button
+                        title={'Войти'}
+                        startIcon={isLoading && <AiOutlineLoading/>}
+                        handle={() => void (0)}
+                        btnClass={'btn-outlined btn-loader'}
+                    />
+                    {errorApiMsg && <div className={`item-explain`}>{errorApiMsg}</div>}
+                </div>
             </form>
         </div>
     );
 
     function submitForm(data: IForm): void {
         dispatch(authUser(data, 'login'))
-        // dispatch({type: SET_ERROR, errorMessage: ''})
+    }
+
+    function forgotHandle() {
+        console.log('forgot')
     }
 
 }

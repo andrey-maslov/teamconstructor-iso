@@ -8,6 +8,7 @@ import {GrUserAdd} from "react-icons/gr"
 import {getAndDecodeData} from "encoded-data-parser"
 import {useForm} from 'react-hook-form'
 import {setAddMemberModal, setEditedMember, setTeamsData} from "../../../../actions/actionCreator";
+import { ErrorMessage } from '@hookform/error-message';
 
 interface IForm {
     name: string
@@ -18,16 +19,16 @@ interface IForm {
 export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
 
     useEffect(() => {
-        if (!visible) {
+        return function clearAll() {
             reset()
             dispatch(setEditedMember(null))
         }
-    }, [visible])
+    }, [])
 
     const dispatch = useDispatch()
     const teams: Array<ITeam> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
     const editedMember: number | null = useSelector((state: GlobalStateType) => state.teamCoopReducer.editedMember)
-    const {register, handleSubmit, reset, errors} = useForm<IForm>()
+    const {register, handleSubmit, reset, errors} = useForm<IForm>({criteriaMode: 'all'})
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
 
     let defaultProfile = {name: '', position: '', encData: ''}
@@ -36,6 +37,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
         const member = members.filter((item: IMember) => item.baseID === editedMember)[0]
         defaultProfile = {name: member.name, position: member.position, encData: btoa(JSON.stringify(member.decData))}
     }
+
 
     return (
         <Rodal
@@ -48,8 +50,8 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
         >
             <div className={style.content}>
                 <form onSubmit={handleSubmit(submitForm)}>
-                    <div className={`form-group`}>
-                        <label htmlFor="">
+                    <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
+                        <label>
                             <span>Имя работника</span>
                             <input
                                 className={style.input}
@@ -65,12 +67,12 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                             />
                         </label>
                         {errors.name && errors.name.type === 'duplicateName' && (
-                            <div className={`msg-error`}>Работник с таким именем уже есть</div>
+                            <div className={`item-explain`}>Работник с таким именем уже есть</div>
                         )}
-                        {errors.name && <div className={`msg-error`}>{errors.name.message}</div>}
+                        {errors.name && <div className={`item-explain`}>{errors.name.message}</div>}
                     </div>
-                    <div className={`form-group`}>
-                        <label htmlFor="">
+                    <div className={`form-group ${errors.position ? 'has-error' : ''}`}>
+                        <label>
                             <span>Должность работника</span>
                             <input
                                 className={style.input}
@@ -82,10 +84,10 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                                 })}
                             />
                         </label>
-                        {errors.position && <div className={`msg-error`}>{errors.position.message}</div>}
+                        {errors.position && <div className={`item-explain`}>{errors.position.message}</div>}
                     </div>
-                    <div className={`form-group`}>
-                        <label htmlFor="">
+                    <div className={`form-group ${errors.encData ? 'has-error' : ''}`}>
+                        <label>
                             <span>Результат теста</span>
                             <textarea
                                 className={style.input}
@@ -101,12 +103,13 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                             />
                         </label>
                         {errors.encData && errors.encData.type === 'decode' && (
-                            <div className={`msg-error`}>Значение невалидно</div>
+                            <div className={`item-explain`}>Значение невалидно</div>
                         )}
                         {errors.encData && errors.encData.type === 'duplicate' && (
-                            <div className={`msg-error`}>Работник с таким результатом уже есть</div>
+                            <div className={`item-explain`}>Работник с таким результатом уже есть</div>
                         )}
-                        {errors.encData && <div className={`msg-error`}>{errors.encData.message}</div>}
+                        {errors.encData && errors.encData.type !== 'decode' && errors.encData.type !== 'duplicate' &&
+                        <div className={`item-explain`}>{errors.encData.message}</div>}
                     </div>
                     <Button
                         title={editedMember ? 'Сохранить' : 'Добавить'}
@@ -119,6 +122,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
             </div>
         </Rodal>
     )
+
 
     function submitForm(formData: IForm): void {
 

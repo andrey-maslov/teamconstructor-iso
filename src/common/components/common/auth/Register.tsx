@@ -5,35 +5,37 @@ import {useDispatch, useSelector} from "react-redux"
 import {GlobalStateType} from "../../../../constants/types"
 import {authUser} from "../../../actions/actionCreator"
 import {useForm} from 'react-hook-form'
-import {SET_ERROR} from "../../../actions/actionTypes";
+import {SET_ERROR} from "../../../actions/actionTypes"
+import {AiOutlineLoading} from 'react-icons/ai'
 
 interface IForm {
     name: string
     email: string
     password: string
     passwordConfirm: string
+    errors: any
 }
 
 const Register: React.FC = () => {
 
-    const errorApiMsg = useSelector((state: GlobalStateType) => state.appReducer.errorMessage)
-    const isModalVisible = useSelector((state: GlobalStateType) => state.modalsReducer.isAuthModal)
+    const appMode = useSelector((state: GlobalStateType) => state.appReducer)
     const dispatch = useDispatch()
     const {register, handleSubmit, reset, getValues, errors} = useForm<IForm>()
+    const {isLoading, errorApiMsg} = appMode
 
     useEffect(() => {
-        if (!isModalVisible) {
-            dispatch({type: SET_ERROR, errorMessage: ''})
+        return function clearAll() {
             reset()
+            dispatch({type: SET_ERROR, errorMessage: ''})
         }
-    }, [isModalVisible])
+    }, [])
 
     return (
         <div>
             <div className={style.content}>
                 <form onSubmit={handleSubmit(submitForm)}>
 
-                    <div className={`form-group`}>
+                    <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
                         <label>
                             <span>Имя</span>
                             <input
@@ -46,26 +48,29 @@ const Register: React.FC = () => {
                                 })}
                             />
                         </label>
-                        {errors.name && <div className={`msg-error`}>{errors.name.message}</div>}
+                        {errors.name && <div className={`item-explain`}>{errors.name.message}</div>}
                     </div>
 
-                    <div className={`form-group`}>
+                    <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
                         <label>
                             <span>Email</span>
                             <input
                                 className={style.input}
-                                type="email"
                                 name="email"
                                 onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
                                 ref={register({
-                                    required: 'Это обязательное поле'
+                                    required: 'Это обязательное поле',
+                                    pattern: {
+                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                        message: "email должен содержать @"
+                                    }
                                 })}
                             />
                         </label>
-                        {errors.email && <div className={`msg-error`}>{errors.email.message}</div>}
+                        {errors.email && <div className={`item-explain`}>{errors.email.message}</div>}
                     </div>
 
-                    <div className={`form-group`}>
+                    <div className={`form-group ${errors.password ? 'has-error' : ''}`}>
                         <label>
                             <span>Пароль</span>
                             <input
@@ -79,10 +84,10 @@ const Register: React.FC = () => {
                                 })}
                             />
                         </label>
-                        {errors.password && <div className={`msg-error`}>{errors.password.message}</div>}
+                        {errors.password && <div className={`item-explain`}>{errors.password.message}</div>}
                     </div>
 
-                    <div className={`form-group`}>
+                    <div className={`form-group ${errors.passwordConfirm ? 'has-error' : ''}`}>
                         <label>
                             <span>Повторите пароль</span>
                             <input
@@ -101,16 +106,18 @@ const Register: React.FC = () => {
                                 })}
                             />
                         </label>
-                        {errors.passwordConfirm && <div className={`msg-error`}>{errors.passwordConfirm.message}</div>}
+                        {errors.passwordConfirm && <div className={`item-explain`}>{errors.passwordConfirm.message}</div>}
                     </div>
 
-                    <Button
-                        title={'Зарегистрироваться'}
-                        startIcon={null}
-                        handle={() => void (0)}
-                        btnClass={'btn-outlined'}
-                    />
-                    {errorApiMsg && <div className={`msg-error`}>{errorApiMsg}</div>}
+                    <div className={`form-group ${errorApiMsg ? 'has-error' : ''}`}>
+                        <Button
+                            title={'Зарегистрироваться'}
+                            startIcon={isLoading && <AiOutlineLoading/>}
+                            handle={() => void (0)}
+                            btnClass={'btn-outlined btn-loader'}
+                        />
+                        {errorApiMsg && <div className={`item-explain`}>{errorApiMsg}</div>}
+                    </div>
                 </form>
             </div>
         </div>

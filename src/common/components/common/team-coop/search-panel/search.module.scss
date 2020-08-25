@@ -1,0 +1,26 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.panel {
+  position: absolute;
+  border-radius: $border-radius-sm;
+  z-index: 100;
+  box-shadow: $box-shadow-lg;
+  width: 200px;
+  left: 1px;
+  top: 1px;
+  animation: Input .3s;
+  transition: all .2s;
+
+  input {
+
+  }
+}
+
+@keyframes Input {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 200px;
+  }
+}
