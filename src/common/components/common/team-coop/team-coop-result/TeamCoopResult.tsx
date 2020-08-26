@@ -8,32 +8,34 @@ import KeyIndicator from "../../pair-coop/pair-coop-output/key-indicator/KeyIndi
 import ComparisonTable from "../../pair-coop/pair-coop-output/comparison-table/ComparisonTable"
 import {getDescByRange} from "../../../../../helper/helper"
 
-const specs = ['Универсальная', 'Идея', 'Продажи', 'Реализация', 'Качество']
-
 const TeamCoopResult: React.FC = () => {
 
     const {terms: scheme, descriptions} = useSelector((state: GlobalStateType) => state.termsReducer)
     const teamCoop                      = useSelector((state: GlobalStateType) => state.teamCoopReducer)
     const activeTeamInd: number         = teamCoop.activeTeam
     const randomNum: number             = teamCoop.randomNum
-    const activeTeam: ITeam = teamCoop.teams[activeTeamInd + 1]
+    const activeTeam: ITeam             = teamCoop.teams[activeTeamInd + 1]
+    const teamsCount                    = teamCoop.teams.length
 
     //if all resources are fetched, calculated and ready to display
     const [isReady, setReady]      = useState(false)
 
     useEffect(() => {
-        if (activeTeam && (activeTeam.items.length !== 0 && scheme)) {
+        if (typeof activeTeam !== 'undefined' && scheme) {
             setReady(true)
         }
-    }, [randomNum, scheme, activeTeamInd])
+        if (teamsCount === 1 || !scheme) {
+            setReady(false)
+        }
+    }, [randomNum, scheme, activeTeamInd,  teamsCount])
 
-    if (!isReady) {
+    if (!isReady || teamsCount === 1) {
         return null
     }
 
-
     const teamSpec          = teamCoop.teamSpec
     const poolMembers       = teamCoop.teams[0].items
+    //FIXME FATAL ERROR when delete last team
     const teamMembers       = activeTeam.items
 
     if (activeTeam.items.length < 3 || activeTeam.items.length > 9) {
@@ -57,7 +59,7 @@ const TeamCoopResult: React.FC = () => {
     const maxSectorSq       = getMaxSectorSquare(teamProfile)
     const allCandidates     = getAllCandidates(poolMembers, teamMembers)
 
-    const stability         = getStability(teamPortrait, maxSectorSq)
+    const crossFunc         = getCrossFunc(teamPortrait, maxSectorSq)
     const interaction       = getInteraction(sortedOctantsArr)
     const emotionalComp     = getEmotionalComp(teamPortrait)
     const loyalty           = getLoyalty(teamProfile)
@@ -71,9 +73,9 @@ const TeamCoopResult: React.FC = () => {
 
     const keyValues         = [
         {
-            title: 'Стабильность',
+            title: 'Кросс-функциональность',
             description: '',
-            value: stability
+            value: crossFunc
         },
         {
             title: 'Способность к взаимодействию',
@@ -169,7 +171,7 @@ const TeamCoopResult: React.FC = () => {
         return (max * max * .7) / 2  // .7 -> sin(45deg); 45 deg -> angle between octant sides;
     }
 
-    function getStability(portrait: IOctant[], maxSectorSq: number): number {
+    function getCrossFunc(portrait: IOctant[], maxSectorSq: number): number {
 
         if (maxSectorSq === 0) {
             return -1

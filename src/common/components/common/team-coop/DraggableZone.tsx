@@ -165,7 +165,7 @@ const DraggableZone: React.FC = () => {
 
                 <Box title="Пул работников" addClass={'store-area'} widget={storeWidget}>
                     {isReady && <DroppableColumnStore
-                        items={filteredMembers || staff.items}
+                        items={(filteredMembers && isSearch) ? filteredMembers : staff.items}
                         deleteItem={deleteMemberHandler}
                         id={`${0}`}
                         isDropDisabled={true}
@@ -205,6 +205,9 @@ const DraggableZone: React.FC = () => {
 
     function openSearch():void {
         setSearch(!isSearch)
+        if (!isSearch) {
+            setFilteredMembers(staff.items)
+        }
     }
 
     function filterStaff(e: any) {
@@ -214,11 +217,12 @@ const DraggableZone: React.FC = () => {
         const filtered = staff.items.filter((item: IMember) => (
             item.name.match(reg) ||
             item.position.match(reg)
-        )).map((item: IMember) => ({
-            ...item,
-            name: item.name.replace(reg, `<mark>${val}</mark>`),
-            position: item.position.replace(reg, `<mark>${val}</mark>`)
-        }))
+        ))
+        //     .map((item: IMember) => ({
+        //     ...item,
+        //     name: item.name.replace(reg, `<mark>${val}</mark>`),
+        //     position: item.position.replace(reg, `<mark>${val}</mark>`)
+        // }))
 
         setFilteredMembers(filtered)
     }
