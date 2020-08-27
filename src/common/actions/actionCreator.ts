@@ -21,6 +21,11 @@ import {
 import {ILoginData, IProject, IRegisterData, ITeam,} from "../../constants/types";
 import {CONTENT_API, BASE_API} from "../../constants/constants";
 import axios from 'axios'
+import Cookie from "js-cookie";
+import {isBrowser} from "../../helper/helper";
+
+// const token = isBrowser ? localStorage.getItem('token') : ''
+const token = Cookie.get('token')
 
 
 /*
@@ -41,7 +46,8 @@ export function setLanguage(language: string): { type: string, language: string 
     };
 }
 
-export function clearUserData(): { type: string } {
+export function logOut(): { type: string } {
+    Cookie.remove('token')
     return {
         type: CLEAR_USER_DATA,
     };
@@ -214,6 +220,29 @@ export const fetchContent = (lang: string) => {
 
 
 /*===== AUTH =====*/
+
+export function checkAuth() {
+    const url = `${BASE_API}/users/me`
+    return (dispatch: any) => {
+
+        if (token) {
+            dispatch(setLoading(true))
+            axios(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+                .then(res => res.data)
+                .then(data => {
+                    dispatch(setUser(data.id, data.username, data.email, data.role, [], null))
+                    dispatch(fetchProjectsList(token))
+                })
+                .catch(error => apiErrorHandling(error, dispatch))
+                .finally(() => dispatch(setLoading(false)))
+        }
+    }
+}
+
 export const authUser = (userData: IRegisterData | ILoginData, authType: 'register' | 'login') => {
 
     const url = (authType === 'register') ? `${BASE_API}/auth/local/register` : `${BASE_API}/auth/local`
@@ -227,19 +256,22 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
             .then(res => res.data)
             .then(data => {
                 const user = data.user;
-                const projects: IProject[] = user.projects.map((item: any) => ({
-                    id: item.id, title: item.title
-                }))
-                const activeProject = projects.length !== 0 ? projects[0] : null
-                dispatch(setUser(user.id, user.username, user.email, user.role, projects, activeProject, data.jwt))
+                dispatch(setUser(user.id, user.username, user.email, user.role, [], null))
+                // isBrowser && localStorage.setItem('token', data.jwt)
+                Cookie.set("token", data.jwt)
+                dispatch(fetchProjectsList(data.jwt))
+                dispatch(setAuthModal(false))
                 dispatch({type: SET_ERROR, errorMessage: ''})
             })
-            .catch(error => apiErrorHandling(error, dispatch))
-            .finally(() => dispatch(setLoading(false)))
+            .catch(error => {
+                apiErrorHandling(error, dispatch)
+                dispatch(setLoading(false))
+            })
+            // .finally(() => dispatch(setLoading(false)))
     }
 }
 
-function setUser(id: number, username: string, email: string, role: number, projects: IProject[] | [], activeProject: IProject | null, token: string) {
+function setUser(id: number, username: string, email: string, role: any, projects: IProject[] | [], activeProject: IProject | null) {
     return {
         type: ADD_AUTH_DATA,
         id,
@@ -248,7 +280,6 @@ function setUser(id: number, username: string, email: string, role: number, proj
         role,
         projects,
         activeProject,
-        token,
     }
 }
 
@@ -263,99 +294,154 @@ export function setLoading(isLoading: boolean): { type: string, isLoading: boole
 
 /*===== PROJECTS CRUD - DB =====*/
 
-export function createProject(user: number, title: string, teams: ITeam[], token: string) {
+export function createProject(title: string, teams: ITeam[]) {
     const url = `${BASE_API}/projects`
+
     return (dispatch: any) => {
-        dispatch(setLoading(true))
-        axios(url, {
-            method: 'POST',
-            data: {
-                user,
-                title,
-                teams,
-            },
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        })
-            .then(res => res.data)
-            .then(data => {
-                dispatch({type: ADD_PROJECT, project: {id: data.id, title: data.title}})
-                dispatch({type: SET_ACTIVE_PROJECT, activeProject: {id: data.id, title: data.title}})
-                dispatch(setTeamsData(data.teams))
-                dispatch({type: SET_ERROR, errorMessage: ''})
-                dispatch(setCreateProjectModal(false))
+
+        if (token) {
+            dispatch(setLoading(true))
+            axios(url, {
+                method: 'POST',
+                data: {
+                    title,
+                    teams,
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
             })
-            .catch(error => apiErrorHandling(error, dispatch))
-            .finally(() => dispatch(setLoading(false)))
+                .then(res => res.data)
+                .then(data => {
+                    dispatch({type: ADD_PROJECT, project: {id: data.id, title: data.title}})
+                    dispatch({type: SET_ACTIVE_PROJECT, activeProject: {id: data.id, title: data.title}})
+                    dispatch(setTeamsData(data.teams))
+                    dispatch({type: SET_ERROR, errorMessage: ''})
+                    dispatch(setCreateProjectModal(false))
+                })
+                .catch(error => {
+                    apiErrorHandling(error, dispatch)
+                })
+                .finally(() => dispatch(setLoading(false)))
+        } else {
+            dispatch(logOut())
+            dispatch(setCreateProjectModal(false))
+        }
     }
 }
 
-export function fetchProject(id: number, token: string) {
+export function fetchProject(id: number) {
 
     const url = `${BASE_API}/projects/${id}`;
 
     return (dispatch: any) => {
-        dispatch(setLoading(true))
-
-        axios(url, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(res => res.data)
-            .then(data => {
-                dispatch({type: SET_ACTIVE_PROJECT, activeProject: {id: data.id, title: data.title}})
-                dispatch(setTeamsData(data.teams))
+        if (token) {
+            dispatch(setLoading(true))
+            axios(url, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             })
-            .catch(error => apiErrorHandling(error, dispatch))
-            .finally(() => dispatch(setLoading(false)))
+                .then(res => res.data)
+                .then(data => {
+                    dispatch({type: SET_ACTIVE_PROJECT, activeProject: {id: data.id, title: data.title}})
+                    dispatch(setTeamsData(data.teams))
+                })
+                .catch(error => apiErrorHandling(error, dispatch))
+                .finally(() => dispatch(setLoading(false)))
+        } else {
+            dispatch(logOut())
+            dispatch(setCreateProjectModal(false))
+        }
     };
 }
 
-export function updateProject(id: number, teams: ITeam[], token: string) {
+export function updateProject(id: number, teams: ITeam[]) {
     const url = `${BASE_API}/projects/${id}`
+
     return (dispatch: any) => {
-        dispatch(setLoading(true))
-        axios(url, {
-            method: 'PUT',
-            data: {teams},
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        })
-            .then(res => res.data)
-            .then(data => {
-                dispatch(setTeamsData(data.teams))
-                dispatch({type: SET_ERROR, errorMessage: ''})
+        if (token) {
+            dispatch(setLoading(true))
+            axios(url, {
+                method: 'PUT',
+                data: {teams},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
             })
-            .catch(error => apiErrorHandling(error, dispatch))
-            .finally(() => dispatch(setLoading(false)))
+                .then(res => res.data)
+                .then(data => {
+                    dispatch(setTeamsData(data.teams))
+                    dispatch({type: SET_ERROR, errorMessage: ''})
+                })
+                .catch(error => apiErrorHandling(error, dispatch))
+                .finally(() => dispatch(setLoading(false)))
+        } else {
+            dispatch(logOut())
+            dispatch(setCreateProjectModal(false))
+        }
     }
 }
 
-export function deleteProject(id: number, projects: IProject[] | [], activeProject: IProject | null, token: string,) {
+export function deleteProject(id: number, projects: IProject[] | [], activeProject: IProject | null) {
     const url = `${BASE_API}/projects/${id}`
+
     return (dispatch: any) => {
-        dispatch(setLoading(true))
-        axios(url, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        })
-            .then(res => {
-                dispatch({type: SET_ACTIVE_PROJECT, activeProject})
-                dispatch({type: SET_PROJECTS, projects})
-                dispatch({type: SET_ERROR, errorMessage: ''})
+        if (token) {
+            dispatch(setLoading(true))
+            axios(url, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
             })
-            .catch(error => apiErrorHandling(error, dispatch))
-            .finally(() => dispatch(setLoading(false)))
+                .then(res => {
+                    dispatch({type: SET_ACTIVE_PROJECT, activeProject})
+                    dispatch({type: SET_PROJECTS, projects})
+                    dispatch({type: SET_ERROR, errorMessage: ''})
+                })
+                .catch(error => apiErrorHandling(error, dispatch))
+                .finally(() => dispatch(setLoading(false)))
+        } else {
+            dispatch(logOut())
+            dispatch(setCreateProjectModal(false))
+        }
     }
+}
+
+export function fetchProjectsList(token: string) {
+
+    const url = `${BASE_API}/projects`;
+
+    return (dispatch: any) => {
+        if (token) {
+            dispatch(setLoading(true))
+            axios(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(res => res.data)
+                .then(data => {
+                    const projects: IProject[] = data.map((item: any) => ({
+                        id: item.id, title: item.title
+                    }))
+                    const activeProject = projects.length !== 0 ? projects[0] : null
+                    dispatch({type: SET_ERROR, errorMessage: ''})
+                    dispatch({type: SET_PROJECTS, projects})
+                    dispatch({type: SET_ACTIVE_PROJECT, activeProject})
+                    dispatch(setTeamsData(data[0].teams))
+                })
+                .catch(error => apiErrorHandling(error, dispatch))
+                .finally(() => dispatch(setLoading(false)))
+        } else {
+            dispatch(logOut())
+        }
+    };
 }
 
 /*===== UTILS =====*/
@@ -363,7 +449,7 @@ export function deleteProject(id: number, projects: IProject[] | [], activeProje
 function apiErrorHandling(error: any, dispatch: any) {
 
     if (error.response) {
-        const msg = error.response.data.message[0].messages[0].message
+        const msg = Array.isArray(error.response.data.message) ? error.response.data.message[0].messages[0].message : error.response.data.message
         dispatch({
             type: SET_ERROR,
             errorMessage: msg

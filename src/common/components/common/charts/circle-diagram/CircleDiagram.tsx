@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import style from './circle-diagram.module.scss'
+import {getKeyResult} from "../../../../../helper/helper";
 
 interface CircleDiagramProps {
     value: number
@@ -10,7 +11,7 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
 
     const roundValue = Math.round(value * 100)
 
-    const color = roundValue > 30 ? (roundValue < 60 ? 'warning' : 'success' ) : 'danger';
+    const color = getKeyResult(value, ['danger', 'warning', 'success'])
 
     const [val, setVal] = useState(0)
     const [isFinish, setFinish] = useState(false)

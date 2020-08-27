@@ -6,7 +6,7 @@ import {UserResult, baseTestResultType, IUserResult, ITendency, IOctant} from ".
 import RadarChart from "../../charts/radar-chart/RadarChart"
 import KeyIndicator from "../../pair-coop/pair-coop-output/key-indicator/KeyIndicator"
 import ComparisonTable from "../../pair-coop/pair-coop-output/comparison-table/ComparisonTable"
-import {getDescByRange} from "../../../../../helper/helper"
+import {getDescByRange, getKeyResult} from "../../../../../helper/helper"
 
 const TeamCoopResult: React.FC = () => {
 
@@ -71,20 +71,24 @@ const TeamCoopResult: React.FC = () => {
     const candidates        = getCandidates(teamPortrait, teamSpec, allCandidates)
     const unwanted          = getUnwanted(teamMembers, teamProfile)
 
+    const keyResults = ['', 'хороший результат', 'отличный результат']
     const keyValues         = [
         {
             title: 'Кросс-функциональность',
-            description: '',
+            description: getKeyResult(crossFunc, keyResults),
+            more: 'some text describes this point',
             value: crossFunc
         },
         {
             title: 'Способность к взаимодействию',
-            description: '',
+            description: getKeyResult(interaction, keyResults),
+            more: 'some text describes this point',
             value: interaction
         },
         {
             title: 'Эмоциональная совместимость',
-            description: '',
+            description: getKeyResult(emotionalComp, keyResults),
+            more: 'some text describes this point',
             value: emotionalComp
         },
     ]
@@ -120,6 +124,7 @@ const TeamCoopResult: React.FC = () => {
                                 title={item.title}
                                 description={item.description}
                                 value={item.value}
+                                more={item.more}
                             />
                         ))}
                     </Box>

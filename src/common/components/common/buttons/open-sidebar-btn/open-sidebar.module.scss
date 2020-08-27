@@ -1,0 +1,19 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.btn {
+  width: 48px;
+  height: 48px;
+  position: fixed;
+  left: -50px;
+  top: 0;
+  font-size: 28px;
+  background-color: $overlay-light;
+  border: 0;
+  border-radius: $border-radius-sm;
+  color: $text-light;
+
+  svg {
+    position: relative;
+    bottom: -3px;
+  }
+}

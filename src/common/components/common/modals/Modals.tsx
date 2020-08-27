@@ -20,11 +20,11 @@ const Modals: React.FC = () => {
     const {isLoading} = appMode
     const {isAddMemberModal, isAuthModal, isCreateProjectModal} = modals
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            dispatch(setAuthModal(false))
-        }
-    },[isLoggedIn])
+    // useEffect(() => {
+    //     if (isLoggedIn) {
+    //         dispatch(setAuthModal(false))
+    //     }
+    // },[isLoggedIn])
 
     return (
         <>

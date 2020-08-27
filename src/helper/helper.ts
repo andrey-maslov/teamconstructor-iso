@@ -150,11 +150,14 @@ export const toPercent = (value: number, digits?: number): {num: number, str: st
     }
 }
 
+export function getKeyResult(value: number, results: string[]): string {
+    return (value > .2 ? (value < .7 ? results[1] : results[2] ) : results[0])
+}
+
 export const isBrowser: boolean = typeof window !== 'undefined'
 
 export function exitConfirmation() {
-    return true
-    if (typeof window !== 'undefined' && location.pathname === '/team') {
+    if (isBrowser && location.pathname === '/team') {
         window.onunload = function () {
             return confirm('Вы хотите покинуть сайт?')
         }

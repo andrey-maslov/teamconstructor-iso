@@ -112,14 +112,14 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
             const newProjects = projects.length > 1 ? projects.filter((item: {id: number, title: string}) => item.id !== projectId) : []
             const newActiveProject = newProjects.length > 0 ? {id: newProjects[0].id, title: newProjects[0].title} : null
             console.log(newProjects, newActiveProject)
-            dispatch(deleteProject(projectId, newProjects, newActiveProject, token))
+            dispatch(deleteProject(projectId, newProjects, newActiveProject))
             setIsOpen(false)
         }
     }
 
 
     function changeProject(id: number) {
-        dispatch(fetchProject(id, token))
+        dispatch(fetchProject(id))
         setIsOpen(false)
     }
 }

@@ -33,7 +33,7 @@ const BoardInfo: React.FC = () => {
     );
 
     function saveProjectHandle(id:  number) {
-        dispatch(updateProject(id, teams, userData.token))
+        dispatch(updateProject(id, teams))
     }
 }
 

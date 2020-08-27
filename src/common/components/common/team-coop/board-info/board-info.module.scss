@@ -1,4 +1,5 @@
 @import 'src/common/assets/scss/_vars.scss';
+@import 'src/common/assets/scss/_flexgridcustom.scss';
 
 .wrapper {
   display: flex;
@@ -16,4 +17,14 @@
   span {
     text-transform: uppercase;
   }
+}
+
+
+@media (max-width: $xl-breakpoint) {
+
+  .wrapper {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
 }

@@ -10,7 +10,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {setAddMemberModal, setTeamsData} from "../../../actions/actionCreator";
 import {useToasts} from 'react-toast-notifications'
 import {FiPlus, FiSearch} from 'react-icons/fi'
-import Loader from "../loaders/loader/Loader";
 import SearchPanel from "./search-panel/SearchPanel";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901

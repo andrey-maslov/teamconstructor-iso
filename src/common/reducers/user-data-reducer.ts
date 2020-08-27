@@ -3,7 +3,10 @@ import {
     SUBSCRIPTION,
     COOKIES_CONSENT,
     CLEAR_USER_DATA,
-    SET_LANG, SET_ERROR, CLEAR_ERROR, SET_ACTIVE_PROJECT, ADD_PROJECT, SET_PROJECTS,
+    SET_LANG,
+    SET_ACTIVE_PROJECT,
+    ADD_PROJECT,
+    SET_PROJECTS,
 } from '../actions/actionTypes';
 import { loadState } from '../store/sessionStorage';
 
@@ -15,7 +18,6 @@ if (!USER_DATA) {
         username: '',
         email: '',
         role: null,
-        token: '',
         projects: [],
         activeProject: null,
         isLoggedIn: false,
@@ -34,7 +36,6 @@ export const userData = (state = USER_DATA, {
     type,
     username,
     email,
-    token,
     activeProject,
     project,
     projects,
@@ -51,7 +52,6 @@ export const userData = (state = USER_DATA, {
                 username,
                 email,
                 role,
-                token,
                 projects,
                 activeProject,
                 isLoggedIn: true
@@ -93,7 +93,6 @@ export const userData = (state = USER_DATA, {
                 username: '',
                 email: '',
                 role: null,
-                token: '',
                 projects: [],
                 activeProject: null,
                 isLoggedIn: false,

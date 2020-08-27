@@ -15,12 +15,9 @@ interface IForm {
 
 const CreateProject: React.FC = () => {
 
-    const userData = useSelector((state: GlobalStateType) => state.userData)
-    const appMode = useSelector((state: GlobalStateType) => state.appReducer)
+    const {isLoading, errorMessage} = useSelector((state: GlobalStateType) => state.appReducer)
     const dispatch = useDispatch()
-    const {register, handleSubmit, reset, errors} = useForm<IForm>()
-    const {errorApiMsg, id, token, projects} = userData
-    const {isLoading} = appMode
+    const {register, handleSubmit, errors} = useForm<IForm>()
 
 
     return (
@@ -41,13 +38,16 @@ const CreateProject: React.FC = () => {
                 </label>
                 {errors.title && <div className={`item-explain`}>{errors.title.message}</div>}
             </div>
-            <Button
-                title={'Создать'}
-                startIcon={isLoading && <AiOutlineLoading/>}
-                handle={() => void (0)}
-                btnClass={'btn-outlined btn-loader'}
-            />
-            {errorApiMsg && <div className={`msg-error`}>{errorApiMsg}</div>}
+            <div className={`form-group ${errorMessage ? 'has-error' : ''}`}>
+                <Button
+                    title={'Создать'}
+                    startIcon={isLoading && <AiOutlineLoading/>}
+                    handle={() => void (0)}
+                    btnClass={'btn-outlined btn-loader'}
+                />
+                {errorMessage && <div className={`item-explain`}>{errorMessage}</div>}
+            </div>
+
         </form>
 
     );
@@ -59,7 +59,7 @@ const CreateProject: React.FC = () => {
             {title: 'команда 1', id: 1, items: []},
         ]
 
-        dispatch(createProject(id, data.title, teams, token))
+        dispatch(createProject(data.title, teams))
     }
 }
 

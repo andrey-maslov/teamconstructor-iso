@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     const appMode = useSelector((state: GlobalStateType) => state.appReducer)
     const dispatch = useDispatch()
     const {register, handleSubmit, reset, errors} = useForm<IForm>()
-    const {isLoading, errorApiMsg} = appMode
+    const {isLoading, errorMessage} = appMode
 
 
     useEffect(() => {
@@ -63,14 +63,14 @@ const Login: React.FC = () => {
                     {errors.password && <div className={`item-explain`}>{errors.password.message}</div>}
                 </div>
 
-                <div className={`form-group ${errorApiMsg ? 'has-error' : ''}`}>
+                <div className={`form-group ${errorMessage ? 'has-error' : ''}`}>
                     <Button
                         title={'Войти'}
                         startIcon={isLoading && <AiOutlineLoading/>}
                         handle={() => void (0)}
                         btnClass={'btn-outlined btn-loader'}
                     />
-                    {errorApiMsg && <div className={`item-explain`}>{errorApiMsg}</div>}
+                    {errorMessage && <div className={`item-explain`}>{errorMessage}</div>}
                 </div>
             </form>
         </div>

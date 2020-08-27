@@ -8,6 +8,7 @@ declare module 'react-svg-bar-chart';
 declare module 'react-outside-click-handler';
 declare module 'i18next-fs-backend';
 declare module 'encoded-data-parser';
+declare module 'js-cookie';
 
 declare module 'file-saver';
 

@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import React, {useState} from 'react'
+import {useSelector} from 'react-redux'
 import DraggableZone from "../../common/team-coop/DraggableZone"
 import TeamCoopResult from "../../common/team-coop/team-coop-result/TeamCoopResult"
 import Box from "../../common/layout/box/Box"
@@ -8,28 +8,26 @@ import {GlobalStateType} from "../../../../constants/types";
 import CreateProject from "../../common/team-coop/create-project/CreateProject";
 import BoardInfo from "../../common/team-coop/board-info/BoardInfo";
 import {exitConfirmation} from "../../../../helper/helper";
-import {fetchProject} from "../../../actions/actionCreator";
-import style from "../../common/team-coop/create-project/create-project.module.scss";
+import {OpenSidebarBtn} from "../../common/buttons/open-sidebar-btn/OpenSidebarBtn";
+import Loader from "../../common/loaders/loader/Loader";
 
 const TeamCoopPage: React.FC = () => {
 
-    const dispatch = useDispatch()
-    const userData = useSelector((state: GlobalStateType) => state.userData)
-    const {isLoggedIn, id} = userData
+    const {isLoggedIn, projects}  = useSelector((state: GlobalStateType) => state.userData)
+    const {isLoading}  = useSelector((state: GlobalStateType) => state.appReducer)
+    const [isSidebar, setSidebar] = useState(false)
 
-    const {projects} = userData
-
-    useEffect(() => {
-        // if(userData.isLoggedIn && userData.id) {
-        //     dispatch(fetchProject(userData.activeProject.id, userData.token))
-        // }
-    }, [userData.isLoggedIn, userData.id])
+    if (isLoading) {
+        return <main className="section main text-center">
+            <Loader/>
+        </main>
+    }
 
     if (!isLoggedIn) {
         return <main className="section main text-center">Пожалуйста, авторизируйтесь</main>
     }
 
-    if (projects.length === 0) {
+    if (!isLoading && projects.length === 0) {
         return (
             <main className="flex-centered page-team">
                 <div>
@@ -40,7 +38,7 @@ const TeamCoopPage: React.FC = () => {
         )
     }
 
-    exitConfirmation()
+    // exitConfirmation()
 
     return (
         <main className='section page-team main'>
@@ -52,9 +50,12 @@ const TeamCoopPage: React.FC = () => {
                         <TeamCoopResult/>
                     </div>
 
-                    <Box title={'Статус'} addClass={'team-sidebar'}>
+                    <div className={`team-sidebar ${isSidebar ? 'visible' : ''}`}>
+                        <OpenSidebarBtn handler={() => setSidebar(!isSidebar)}/>
+                        <Box title={'Статус'}>
                         <TeamCoopSidebar/>
                     </Box>
+                    </div>
                 </div>
             </div>
         </main>
