@@ -2,7 +2,7 @@ import {
     T_COMPARISON_IN_PROCESS,
     T_SET_COMPARISON_READY,
     SET_TEAMS_DATA,
-    SET_ACTIVE_TEAM, SET_RANDOM, SET_TEAMS, ADD_MEMBER, SET_EDITED_MEMBER, SET_TEAM_SPEC, CLEAR_USER_DATA
+    SET_ACTIVE_TEAM, SET_RANDOM, ADD_MEMBER, SET_EDITED_MEMBER, SET_TEAM_SPEC, CLEAR_USER_DATA, SET_POOL
 
 } from "../actions/actionTypes";
 import {loadState} from "../store/sessionStorage";
@@ -17,8 +17,8 @@ import {loadState} from "../store/sessionStorage";
 //     },
 // ]
 
-let STATE = loadState('teams');
-// let STATE: any = null;
+// let STATE = loadState('teams');
+let STATE: any = null;
 
 if (!STATE) {
     STATE = {
@@ -39,6 +39,7 @@ export const teamCoopReducer = (state = STATE, {
     isComparisonResultReady,
     isComparisonInProcess,
     teams,
+    pool,
     activeTeam,
     teamSpec,
     randomNum,
@@ -84,15 +85,17 @@ export const teamCoopReducer = (state = STATE, {
                 teams: newTeams
             }
         }
+        case SET_POOL : {
+            const newTeams = [...state.teams.slice(1)]
+            return {
+                ...state,
+                teams: [pool, ...newTeams]
+            }
+        }
         case SET_EDITED_MEMBER :
             return {
                 ...state,
                 editedMember
-            }
-        case SET_TEAMS :
-            return {
-                ...state,
-                teams
             }
         case CLEAR_USER_DATA :
             return {

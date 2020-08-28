@@ -2,6 +2,7 @@ import {
     SET_PAIR_DATA,
     CLEAR_PAIR_DATA,
     SET_TEAMS_DATA,
+    SET_POOL,
     SET_ACTIVE_TEAM,
     SET_ROW_DATA1,
     SET_ROW_DATA2,
@@ -16,13 +17,13 @@ import {
     SET_AUTH_MODAL,
     FETCH_CONTENT,
     SET_ERROR,
+    PROCESS_FAILED,
     LOADING, ADD_PROJECT, SET_ACTIVE_PROJECT, SET_PROJECTS, SET_CREATE_PROJECT_MODAL, SET_EDITED_MEMBER,
 } from './actionTypes';
 import {ILoginData, IProject, IRegisterData, ITeam,} from "../../constants/types";
 import {CONTENT_API, BASE_API} from "../../constants/constants";
 import axios from 'axios'
 import Cookie from "js-cookie";
-import {isBrowser} from "../../helper/helper";
 
 // const token = isBrowser ? localStorage.getItem('token') : ''
 const token = Cookie.get('token')
@@ -40,6 +41,7 @@ export function addUserData(name: string, email: string): { type: string, name: 
 }
 
 export function setLanguage(language: string): { type: string, language: string } {
+    Cookie.set("i18next", language)
     return {
         type: SET_LANG,
         language,
@@ -261,7 +263,7 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
                 Cookie.set("token", data.jwt)
                 dispatch(fetchProjectsList(data.jwt))
                 dispatch(setAuthModal(false))
-                dispatch({type: SET_ERROR, errorMessage: ''})
+                dispatch(clearErrors())
             })
             .catch(error => {
                 apiErrorHandling(error, dispatch)
@@ -294,7 +296,7 @@ export function setLoading(isLoading: boolean): { type: string, isLoading: boole
 
 /*===== PROJECTS CRUD - DB =====*/
 
-export function createProject(title: string, teams: ITeam[]) {
+export function createProject(title: string, pool: ITeam, teams: ITeam[]) {
     const url = `${BASE_API}/projects`
 
     return (dispatch: any) => {
@@ -305,6 +307,7 @@ export function createProject(title: string, teams: ITeam[]) {
                 method: 'POST',
                 data: {
                     title,
+                    pool,
                     teams,
                 },
                 headers: {
@@ -316,8 +319,8 @@ export function createProject(title: string, teams: ITeam[]) {
                 .then(data => {
                     dispatch({type: ADD_PROJECT, project: {id: data.id, title: data.title}})
                     dispatch({type: SET_ACTIVE_PROJECT, activeProject: {id: data.id, title: data.title}})
-                    dispatch(setTeamsData(data.teams))
-                    dispatch({type: SET_ERROR, errorMessage: ''})
+                    dispatch(setTeamsData([data.pool, ...data.teams]))
+                    dispatch(clearErrors())
                     dispatch(setCreateProjectModal(false))
                 })
                 .catch(error => {
@@ -347,7 +350,7 @@ export function fetchProject(id: number) {
                 .then(res => res.data)
                 .then(data => {
                     dispatch({type: SET_ACTIVE_PROJECT, activeProject: {id: data.id, title: data.title}})
-                    dispatch(setTeamsData(data.teams))
+                    dispatch(setTeamsData([data.pool, ...data.teams]))
                 })
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
@@ -358,7 +361,7 @@ export function fetchProject(id: number) {
     };
 }
 
-export function updateProject(id: number, teams: ITeam[]) {
+export function updateProject(id: number, payload: {pool?: ITeam, teams?: ITeam[]}) {
     const url = `${BASE_API}/projects/${id}`
 
     return (dispatch: any) => {
@@ -366,7 +369,7 @@ export function updateProject(id: number, teams: ITeam[]) {
             dispatch(setLoading(true))
             axios(url, {
                 method: 'PUT',
-                data: {teams},
+                data: {...payload},
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -374,8 +377,15 @@ export function updateProject(id: number, teams: ITeam[]) {
             })
                 .then(res => res.data)
                 .then(data => {
-                    dispatch(setTeamsData(data.teams))
-                    dispatch({type: SET_ERROR, errorMessage: ''})
+                    if (payload.pool && !payload.teams) {
+                        console.log('addd member from dispatch')
+                        console.log(data)
+                        dispatch({type: SET_POOL, pool: data.pool})
+                    } else {
+                        dispatch(setTeamsData([data.pool, ...data.teams]))
+                    }
+                    dispatch(clearErrors())
+                    dispatch(setAddMemberModal(false))
                 })
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
@@ -386,7 +396,7 @@ export function updateProject(id: number, teams: ITeam[]) {
     }
 }
 
-export function deleteProject(id: number, projects: IProject[] | [], activeProject: IProject | null) {
+export function deleteProject(id: number) {
     const url = `${BASE_API}/projects/${id}`
 
     return (dispatch: any) => {
@@ -395,14 +405,11 @@ export function deleteProject(id: number, projects: IProject[] | [], activeProje
             axios(url, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
             })
-                .then(res => {
-                    dispatch({type: SET_ACTIVE_PROJECT, activeProject})
-                    dispatch({type: SET_PROJECTS, projects})
-                    dispatch({type: SET_ERROR, errorMessage: ''})
+                .then(() => {
+                    dispatch(fetchProjectsList(token))
                 })
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
@@ -431,10 +438,10 @@ export function fetchProjectsList(token: string) {
                         id: item.id, title: item.title
                     }))
                     const activeProject = projects.length !== 0 ? projects[0] : null
-                    dispatch({type: SET_ERROR, errorMessage: ''})
                     dispatch({type: SET_PROJECTS, projects})
                     dispatch({type: SET_ACTIVE_PROJECT, activeProject})
-                    dispatch(setTeamsData(data[0].teams))
+                    dispatch(setTeamsData([data[0].pool, ...data[0].teams]))
+                    dispatch(clearErrors())
                 })
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
@@ -446,13 +453,20 @@ export function fetchProjectsList(token: string) {
 
 /*===== UTILS =====*/
 
+function clearErrors(){
+    return (dispatch: any) => {
+        dispatch({type: SET_ERROR, errorApiMessage: ''})
+        dispatch({type: PROCESS_FAILED, processFailed: false})
+    }
+}
+
 function apiErrorHandling(error: any, dispatch: any) {
 
     if (error.response) {
         const msg = Array.isArray(error.response.data.message) ? error.response.data.message[0].messages[0].message : error.response.data.message
         dispatch({
             type: SET_ERROR,
-            errorMessage: msg
+            errorApiMessage: msg
         })
     } else if (error.request) {
         // The request was made but no response was received
@@ -463,5 +477,6 @@ function apiErrorHandling(error: any, dispatch: any) {
         // Something happened in setting up the request that triggered an Error
         console.error('ERROR', error.message)
     }
+    dispatch({type: PROCESS_FAILED, processFailed: true})
     console.log(error)
 }

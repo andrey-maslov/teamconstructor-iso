@@ -144,14 +144,14 @@ const PairCoopOutput: React.FC = () => {
                     <div className="col-md-6 col-lg-5">
                         <strong>{name1}</strong>
                         <Table
-                            tableData={fullResult1.sortedOctants.map((item, i) => [scheme.psychoTypes[i], item.value])}
+                            tableData={fullResult1.sortedOctants.map((item, i) => [scheme.psychoTypes[item.index], item.value])}
                             tableHeader={['октант', 'значение']}
                         />
                     </div>
                     <div className="col-md-6 col-lg-5">
                         <strong>{name2}</strong><br/>
                         <Table
-                            tableData={fullResult2.sortedOctants.map((item, i) => [scheme.psychoTypes[i], item.value])}
+                            tableData={fullResult2.sortedOctants.map((item, i) => [scheme.psychoTypes[item.index], item.value])}
                             tableHeader={['октант', 'значение']}
                         />
                     </div>

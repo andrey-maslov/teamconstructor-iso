@@ -15,16 +15,15 @@ interface IForm {
 
 const Login: React.FC = () => {
 
-    const appMode = useSelector((state: GlobalStateType) => state.appReducer)
+    const {isLoading, errorApiMessage} = useSelector((state: GlobalStateType) => state.appReducer)
     const dispatch = useDispatch()
     const {register, handleSubmit, reset, errors} = useForm<IForm>()
-    const {isLoading, errorMessage} = appMode
 
 
     useEffect(() => {
         return function clearAll() {
             reset()
-            dispatch({type: SET_ERROR, errorMessage: ''})
+            dispatch({type: SET_ERROR, errorApiMessage: ''})
         }
     }, [])
 
@@ -39,7 +38,7 @@ const Login: React.FC = () => {
                             className={style.input}
                             type="text"
                             name="identifier"
-                            onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
+                            onFocus={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                             ref={register({
                                 required: 'Это обязательное поле'
                             })}
@@ -57,20 +56,20 @@ const Login: React.FC = () => {
                             ref={register({
                                 required: 'Это обязательное поле',
                             })}
-                            onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
+                            onFocus={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                         />
                     </label>
                     {errors.password && <div className={`item-explain`}>{errors.password.message}</div>}
                 </div>
 
-                <div className={`form-group ${errorMessage ? 'has-error' : ''}`}>
+                <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                     <Button
                         title={'Войти'}
                         startIcon={isLoading && <AiOutlineLoading/>}
                         handle={() => void (0)}
                         btnClass={'btn-outlined btn-loader'}
                     />
-                    {errorMessage && <div className={`item-explain`}>{errorMessage}</div>}
+                    {errorApiMessage && <div className={`item-explain`}>{errorApiMessage}</div>}
                 </div>
             </form>
         </div>

@@ -24,7 +24,7 @@ if (!USER_DATA) {
         isSubscribed: false,
         language: '',
         isCookiesConsented: false,
-        errorMessage: ''
+        errorApiMessage: ''
     };
 }
 

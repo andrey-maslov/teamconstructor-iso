@@ -17,7 +17,7 @@ export const CreateProjectModal: React.FC<IModalProps> = ({visible, closeModal})
 
     useEffect(() => {
         if (!visible) {
-            dispatch({type: SET_ERROR, errorMessage: ''})
+            dispatch({type: SET_ERROR, errorApiMessage: ''})
             reset()
         }
     }, [visible])

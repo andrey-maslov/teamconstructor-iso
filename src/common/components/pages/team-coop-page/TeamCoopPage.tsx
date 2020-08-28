@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import DraggableZone from "../../common/team-coop/DraggableZone"
 import TeamCoopResult from "../../common/team-coop/team-coop-result/TeamCoopResult"
@@ -16,12 +16,19 @@ const TeamCoopPage: React.FC = () => {
     const {isLoggedIn, projects}  = useSelector((state: GlobalStateType) => state.userData)
     const {isLoading}  = useSelector((state: GlobalStateType) => state.appReducer)
     const [isSidebar, setSidebar] = useState(false)
+    const [isPageReady, setPageReady] = useState(false)
 
-    if (isLoading) {
-        return <main className="section main text-center">
-            <Loader/>
-        </main>
-    }
+    // useEffect(() => {
+    //     if (projects && projects.length > 0) {
+    //         setPageReady(true)
+    //     }
+    // }, [])
+    //
+    // if (!isPageReady) {
+    //     return <main className="section main text-center">
+    //         <Loader/>
+    //     </main>
+    // }
 
     if (!isLoggedIn) {
         return <main className="section main text-center">Пожалуйста, авторизируйтесь</main>

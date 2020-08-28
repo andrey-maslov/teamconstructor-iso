@@ -15,7 +15,7 @@ interface IForm {
 
 const CreateProject: React.FC = () => {
 
-    const {isLoading, errorMessage} = useSelector((state: GlobalStateType) => state.appReducer)
+    const {isLoading, errorApiMessage} = useSelector((state: GlobalStateType) => state.appReducer)
     const dispatch = useDispatch()
     const {register, handleSubmit, errors} = useForm<IForm>()
 
@@ -28,7 +28,7 @@ const CreateProject: React.FC = () => {
                     <input
                         type="text"
                         name="title"
-                        onChange={() => dispatch({type: SET_ERROR, errorMessage: ''})}
+                        onChange={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                         ref={register({
                             required: 'Это обязательное поле'
                         })}
@@ -38,14 +38,14 @@ const CreateProject: React.FC = () => {
                 </label>
                 {errors.title && <div className={`item-explain`}>{errors.title.message}</div>}
             </div>
-            <div className={`form-group ${errorMessage ? 'has-error' : ''}`}>
+            <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                 <Button
                     title={'Создать'}
                     startIcon={isLoading && <AiOutlineLoading/>}
                     handle={() => void (0)}
                     btnClass={'btn-outlined btn-loader'}
                 />
-                {errorMessage && <div className={`item-explain`}>{errorMessage}</div>}
+                {errorApiMessage && <div className={`item-explain`}>{errorApiMessage}</div>}
             </div>
 
         </form>
@@ -53,13 +53,7 @@ const CreateProject: React.FC = () => {
     );
 
     function submitForm(data: IForm): void {
-
-        const teams = [
-            {title: 'pool', id: 0, items: []},
-            {title: 'команда 1', id: 1, items: []},
-        ]
-
-        dispatch(createProject(data.title, teams))
+        dispatch(createProject(data.title, {title: 'pool', id: 0, items: []}, [{title: 'команда 1', id: 1, items: []}]))
     }
 }
 
