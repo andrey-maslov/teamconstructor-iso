@@ -18,15 +18,14 @@ interface IForm {
 
 const Register: React.FC = () => {
 
-    const appMode = useSelector((state: GlobalStateType) => state.appReducer)
+    const {isLoading, errorApiMessage} = useSelector((state: GlobalStateType) => state.appReducer)
     const dispatch = useDispatch()
     const {register, handleSubmit, reset, getValues, errors} = useForm<IForm>()
-    const {isLoading, errorApiMsg} = appMode
 
     useEffect(() => {
         return function clearAll() {
             reset()
-            dispatch({type: SET_ERROR, errorMessage: ''})
+            dispatch({type: SET_ERROR, errorApiMessage: ''})
         }
     }, [])
 
@@ -42,7 +41,7 @@ const Register: React.FC = () => {
                                 className={style.input}
                                 type="text"
                                 name="name"
-                                onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
+                                onFocus={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                                 ref={register({
                                     required: 'Это обязательное поле'
                                 })}
@@ -57,7 +56,7 @@ const Register: React.FC = () => {
                             <input
                                 className={style.input}
                                 name="email"
-                                onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
+                                onFocus={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                                 ref={register({
                                     required: 'Это обязательное поле',
                                     pattern: {
@@ -77,7 +76,7 @@ const Register: React.FC = () => {
                                 className={style.input}
                                 type="password"
                                 name="password"
-                                onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
+                                onFocus={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                                 ref={register({
                                     required: 'Это обязательное поле',
                                     minLength: {value: 3, message: 'Слишком короткий пароль'}
@@ -94,7 +93,7 @@ const Register: React.FC = () => {
                                 className={style.input}
                                 type="password"
                                 name="passwordConfirm"
-                                onFocus={() => dispatch({type: SET_ERROR, errorMessage: ''})}
+                                onFocus={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                                 ref={register({
                                     required: "Пожалуйста, подтвердите пароль!",
                                     validate: {
@@ -109,14 +108,14 @@ const Register: React.FC = () => {
                         {errors.passwordConfirm && <div className={`item-explain`}>{errors.passwordConfirm.message}</div>}
                     </div>
 
-                    <div className={`form-group ${errorApiMsg ? 'has-error' : ''}`}>
+                    <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                         <Button
                             title={'Зарегистрироваться'}
                             startIcon={isLoading && <AiOutlineLoading/>}
                             handle={() => void (0)}
                             btnClass={'btn-outlined btn-loader'}
                         />
-                        {errorApiMsg && <div className={`item-explain`}>{errorApiMsg}</div>}
+                        {errorApiMessage && <div className={`item-explain`}>{errorApiMessage}</div>}
                     </div>
                 </form>
             </div>

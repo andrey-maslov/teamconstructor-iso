@@ -7,7 +7,7 @@ import ColumnTop from "./droppable-column/ColumnTop"
 import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
 import {GlobalStateType, IMember, ITeam} from "../../../../constants/types"
 import {useDispatch, useSelector} from "react-redux";
-import {setAddMemberModal, setTeamsData} from "../../../actions/actionCreator";
+import {setAddMemberModal, setTeamsData, updateProject} from "../../../actions/actionCreator";
 import {useToasts} from 'react-toast-notifications'
 import {FiPlus, FiSearch} from 'react-icons/fi'
 import SearchPanel from "./search-panel/SearchPanel";
@@ -62,6 +62,7 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 const DraggableZone: React.FC = () => {
 
     const teams: ITeam[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    const {activeProject} = useSelector((state: GlobalStateType) => state.userData)
     const staff: ITeam = teams[0]
     const dispatch = useDispatch();
     const {addToast} = useToasts()
@@ -92,7 +93,7 @@ const DraggableZone: React.FC = () => {
             const items = reorder(teams[sInd].items, source.index, destination.index);
             const newTeams: ITeam[] = [...teams];
             newTeams[sInd].items = items;
-            dispatch(setTeamsData(newTeams))
+            dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
 
         } else if (sInd === 0) {
 
@@ -105,7 +106,7 @@ const DraggableZone: React.FC = () => {
             } else {
                 const newTeams: ITeam[] = [...teams];
                 newTeams[dInd].items = result;
-                dispatch(setTeamsData(newTeams))
+                dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
             }
 
         } else {
@@ -119,8 +120,7 @@ const DraggableZone: React.FC = () => {
                 const newTeams = [...teams];
                 newTeams[sInd].items = result[sInd];
                 newTeams[dInd].items = result[dInd];
-
-                dispatch(setTeamsData([...newTeams]))
+                dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
             }
         }
     }
@@ -238,7 +238,7 @@ const DraggableZone: React.FC = () => {
     function deleteMemberFromTeam(colIndex: number, itemIndex: number) {
         const newTeams = [...teams];
         newTeams[colIndex].items.splice(itemIndex, 1);
-        dispatch(setTeamsData(newTeams))
+        dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
         addToast(`Работник удален из команды`, {appearance: 'success', autoDismiss: true})
     }
 
@@ -249,7 +249,7 @@ const DraggableZone: React.FC = () => {
             ...team,
             items: team.items.filter((item: IMember) => item.baseID !== baseId)
         }))
-        dispatch(setTeamsData(newTeams))
+        dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
         addToast(`Работник удален из пула`, {appearance: 'success', autoDismiss: true})
     }
 
@@ -261,8 +261,8 @@ const DraggableZone: React.FC = () => {
     }
 
     function deleteTeam(colIndex: number): void {
-        const newTeams = [...teams];
-        dispatch(setTeamsData(newTeams.filter((group, i) => i !== colIndex)));
+        const filteredTeams = [...teams].filter((group, i) => i !== colIndex)
+        dispatch(updateProject(activeProject.id, {pool: filteredTeams[0], teams: filteredTeams.slice(1)}))
         addToast(`Команда удалена из списка`, {appearance: 'success', autoDismiss: true})
     }
 

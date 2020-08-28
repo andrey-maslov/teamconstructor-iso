@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import OutsideClickHandler from 'react-outside-click-handler';
-import {fetchContent, fetchTerms} from '../../../../actions/actionCreator';
+import {fetchContent, fetchTerms, setLanguage} from '../../../../actions/actionCreator';
 import {LANGS} from '../../../../../constants/constants';
 import {Popover} from '../../popovers/Popover';
 import style from './lang-switcher-alt.module.scss';
@@ -29,6 +29,7 @@ const LangSwitcherAlt: React.FC = () => {
             .then(res => {
                 dispatch(fetchTerms(lng))
                 dispatch(fetchContent(lng))
+                dispatch(setLanguage(lng))
                 localizeMeta(lng)
                 if (isOpen) {
                     setIsOpen(false)

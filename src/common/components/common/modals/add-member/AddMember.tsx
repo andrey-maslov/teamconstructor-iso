@@ -7,8 +7,9 @@ import Button from "../../buttons/button/Button"
 import {GrUserAdd} from "react-icons/gr"
 import {getAndDecodeData} from "encoded-data-parser"
 import {useForm} from 'react-hook-form'
-import {setAddMemberModal, setEditedMember, setTeamsData} from "../../../../actions/actionCreator";
-import { ErrorMessage } from '@hookform/error-message';
+import {setAddMemberModal, setEditedMember, setTeamsData, updateProject} from "../../../../actions/actionCreator";
+import {AiOutlineLoading} from "react-icons/ai";
+
 
 interface IForm {
     name: string
@@ -27,14 +28,16 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
 
     const dispatch = useDispatch()
     const teams: Array<ITeam> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
-    const editedMember: number | null = useSelector((state: GlobalStateType) => state.teamCoopReducer.editedMember)
+    const editedMemberId: number | null = useSelector((state: GlobalStateType) => state.teamCoopReducer.editedMember)
+    const {activeProject} = useSelector((state: GlobalStateType) => state.userData)
+    const {isLoading, errorApiMessage} = useSelector((state: GlobalStateType) => state.appReducer)
     const {register, handleSubmit, reset, errors} = useForm<IForm>({criteriaMode: 'all'})
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
 
     let defaultProfile = {name: '', position: '', encData: ''}
 
-    if (editedMember) {
-        const member = members.filter((item: IMember) => item.baseID === editedMember)[0]
+    if (editedMemberId !== null) {
+        const member = members.filter((item: IMember) => item.baseID === editedMemberId)[0]
         defaultProfile = {name: member.name, position: member.position, encData: btoa(JSON.stringify(member.decData))}
     }
 
@@ -61,7 +64,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                                 ref={register({
                                     required: 'Это обязательное поле',
                                     validate: {
-                                        duplicateName: value => !isDuplicateName(value, members, editedMember)
+                                        duplicateName: value => !isDuplicateName(value, members, editedMemberId)
                                     }
                                 })}
                             />
@@ -97,7 +100,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                                     required: 'Это обязательное поле',
                                     validate: {
                                         decode: value => getAndDecodeData('', value).data !== null,
-                                        duplicate: value => !isDuplicateData(getAndDecodeData('', value).data, members, editedMember)
+                                        duplicate: value => !isDuplicateData(getAndDecodeData('', value).data, members, editedMemberId)
                                     }
                                 })}
                             />
@@ -111,12 +114,15 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                         {errors.encData && errors.encData.type !== 'decode' && errors.encData.type !== 'duplicate' &&
                         <div className={`item-explain`}>{errors.encData.message}</div>}
                     </div>
-                    <Button
-                        title={editedMember ? 'Сохранить' : 'Добавить'}
-                        startIcon={<GrUserAdd/>}
-                        handle={() => void (0)}
-                        btnClass={'btn-outlined'}
-                    />
+                    <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
+                        <Button
+                            title={editedMemberId ? 'Сохранить' : 'Добавить'}
+                            startIcon={isLoading ? <AiOutlineLoading/> : <GrUserAdd/>}
+                            handle={() => void (0)}
+                            btnClass={'btn-outlined'}
+                        />
+                        {errorApiMessage && <div className={`item-explain`}>{errorApiMessage}</div>}
+                    </div>
 
                 </form>
             </div>
@@ -143,15 +149,17 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
 
         let newTeams = [...teams]
 
-        if (!editedMember) {
+        if (editedMemberId === null) {
             newTeams[0].items.push(newMember)
+            dispatch(updateProject(activeProject.id, {pool: newTeams[0]}))
+            console.log('add')
         } else {
-            console.log(newMember)
+            console.log('edit')
             newTeams = [...teams].map(team => {
                 return {
                     ...team,
                     items: team.items.map((item: IMember) => {
-                        if (item.baseID === editedMember) {
+                        if (item.baseID === editedMemberId) {
                             return {
                                 ...item,
                                 name: newMember.name,
@@ -163,13 +171,13 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                     })
                 }
             })
+            dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
         }
+        // dispatch(setTeamsData(newTeams))
 
-        dispatch(setTeamsData(newTeams))
-
-        setTimeout(() => {
-            dispatch(setAddMemberModal(false))
-        }, 500)
+        // setTimeout(() => {
+        //     dispatch(setAddMemberModal(false))
+        // }, 500)
     }
 
     function isDuplicateData(data: DecodedDataType, members: IMember[], edMember: number | null): boolean {

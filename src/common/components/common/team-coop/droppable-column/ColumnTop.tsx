@@ -6,7 +6,7 @@ import {useForm} from 'react-hook-form'
 import style from './droppable-column.module.scss'
 import OutsideClickHandler from 'react-outside-click-handler'
 import {GlobalStateType, ITeam} from "../../../../../constants/types";
-import {setTeamsData} from "../../../../actions/actionCreator";
+import {setTeamsData, updateProject} from "../../../../actions/actionCreator";
 
 interface IForm {
     label: string
@@ -24,6 +24,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
         isEdit: false,
     })
     const teams: ITeam[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
+    const {activeProject} = useSelector((state: GlobalStateType) => state.userData)
     const dispatch = useDispatch()
     const {register, handleSubmit, errors, reset} = useForm<IForm>()
     const labels: string[] = teams.length > 1 ? teams.map(team => team.title.toLowerCase()) : []
@@ -80,7 +81,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
 
         const newTeams = [...teams]
         newTeams[columnIndex].title = formData.label
-        dispatch(setTeamsData(newTeams))
+        dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
 
         setState({...state, isEdit: !state.isEdit})
 

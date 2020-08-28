@@ -40,7 +40,7 @@ index.subscribe(() => {
     saveState('terms', index.getState().termsReducer)
     saveState('userData', index.getState().userData)
     saveState('pair', index.getState().pairCoopReducer)
-    saveState('teams', index.getState().teamCoopReducer)
+    // saveState('teams', index.getState().teamCoopReducer)
 });
 
 export default index;

@@ -9,11 +9,10 @@ import {AiOutlineLoading} from "react-icons/ai";
 
 const BoardInfo: React.FC = () => {
 
-    const userData = useSelector((state: GlobalStateType) => state.userData)
+    const {activeProject} = useSelector((state: GlobalStateType) => state.userData)
     const teams = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
     const appMode = useSelector((state: GlobalStateType) => state.appReducer)
     const dispatch = useDispatch()
-    const {activeProject} = userData
     const {isLoading} = appMode
 
     if (!activeProject) {
@@ -23,17 +22,17 @@ const BoardInfo: React.FC = () => {
     return (
         <div className={style.wrapper}>
             <h2 className={style.title}>Доска проекта <span>{activeProject.title}</span></h2>
-            <Button
-                title={'Сохранить'}
-                handle={() => {saveProjectHandle(activeProject.id)}}
-                btnClass={`btn btn-outlined ${isLoading && 'btn-loader'}`}
-                startIcon={!isLoading ? <FiSave/> : <AiOutlineLoading/>}
-            />
+            {/*<Button*/}
+            {/*    title={'Сохранить'}*/}
+            {/*    handle={() => {saveProjectHandle(activeProject.id)}}*/}
+            {/*    btnClass={`btn btn-outlined ${isLoading && 'btn-loader'}`}*/}
+            {/*    startIcon={!isLoading ? <FiSave/> : <AiOutlineLoading/>}*/}
+            {/*/>*/}
         </div>
     );
 
     function saveProjectHandle(id:  number) {
-        dispatch(updateProject(id, teams))
+        dispatch(updateProject(id, {pool: teams[0], teams: teams.slice(1)}))
     }
 }
 
