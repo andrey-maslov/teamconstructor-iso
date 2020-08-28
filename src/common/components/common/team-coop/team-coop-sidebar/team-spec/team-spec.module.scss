@@ -1,7 +1,8 @@
 @import 'src/common/assets/scss/_vars.scss';
+@import 'src/common/assets/scss/_flexgridcustom.scss';
 
 .wrapper {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .title {
@@ -40,4 +41,31 @@
 .label > input:checked + svg {
   color: $orange;
   opacity: 1;
+}
+
+.wrapper {
+
+  &.compact {
+
+    .title {
+      display: none;
+    }
+
+    .label {
+
+      span {
+        display: none;
+      }
+
+      & > svg {
+        margin-right: auto;
+        margin-left: auto;
+      }
+    }
+
+  }
+
+  &.full {
+
+  }
 }

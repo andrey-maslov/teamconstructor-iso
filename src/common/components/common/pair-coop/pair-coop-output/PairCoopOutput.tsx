@@ -13,13 +13,13 @@ import {getDescByRange, toPercent} from "../../../../../helper/helper";
 const PairCoopOutput: React.FC = () => {
 
     //Initial data
-    const {terms: scheme, descriptions}    = useSelector((state: GlobalStateType) => state.termsReducer)
-    const pairStore                 = useSelector((state: GlobalStateType) => state.pairCoopReducer)
-    const isResultReady: boolean    = pairStore.isComparisonResultReady
-    const decData1: DecodedDataType = pairStore.partner1.data
-    const decData2: DecodedDataType = pairStore.partner2.data
-    const name1: string             = pairStore.partner1.name
-    const name2: string             = pairStore.partner2.name
+    const {terms: scheme, descriptions} = useSelector((state: GlobalStateType) => state.termsReducer)
+    const pairStore                     = useSelector((state: GlobalStateType) => state.pairCoopReducer)
+    const isResultReady: boolean        = pairStore.isComparisonResultReady
+    const decData1: DecodedDataType     = pairStore.partner1.data
+    const decData2: DecodedDataType     = pairStore.partner2.data
+    const name1: string                 = pairStore.partner1.name
+    const name2: string                 = pairStore.partner2.name
 
     //if all resources are fetched, calculated and ready to display
     const [isReady, setReady]           = useState(false)
@@ -30,7 +30,6 @@ const PairCoopOutput: React.FC = () => {
         }
     }, [isResultReady, scheme])
 
-    console.log(isResultReady, scheme, descriptions)
 
     if (!isReady) {
         return null;

@@ -21,10 +21,10 @@ const TeamCoopResult: React.FC = () => {
     const [isReady, setReady]      = useState(false)
 
     useEffect(() => {
-        if (typeof activeTeam !== 'undefined' && scheme) {
+        if (typeof activeTeam !== 'undefined' && scheme && descriptions) {
             setReady(true)
         }
-        if (teamsCount === 1 || !scheme) {
+        if (teamsCount === 1 || !scheme || !descriptions) {
             setReady(false)
         }
     }, [randomNum, scheme, activeTeamInd,  teamsCount])

@@ -1,9 +1,10 @@
 @import 'src/common/assets/scss/_vars.scss';
 
 .header {
-  position: relative;
+  position: fixed;
   border-bottom: 1px solid $overlay-light;
-  background-color: rgba($overflow, .1);
+  background-color: rgba($overflow, .3);
+  box-shadow: $box-shadow-lg;
   z-index: 99;
 }
 
@@ -14,4 +15,12 @@
   padding-top: 10px;
   padding-bottom: 10px;
   height: 60px;
+}
+
+@media (max-width: 1400px) {
+  .header {
+    padding-left: 75px;
+    position: absolute;
+    z-index: 1;
+  }
 }

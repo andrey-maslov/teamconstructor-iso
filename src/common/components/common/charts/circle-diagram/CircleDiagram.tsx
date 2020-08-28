@@ -26,7 +26,7 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
         }
 
         return function cleanUp() {
-            const x = 0
+            const val = 0
         }
     }, [val, roundValue])
 

@@ -1,26 +1,38 @@
-import React from 'react';
-import {ITeam} from "../../../../../../constants/types";
+import React from 'react'
+import {FaUserAlt} from 'react-icons/fa'
+import {ITeam} from "../../../../../../constants/types"
 
-import style from './team-module.module.scss';
+import style from './team-module.module.scss'
 
 interface TeamModuleProps {
     team: ITeam
+    index: number
     isActive: boolean
     handler: () => void
+    isCompact?: boolean
 }
 
-const TeamModule: React.FC<TeamModuleProps> = ({team, isActive, handler}) => {
+const TeamModule: React.FC<TeamModuleProps> = ({team, index, isActive, handler, isCompact}) => {
 
     return (
         <div
             tabIndex={0}
             role={'button'}
-            className={`${style.block} ${isActive ? style.active : ''}`}
+            className={`${style.block} ${isActive ? style.active : ''} ${isCompact ? style.compact : ''}`}
             onClick={handler}
             onKeyPress={handler}
         >
-            <div className={style.title}>{team.title}</div>
-            <div><span>Размер:</span> {team.items.length}</div>
+            {!isCompact ? (
+                    <>
+                        <div className={style.title}>{team.title}</div>
+                        <div className={style.count}>
+                            <FaUserAlt/>
+                            <span>{`x `}{team.items.length}</span>
+                        </div>
+                    </>
+                )
+                :
+                <div>{index + 1}</div>}
         </div>
     );
 }
