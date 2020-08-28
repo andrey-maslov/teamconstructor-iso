@@ -10,13 +10,14 @@ const icons = [<FaUniversalAccess key={0}/>, <FaLightbulb key={1}/>, <FaShopping
 interface TeamSpecProps {
     teamSpec: number
     changeSpec: any
+    isCompact: boolean
 }
 
-const TeamSpec: React.FC<TeamSpecProps> = ({teamSpec, changeSpec}) => {
+const TeamSpec: React.FC<TeamSpecProps> = ({teamSpec, changeSpec, isCompact}) => {
 
-
+console.log(isCompact)
     return (
-        <div className={style.wrapper}>
+        <div className={`${style.wrapper} ${isCompact ? style.compact : style.full}`}>
             <h4 className={style.title}>Специализация команды</h4>
             <form>
                 {values.map((value, i) => (

@@ -35,7 +35,7 @@ body {
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
-  padding: 0 80px;
+  padding: 0 15px;
 }
 
 .flex-row {
@@ -88,7 +88,7 @@ body {
 
   &:before {
     position: fixed;
-    content: '';
+    //content: '';
     display: block;
     width: 100%;
     height: 100vh;
@@ -495,15 +495,21 @@ th, td {
     }
   }
 }
+/*===== PAIR COOPERATION =====*/
+
+.page-pair {
+  padding-top: 100px;
+}
 
 /*===== TEAM COOPERATION =====*/
 
-$sidebar-width: 20rem;
+$sidebar-width: 18rem;
 
 .page-team {
+  padding-top: 110px;
 
   .store-area {
-    width: $sidebar-width;
+    width: 20rem;
 
     & > div:nth-of-type(2) {
       background-color: rgba($text-light, .5);
@@ -532,16 +538,14 @@ $sidebar-width: 20rem;
     flex-grow: 1;
     flex-shrink: 0;
     overflow-x: auto;
-    width: calc(100% - #{$sidebar-width});
+    margin-left: calc(#{$sidebar-width} + #{$gutter-width});
   }
 
   .team-sidebar {
-    width: $sidebar-width;
-    min-width: $sidebar-width;
-    margin-bottom: $gutter-width;
-    position: sticky;
-    top: 30px;
+    position: fixed;
+    top: 0;
     height: 100%;
+    z-index: 1;
   }
 }
 
@@ -570,10 +574,6 @@ $sidebar-width: 20rem;
 }
 
 /*===== FORMS =====*/
-//input.input:focus, input.input.active, select:focus, select.active, textarea:focus, textarea.active {
-//  outline: none;
-//  border-color: $accent;
-//}
 
 input, textarea {
   display: block;
@@ -634,7 +634,6 @@ input, textarea {
 @media (max-width: $xl-breakpoint) {
 
   .page-team {
-    z-index: 100;
 
     .container-wide {
       position: relative;
@@ -642,29 +641,34 @@ input, textarea {
       padding-right: 5px;
     }
 
-    .teams-area,
-    .result-area {
-      margin-right: 0;
-    }
-
     .team-sidebar {
-      position: fixed;
-      top: 80px;
-      right: 5px;
-      transform: translateX(102%);
-      background-color: $overlay-dark;
-      box-shadow: $box-shadow-lg;
-      z-index: 100;
+      width: 60px;
       transition: transform .2s ease-in-out;
 
       &.visible {
         transform: translateX(0);
       }
 
+      &.full {
+        position: fixed;
+        width: 20rem;
+        top: 80px;
+        right: 5px;
+        //transform: translateX(102%);
+      }
+
     }
 
     .drag-area {
-      width: 100%;
+      margin-left: 60px + $gutter-width / 2;
+    }
+
+    .team-radar {
+
+      .box-content {
+        padding-right: .2rem;
+        padding-left: .2rem;
+      }
     }
   }
 

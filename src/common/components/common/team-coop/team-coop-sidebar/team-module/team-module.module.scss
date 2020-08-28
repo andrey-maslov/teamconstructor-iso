@@ -1,8 +1,8 @@
 @import 'src/common/assets/scss/_vars.scss';
 
 .block {
-  margin-bottom: 1rem;
-  padding: .8rem;
+  margin-bottom: .5rem;
+  padding: .5rem .8rem;
   border: 1px solid $overlay-light;
   border-radius: $border-radius;
 
@@ -16,8 +16,25 @@
   }
 }
 
+.count {
+
+  svg {
+    margin-right: 10px;
+  }
+
+  span {
+    font-size: 1.2rem;
+  }
+}
+
 .title {
+  font-size: 1rem;
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
   text-transform: uppercase;
+}
+
+.compact {
+  color: currentColor;
+  text-align: center;
 }
