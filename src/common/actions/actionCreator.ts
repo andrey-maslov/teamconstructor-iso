@@ -18,15 +18,21 @@ import {
     FETCH_CONTENT,
     SET_ERROR,
     PROCESS_FAILED,
-    LOADING, ADD_PROJECT, SET_ACTIVE_PROJECT, SET_PROJECTS, SET_CREATE_PROJECT_MODAL, SET_EDITED_MEMBER,
+    LOADING,
+    ADD_PROJECT,
+    SET_ACTIVE_PROJECT,
+    SET_PROJECTS,
+    SET_CREATE_PROJECT_MODAL,
+    SET_EDITED_MEMBER,
 } from './actionTypes';
-import {ILoginData, IProject, IRegisterData, ITeam,} from "../../constants/types";
-import {CONTENT_API, BASE_API} from "../../constants/constants";
+import {ILoginData, IProject, IRegisterData, ITeam,} from "../../constants/types"
+import {CONTENT_API, BASE_API} from "../../constants/constants"
 import axios from 'axios'
-import Cookie from "js-cookie";
+import Cookie from "js-cookie"
+import {isBrowser} from "../../helper/helper"
 
-// const token = isBrowser ? localStorage.getItem('token') : ''
-const token = Cookie.get('token')
+const token = isBrowser ? localStorage.getItem('token') : ''
+// const token = Cookie.get('token')
 
 
 /*
@@ -49,7 +55,10 @@ export function setLanguage(language: string): { type: string, language: string 
 }
 
 export function logOut(): { type: string } {
-    Cookie.remove('token')
+    // Cookie.remove('token')
+    if (isBrowser) {
+        localStorage.removeItem('token')
+    }
     return {
         type: CLEAR_USER_DATA,
     };
@@ -259,8 +268,8 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
             .then(data => {
                 const user = data.user;
                 dispatch(setUser(user.id, user.username, user.email, user.role, [], null))
-                // isBrowser && localStorage.setItem('token', data.jwt)
-                Cookie.set("token", data.jwt)
+                isBrowser && localStorage.setItem('token', data.jwt)
+                // Cookie.set("token", data.jwt)
                 dispatch(fetchProjectsList(data.jwt))
                 dispatch(setAuthModal(false))
                 dispatch(clearErrors())
@@ -390,7 +399,7 @@ export function updateProject(id: number, payload: {pool?: ITeam, teams?: ITeam[
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
         } else {
-            dispatch(logOut())
+            // dispatch(logOut())
             dispatch(setCreateProjectModal(false))
         }
     }

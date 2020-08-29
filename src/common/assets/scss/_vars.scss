@@ -34,12 +34,12 @@ $link-hover: $accent-hover;
 
 //DARK THEME COLORS
 $base: #1C1E23;
-$overlay-dark: #2D3037;
-$overlay-light: lighten($overlay-dark, 5%);
+$overlay-dark: lighten($base, 5%);
+$overlay-light: lighten($base, 10%);
 $surface: lighten($base, 5%);
 $overflow: #010101;
 
-$base-bg: $surface;
+$base-bg: $base;
 $base-gradient: linear-gradient(90deg, $overlay-light, $base);
 
 $blue: #5D9EFC;

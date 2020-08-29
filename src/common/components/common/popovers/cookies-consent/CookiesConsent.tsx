@@ -1,18 +1,22 @@
-import React from 'react';
-import {NavLink} from "react-router-dom";
-import style from './cookies-consent.module.scss';
-import Button from "../../buttons/button/Button";
+import React, {useEffect, useState} from 'react'
+import {NavLink} from "react-router-dom"
+import style from './cookies-consent.module.scss'
+import Button from "../../buttons/button/Button"
+import Cookie from "js-cookie"
 
-const cookiesConsentText = 'Мы заботимся о вас, поэтому надо согласиться с нашей политикой куки';
+const cookiesConsentText = 'Мы заботимся о вас, поэтому надо согласиться с нашей политикой куки'
 
-interface CookiesConsentProps {
-    isVisible: boolean
-    handleCookies: () => void
-}
 
-export const CookiesConsent: React.FC<CookiesConsentProps> = ({isVisible, handleCookies}) => {
+export const CookiesConsent: React.FC = () => {
 
-    if (!isVisible) {
+    const [isConsented, setConsented] = useState(false)
+
+    useEffect(() => {
+        const consent = Cookie.get('cookie-consent')
+        consent && setConsented(true)
+    }, [])
+
+    if (isConsented) {
         return null
     }
 
@@ -20,14 +24,18 @@ export const CookiesConsent: React.FC<CookiesConsentProps> = ({isVisible, handle
         <div className={style.popup}>
             <div className={style.content}>
                 <p>{cookiesConsentText}</p>
-                {/*<NavLink className={style.policyLink} to={'/cookie-policy'}>Политика Куки</NavLink>*/}
-                {/* eslint-disable-next-line react/jsx-no-undef */}
+                <NavLink className={style.policyLink} to={'/cookie-policy'}>Политика Куки</NavLink>
                 <Button
                     title="Я согласен"
-                    btnClass="btn-accent btn"
-                    handle={handleCookies}
+                    btnClass="btn-outlined btn"
+                    handle={handleCookiesConsent}
                 />
             </div>
         </div>
     )
+
+    function handleCookiesConsent() {
+        setConsented(true)
+        Cookie.set('cookie-consent', 'OK')
+    }
 };

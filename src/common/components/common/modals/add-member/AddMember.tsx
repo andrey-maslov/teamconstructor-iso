@@ -173,11 +173,6 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
             })
             dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
         }
-        // dispatch(setTeamsData(newTeams))
-
-        // setTimeout(() => {
-        //     dispatch(setAddMemberModal(false))
-        // }, 500)
     }
 
     function isDuplicateData(data: DecodedDataType, members: IMember[], edMember: number | null): boolean {

@@ -1,4 +1,5 @@
 import {
+    COOKIES_CONSENT,
     SET_ADD_MEMBER_MODAL,
     SET_AUTH_MODAL, SET_CREATE_PROJECT_MODAL,
 } from "../actions/actionTypes";
@@ -7,9 +8,7 @@ const APP_STATE = {
     isAddMemberModal: false,
     isCreateProjectModal: false,
     isAuthModal: false,
-    isStatusModal: false,
-    statusType: '',
-    statusContent: null as JSX.Element | null
+    isCookiesConsented: false,
 };
 
 type ModalsReducerType = typeof APP_STATE;
@@ -19,6 +18,7 @@ export const modalsReducer = (state = APP_STATE, {
     isAddMemberModal,
     isCreateProjectModal,
     isAuthModal,
+    isCookiesConsented,
 }: any) => {
     switch (type) {
         case SET_ADD_MEMBER_MODAL :
@@ -35,6 +35,11 @@ export const modalsReducer = (state = APP_STATE, {
             return {
                 ...state,
                 isAuthModal,
+            };
+        case COOKIES_CONSENT :
+            return {
+                ...state,
+                isCookiesConsented,
             };
         default:
             return state;

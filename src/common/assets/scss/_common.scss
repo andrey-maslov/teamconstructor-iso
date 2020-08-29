@@ -84,6 +84,7 @@ body {
     flex: 1 0 auto;
     min-height: auto;
     width: 100%;
+    padding-top: 120px;
   }
 
   &:before {
@@ -110,7 +111,7 @@ body {
 }
 
 main {
-  z-index: 1;
+  //z-index: 1;
 }
 
 .result-box {
@@ -230,6 +231,13 @@ body *::-webkit-scrollbar-track {
   background-color: $overlay-dark;
 }
 
+
+.store-area .box-content, textarea {
+  &::-webkit-scrollbar,
+  &::-webkit-scrollbar-track {
+    width: 10px;
+  }
+}
 
 //focus visible polyfill
 .js-focus-visible :focus:not(.focus-visible) {
@@ -573,6 +581,13 @@ $sidebar-width: 18rem;
   }
 }
 
+.add-member-modal {
+
+  textarea {
+    font-size: 14px;
+  }
+}
+
 /*===== FORMS =====*/
 
 input, textarea {
@@ -600,7 +615,7 @@ input, textarea {
     font-size: .8rem;
     min-height: 1.5rem;
     padding-top: 0;
-    line-height: 1.5rem;
+    line-height: 1.4;
     transition: color .3s cubic-bezier(.215,.61,.355,1);
   }
 
@@ -609,6 +624,18 @@ input, textarea {
 
     .item-explain {
       color: $danger;
+
+      &.floating {
+        position: absolute;
+        padding: .8rem;
+        right: 0;
+        bottom: -120%;
+        background-color: #fff;
+        border-radius: $border-radius-sm;
+        box-shadow: $box-shadow-lg;
+        width: 100%;
+        z-index: 99;
+      }
     }
 
     input,

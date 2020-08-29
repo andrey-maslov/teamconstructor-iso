@@ -6,7 +6,7 @@ import {useForm} from 'react-hook-form'
 import style from './droppable-column.module.scss'
 import OutsideClickHandler from 'react-outside-click-handler'
 import {GlobalStateType, ITeam} from "../../../../../constants/types";
-import {setTeamsData, updateProject} from "../../../../actions/actionCreator";
+import {updateProject} from "../../../../actions/actionCreator";
 
 interface IForm {
     label: string
@@ -37,7 +37,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
                     onOutsideClick={() => setState({...state, isEdit: !state.isEdit})}
                 >
                     <form onSubmit={handleSubmit(submit)}>
-                        <div className={`form-group ${errors.label ? 'has-error' : ''}`}>
+                        <div className={`form-group ${errors.label ? 'has-error' : ''} ${style.group}`}>
                             <input
                             type="text"
                             name="label"
@@ -54,7 +54,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
                             autoComplete="off"
                         />
                             {errors.label && errors.label.type === 'duplicateLabel' && (
-                                <div className={`item-explain`}>Команда с таком названием уже есть</div>
+                                <div className={`item-explain floating`}>Команда с таком названием уже есть</div>
                             )}
                         </div>
                     </form>

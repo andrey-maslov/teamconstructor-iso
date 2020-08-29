@@ -7,6 +7,7 @@ import {GlobalStateType} from "../../../../constants/types"
 import AuthModal from "./auth-modal/AuthModal"
 import LoaderRequest from "../loaders/loader-request/LoaderRequest";
 import {CreateProjectModal} from "./create-project-modal/CreateProjectModal";
+import {CookiesConsent} from "../popovers/cookies-consent/CookiesConsent";
 
 // import { CookiesConsent } from '../cookies-consent/CookiesConsent'
 
@@ -14,17 +15,8 @@ import {CreateProjectModal} from "./create-project-modal/CreateProjectModal";
 const Modals: React.FC = () => {
 
     const dispatch = useDispatch();
-    const appMode = useSelector((state: GlobalStateType) => state.appReducer)
-    const isLoggedIn = useSelector((state: GlobalStateType) => state.userData.isLoggedIn)
     const modals = useSelector((state: GlobalStateType) => state.modalsReducer)
-    const {isLoading} = appMode
-    const {isAddMemberModal, isAuthModal, isCreateProjectModal} = modals
-
-    // useEffect(() => {
-    //     if (isLoggedIn) {
-    //         dispatch(setAuthModal(false))
-    //     }
-    // },[isLoggedIn])
+    const {isAddMemberModal, isAuthModal, isCreateProjectModal, isCookiesConsented} = modals
 
     return (
         <>
@@ -50,12 +42,7 @@ const Modals: React.FC = () => {
                 }}
             />}
 
-            {/*{isLoading && <LoaderRequest/>}*/}
-
-            {/*<CookiesConsent*/}
-            {/*    handleCookies={handleCookiesConsent}*/}
-            {/*    isVisible={!isCookiesConsented}*/}
-            {/*/>*/}
+            <CookiesConsent/>
 
         </>
     );

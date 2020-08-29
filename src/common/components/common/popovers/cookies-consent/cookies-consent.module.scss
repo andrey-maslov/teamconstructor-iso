@@ -1,14 +1,17 @@
+@import 'src/common/assets/scss/_vars.scss';
+
 .popup {
-  width: 250px;
+  width: 300px;
   height: auto;
   position: fixed;
   bottom: 30px;
   left: 30px;
-  background-color: #fff;
+  background-color: $overlay-light;
   border-radius: 5px;
   box-shadow: 0 4px 20px rgba(0,0,0,.2);
   padding: 20px;
   z-index: 20;
+  //border: 1px solid $orange;
 
   button {
     width: 100%;
@@ -16,7 +19,6 @@
 
   .policyLink {
     display: block;
-    color: #2386B6;
     text-decoration: underline;
     margin-bottom: 20px;
   }
