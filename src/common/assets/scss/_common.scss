@@ -2,15 +2,14 @@
 @import './flexgridcustom.scss';
 
 
-//html {
-//  scroll-behavior: smooth;
-//}
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: $font-default;
   font-size: 18px;
   overflow-x: hidden;
-  //background-color: $grey-bg;
 
   * {
     //border: 1px solid red;
@@ -40,8 +39,6 @@ body {
 
 .flex-row {
   display: flex;
-  //margin-left: -$gutter-width / 2;
-  //margin-right: -$gutter-width / 2;
 }
 
 .section {
@@ -89,16 +86,16 @@ body {
 
   &:before {
     position: fixed;
-    //content: '';
+    content: '';
     display: block;
     width: 100%;
     height: 100vh;
-    background-image: url('../img/main_bg4.jpg');
+    background-image: url('../img/main_bg1-opt.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     opacity: .5;
-    filter: grayscale(100%) brightness(0.2);
+    //filter: grayscale(100%) brightness(0.2);
   }
 
   .page {
@@ -232,7 +229,9 @@ body *::-webkit-scrollbar-track {
 }
 
 
-.store-area .box-content, textarea {
+.store-area .box-content,
+textarea,
+.team-sidebar {
   &::-webkit-scrollbar,
   &::-webkit-scrollbar-track {
     width: 10px;
@@ -553,7 +552,9 @@ $sidebar-width: 18rem;
     position: fixed;
     top: 0;
     height: 100%;
-    z-index: 1;
+    z-index: 2;
+    overflow-y: auto;
+    background-color: $overlay-dark;
   }
 }
 
@@ -660,6 +661,10 @@ input, textarea {
 
 @media (max-width: $xl-breakpoint) {
 
+  .main {
+    padding-top: 100px;
+  }
+
   .page-team {
 
     .container-wide {
@@ -669,7 +674,6 @@ input, textarea {
     }
 
     .team-sidebar {
-      width: 60px;
       transition: transform .2s ease-in-out;
 
       &.visible {
@@ -696,6 +700,13 @@ input, textarea {
         padding-right: .2rem;
         padding-left: .2rem;
       }
+    }
+  }
+
+  .teams-wrapper {
+
+    & > div {
+      margin-right: .5rem;
     }
   }
 

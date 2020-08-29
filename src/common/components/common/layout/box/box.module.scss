@@ -25,7 +25,6 @@
   color: lighten($text-light, 10%);
   padding: .75rem 0;
   margin-bottom: 0;
-  //@include gradient-accent(176deg, .3, .3);
 
   svg {
     position: relative;
@@ -36,9 +35,16 @@
 
 .content {
   padding: 1.5rem;
-  //height: 100%
 }
 
+
+@media(max-width: 1400px) {
+
+  .content {
+    padding: 1rem;
+  }
+
+}
 
 @media(max-width: 992px) {
 
