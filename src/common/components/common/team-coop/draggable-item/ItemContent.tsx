@@ -66,8 +66,8 @@ const ItemContent: React.FC<IItemContent> = ({member}) => {
                 <Radar
                     options={options}
                     data={data}
-                    width={60}
-                    height={60}
+                    width={55}
+                    height={55}
                 />
             </div>
             <div className={style.content}>

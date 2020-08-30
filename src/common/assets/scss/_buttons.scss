@@ -4,10 +4,10 @@
 input[type=submit],
 .btn {
   position: relative;
-  font-size: 18px;
+  font-size: 1.2rem;
   display: inline-block;
   text-transform: uppercase;
-  min-width: 160px;
+  min-width: 11rem;
   padding: 0 10px;
   vertical-align: middle;
   text-decoration: none;
@@ -21,8 +21,8 @@ input[type=submit],
 }
 
 a.btn {
-  height: 40px;
-  line-height: 40px;
+  height: 3rem;
+  line-height: 3rem;
 
   &:hover {
     text-decoration: none;
@@ -79,9 +79,9 @@ button.btn-link {
 // Long button
 .btn {
   &.btn-lg {
-    height: 60px;
+    height: 4rem;
     //line-height: 47px;
-    min-width: 200px;
+    min-width: 15rem;
     max-width: unset;
   }
 }

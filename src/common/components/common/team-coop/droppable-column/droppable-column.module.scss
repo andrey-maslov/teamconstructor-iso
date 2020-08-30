@@ -2,8 +2,8 @@
 
 .wrapper {
   user-select: none;
-  min-width: 250px;
-  min-height: 42.7rem;
+  //min-width: 250px;
+  min-height: 42rem;
 
   &.store {
     border: 0;
@@ -13,7 +13,7 @@
   &.team {
     transition: background-color .1s ease-in-out;
     padding: .5rem;
-    width: 300px;
+    width: 18rem;
   }
 
   &.fixed {
@@ -47,8 +47,8 @@
 .title {
   margin: 0;
   text-transform: uppercase;
-  height: 40px;
-  line-height: 40px;
+  height: 2rem;
+  line-height: 2rem;
   padding: 0 .5rem;
   border-radius: $border-radius-sm;
   background-color: transparent;
@@ -63,16 +63,15 @@
 }
 
 .titleInput {
-  height: 40px;
-  line-height: 40px;
+  height: 2.25rem;
   padding: 0 .5rem;
   width: auto;
-  max-width: 210px;
+  //max-width: 210px;
 }
 
 .delete {
-  width: 40px;
-  height: 40px;
+  width: 2.25rem;
+  height: 2.25rem;
   border: 0;
   background-color: transparent;
   color: $text-light;

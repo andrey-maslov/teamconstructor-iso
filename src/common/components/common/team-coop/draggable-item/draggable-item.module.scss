@@ -3,7 +3,7 @@
 .wrapper {
   position: relative;
   user-select: none;
-  padding: .8rem 1rem;
+  padding: .7rem .8rem;
   box-shadow: $box-shadow-md;
   border-radius: $border-radius;
 
@@ -38,16 +38,12 @@
 }
 
 .avatar {
-  max-width: 30%;
-  width: 30%;
+  max-width: 28%;
+  width: 28%;
   margin-right: .5rem;
   opacity: .7;
   border-radius: 50%;
   border: 1px solid $text-light;
-
-  svg {
-    font-size: 50px;
-  }
 }
 
 .content {
@@ -57,13 +53,13 @@
 .name {
   font-weight: 700;
   color: $text-light;
-  font-size: 17px;
+  font-size: 1.1rem;
 }
 
 .position {
   color: $text-light;
   opacity: .8;
-  font-size: .8rem;
+  font-size: .9rem;
 }
 
 .buttons {

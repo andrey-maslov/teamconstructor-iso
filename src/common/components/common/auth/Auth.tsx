@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import Login from "./Login";
-import Register from "./Register";
+import React, {useState} from 'react'
+import Login from "./Login"
+import Register from "./Register"
 
 import style from './auth.module.scss'
 
@@ -20,13 +20,13 @@ const Auth: React.FC = () => {
                     className={`${authMode.mode === 'login' ? style.active : ''}`}
                     onClick={() => setAuthMode({mode: 'login'})}
                 >
-                    Login
+                    Вход
                 </button>
                 <button
                     className={`${authMode.mode === 'register' ? style.active : ''}`}
                     onClick={() => setAuthMode({mode: 'register'})}
                 >
-                    Register
+                    Регистрация
                 </button>
             </div>
             {authMode.mode === 'login' ?

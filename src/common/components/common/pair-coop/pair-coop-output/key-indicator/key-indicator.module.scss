@@ -7,8 +7,8 @@
   align-items: center;
   border: 1px solid $overlay-light;
   border-radius: $border-radius-sm;
-  padding: 1.5rem;
-  width: 17rem;
+  padding: 1.25rem;
+  width: 16rem;
 
   //&:not(:last-of-type) {
   //  margin-bottom: 20px;
@@ -19,15 +19,17 @@
     margin-bottom: 1rem;
     text-align: center;
   }
+}
 
-  small {
-    margin-top: 1.5rem;
-    text-align: center;
-  }
+.desc {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: .9rem;
 }
 
 .more button {
   position: absolute;
-  right: 3px;
-  top: 3px;
+  right: 5px;
+  top: 5px;
+  font-size: 1rem;
 }

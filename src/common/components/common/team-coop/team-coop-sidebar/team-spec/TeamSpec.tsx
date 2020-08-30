@@ -15,7 +15,6 @@ interface TeamSpecProps {
 
 const TeamSpec: React.FC<TeamSpecProps> = ({teamSpec, changeSpec, isCompact}) => {
 
-console.log(isCompact)
     return (
         <div className={`${style.wrapper} ${isCompact ? style.compact : style.full}`}>
             <h4 className={style.title}>Специализация команды</h4>

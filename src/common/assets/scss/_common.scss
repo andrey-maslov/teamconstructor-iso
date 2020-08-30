@@ -4,11 +4,12 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 15px;
 }
 
 body {
   font-family: $font-default;
-  font-size: 18px;
+  font-size: 1rem;
   overflow-x: hidden;
 
   * {
@@ -81,7 +82,7 @@ body {
     flex: 1 0 auto;
     min-height: auto;
     width: 100%;
-    padding-top: 120px;
+    padding-top: 107px;
   }
 
   &:before {
@@ -118,6 +119,10 @@ main {
 .result-area {
   margin-right: $gutter-width / 2;
   margin-bottom: $gutter-width / 2;
+
+  .col > div {
+    margin-bottom: $gutter-width / 2;
+  }
 }
 
 .team {
@@ -141,13 +146,13 @@ main {
   }
 
   &-table {
-      table {
-        th {
-          &:first-child {
-            min-width: 220px;
-          }
+    table {
+      th {
+        &:first-child {
+          min-width: 220px;
         }
       }
+    }
   }
 }
 
@@ -182,9 +187,17 @@ main {
     height: auto;
     line-height: 1;
     text-transform: none;
-    //padding: 0 1rem;
+    padding: .3rem .5rem;
     border-radius: $border-radius-sm;
     margin-right: .5rem;
+    border: 0;
+    background-color: $text-light;
+    opacity: .8;
+    color: $base;
+
+    &:hover {
+      opacity: 1;
+    }
 
     &:last-of-type {
       margin-right: 0;
@@ -193,6 +206,10 @@ main {
     &.active {
       color: $orange;
       border-color: $orange;
+    }
+
+    &.btn-icon {
+      padding: 0 .4rem;
     }
   }
 
@@ -210,10 +227,12 @@ body *::-webkit-scrollbar-track {
   background-color: $overlay-dark;
   height: 10px;
 }
+
 html::-webkit-scrollbar-corner,
 body *::-webkit-scrollbar-corner {
   background-color: $overlay-dark;
 }
+
 html::-webkit-scrollbar-thumb,
 body *::-webkit-scrollbar-thumb {
   background-color: lighten($overlay-light, 5%);
@@ -221,6 +240,7 @@ body *::-webkit-scrollbar-thumb {
   border-radius: 5px;
   border: 2px solid transparent;
 }
+
 html::-webkit-scrollbar,
 body *::-webkit-scrollbar,
 html::-webkit-scrollbar-track,
@@ -398,8 +418,6 @@ th, td {
 }
 
 
-
-
 /*===== Modals =====*/
 .root {
 
@@ -502,6 +520,7 @@ th, td {
     }
   }
 }
+
 /*===== PAIR COOPERATION =====*/
 
 .page-pair {
@@ -510,7 +529,7 @@ th, td {
 
 /*===== TEAM COOPERATION =====*/
 
-$sidebar-width: 18rem;
+$sidebar-width: 17rem;
 
 .page-team {
   padding-top: 110px;
@@ -524,7 +543,7 @@ $sidebar-width: 18rem;
     }
 
     .box-content {
-      max-height: 745px;
+      max-height: 48rem;
       overflow-y: auto;
     }
   }
@@ -554,6 +573,7 @@ $sidebar-width: 18rem;
     height: 100%;
     z-index: 2;
     overflow-y: auto;
+    box-shadow: $box-shadow-lg;
     background-color: $overlay-dark;
   }
 }
@@ -589,6 +609,13 @@ $sidebar-width: 18rem;
   }
 }
 
+.team-indicators {
+
+  .indicator {
+    margin-bottom: 1.25rem;
+  }
+}
+
 /*===== FORMS =====*/
 
 input, textarea {
@@ -617,7 +644,7 @@ input, textarea {
     min-height: 1.5rem;
     padding-top: 0;
     line-height: 1.4;
-    transition: color .3s cubic-bezier(.215,.61,.355,1);
+    transition: color .3s cubic-bezier(.215, .61, .355, 1);
   }
 
   &.has-error {
@@ -691,7 +718,7 @@ input, textarea {
     }
 
     .drag-area {
-      margin-left: 60px + $gutter-width / 2;
+      margin-left: 4rem + $gutter-width / 2;
     }
 
     .team-radar {
@@ -711,8 +738,8 @@ input, textarea {
   }
 
 
-
 }
+
 @media (max-width: $lg-breakpoint) {
 
   .section {

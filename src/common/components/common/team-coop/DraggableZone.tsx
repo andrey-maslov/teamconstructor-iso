@@ -133,14 +133,14 @@ const DraggableZone: React.FC = () => {
         <div>
             <button
                 onClick={addMemberModal}
-                className={'btn btn-outlined btn-widget'}
+                className={'btn btn-widget btn-icon'}
                 aria-label={'добавить пользователя в пул'}
             >
                 <FiPlus/>
             </button>
             <button
                 onClick={openSearch}
-                className={`btn btn-outlined btn-widget ${isSearch ? 'active' : ''}`}
+                className={`btn btn-widget btn-icon ${isSearch ? 'active' : ''}`}
                 aria-label={'открыть поиск'}
             >
                 <FiSearch/>
@@ -153,7 +153,7 @@ const DraggableZone: React.FC = () => {
     const teamsWidget = (
         <Button
             handle={addTeam}
-            btnClass={'btn btn-outlined btn-widget'}
+            btnClass={'btn btn-widget'}
             title={'Добавить команду'}
         />
     )

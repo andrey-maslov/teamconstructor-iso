@@ -31,7 +31,8 @@ import axios from 'axios'
 import Cookie from "js-cookie"
 import {isBrowser} from "../../helper/helper"
 
-const token = isBrowser ? localStorage.getItem('token') : ''
+let localToken = null
+const token = isBrowser ? localStorage.getItem('token') : localToken
 // const token = Cookie.get('token')
 
 
@@ -58,6 +59,7 @@ export function logOut(): { type: string } {
     // Cookie.remove('token')
     if (isBrowser) {
         localStorage.removeItem('token')
+        localToken = null
     }
     return {
         type: CLEAR_USER_DATA,
@@ -132,7 +134,6 @@ export function setRowData(encData1: string, encData2: string) {
             encData2,
         };
     }
-    console.log('default')
     return {
         type: SET_ROW_DATA1,
     }
@@ -204,7 +205,6 @@ export const fetchTerms = (lang: string) => {
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                // console.log(data)
                 dispatch({
                     type: FETCH_TERMS,
                     terms: data[`content_${lang}`]
@@ -269,6 +269,7 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
                 const user = data.user;
                 dispatch(setUser(user.id, user.username, user.email, user.role, [], null))
                 isBrowser && localStorage.setItem('token', data.jwt)
+                localToken = data.jwt
                 // Cookie.set("token", data.jwt)
                 dispatch(fetchProjectsList(data.jwt))
                 dispatch(setAuthModal(false))
@@ -372,7 +373,6 @@ export function fetchProject(id: number) {
 
 export function updateProject(id: number, payload: {pool?: ITeam, teams?: ITeam[]}) {
     const url = `${BASE_API}/projects/${id}`
-
     return (dispatch: any) => {
         if (token) {
             dispatch(setLoading(true))
@@ -387,8 +387,6 @@ export function updateProject(id: number, payload: {pool?: ITeam, teams?: ITeam[
                 .then(res => res.data)
                 .then(data => {
                     if (payload.pool && !payload.teams) {
-                        console.log('addd member from dispatch')
-                        console.log(data)
                         dispatch({type: SET_POOL, pool: data.pool})
                     } else {
                         dispatch(setTeamsData([data.pool, ...data.teams]))

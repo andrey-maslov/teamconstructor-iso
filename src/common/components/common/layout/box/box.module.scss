@@ -4,7 +4,7 @@
   box-sizing: border-box;
   color: currentColor;
   position: relative;
-  background: rgba($overlay-light, .3);
+  background: rgba($overlay-dark, .5);
   border-radius: $border-radius-sm;
   box-shadow: $box-shadow-sm;
   transition: all .3s;
@@ -16,14 +16,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 .5rem 0 1.5rem;
+  padding: 0 .5rem 0 1.25rem;
   border-radius: $border-radius $border-radius 0 0;
   @include gradient-accent(176deg, .3, .3);
 }
 
 .title {
   color: lighten($text-light, 10%);
-  padding: .75rem 0;
+  font-size: 1.25rem;
+  padding: .6rem 0;
   margin-bottom: 0;
 
   svg {
@@ -34,7 +35,7 @@
 }
 
 .content {
-  padding: 1.5rem;
+  padding: 1.25rem;
 }
 
 

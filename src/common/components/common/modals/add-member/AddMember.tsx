@@ -49,7 +49,8 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
             onClose={() => {
                 closeModal()
             }}
-            height={500}
+            width={340}
+            height={460}
         >
             <div className={style.content}>
                 <form onSubmit={handleSubmit(submitForm)}>

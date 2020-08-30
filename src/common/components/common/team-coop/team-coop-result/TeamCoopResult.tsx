@@ -7,6 +7,7 @@ import RadarChart from "../../charts/radar-chart/RadarChart"
 import KeyIndicator from "../../pair-coop/pair-coop-output/key-indicator/KeyIndicator"
 import ComparisonTable from "../../pair-coop/pair-coop-output/comparison-table/ComparisonTable"
 import {getDescByRange, getKeyResult} from "../../../../../helper/helper"
+import TeamDescription from "../../pair-coop/pair-coop-output/description/TeamDescription";
 
 const TeamCoopResult: React.FC = () => {
 
@@ -92,7 +93,7 @@ const TeamCoopResult: React.FC = () => {
             value: emotionalComp
         },
     ]
-    const resultTableData   = getResultTableData()
+    const teamDescriptionData = getResultTableData()
 
     // console.log(candidates)
 
@@ -103,51 +104,60 @@ const TeamCoopResult: React.FC = () => {
             <div className={'result-wrapper'} id="teamResult">
 
                 <div className={'result-area flex-row'}>
-                    <Box
-                        addClass="team-radar"
-                        title={`${activeTeam.title}. Профили участников`}
-                    >
-                        {profiles.length !== 0 &&
-                        <RadarChart
-                            profiles={profiles}
-                            names={names}
-                            labels={scheme.tendencies}
-                        />}
-                    </Box>
-                    <Box
-                        addClass="team-keys"
-                        title={`${activeTeam.title}. Ключевые показатели`}
-                    >
-                        {keyValues.map((item, i) => (
-                            <KeyIndicator
-                                key={i}
-                                title={item.title}
-                                description={item.description}
-                                value={item.value}
-                                more={item.more}
-                            />
-                        ))}
-                    </Box>
-                </div>
+                    <div className="col">
+                        <Box
+                            addClass="team-radar"
+                            title={`${activeTeam.title}. Профили участников`}
+                        >
+                            {profiles.length !== 0 &&
+                            <RadarChart
+                                profiles={profiles}
+                                names={names}
+                                labels={scheme.tendencies}
+                            />}
+                        </Box>
 
-                <div className={'result-area flex-row'}>
-                    <Box
-                        addClass="team-radar"
-                        title={`${activeTeam.title}. Общий профиль`}
-                    >
-                        {profiles.length !== 0 &&
-                        <RadarChart
-                            profiles={[teamProfile]}
-                            names={[activeTeam.title]}
-                            labels={scheme.tendencies}
-                        />}
-                    </Box>
-                    <Box
-                        addClass="team-table"
-                        title={`${activeTeam.title}. Сводная таблица`}
-                    >
-                        <ComparisonTable tableData={resultTableData}/>
-                    </Box>
+                        <Box
+                            addClass="team-radar"
+                            title={`${activeTeam.title}. Общий профиль`}
+                        >
+                            {profiles.length !== 0 &&
+                            <RadarChart
+                                profiles={[teamProfile]}
+                                names={[activeTeam.title]}
+                                labels={scheme.tendencies}
+                            />}
+                        </Box>
+                    </div>
+
+                    <div className="col">
+                        <Box
+                            addClass="team-keys"
+                            title={`${activeTeam.title}. Ключевые показатели`}
+                        >
+                            {keyValues.map((item, i) => (
+                                <KeyIndicator
+                                    key={i}
+                                    title={item.title}
+                                    description={item.description}
+                                    value={item.value}
+                                    more={item.more}
+                                />
+                            ))}
+                        </Box>
+
+
+                        <Box
+                            addClass="team-table team-indicators"
+                            title={`${activeTeam.title}. Показатели`}
+                        >
+                            <TeamDescription
+                                teamProfile={['Психрологический профиль команды', teamProfileDesc]}
+                                data={teamDescriptionData}
+                            />
+                            {/*<ComparisonTable tableData={resultTableData}/>*/}
+                        </Box>
+                    </div>
                 </div>
             </div>
             }
@@ -330,17 +340,18 @@ const TeamCoopResult: React.FC = () => {
             candidateData = ['Работники, рекомендуемые в команду', candidates.map(item => item.name).join(', ')]
         }
 
-        const unwantedData = unwanted.length === 0 ? null : ['Работники, напрягающие команду', unwanted.map(item => item.name).join(', ')]
+        const unwantedData = unwanted.length === 0 ?
+            null :
+            ['Работники, напрягающие команду', unwanted.map(item => item.name).join(', ')]
 
         return [
             ['Лояльность к внешнему руководству',           getDescByRange(loyalty, descriptions.loyaltyDesc)],
             ['Ответственность команды',                     getDescByRange(commitment, descriptions.commitmentDesc)],
-            ['Психологический профиль команды',             teamProfileDesc],
             ['Лидер команды',                               leaderName],
             ['Альтернативный лидер',                        opinionLeaderName],
-            ['Типы, рекомендуемые в команду',               needList.map(i => scheme.psychoTypes[i]).join(', ')],
-            candidateData && candidateData,
-            unwantedData && unwantedData
+            needList.length > 0 ? ['Типы, рекомендуемые в команду', needList.map(i => scheme.psychoTypes[i]).join(', ')] : null,
+            candidateData ? candidateData : null,
+            unwantedData ? unwantedData : null
         ]
     }
 
