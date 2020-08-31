@@ -1,6 +1,6 @@
 import React from 'react'
 import Table from "../../../tables/table/Table"
-import {TableRow} from "../../../../../../constants/types";
+import {TableRow} from "../../../../../../constants/types"
 
 interface ComparisonTableProps {
     tableData: TableRow[]

@@ -32,7 +32,7 @@ const RadarChart: React.FC<ChartsPropsType> = ({profiles, names, labels}) => {
     const chartRadarOptions: any = {
         desktop: {
             width: 530,
-            height: 400,
+            height: 428,
             labels: chartLabels,
         },
         mobi: {

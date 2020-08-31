@@ -25,7 +25,7 @@ const InputField: React.FC<IInputField> = ({label, value, placeholder, nameRef, 
                     placeholder={`Профиль ${label}`}
                     autoComplete={'off'}
                 />
-                {errors[`name${label}`] && <div className={`item-explain`}>{errors[`name${label}`] .message}</div>}
+                {errors[`name${label}`] && <div className={`item-explain`}>{errors[`name${label}`].message}</div>}
             </div>
             <div className={`form-group ${errors[`data${label}`] ? 'has-error' : ''}`}>
                 <textarea

@@ -7,7 +7,7 @@ import Table from "../../tables/table/Table";
 import ComparisonTable from "./comparison-table/ComparisonTable";
 import {DecodedDataType, GlobalStateType} from "../../../../../constants/types";
 import {BsTable} from "react-icons/bs";
-import KeyIndicator from "./key-indicator/KeyIndicator";
+import KeyIndicator from "../../result-common/key-indicator/KeyIndicator";
 import {getDescByRange, toPercent} from "../../../../../helper/helper";
 
 const PairCoopOutput: React.FC = () => {

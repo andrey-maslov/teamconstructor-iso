@@ -1,7 +1,7 @@
 import React from "react"
-import CircleDiagram from "../../../charts/circle-diagram/CircleDiagram"
+import CircleDiagram from "../../charts/circle-diagram/CircleDiagram"
 import style from "./key-indicator.module.scss"
-import PopoverMore from "../../../popovers/popover-more/PopoverMore"
+import PopoverMore from "../../popovers/popover-more/PopoverMore"
 
 export interface IKeyIndicator {
     title: string

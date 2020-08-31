@@ -65,7 +65,6 @@ const PairCoopInput: React.FC = () => {
                                 placeholder={`Внесите в это поле зашифрованный результат для пользователя ${item}`}
                                 nameRef={register({
                                     required: 'Это обязательное поле',
-                                    minLength: {value: 5, message: 'Слишком короткое имя'}
                                 })}
                                 dataRef={register({
                                     required: 'Это обязательное поле',

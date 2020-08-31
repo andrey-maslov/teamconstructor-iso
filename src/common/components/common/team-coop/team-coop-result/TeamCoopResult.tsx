@@ -4,10 +4,9 @@ import {GlobalStateType, IMember, ITeam, TableRow} from "../../../../../constant
 import Box from "../../layout/box/Box"
 import {UserResult, baseTestResultType, IUserResult, ITendency, IOctant} from "../../../../../UserResult"
 import RadarChart from "../../charts/radar-chart/RadarChart"
-import KeyIndicator from "../../pair-coop/pair-coop-output/key-indicator/KeyIndicator"
-import ComparisonTable from "../../pair-coop/pair-coop-output/comparison-table/ComparisonTable"
+import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
 import {getDescByRange, getKeyResult} from "../../../../../helper/helper"
-import TeamDescription from "../../pair-coop/pair-coop-output/description/TeamDescription";
+import Description from "../../result-common/description/Description";
 
 const TeamCoopResult: React.FC = () => {
 
@@ -95,9 +94,6 @@ const TeamCoopResult: React.FC = () => {
     ]
     const teamDescriptionData = getResultTableData()
 
-    // console.log(candidates)
-
-
     return (
         <>
             {isReady &&
@@ -135,15 +131,18 @@ const TeamCoopResult: React.FC = () => {
                             addClass="team-keys"
                             title={`${activeTeam.title}. Ключевые показатели`}
                         >
-                            {keyValues.map((item, i) => (
-                                <KeyIndicator
-                                    key={i}
-                                    title={item.title}
-                                    description={item.description}
-                                    value={item.value}
-                                    more={item.more}
-                                />
-                            ))}
+                            <div className="row">
+                                {keyValues.map((item, i) => (
+                                    <div key={i} className={'col-sm-4'}>
+                                        <KeyIndicator
+                                            title={item.title}
+                                            description={item.description}
+                                            value={item.value}
+                                            more={item.more}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
                         </Box>
 
 
@@ -151,11 +150,10 @@ const TeamCoopResult: React.FC = () => {
                             addClass="team-table team-indicators"
                             title={`${activeTeam.title}. Показатели`}
                         >
-                            <TeamDescription
+                            <Description
                                 teamProfile={['Психологический профиль команды', teamProfileDesc]}
                                 data={teamDescriptionData}
                             />
-                            {/*<ComparisonTable tableData={resultTableData}/>*/}
                         </Box>
                     </div>
                 </div>

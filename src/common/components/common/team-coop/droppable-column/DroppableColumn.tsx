@@ -1,6 +1,6 @@
 import React from "react"
 import {Droppable} from "react-beautiful-dnd"
-import DraggableItem from "../draggable-item/DraggableItem"
+import DraggableItem from "./draggable-item/DraggableItem"
 import {IMember} from "../../../../../constants/types";
 
 import style from './droppable-column.module.scss'

@@ -1,7 +1,7 @@
 import React from "react"
 import {Droppable} from "react-beautiful-dnd"
 import {IDroppableColumn} from "./DroppableColumn"
-import DraggableItem from "../draggable-item/DraggableItem"
+import DraggableItem from "./draggable-item/DraggableItem"
 
 import style from './droppable-column.module.scss'
 

@@ -1,4 +1,4 @@
-@import 'src/common/assets/scss/_vars.scss';
+@import '../../../../assets/scss/vars';
 
 .comp {
   position: relative;
@@ -8,7 +8,8 @@
   border: 1px solid $overlay-light;
   border-radius: $border-radius-sm;
   padding: 1.5rem;
-  width: 18rem;
+  min-width: 180px;
+  width: 100%;
 
   //&:not(:last-of-type) {
   //  margin-bottom: 20px;
@@ -32,4 +33,11 @@
   right: 5px;
   top: 5px;
   font-size: 1rem;
+}
+
+@media (max-width: 1400px) {
+
+  .comp {
+    padding: 1rem;
+  }
 }

@@ -101,7 +101,7 @@ const DraggableZone: React.FC = () => {
 
             if (!checkDuplicate(0, source.index, dInd)) {
                 const currName = teams[0].items[source.index].name
-                addToast(`Работник ${currName} есть в команде!`, {appearance: 'error'})
+                addToast(`Работник ${currName} есть в команде!`, {appearance: 'error', autoDismiss: true})
                 return
             } else {
                 const newTeams: ITeam[] = [...teams];

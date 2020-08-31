@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react'
-import { UserResult} from "../../../../../UserResult"
+import { UserResult} from "../../../../../../UserResult"
 import style from './draggable-item.module.scss'
 import {Radar} from "react-chartjs-2"
-import {COLORS} from '../../../../../constants/constants'
-import {IMember} from "../../../../../constants/types";
+import {COLORS} from '../../../../../../constants/constants'
+import {IMember} from "../../../../../../constants/types";
 
 interface IItemContent {
     member: IMember

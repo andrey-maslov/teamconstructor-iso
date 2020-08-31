@@ -1,9 +1,9 @@
 import React from 'react'
 import {useDispatch} from 'react-redux'
 import {Draggable} from "react-beautiful-dnd"
-import {IMember} from "../../../../../constants/types"
+import {IMember} from "../../../../../../constants/types"
 import ItemContent from "./ItemContent"
-import {setAddMemberModal, setEditedMember} from "../../../../actions/actionCreator"
+import {setAddMemberModal, setEditedMember} from "../../../../../actions/actionCreator"
 import {FaTimes} from "react-icons/fa"
 import {FiEdit3} from "react-icons/fi"
 

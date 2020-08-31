@@ -129,16 +129,6 @@ main {
 
   &-keys {
     flex: 1;
-
-    .box-content {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      & > div {
-        margin-bottom: 1rem;
-      }
-    }
   }
 
   &-radar {

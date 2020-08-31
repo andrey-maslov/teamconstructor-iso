@@ -1,14 +1,14 @@
 import React from 'react'
 import Indicator from "../indicator/Indicator"
-import {GoRocket} from "react-icons/go"
+
 import {AiOutlineProfile} from "react-icons/ai";
 
-interface TeamDescriptionProps {
+interface DescriptionProps {
     teamProfile: string[] | null
     data: (string[] | null)[]
 }
 
-const TeamDescription: React.FC<TeamDescriptionProps> = ({teamProfile, data}) => {
+const Description: React.FC<DescriptionProps> = ({teamProfile, data}) => {
 
     return (
         <div className="row">
@@ -33,4 +33,4 @@ const TeamDescription: React.FC<TeamDescriptionProps> = ({teamProfile, data}) =>
     );
 }
 
-export default TeamDescription;
+export default Description;
