@@ -264,7 +264,7 @@ const TeamCoopResult: React.FC = () => {
     }
 
     function getNeed(maxSectorSq: number): number[] {
-        const minorOctants: IOctant[] = teamPortrait.filter((item: IOctant) => item.value < maxSectorSq * .15)
+        const minorOctants: IOctant[] = teamPortrait.filter((item: IOctant) => item.value < maxSectorSq * .3)
         return minorOctants.map(item => item.index)
     }
 
@@ -306,7 +306,7 @@ const TeamCoopResult: React.FC = () => {
     function checkIntensity(memberProfile: ITendency[], teamProfile: ITendency[]): boolean {
         const sortedMemberProfile = [...memberProfile].sort((a, b) => b.value - a.value)
         const sortedTeamProfile = [...teamProfile].sort((a, b) => b.value - a.value)
-        return !(sortedMemberProfile[0].value > sortedTeamProfile[0].value * 1.2 || sortedMemberProfile[0].value < sortedTeamProfile[0].value * .8);
+        return !(sortedMemberProfile[0].value > sortedTeamProfile[0].value * 1.3 || sortedMemberProfile[0].value < sortedTeamProfile[0].value * .7);
     }
 
     //for function getCandidate
@@ -317,7 +317,7 @@ const TeamCoopResult: React.FC = () => {
             const specOctants = majorOctants.filter(octant => octant.code === specsList[specInd][0] || octant.code === specsList[specInd][1])
             const maxOctant = specOctants[0].value > specOctants[1].value ? specOctants[0] : specOctants[1]
 
-            if (Math.abs(specOctants[0].value - specOctants[1].value) < maxOctant.value * .2) {
+            if (Math.abs(specOctants[0].value - specOctants[1].value) < maxOctant.value * .3) {
                 return false
             }
         }
