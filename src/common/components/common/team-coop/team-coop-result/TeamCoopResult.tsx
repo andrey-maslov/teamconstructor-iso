@@ -340,9 +340,15 @@ const TeamCoopResult: React.FC = () => {
             candidateData = ['Работники, рекомендуемые в команду', candidates.map(item => item.name).join(', ')]
         }
 
-        const unwantedData = unwanted.length === 0 ?
-            null :
-            ['Работники, создающие напряжение в команде', unwanted.map(item => item.name).join(', ')]
+        let unwantedData: TableRow | null = []
+        if (unwanted.length === 0) {
+            unwantedData = null
+        } else if (unwanted.length > 1) {
+           unwantedData = ['Работники, создающие напряжение в команде', `${unwanted.map(item => item.name).join(', ')}, (Команда атомизирована)`]
+        } else {
+            unwantedData = ['Работники, создающие напряжение в команде', unwanted.map(item => item.name).join(', ')]
+        }
+
 
         return [
             ['Лояльность к внешнему руководству',           getDescByRange(loyalty, descriptions.loyaltyDesc)],
@@ -350,8 +356,8 @@ const TeamCoopResult: React.FC = () => {
             ['Лидер команды',                               leaderName],
             ['Альтернативный лидер',                        opinionLeaderName],
             needList.length > 0 ? ['Типы, рекомендуемые в команду', needList.map(i => scheme.psychoTypes[i]).join(', ')] : null,
-            candidateData ? candidateData : null,
-            unwantedData ? unwantedData : null
+            candidateData,
+            unwantedData
         ]
     }
 

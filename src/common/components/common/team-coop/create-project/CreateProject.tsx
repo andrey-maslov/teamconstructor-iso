@@ -53,7 +53,7 @@ const CreateProject: React.FC = () => {
     );
 
     function submitForm(data: IForm): void {
-        dispatch(createProject(data.title, {title: 'pool', id: 0, items: []}, [{title: 'команда 1', id: 1, items: []}]))
+        dispatch(createProject(data.title, {title: 'pool', id: 0, items: []}, [{title: 'Команда 1', id: 1, items: []}]))
     }
 }
 
