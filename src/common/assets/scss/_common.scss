@@ -220,6 +220,12 @@ main {
   }
 }
 
+html,
+body * {
+  scrollbar-color: lighten($overlay-light, 5%) $overlay-dark;
+  scrollbar-width: 6px;
+}
+
 html::-webkit-scrollbar,
 html::-webkit-scrollbar-track,
 body *::-webkit-scrollbar,
@@ -545,6 +551,7 @@ $sidebar-width: 17rem;
     .box-content {
       max-height: 48rem;
       overflow-y: auto;
+      height: 95%;
     }
   }
 

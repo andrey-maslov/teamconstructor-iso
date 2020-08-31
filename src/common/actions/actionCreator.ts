@@ -29,43 +29,6 @@ import {ILoginData, IProject, IRegisterData, ITeam,} from "../../constants/types
 import {CONTENT_API, BASE_API} from "../../constants/constants"
 import axios from 'axios'
 import Cookie from "js-cookie"
-import {isBrowser} from "../../helper/helper"
-
-let localToken = null
-const token = isBrowser ? localStorage.getItem('token') : localToken
-// const token = Cookie.get('token')
-
-
-/*
-USER AUTHORIZATION
- */
-export function addUserData(name: string, email: string): { type: string, name: string, email: string } {
-    return {
-        type: ADD_AUTH_DATA,
-        name,
-        email,
-    };
-}
-
-export function setLanguage(language: string): { type: string, language: string } {
-    Cookie.set("i18next", language)
-    return {
-        type: SET_LANG,
-        language,
-    };
-}
-
-export function logOut(): { type: string } {
-    // Cookie.remove('token')
-    if (isBrowser) {
-        localStorage.removeItem('token')
-        localToken = null
-    }
-    return {
-        type: CLEAR_USER_DATA,
-    };
-}
-
 
 /*
 COMPARISON PROCESS
@@ -231,11 +194,31 @@ export const fetchContent = (lang: string) => {
 
 
 /*===== AUTH =====*/
+export function setLanguage(language: string): { type: string, language: string } {
+    Cookie.set("i18next", language)
+    return {
+        type: SET_LANG,
+        language,
+    };
+}
+
+function setUser(id: number, username: string, email: string, role: any, projects: IProject[] | [], activeProject: IProject | null) {
+    return {
+        type: ADD_AUTH_DATA,
+        id,
+        username,
+        email,
+        role,
+        projects,
+        activeProject,
+    }
+}
 
 export function checkAuth() {
     const url = `${BASE_API}/users/me`
-    return (dispatch: any) => {
+    const token = Cookie.get('token')
 
+    return (dispatch: any) => {
         if (token) {
             dispatch(setLoading(true))
             axios(url, {
@@ -268,9 +251,8 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
             .then(data => {
                 const user = data.user;
                 dispatch(setUser(user.id, user.username, user.email, user.role, [], null))
-                isBrowser && localStorage.setItem('token', data.jwt)
-                localToken = data.jwt
-                // Cookie.set("token", data.jwt)
+                // isBrowser && localStorage.setItem('token', data.jwt)
+                Cookie.set("token", data.jwt)
                 dispatch(fetchProjectsList(data.jwt))
                 dispatch(setAuthModal(false))
                 dispatch(clearErrors())
@@ -283,16 +265,12 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
     }
 }
 
-function setUser(id: number, username: string, email: string, role: any, projects: IProject[] | [], activeProject: IProject | null) {
+
+export function logOut(): { type: string } {
+    Cookie.remove('token')
     return {
-        type: ADD_AUTH_DATA,
-        id,
-        username,
-        email,
-        role,
-        projects,
-        activeProject,
-    }
+        type: CLEAR_USER_DATA,
+    };
 }
 
 /*===== APPLICATION MODE (app reducer) =====*/
@@ -308,6 +286,7 @@ export function setLoading(isLoading: boolean): { type: string, isLoading: boole
 
 export function createProject(title: string, pool: ITeam, teams: ITeam[]) {
     const url = `${BASE_API}/projects`
+    const token = Cookie.get('token')
 
     return (dispatch: any) => {
 
@@ -338,7 +317,8 @@ export function createProject(title: string, pool: ITeam, teams: ITeam[]) {
                 })
                 .finally(() => dispatch(setLoading(false)))
         } else {
-            dispatch(logOut())
+            alert('not authorized')
+            // dispatch(logOut())
             dispatch(setCreateProjectModal(false))
         }
     }
@@ -346,7 +326,8 @@ export function createProject(title: string, pool: ITeam, teams: ITeam[]) {
 
 export function fetchProject(id: number) {
 
-    const url = `${BASE_API}/projects/${id}`;
+    const url = `${BASE_API}/projects/${id}`
+    const token = Cookie.get('token')
 
     return (dispatch: any) => {
         if (token) {
@@ -365,7 +346,8 @@ export function fetchProject(id: number) {
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
         } else {
-            dispatch(logOut())
+            alert('not authorized')
+            // dispatch(logOut())
             dispatch(setCreateProjectModal(false))
         }
     };
@@ -373,6 +355,8 @@ export function fetchProject(id: number) {
 
 export function updateProject(id: number, payload: {pool?: ITeam, teams?: ITeam[]}) {
     const url = `${BASE_API}/projects/${id}`
+    const token = Cookie.get('token')
+
     return (dispatch: any) => {
         if (token) {
             dispatch(setLoading(true))
@@ -398,6 +382,7 @@ export function updateProject(id: number, payload: {pool?: ITeam, teams?: ITeam[
                 .finally(() => dispatch(setLoading(false)))
         } else {
             // dispatch(logOut())
+            alert('not authorized')
             dispatch(setCreateProjectModal(false))
         }
     }
@@ -405,6 +390,7 @@ export function updateProject(id: number, payload: {pool?: ITeam, teams?: ITeam[
 
 export function deleteProject(id: number) {
     const url = `${BASE_API}/projects/${id}`
+    const token = Cookie.get('token')
 
     return (dispatch: any) => {
         if (token) {
@@ -421,7 +407,8 @@ export function deleteProject(id: number) {
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
         } else {
-            dispatch(logOut())
+            // dispatch(logOut())
+            alert('not authorized')
             dispatch(setCreateProjectModal(false))
         }
     }
@@ -429,7 +416,7 @@ export function deleteProject(id: number) {
 
 export function fetchProjectsList(token: string) {
 
-    const url = `${BASE_API}/projects`;
+    const url = `${BASE_API}/projects`
 
     return (dispatch: any) => {
         if (token) {
@@ -453,7 +440,8 @@ export function fetchProjectsList(token: string) {
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
         } else {
-            dispatch(logOut())
+            // dispatch(logOut())
+            alert('not authorized')
         }
     };
 }

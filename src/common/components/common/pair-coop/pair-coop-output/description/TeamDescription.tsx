@@ -26,7 +26,6 @@ const TeamDescription: React.FC<TeamDescriptionProps> = ({teamProfile, data}) =>
                         <Indicator
                             title={item[0]}
                             description={item[1]}
-                            icon={<GoRocket/>}
                         />
                     </div>
             })}

@@ -73,7 +73,7 @@ const TeamCoopResult: React.FC = () => {
     const unwanted          = getUnwanted(teamMembers, teamProfile)
 
     const keyResults = ['', 'хороший результат', 'отличный результат']
-    const keyValues         = [
+    const keyValues  = [
         {
             title: 'Кросс-функциональность',
             description: getKeyResult(crossFunc, keyResults),
@@ -152,7 +152,7 @@ const TeamCoopResult: React.FC = () => {
                             title={`${activeTeam.title}. Показатели`}
                         >
                             <TeamDescription
-                                teamProfile={['Психрологический профиль команды', teamProfileDesc]}
+                                teamProfile={['Психологический профиль команды', teamProfileDesc]}
                                 data={teamDescriptionData}
                             />
                             {/*<ComparisonTable tableData={resultTableData}/>*/}
@@ -256,7 +256,7 @@ const TeamCoopResult: React.FC = () => {
             }
         }
         if (descIndList.length === 0) {
-            return 'ERROR'
+            return 'Не определено'
         }
         const desc = descIndList.map(index => descList[index]).join(', ')
 
@@ -342,7 +342,7 @@ const TeamCoopResult: React.FC = () => {
 
         const unwantedData = unwanted.length === 0 ?
             null :
-            ['Работники, напрягающие команду', unwanted.map(item => item.name).join(', ')]
+            ['Работники, создающие напряжение в команде', unwanted.map(item => item.name).join(', ')]
 
         return [
             ['Лояльность к внешнему руководству',           getDescByRange(loyalty, descriptions.loyaltyDesc)],

@@ -38,14 +38,14 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
         >
             <div className={style.wrapper}>
 
-                <button className={style.profile} onClick={() => {
+                <button className={style.openBtn} onClick={() => {
                     setIsOpen(!isOpen)
                 }}>
                     <FiUser/>
                     <FiChevronDown/>
                 </button>
 
-                <Popover isVisible={isOpen} className='user-popover'>
+                <Popover isVisible={isOpen} className={`user-popover ${style.body}`}>
                     <ul className={style.links}>
                         <li>
                             <p className={`${style.item} ${style.creds}`}>
@@ -94,7 +94,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
 
                     <button className={style.item} onClick={logoutHandle}>
                         <FiLogOut/>
-                        <span>Logout</span>
+                        <span>Выход</span>
                     </button>
                 </Popover>
             </div>

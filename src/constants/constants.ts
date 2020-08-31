@@ -23,8 +23,8 @@ export const unit = {factor: 100, sign: '%'}
 // export const REQUEST_BASE_URL = 'https://base.teamconstructor.com'
 // export const REQUEST_BASE_ROUTE = `${REQUEST_BASE_URL}/api/Predict`
 
-// export const API_URL = 'https://strapi.nobugs.today'
-export const BASE_API = 'https://strapi.nobugs.today'
+// export const BASE_API = 'https://strapi.nobugs.today'
+export const BASE_API = 'https://api.teamconstructor.com'
 export const CONTENT_API = 'https://api.salary2.me'
 
 export const COLORS = {
