@@ -40,7 +40,7 @@ i18n
             preload: ['en', 'ru'],
             // @ts-ignore
             whitelist: languages,
-            ns: ['common', 'questions'],
+            ns: ['common', 'team', 'pair', '404'],
             defaultNS: 'common',
             backend: {
                 loadPath: `${process.env.RAZZLE_PUBLIC_DIR!}/locales/{{lng}}/{{ns}}.json`,

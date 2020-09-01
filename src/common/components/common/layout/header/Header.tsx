@@ -6,15 +6,17 @@ import MobiHeader from '../../../mobi/header/MobiHeader'
 import WebHeader from '../../../web/header/WebHeader'
 import {FiDollarSign, FiHome} from "react-icons/fi"
 import {GlobalStateType} from "../../../../../constants/types"
+import {useTranslation} from "react-i18next";
 
 const Header: React.FC = () => {
 
     const dispatch = useDispatch()
+    const {t} = useTranslation()
     const {isLoggedIn, userEmail} = useSelector((state: GlobalStateType) => state.userData)
 
     const routes = [
-        {title: 'Пара', path: '/', access: 'all', icon: <FiHome/>},
-        {title: 'Команда', path: '/team', access: 'auth', icon: <FiDollarSign/>},
+        {title: t('common:nav.pair'), path: '/', access: 'all', icon: <FiHome/>},
+        {title: t('common:nav.team'), path: '/team', access: 'auth', icon: <FiDollarSign/>},
     ];
 
     const isTablet = useMediaPredicate('(max-width: 992px)');
@@ -27,7 +29,7 @@ const Header: React.FC = () => {
 
     const handleLoginBtn = () => {
         if (isLoggedIn) {
-            if(confirm('Вы действительно хотиете выйти?')) {
+            if(confirm(t('common:confirms.do_logout'))) {
                 dispatch(logOut())
             }
         } else {

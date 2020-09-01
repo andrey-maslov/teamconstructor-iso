@@ -3,22 +3,22 @@ import {useSelector, useDispatch} from 'react-redux'
 import style from "./popover-user.module.scss"
 import {FiUser, FiUserCheck, FiLogOut, FiChevronDown, FiStar} from "react-icons/fi"
 import {Popover} from "../Popover"
+import {useTranslation} from 'react-i18next'
 import OutsideClickHandler from 'react-outside-click-handler'
-import {GlobalStateType} from "../../../../../constants/types";
-import {deleteProject, fetchProject, setCreateProjectModal} from "../../../../actions/actionCreator";
+import {GlobalStateType} from "../../../../../constants/types"
+import {deleteProject, fetchProject, setCreateProjectModal} from "../../../../actions/actionCreator"
 
 interface PopoverUserProps {
-    userEmail: string
     logoutHandle: () => void
 }
 
-const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
+const PopoverUser: React.FC<PopoverUserProps> = ({ logoutHandle}) => {
 
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
     const userData = useSelector((state: GlobalStateType) => state.userData)
     const {projects, activeProject, email, username} = userData
-    const token: string = useSelector((state: GlobalStateType) => state.userData.token)
+    const {t} = useTranslation();
 
     const outsideClickHandler = () => {
         if (isOpen) {
@@ -58,7 +58,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
                     <div className={style.title}>
                         <div>
                             <FiStar/>
-                            <span>Мои проекты</span>
+                            <span>{t('team:project.my_projects')}</span>
                         </div>
                         <button
                             className={style.create}
@@ -88,13 +88,13 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
                             </li>
                         )) :
                             <li>
-                                <span>У вас нет проектов</span>
+                                <span>{t('team:project.no_projects')}</span>
                             </li>}
                     </ul>
 
                     <button className={style.item} onClick={logoutHandle}>
                         <FiLogOut/>
-                        <span>Выход</span>
+                        <span>{t('common:buttons.logOut')}</span>
                     </button>
                 </Popover>
             </div>
@@ -116,7 +116,6 @@ const PopoverUser: React.FC<PopoverUserProps> = ({userEmail, logoutHandle}) => {
             setIsOpen(false)
         }
     }
-
 
     function changeProject(id: number) {
         dispatch(fetchProject(id))

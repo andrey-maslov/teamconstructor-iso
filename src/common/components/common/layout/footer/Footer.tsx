@@ -1,27 +1,26 @@
-import React from 'react';
-import {useTranslation} from "react-i18next";
-import SocialSharing from "../../buttons/social-sharing/SocialSharing";
-import TopLogo from "../header/top-logo/TopLogo";
-import {NavLink} from "react-router-dom";
-import LangSwitcherAlt from "../../buttons/lang-switcher-alt/LangSwitcherAlt";
-import style from './footer.module.scss';
+import React from 'react'
+import {useTranslation} from "react-i18next"
+import TopLogo from "../header/top-logo/TopLogo"
+import {NavLink} from "react-router-dom"
+import LangSwitcherAlt from "../../buttons/lang-switcher-alt/LangSwitcherAlt"
+import style from './footer.module.scss'
 
-const Footer = () => {
+const Footer: React.FC = () => {
 
     const {t} = useTranslation();
 
     const links = [
         {
             link: '/privacy-policy',
-            title: t('footer.links.privacy_policy'),
+            title: t('common:nav.privacy_policy'),
         },
         {
             link: '/terms',
-            title: t('footer.links.terms'),
+            title: t('common:nav.terms'),
         },
         {
             link: '/cookie-policy',
-            title: t('footer.links.cookie'),
+            title: t('common:nav.cookie'),
         },
     ];
 
@@ -42,7 +41,9 @@ const Footer = () => {
     return (
         <footer className={`${style.footer} footer`}>
             <div className="container">
-                <div className={style.logo}><TopLogo/></div>
+                <div className={style.logo}>
+                    <TopLogo/>
+                </div>
                 <FooterLinks/>
                 <div className={style.copy}>
                     <div className="row justify-content-between">

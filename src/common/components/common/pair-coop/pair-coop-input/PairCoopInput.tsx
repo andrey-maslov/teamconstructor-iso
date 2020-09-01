@@ -10,6 +10,7 @@ import ProfileGenerator from "./profile-generator/ProfileGenerator"
 import style from './pair-coop-input.module.scss'
 import {GlobalStateType} from "../../../../../constants/types"
 import {useForm} from 'react-hook-form'
+import {useTranslation} from "react-i18next"
 
 interface IPairLocalState {
     data1: string
@@ -30,6 +31,7 @@ const PairCoopInput: React.FC = () => {
     const encData1 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.encData);
     const encData2 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.encData);
     const {register, handleSubmit, reset, errors} = useForm()
+    const {t} = useTranslation();
 
     const encDataFromURL = getAndDecodeData().encoded;
 
@@ -62,12 +64,12 @@ const PairCoopInput: React.FC = () => {
                             <InputField
                                 label={`${item}`}
                                 value={localState[`data${item}`]}
-                                placeholder={`Внесите в это поле зашифрованный результат для пользователя ${item}`}
+                                placeholder={`${t('pair:textarea_placeholder')} ${item}`}
                                 nameRef={register({
-                                    required: 'Это обязательное поле',
+                                    required: `${t('common:errors.required')}`,
                                 })}
                                 dataRef={register({
-                                    required: 'Это обязательное поле',
+                                    required: `${t('common:errors.required')}`,
                                     validate: {
                                         decode: value => getAndDecodeData('', value).data !== null
                                     }
@@ -80,7 +82,7 @@ const PairCoopInput: React.FC = () => {
                 </div>
                 <div className={style.buttons}>
                     <Button
-                        title={'Сравнить'}
+                        title={t('common:buttons.compare')}
                         startIcon={<GoRocket/>}
                         handle={() => void (0)}
                         btnClass={'btn-outlined'}

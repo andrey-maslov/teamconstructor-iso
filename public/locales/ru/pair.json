@@ -1,0 +1,10 @@
+{
+  "textarea_placeholder": "Внесите в это поле зашифрованный результат для пользователя",
+  "result_for_pair":  "Результаты анализа совместимости пары  {{name1}} и {{name2}}",
+  "profile": "Профиль",
+  "descriptions": "Описание",
+  "characteristics": "Основные характеристики",
+  "revealed": "Выявлено",
+  "one_brings_in_pair": "{{name}} привносит в пару {{description}}",
+  "both_bring_in_pair": "И {{name1}}, и {{name2}} привносят в пару {{description}}"
+}

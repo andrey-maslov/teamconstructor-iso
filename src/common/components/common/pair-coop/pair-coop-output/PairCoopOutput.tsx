@@ -9,59 +9,61 @@ import {DecodedDataType, GlobalStateType} from "../../../../../constants/types";
 import {BsTable} from "react-icons/bs";
 import KeyIndicator from "../../result-common/key-indicator/KeyIndicator";
 import {getDescByRange, toPercent} from "../../../../../helper/helper";
+import {useTranslation} from "react-i18next";
 
 const PairCoopOutput: React.FC = () => {
 
+    const {t} = useTranslation();
+
     //Initial data
     const {terms: scheme, descriptions} = useSelector((state: GlobalStateType) => state.termsReducer)
-    const pairStore                     = useSelector((state: GlobalStateType) => state.pairCoopReducer)
-    const isResultReady: boolean        = pairStore.isComparisonResultReady
-    const decData1: DecodedDataType     = pairStore.partner1.data
-    const decData2: DecodedDataType     = pairStore.partner2.data
-    const name1: string                 = pairStore.partner1.name
-    const name2: string                 = pairStore.partner2.name
+    const pairStore = useSelector((state: GlobalStateType) => state.pairCoopReducer)
+    const isResultReady: boolean = pairStore.isComparisonResultReady
+    const decData1: DecodedDataType = pairStore.partner1.data
+    const decData2: DecodedDataType = pairStore.partner2.data
+    const name1: string = pairStore.partner1.name
+    const name2: string = pairStore.partner2.name
 
     //if all resources are fetched, calculated and ready to display
-    const [isReady, setReady]           = useState(false)
+    const [isReady, setReady] = useState(false)
 
     useEffect(() => {
-        if (isResultReady &&  scheme && descriptions) {
+        if (isResultReady && scheme && descriptions) {
             setReady(true)
         }
-    }, [isResultReady, scheme])
-
+    }, [isResultReady, scheme, descriptions])
 
     if (!isReady) {
         return null;
     }
 
-    const {compatibilityDesc, efficiencyDesc, complementarityDesc} = descriptions
+    const {compatibilityDesc, efficiencyDesc, complementarityDesc, pairDescriptions: desc} = descriptions
 
     const fullResult1: IUserResult = new UserResult(decData1[1])
     const fullResult2: IUserResult = new UserResult(decData2[1])
 
-    const portrait1    = fullResult1.portrait;
-    const portrait2    = fullResult2.portrait;
-    const profile1     = fullResult1.profile
-    const profile2     = fullResult2.profile
+    const portrait1 = fullResult1.portrait;
+    const portrait2 = fullResult2.portrait;
+    const profile1 = fullResult1.profile
+    const profile2 = fullResult2.profile
     const leadSegment1 = fullResult1.mainOctant
     const leadSegment2 = fullResult2.mainOctant
 
     //All calculated values for comparison table
-    const intensityRatio: number           = getIntensityRatio()
-    const understanding: number            = getUnderstanding()
-    const attraction: number[]             = getAttraction()
-    const lifeAttitudes: number            = getLifeAttitudes()
-    const similarityThinking: number       = getSimilarityThinking()
-    const emotionalCompatibility: number   = getEmotionalCompatibility()
-    const complementarity: string          = getComplementarity()
-    const maturity: number[]               = getPsyMaturity()
+    const intensityRatio: number = getIntensityRatio()
+    const understanding: number = getUnderstanding()
+    const attraction: number[] = getAttraction()
+    const lifeAttitudes: number = getLifeAttitudes()
+    const similarityThinking: number = getSimilarityThinking()
+    const emotionalCompatibility: number = getEmotionalCompatibility()
+    const complementarity: string = getComplementarity()
+    const maturity: number[] = getPsyMaturity()
 
-    const valuesForEfficiency: number[]    = [intensityRatio, understanding, lifeAttitudes, similarityThinking, emotionalCompatibility];
-    const efficiency: number               = valuesForEfficiency.reduce((a, b) => a + b) / valuesForEfficiency.length;
+    const valuesForEfficiency: number[] = [intensityRatio, understanding, lifeAttitudes, similarityThinking, emotionalCompatibility];
+    const efficiency: number = valuesForEfficiency.reduce((a, b) => a + b) / valuesForEfficiency.length;
 
     const valuesForCompatibility: number[] = [intensityRatio, understanding, ...maturity, lifeAttitudes, similarityThinking, emotionalCompatibility, ...maturity];
-    const compatibility: number            = valuesForCompatibility.reduce((a, b) => a + b) / valuesForCompatibility.length;
+    const compatibility: number = valuesForCompatibility.reduce((a, b) => a + b) / valuesForCompatibility.length;
 
     const keyValues = [
         {
@@ -78,7 +80,10 @@ const PairCoopOutput: React.FC = () => {
 
     return (
         <>
-            <Box title={`Результаты анализа совместимости пары ${name1} и ${name2}`}>
+            <Box
+                addClass='result-box'
+                title={`${t('pair:result_for_pair', {name1, name2})}`}
+            >
                 <div className="row around-md">
                     <RadarChart
                         profiles={[profile1, profile2]}
@@ -100,7 +105,7 @@ const PairCoopOutput: React.FC = () => {
 
             <Box
                 addClass='result-box'
-                title={'Сводная таблица'}
+                title={t('pair:descriptions')}
                 icon={<BsTable/>}
             >
                 <div className="row center-md">
@@ -162,16 +167,16 @@ const PairCoopOutput: React.FC = () => {
     function getComparisonTableData() {
 
         return [
-            ['Принятие особенностей партнера', toPercent(intensityRatio).str],
-            ['Взаимное понимание', toPercent(understanding).str],
-            ['Бессознательное притяжение', `${name1} - ${toPercent(attraction[0]).str},</br>${name2} - ${toPercent(attraction[1]).str}`],
-            ['Схожесть жизненных установок', toPercent(lifeAttitudes).str],
-            ['Схожесть мышления', toPercent(similarityThinking).str],
-            ['Эмоциональная совместимость', toPercent(emotionalCompatibility).str],
-            ['Дополняемость', complementarity],
-            ['Психологическая взрослость', `${name1} - ${toPercent(maturity[0]).str},</br>${name2} - ${toPercent(maturity[1]).str}`],
-            ['Эффективность совместной деятельности', toPercent(efficiency).str],
-            ['Взаимное принятие', toPercent(compatibility).str]
+            [desc[0], toPercent(intensityRatio).str],
+            [desc[1], toPercent(understanding).str],
+            [desc[2], `${name1} - ${toPercent(attraction[0]).str},</br>${name2} - ${toPercent(attraction[1]).str}`],
+            [desc[3], toPercent(lifeAttitudes).str],
+            [desc[4], toPercent(similarityThinking).str],
+            [desc[5], toPercent(emotionalCompatibility).str],
+            [desc[6], complementarity],
+            [desc[7], `${name1} - ${toPercent(maturity[0]).str},</br>${name2} - ${toPercent(maturity[1]).str}`],
+            [desc[8], toPercent(efficiency).str],
+            [desc[9], toPercent(compatibility).str]
         ]
     }
 
@@ -284,10 +289,12 @@ const PairCoopOutput: React.FC = () => {
         const indexOfSegment2 = fullResult2.mainOctant.index
 
         if (fullResult1.mainOctant.code === fullResult2.mainOctant.code) {
-            return `И ${name1}, и ${name2} дают паре ${complementarityDesc[indexOfSegment1]}`
+            return t('pair:both_bring_in_pair', {name1, name2, description: complementarityDesc.variants[indexOfSegment1]})
         }
 
-        return `${name1} привносит в пару ${complementarityDesc[indexOfSegment1]}.</br> ${name2}  привносит в пару ${complementarityDesc[indexOfSegment2]}`
+        return `${t('pair.one_brings_in_pair', {name: name1, description: complementarityDesc.variants[indexOfSegment1]})}.<br/> 
+                ${t('pair.one_brings_in_pair', {name: name2, description: complementarityDesc.variants[indexOfSegment2]})}`
+
     }
 
     //Психологическая взрослость

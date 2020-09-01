@@ -9,7 +9,8 @@ import TeamModule from "./team-module/TeamModule"
 import TeamSpec from "./team-spec/TeamSpec"
 import {SET_TEAM_SPEC} from "../../../../actions/actionTypes"
 import {useMediaPredicate} from 'react-media-hook'
-import {OpenSidebarBtn} from "../../buttons/open-sidebar-btn/OpenSidebarBtn";
+import {OpenSidebarBtn} from "../../buttons/open-sidebar-btn/OpenSidebarBtn"
+import {useTranslation} from "react-i18next"
 
 const TeamCoopSidebar: React.FC = () => {
 
@@ -20,6 +21,7 @@ const TeamCoopSidebar: React.FC = () => {
     const dispatch = useDispatch()
     const isMedium = useMediaPredicate('(max-width: 1400px)')
     const [isCompact, setCompact] = useState(false)
+    const {t} = useTranslation()
     const mediumClasses = isCompact ? 'compact' : 'full'
 
     useEffect(() => {
@@ -56,7 +58,7 @@ const TeamCoopSidebar: React.FC = () => {
             </div>
             <div className={`${style.bottom}`}>
                 <Button
-                    title={!isCompact ? 'Просчитать' : ''}
+                    title={!isCompact ? t('common:buttons.calculate') : ''}
                     handle={calculateHandler}
                     btnClass={'btn btn-accent'}
                     startIcon={<GoRocket/>}

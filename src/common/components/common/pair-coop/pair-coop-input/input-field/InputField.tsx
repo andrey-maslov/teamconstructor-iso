@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './input-field.module.scss'
+import {useTranslation} from "react-i18next";
 
 interface IInputField {
     label: string
@@ -12,6 +13,7 @@ interface IInputField {
 
 const InputField: React.FC<IInputField> = ({label, value, placeholder, nameRef, dataRef, errors}) => {
 
+    const {t} = useTranslation();
 
     return (
         <div className={style.wrapper}>
@@ -19,10 +21,10 @@ const InputField: React.FC<IInputField> = ({label, value, placeholder, nameRef, 
                 <input
                     type="text"
                     name={`name${label}`}
-                    defaultValue={`Профиль ${label}`}
+                    defaultValue={`${t('pair:profile')} ${label}`}
                     ref={nameRef}
                     onFocus={(e: any) => e.target.select()}
-                    placeholder={`Профиль ${label}`}
+                    placeholder={`${t('pair:profile')} ${label}`}
                     autoComplete={'off'}
                 />
                 {errors[`name${label}`] && <div className={`item-explain`}>{errors[`name${label}`].message}</div>}
@@ -36,7 +38,7 @@ const InputField: React.FC<IInputField> = ({label, value, placeholder, nameRef, 
                 />
                 {errors[`data${label}`] && <div className={`item-explain`}>{errors[`data${label}`].message}</div>}
                 {errors[`data${label}`] && errors[`data${label}`].type === 'decode' && (
-                    <div className={`item-explain`}>Значение невалидно</div>
+                    <div className={`item-explain`}>{t('common:errors.not_valid')}</div>
                 )}
             </div>
         </div>

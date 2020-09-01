@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux"
-import {GlobalStateType, IMember, ITeam, TableRow} from "../../../../../constants/types"
+import {GlobalStateType, IMember, ITeam} from "../../../../../constants/types"
 import Box from "../../layout/box/Box"
 import {UserResult, baseTestResultType, IUserResult, ITendency, IOctant} from "../../../../../UserResult"
 import RadarChart from "../../charts/radar-chart/RadarChart"
 import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
 import {getDescByRange, getKeyResult} from "../../../../../helper/helper"
-import Description from "../../result-common/description/Description";
+import Description from "../../result-common/description/Description"
+import {useTranslation} from "react-i18next";
 
 const TeamCoopResult: React.FC = () => {
 
@@ -18,7 +19,8 @@ const TeamCoopResult: React.FC = () => {
     const teamsCount                    = teamCoop.teams.length
 
     //if all resources are fetched, calculated and ready to display
-    const [isReady, setReady]      = useState(false)
+    const [isReady, setReady] = useState(false)
+    const {t} = useTranslation()
 
     useEffect(() => {
         if (typeof activeTeam !== 'undefined' && scheme && descriptions) {
@@ -39,7 +41,7 @@ const TeamCoopResult: React.FC = () => {
     const teamMembers       = activeTeam.items
 
     if (activeTeam.items.length < 3 || activeTeam.items.length > 9) {
-        return <div className="" style={{textAlign: 'center'}}>Количество участников команды должно быть от 3 до 9</div>
+        return <div className="" style={{textAlign: 'center'}}>{t('team:members_limit')}</div>
     }
 
     const testResultList = activeTeam.items.map((item: IMember) => {
@@ -69,11 +71,11 @@ const TeamCoopResult: React.FC = () => {
     const teamProfileDesc   = getProfileDesc(maxSectorSq, descriptions.complementarityDesc.variants)
     const needList          = getNeed(maxSectorSq)
     const candidates        = getCandidates(teamPortrait, teamSpec, allCandidates)
-    const unwanted          = getUnwanted(teamMembers, teamProfile)
+    const unwanted          = getUnwanted(teamMembers)
 
     const keyValues  = [crossFunc, emotionalComp, interaction].map((value, i) => ({
         title: descriptions.keyIndicators[i].title,
-        description: getKeyResult(value, ['', 'хороший результат', 'отличный результат']),
+        description: getKeyResult(value, ['', t('team:result.good'), t('team:result.excellent')]),
         more: descriptions.keyIndicators[i].desc,
         value
     }))
@@ -86,7 +88,7 @@ const TeamCoopResult: React.FC = () => {
                     <div className="col">
                         <Box
                             addClass="team-radar"
-                            title={`${activeTeam.title}. Профили участников`}
+                            title={`${activeTeam.title}. ${t('team:profiles')}`}
                         >
                             {profiles.length !== 0 &&
                             <RadarChart
@@ -98,7 +100,7 @@ const TeamCoopResult: React.FC = () => {
 
                         <Box
                             addClass="team-radar"
-                            title={`${activeTeam.title}. Общий профиль`}
+                            title={`${activeTeam.title}. ${t('team:common_profile')}`}
                         >
                             {profiles.length !== 0 &&
                             <RadarChart
@@ -112,7 +114,7 @@ const TeamCoopResult: React.FC = () => {
                     <div className="col">
                         <Box
                             addClass="team-keys"
-                            title={`${activeTeam.title}. Ключевые показатели`}
+                            title={`${activeTeam.title}. ${t('team:key_indicators')}`}
                         >
                             <div className="row">
                                 {keyValues.map((item, i) => (
@@ -131,7 +133,7 @@ const TeamCoopResult: React.FC = () => {
 
                         <Box
                             addClass="team-table team-indicators"
-                            title={`${activeTeam.title}. Показатели`}
+                            title={`${activeTeam.title}.  ${t('team:indicators')}`}
                         >
                             <Description
                                 teamProfile={{title: `${descriptions.complementarityDesc.title}`, desc: teamProfileDesc, status: 1}}
@@ -215,7 +217,6 @@ const TeamCoopResult: React.FC = () => {
             return topSum / 0.1
         }
         return topSum / bottomSum
-
     }
 
     //TODO need to fix
@@ -245,9 +246,9 @@ const TeamCoopResult: React.FC = () => {
         if (descIndList.length === 0) {
             return descList[8]
         }
-        const desc = descIndList.map(index => descList[index]).join(', ')
+        const description = descIndList.map(index => descList[index]).join(', ')
 
-        return `Команда характеризуется такими качествами как ${desc}`
+        return t('team:team_is_characterized', {description})
     }
 
     function getNeed(maxSectorSq: number): number[] {
@@ -311,7 +312,7 @@ const TeamCoopResult: React.FC = () => {
         return true
     }
 
-    function getUnwanted(members: IMember[], teamProfile: ITendency[]): IMember[] {
+    function getUnwanted(members: IMember[]): IMember[] {
         return members.filter(item => !checkIntensity(UserResult.getProfile(item.decData[1])))
     }
 
@@ -327,15 +328,6 @@ const TeamCoopResult: React.FC = () => {
             candidateData = {title: descriptions.candidatesDesc.title, desc: candidates.map(item => item.name).join(', '), status: 1}
         }
 
-        let unwantedData: { title: string; desc: string; status: number }
-        if (unwanted.length === 0) {
-            unwantedData = {title: descriptions.unwantedDesc.title, desc: descriptions.candidatesDesc.variants[1], status: 2}
-        } else if (unwanted.length > 1) {
-           unwantedData = {title: descriptions.unwantedDesc.title, desc: `${unwanted.map(item => item.name).join(', ')} ${descriptions.candidatesDesc.variants[1]}`, status: 0}
-        } else {
-           unwantedData = {title: descriptions.unwantedDesc.title, desc: unwanted.map(item => item.name).join(', '), status: 1}
-        }
-
         let needData: { title: string; desc: string; status: number }
         if (needList.length === 0) {
             needData = {title: descriptions.needDesc.title, desc: descriptions.needDesc.variants[1], status: 2}
@@ -344,13 +336,20 @@ const TeamCoopResult: React.FC = () => {
             needData = {title: descriptions.needDesc.title, desc: needList.map(i => scheme.psychoTypes[i]).join(', '), status: 1}
         }
 
-
+        let unwantedData: { title: string; desc: string; status: number }
+        if (unwanted.length === 0) {
+            unwantedData = {title: descriptions.unwantedDesc.title, desc: descriptions.unwantedDesc.variants[1], status: 2}
+        } else if (unwanted.length > 1) {
+            unwantedData = {title: descriptions.unwantedDesc.title, desc: `${unwanted.map(item => item.name).join(', ')} ( ${descriptions.unwantedDesc.variants[1]} )`, status: 0}
+        } else {
+            unwantedData = {title: descriptions.unwantedDesc.title, desc: unwanted.map(item => item.name).join(', '), status: 1}
+        }
 
         return [
             getDescByRange(loyalty, descriptions.loyaltyDesc),
             getDescByRange(commitment, descriptions.commitmentDesc),
-            {title: 'Лидер команды', desc: leaderName, status: 2},
-            {title: 'Альтернативный лидер', desc: opinionLeaderName, status: opinionLeaderName !== leaderName ? 2 : 1},
+            {title: descriptions.leaderDesc.variants[0], desc: leaderName, status: 2},
+            {title: descriptions.leaderDesc.variants[1], desc: opinionLeaderName, status: opinionLeaderName !== leaderName ? 2 : 1},
             needData,
             candidateData,
             unwantedData

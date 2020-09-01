@@ -17,7 +17,7 @@ export type NavigationType = {
 
 const WebNav: React.FC<NavigationType> = ({isLoggedIn, handleLoginBtn, userEmail, routes}) => {
 
-    const {t} = useTranslation();
+    const {t} = useTranslation()
 
     return (
         <div className={style.nav}>
@@ -25,7 +25,12 @@ const WebNav: React.FC<NavigationType> = ({isLoggedIn, handleLoginBtn, userEmail
             <ul className={style.list}>
                 {routes.map(route => (
                     <li key={route.title}>
-                        <NavLink className={style.link} exact to={route.path} activeClassName={style.current}>
+                        <NavLink
+                            className={style.link}
+                            exact
+                            to={route.path}
+                            activeClassName={style.current}
+                        >
                             {route.title}
                         </NavLink>
                     </li>
@@ -33,7 +38,6 @@ const WebNav: React.FC<NavigationType> = ({isLoggedIn, handleLoginBtn, userEmail
             </ul>
             {isLoggedIn ?
                 <PopoverUser
-                    userEmail={userEmail}
                     logoutHandle={handleLoginBtn}
                 /> :
                 <Button
