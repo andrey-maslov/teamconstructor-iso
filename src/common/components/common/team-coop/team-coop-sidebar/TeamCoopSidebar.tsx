@@ -17,15 +17,13 @@ const TeamCoopSidebar: React.FC = () => {
     const teams: ITeam[] = teamsState.teams.slice(1)
     const activeTeam: number = teamsState.activeTeam
     const teamSpec: number = teamsState.teamSpec
-    const dispatch = useDispatch();
-    const isMedium = useMediaPredicate('(max-width: 1400px)');
+    const dispatch = useDispatch()
+    const isMedium = useMediaPredicate('(max-width: 1400px)')
     const [isCompact, setCompact] = useState(false)
     const mediumClasses = isCompact ? 'compact' : 'full'
 
     useEffect(() => {
-        if (isMedium) {
-            setCompact(true)
-        }
+        isMedium ? setCompact(true) : setCompact(false)
     }, [isMedium])
 
     return (

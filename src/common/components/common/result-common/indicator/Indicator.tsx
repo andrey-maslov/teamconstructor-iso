@@ -4,13 +4,16 @@ import style from "./indicator.module.scss"
 export interface Indicator {
     title: string
     description: string
+    status: number
     icon?: React.ReactNode
 }
 
-const Indicator: React.FC<Indicator> = ({title, description, icon}) => {
+const Indicator: React.FC<Indicator> = ({title, description, status, icon}) => {
+
+    const statuses = ['danger', 'warning', 'success']
 
     return (
-        <div className={style.wrapper}>
+        <div className={`${style.wrapper} ${statuses[status] ? style[statuses[status]] : ''}`}>
             <div className={style.top}>
 
                 {icon ?

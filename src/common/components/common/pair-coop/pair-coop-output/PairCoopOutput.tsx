@@ -65,13 +65,13 @@ const PairCoopOutput: React.FC = () => {
 
     const keyValues = [
         {
-            title: 'Взаимное принятие',
-            description: getDescByRange(compatibility, compatibilityDesc),
+            title: getDescByRange(compatibility, compatibilityDesc).title,
+            description: getDescByRange(compatibility, compatibilityDesc).desc,
             value: compatibility
         },
         {
-            title: 'Эффективность совместной деятельности',
-            description: getDescByRange(efficiency, efficiencyDesc),
+            title: getDescByRange(efficiency, efficiencyDesc).title,
+            description: getDescByRange(efficiency, efficiencyDesc).desc,
             value: efficiency
         }
     ]
@@ -85,7 +85,7 @@ const PairCoopOutput: React.FC = () => {
                         names={[name1, name2]}
                         labels={scheme.tendencies}
                     />
-                    <div>
+                    <div className="keys">
                         {keyValues.map((item, i) => (
                             <KeyIndicator
                                 key={i}

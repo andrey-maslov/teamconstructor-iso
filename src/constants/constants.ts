@@ -1,5 +1,5 @@
 export const SITE_TITLE = 'Teamconstructor'
-// export const LANGS = ['ru', 'en', 'pl', 'es', 'de', 'fr', 'it'];
+
 // export const LANGS = [
 //     ['ru', 'Русский'],
 //     ['en', 'English'],
@@ -16,14 +16,15 @@ export const LANGS = [
 ];
 export const LANG_DEFAULT = LANGS[0][0]
 
-export const ROUTES = ['/', '/result'];
+export const ROUTES = {
+    '/':               'page-main',
+    '/pair':           'page-pair',
+    '/team':           'page-team',
+    '/cookie-policy':  'page-content',
+    '/privacy-policy': 'page-content',
+    '/terms':          'page-content',
+};
 
-export const unit = {factor: 100, sign: '%'}
-
-// export const REQUEST_BASE_URL = 'https://base.teamconstructor.com'
-// export const REQUEST_BASE_ROUTE = `${REQUEST_BASE_URL}/api/Predict`
-
-// export const BASE_API = 'https://strapi.nobugs.today'
 export const BASE_API = 'https://api.teamconstructor.com'
 export const CONTENT_API = 'https://api.salary2.me'
 

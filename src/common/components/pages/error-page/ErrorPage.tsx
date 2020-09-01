@@ -8,7 +8,7 @@ const ErrorPage = () => {
     const {t} = useTranslation();
 
     return (
-        <div className={`main section grey-bg ${style.wrapper}`}>
+        <div className={`main section flex-centered ${style.wrapper}`}>
             <div className="container">
                 <h1>{t('common:404_page.title')}</h1>
                 <div className={style.content} dangerouslySetInnerHTML={{__html: t('common:404_page.description')}}/>

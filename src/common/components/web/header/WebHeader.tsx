@@ -14,13 +14,15 @@ export interface IHeaderProps {
 const WebHeader: React.FC<IHeaderProps> = (props) => {
 
     return (
-        <header className={`${style.header} container-wide`}>
-            <nav className={style.bar}>
-                <TopLogo/>
-                <WebNav
-                    {...props}
-                />
-            </nav>
+        <header className={`${style.header} header`}>
+            <div className="container-wide">
+                <nav className={style.bar}>
+                    <TopLogo/>
+                    <WebNav
+                        {...props}
+                    />
+                </nav>
+            </div>
         </header>
     );
 };

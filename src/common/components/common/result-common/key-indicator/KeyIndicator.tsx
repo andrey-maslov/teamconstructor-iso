@@ -17,7 +17,7 @@ const KeyIndicator: React.FC<IKeyIndicator> = ({title, description, value, more}
             {more && <div className={style.more}><PopoverMore data={[more]}/></div>}
             <h5>{title}</h5>
             <CircleDiagram value={value}/>
-            {description && <div className={style.desc}>{description}</div>}
+            <div className={style.desc}>{description || ''}</div>
         </div>
     )
 }

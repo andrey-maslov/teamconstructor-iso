@@ -87,9 +87,9 @@ i18n
                                             <head>
                                                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                                                 <meta charSet='utf-8' />
-                                                <title>${initialI18nStore[initLang].common.meta.title}</title>
                                                 <meta name="description" content="${initialI18nStore[initLang].common.meta.title}">
                                                 <meta name="viewport" content="width=device-width, initial-scale=1">
+                                                <title>${initialI18nStore[initLang].common.meta.title}</title>
                                                 ${assets.client.css ? `<link rel="stylesheet" href="${assets.client.css}">` : ''}
                                                 <script src="${assets.client.js}" defer></script>
                                                 <script>
@@ -103,9 +103,9 @@ i18n
                                             </body>
                                         </html>`;
 
-                        // if (!ROUTES.includes(req.path)) {
-                        //     res.status(404).send(indexHTML);
-                        // }
+                        if (!Object.keys(ROUTES).includes(req.path)) {
+                            res.status(404).send(indexHTML);
+                        }
 
                         res.status(200).send(indexHTML);
 

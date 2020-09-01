@@ -11,6 +11,7 @@ body {
   font-family: $font-default;
   font-size: 1rem;
   overflow-x: hidden;
+  //min-width: 1100px;
 
   * {
     //border: 1px solid red;
@@ -47,15 +48,6 @@ body {
   padding-bottom: 3rem;
 }
 
-.content {
-  max-width: 900px;
-  margin: 0 auto;
-
-  &-page {
-    padding: 60px 0;
-  }
-}
-
 .table-wrapper {
   overflow-x: auto;
 }
@@ -82,7 +74,7 @@ body {
     flex: 1 0 auto;
     min-height: auto;
     width: 100%;
-    padding-top: 107px;
+    padding-top: 110px;
   }
 
   &:before {
@@ -120,8 +112,15 @@ main {
   margin-right: $gutter-width / 2;
   margin-bottom: $gutter-width / 2;
 
-  .col > div {
-    margin-bottom: $gutter-width / 2;
+  .col {
+
+    &:nth-of-type(2) {
+      width: 100%;
+    }
+
+    & > div {
+      margin-bottom: $gutter-width / 2;
+    }
   }
 }
 
@@ -519,8 +518,14 @@ th, td {
 
 /*===== PAIR COOPERATION =====*/
 
-.page-pair {
-  padding-top: 100px;
+.page-pair, .page-main {
+
+  .keys {
+
+    & > div {
+      margin-bottom: $gutter-width / 2;
+    }
+  }
 }
 
 /*===== TEAM COOPERATION =====*/
@@ -528,7 +533,14 @@ th, td {
 $sidebar-width: 17rem;
 
 .page-team {
-  padding-top: 110px;
+
+  .main {
+    overflow-x: auto;
+  }
+
+  .footer {
+    margin-left: $sidebar-width;
+  }
 
   .store-area {
     width: 20rem;
@@ -557,11 +569,12 @@ $sidebar-width: 17rem;
     }
   }
 
-  .drag-area {
+  .content {
     flex-grow: 1;
     flex-shrink: 0;
     overflow-x: auto;
     margin-left: calc(#{$sidebar-width} + #{$gutter-width});
+    min-width: 1170px;
   }
 
   .team-sidebar {
@@ -685,11 +698,28 @@ input, textarea {
 
 @media (max-width: $xl-breakpoint) {
 
-  .main {
-    padding-top: 100px;
-  }
-
   .page-team {
+
+    h1 {
+      font-size: 1.75rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .main {
+      padding-top: 40px;
+    }
+
+    .header {
+      position: relative;
+      padding-left: 75px;
+      z-index: 1;
+    }
+
+    .footer {
+      margin-left: 60px;
+    }
 
     .container-wide {
       position: relative;
@@ -714,7 +744,7 @@ input, textarea {
 
     }
 
-    .drag-area {
+    .content {
       margin-left: 4rem + $gutter-width / 2;
     }
 

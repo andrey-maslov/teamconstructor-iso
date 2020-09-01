@@ -34,7 +34,7 @@ const TeamCoopPage: React.FC = () => {
 
     if (!isLoading && projects.length === 0) {
         return (
-            <main className="flex-centered page-team main">
+            <main className="flex-centered main">
                 <div>
                     <p style={{fontSize: '24px'}}>У вас еще нет ниодного проекта. <br/>Создайте свой первый проект</p>
                     <CreateProject/>
@@ -46,18 +46,18 @@ const TeamCoopPage: React.FC = () => {
     // exitConfirmation()
 
     return (
-        <div className='section page-team main'>
+        <>
             <div className={`team-sidebar`}>
                 <TeamCoopSidebar/>
             </div>
-            <main className="">
-                <div className="drag-area">
+            <main className="main">
+                <div className="content">
                     <BoardInfo/>
                     <DraggableZone/>
                     <TeamCoopResult/>
                 </div>
             </main>
-        </div>
+        </>
     );
 };
 

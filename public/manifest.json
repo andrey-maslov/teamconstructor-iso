@@ -1,6 +1,6 @@
 {
-  "short_name": "Salary2me",
-  "name": "Know your market rate - Salary2.me",
+  "short_name": "Teamconstructor",
+  "name": "Build your own dream team",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#36A9E0",
+  "theme_color": "#556587",
   "background_color": "#ffffff"
 }

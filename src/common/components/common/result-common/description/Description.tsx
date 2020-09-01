@@ -4,8 +4,8 @@ import Indicator from "../indicator/Indicator"
 import {AiOutlineProfile} from "react-icons/ai";
 
 interface DescriptionProps {
-    teamProfile: string[] | null
-    data: (string[] | null)[]
+    teamProfile: {title: string, desc: string, status: number}
+    data: {title: string, desc: string, status: number}[]
 }
 
 const Description: React.FC<DescriptionProps> = ({teamProfile, data}) => {
@@ -14,18 +14,20 @@ const Description: React.FC<DescriptionProps> = ({teamProfile, data}) => {
         <div className="row">
             {teamProfile && <div className="indicator col-xl-12">
                 <Indicator
-                    title={teamProfile[0]}
-                    description={teamProfile[1]}
+                    title={teamProfile.title}
+                    description={teamProfile.desc}
+                    status={teamProfile.status}
                     icon={<AiOutlineProfile/>}
                 />
             </div>}
 
-            {data.slice(1).map((item, i) => {
+            {data.map((item, i) => {
                 return item &&
                     <div key={i} className="indicator col-xl-6">
                         <Indicator
-                            title={item[0]}
-                            description={item[1]}
+                            title={item.title}
+                            description={item.desc}
+                            status={item.status}
                         />
                     </div>
             })}

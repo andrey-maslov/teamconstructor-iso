@@ -34,13 +34,12 @@ export const checkAnswers = (answers: any, callback: any) => {
 
 export const parseQueryString = (queryString: string) => {
     let params: any = {},
-        queries,
         temp,
         i,
         l;
 
     // Split into key/value pairs
-    queries = queryString.replace(/%20/g, ' ').replace('  ', ' ').split('&');
+    const queries = queryString.replace(/%20/g, ' ').replace('  ', ' ').split('&');
 
     // Convert the array of strings into an object
     for (i = 0, l = queries.length; i < l; i++) {
@@ -88,18 +87,18 @@ export class Helper {
 
     static addSpace(nStr: string) {
         nStr += '';
-        let x = nStr.split('.');
+        const x = nStr.split('.');
         let x1 = x[0];
-        let x2 = x.length > 1 ? '.' + x[1] : '';
-        let rgx = /(\d+)(\d{3})/;
+        const x2 = x.length > 1 ? '.' + x[1] : '';
+        const rgx = /(\d+)(\d{3})/;
         while (rgx.test(x1)) {
             x1 = x1.replace(rgx, `$1\u00A0$2`);
         }
         return x1 + x2;
-    };
+    }
 
     static getConvertedSize = (bytes: number, precision = 2) => {
-        let units = ['b', 'Kb', 'Mb', 'Gb', 'Tb'];
+        const units = ['b', 'Kb', 'Mb', 'Gb', 'Tb'];
 
         if (bytes < 500) {
             return `${bytes} ${units[0]}`;
@@ -129,20 +128,23 @@ export const isBase64 = (str: string) => {
     }
 }
 
-export const getDescByRange = (value: number, descList: IDescWithRange[], factor?: number): string => {
+export const getDescByRange = (value: number, descList: { title: string, variants: IDescWithRange[] }): { title: string, desc: string, status: number } => {
 
-    const ratio = factor ? factor : 1
-    let desc = '';
+    let desc = ''
+    let index = null
 
-    for (const item of descList) {
-        if (value > (item.range[0] * ratio) && value <= (item.range[1] * ratio)) {
-            desc = item.desc
+    for (let i = 0; i < descList.variants.length; i++) {
+        if (value > (descList.variants[i].range[0]) && value <= (descList.variants[i].range[1])) {
+            desc = descList.variants[i].desc
+            index = i
+            break
         }
     }
-    return desc
+    const status = index === 0 ? 0 : (index === descList.variants.length ? 2 : 1)
+    return {title: descList.title, desc, status}
 }
 
-export const toPercent = (value: number, digits?: number): {num: number, str: string} => {
+export const toPercent = (value: number, digits?: number): { num: number, str: string } => {
     const val = Number((value * 100).toFixed(digits))
     return {
         num: val,
@@ -151,7 +153,7 @@ export const toPercent = (value: number, digits?: number): {num: number, str: st
 }
 
 export function getKeyResult(value: number, results: string[]): string {
-    return (value > .2 ? (value < .7 ? results[1] : results[2] ) : results[0])
+    return (value > .2 ? (value < .7 ? results[1] : results[2]) : results[0])
 }
 
 export const isBrowser: boolean = typeof window !== 'undefined'

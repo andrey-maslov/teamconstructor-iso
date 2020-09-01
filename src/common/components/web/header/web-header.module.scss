@@ -2,6 +2,7 @@
 
 .header {
   position: fixed;
+  width: 100%;
   border-bottom: 1px solid $overlay-light;
   //background-color: rgba($overflow, .3);
   background-color: #23262c;
@@ -19,9 +20,6 @@
 }
 
 @media (max-width: 1400px) {
-  .header {
-    padding-left: 75px;
-    position: absolute;
-    z-index: 1;
-  }
+
+
 }

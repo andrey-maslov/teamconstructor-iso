@@ -18,14 +18,14 @@ const PairCoopPage: React.FC = () => {
     const history = useHistory();
 
     if (!scheme) {
-        return <main className='page-pair flex-centered'>
+        return <main className='flex-centered'>
             <div className="container">
                 <Loader/>
             </div>
         </main>
     }
     if (isComparisonInProcess) {
-        return <main className='page-pair flex-centered'>
+        return <main className='flex-centered'>
             <CompareLoader type="full-page"/>
         </main>
     }
@@ -36,7 +36,7 @@ const PairCoopPage: React.FC = () => {
     }
 
     return (
-        <main className='section page-pair main flex-centered'>
+        <main className='section main flex-centered'>
             <div className="container">
                 {isCompareReady &&
                 <Button

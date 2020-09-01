@@ -40,7 +40,7 @@ const Footer = () => {
     }
 
     return (
-        <footer className={style.footer}>
+        <footer className={`${style.footer} footer`}>
             <div className="container">
                 <div className={style.logo}><TopLogo/></div>
                 <FooterLinks/>

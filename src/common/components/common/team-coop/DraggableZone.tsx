@@ -109,6 +109,8 @@ const DraggableZone: React.FC = () => {
                 dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
             }
 
+        } else if (dInd === 0) {
+            console.log('store is destination')
         } else {
             const result = move(teams[sInd].items, teams[dInd].items, source, destination); //new destination teams array
 
@@ -167,7 +169,7 @@ const DraggableZone: React.FC = () => {
                         items={(filteredMembers && isSearch) ? filteredMembers : staff.items}
                         deleteItem={deleteMemberHandler}
                         id={`${0}`}
-                        isDropDisabled={true}
+                        // isDropDisabled={true}
                     />}
                 </Box>
 

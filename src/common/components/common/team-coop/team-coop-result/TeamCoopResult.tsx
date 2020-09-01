@@ -57,8 +57,8 @@ const TeamCoopResult: React.FC = () => {
     const teamPortrait      = UserResult.getPortrait(teamProfile)
     const sortedOctantsArr  = fullProfiles.map((item: any) => item.sortedOctants)
     const maxSectorSq       = getMaxSectorSquare(teamProfile)
-    const allCandidates     = getAllCandidates(poolMembers, teamMembers)
 
+    const allCandidates     = getAllCandidates(poolMembers, teamMembers)
     const crossFunc         = getCrossFunc(teamPortrait, maxSectorSq)
     const interaction       = getInteraction(sortedOctantsArr)
     const emotionalComp     = getEmotionalComp(teamPortrait)
@@ -66,39 +66,22 @@ const TeamCoopResult: React.FC = () => {
     const leaderName        = names[getLeadingMemberByType(1)]
     const opinionLeaderName = names[getLeadingMemberByType(2)]
     const commitment        = getCommitment()
-    const teamProfileDesc   = getProfileDesc(maxSectorSq, descriptions.complementarityDesc)
+    const teamProfileDesc   = getProfileDesc(maxSectorSq, descriptions.complementarityDesc.variants)
     const needList          = getNeed(maxSectorSq)
     const candidates        = getCandidates(teamPortrait, teamSpec, allCandidates)
     const unwanted          = getUnwanted(teamMembers, teamProfile)
 
-    const keyResults = ['', 'хороший результат', 'отличный результат']
-    const keyValues  = [
-        {
-            title: 'Кросс-функциональность',
-            description: getKeyResult(crossFunc, keyResults),
-            more: 'some text describes this point',
-            value: crossFunc
-        },
-        {
-            title: 'Способность к взаимодействию',
-            description: getKeyResult(interaction, keyResults),
-            more: 'some text describes this point',
-            value: interaction
-        },
-        {
-            title: 'Эмоциональная совместимость',
-            description: getKeyResult(emotionalComp, keyResults),
-            more: 'some text describes this point',
-            value: emotionalComp
-        },
-    ]
+    const keyValues  = [crossFunc, emotionalComp, interaction].map((value, i) => ({
+        title: descriptions.keyIndicators[i].title,
+        description: getKeyResult(value, ['', 'хороший результат', 'отличный результат']),
+        more: descriptions.keyIndicators[i].desc,
+        value
+    }))
+
     const teamDescriptionData = getResultTableData()
 
     return (
-        <>
-            {isReady &&
-            <div className={'result-wrapper'} id="teamResult">
-
+        <div className={'result-wrapper'} id="teamResult">
                 <div className={'result-area flex-row'}>
                     <div className="col">
                         <Box
@@ -151,15 +134,13 @@ const TeamCoopResult: React.FC = () => {
                             title={`${activeTeam.title}. Показатели`}
                         >
                             <Description
-                                teamProfile={['Психологический профиль команды', teamProfileDesc]}
+                                teamProfile={{title: `${descriptions.complementarityDesc.title}`, desc: teamProfileDesc, status: 1}}
                                 data={teamDescriptionData}
                             />
                         </Box>
                     </div>
                 </div>
             </div>
-            }
-        </>
     );
 
     function getTeamProfile(profiles: ITendency[][]) {
@@ -176,6 +157,14 @@ const TeamCoopResult: React.FC = () => {
             const sum = item.reduce((a, b) => a + b)
             return {index: i, value: Number((sum / count).toFixed(1))}
         })
+    }
+
+    function getTeamMaxIntensity(profiles: ITendency[][]): number {
+        const maxValues = profiles.map(profile => {
+            const sorted = [...profile].sort((a, b) => b.value - a.value)
+            return sorted[0].value
+        })
+        return maxValues.reduce((a,b) => a + b) / profiles.length
     }
 
     function getMaxSectorSquare(profile: ITendency[]): number {
@@ -254,7 +243,7 @@ const TeamCoopResult: React.FC = () => {
             }
         }
         if (descIndList.length === 0) {
-            return 'Не определено'
+            return descList[8]
         }
         const desc = descIndList.map(index => descList[index]).join(', ')
 
@@ -289,7 +278,7 @@ const TeamCoopResult: React.FC = () => {
             const portrait = UserResult.getPortrait(profile)
             const sortedOctants = [...portrait].sort((a, b) => (b.value - a.value))
 
-            if (!checkIntensity(profile, teamProfile)) {
+            if (!checkIntensity(profile)) {
                 return false
             }
             return (
@@ -301,10 +290,10 @@ const TeamCoopResult: React.FC = () => {
     }
 
     //не слишком ли расходится интенсивность кандидата и команды
-    function checkIntensity(memberProfile: ITendency[], teamProfile: ITendency[]): boolean {
+    function checkIntensity(memberProfile: ITendency[]): boolean {
+        const teamMaxIntensity  = getTeamMaxIntensity(profiles)
         const sortedMemberProfile = [...memberProfile].sort((a, b) => b.value - a.value)
-        const sortedTeamProfile = [...teamProfile].sort((a, b) => b.value - a.value)
-        return !(sortedMemberProfile[0].value > sortedTeamProfile[0].value * 1.3 || sortedMemberProfile[0].value < sortedTeamProfile[0].value * .7);
+        return !(sortedMemberProfile[0].value > teamMaxIntensity * 1.3 || sortedMemberProfile[0].value < teamMaxIntensity * .7);
     }
 
     //for function getCandidate
@@ -323,37 +312,46 @@ const TeamCoopResult: React.FC = () => {
     }
 
     function getUnwanted(members: IMember[], teamProfile: ITendency[]): IMember[] {
-        return members.filter(item => !checkIntensity(UserResult.getProfile(item.decData[1]), teamProfile))
+        return members.filter(item => !checkIntensity(UserResult.getProfile(item.decData[1])))
     }
 
     function getResultTableData() {
 
-        let candidateData: TableRow | null = []
+        let candidateData: { title: string; desc: string; status: number }
         if (!candidates) {
-            candidateData = null
-        } else if (candidates && candidates.length === 0) {
-            candidateData = ['Работники, рекомендуемые в команду', 'Среди ваших работников нет подходящего кандидата']
+            candidateData = {title: descriptions.candidatesDesc.title, desc: descriptions.candidatesDesc.variants[1], status: 2}
+        } else if (candidates.length === 0) {
+            candidateData = {title: descriptions.candidatesDesc.title, desc: descriptions.candidatesDesc.variants[0], status: 0}
         }
         else {
-            candidateData = ['Работники, рекомендуемые в команду', candidates.map(item => item.name).join(', ')]
+            candidateData = {title: descriptions.candidatesDesc.title, desc: candidates.map(item => item.name).join(', '), status: 1}
         }
 
-        let unwantedData: TableRow | null = []
+        let unwantedData: { title: string; desc: string; status: number }
         if (unwanted.length === 0) {
-            unwantedData = null
+            unwantedData = {title: descriptions.unwantedDesc.title, desc: descriptions.candidatesDesc.variants[1], status: 2}
         } else if (unwanted.length > 1) {
-           unwantedData = ['Работники, создающие напряжение в команде', `${unwanted.map(item => item.name).join(', ')}, (Команда атомизирована)`]
+           unwantedData = {title: descriptions.unwantedDesc.title, desc: `${unwanted.map(item => item.name).join(', ')} ${descriptions.candidatesDesc.variants[1]}`, status: 0}
         } else {
-            unwantedData = ['Работники, создающие напряжение в команде', unwanted.map(item => item.name).join(', ')]
+           unwantedData = {title: descriptions.unwantedDesc.title, desc: unwanted.map(item => item.name).join(', '), status: 1}
         }
+
+        let needData: { title: string; desc: string; status: number }
+        if (needList.length === 0) {
+            needData = {title: descriptions.needDesc.title, desc: descriptions.needDesc.variants[1], status: 2}
+        }
+        else {
+            needData = {title: descriptions.needDesc.title, desc: needList.map(i => scheme.psychoTypes[i]).join(', '), status: 1}
+        }
+
 
 
         return [
-            ['Лояльность к внешнему руководству',           getDescByRange(loyalty, descriptions.loyaltyDesc)],
-            ['Ответственность команды',                     getDescByRange(commitment, descriptions.commitmentDesc)],
-            ['Лидер команды',                               leaderName],
-            ['Альтернативный лидер',                        opinionLeaderName],
-            needList.length > 0 ? ['Типы, рекомендуемые в команду', needList.map(i => scheme.psychoTypes[i]).join(', ')] : null,
+            getDescByRange(loyalty, descriptions.loyaltyDesc),
+            getDescByRange(commitment, descriptions.commitmentDesc),
+            {title: 'Лидер команды', desc: leaderName, status: 2},
+            {title: 'Альтернативный лидер', desc: opinionLeaderName, status: opinionLeaderName !== leaderName ? 2 : 1},
+            needData,
             candidateData,
             unwantedData
         ]

@@ -37,5 +37,25 @@
   width: .9rem;
   height:  .9rem;
   border-radius: 50%;
-  background-color: rgba($orange, .9);
+}
+
+.wrapper {
+  &.danger {
+    .circle {
+      background-color: $danger;
+      color: $danger;
+    }
+  }
+  &.warning {
+    .circle {
+      background-color: $warning;
+      color: $warning;
+    }
+  }
+  &.success {
+    .circle {
+      background-color: $success;
+      color: $success;
+    }
+  }
 }
