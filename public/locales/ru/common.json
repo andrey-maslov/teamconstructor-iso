@@ -14,21 +14,43 @@
   "buttons": {
     "login": "Войти",
     "logOut": "Выйти",
+    "register": "Зарегистрироваться",
     "calculate": "Просчитать",
     "compare": "Сравнить",
     "to_main": "На главную",
-    "one_else": "Еще раз"
+    "one_else": "Еще раз",
+    "save": "Сохранить",
+    "add": "Добавить",
+    "add_member_to_pool": "добавить пользователя в пул",
+    "search": "Поиск",
+    "create": "Создать"
   },
   "errors": {
-    "need_to_authorized": "Пожалуйста, авторизируйтесь",
+    "need_to_authorize": "Пожалуйста, авторизируйтесь",
     "required": "Это обязательное поле",
-    "not_valid": "Значение невалидно"
+    "invalid": "Значение невалидно",
+    "invalid_email": "email должен содержать @",
+    "short_pwd": "Слишком короткий пароль",
+    "confirm_pwd": "Пожалуйста, подтвердите пароль!",
+    "pwd_mismatch": "Пароли не совпадают!",
+    "duplicate_team_name": "Команда с таком названием уже есть",
+    "duplicate_member_name": "Работник с таким именем уже есть",
+    "duplicate_member": "Работник {{name}} уже есть в команде",
+    "duplicate_member_result": "Работник с таким именем уже есть"
   },
   "meta": {
     "description": "описание для тимконструктора",
     "title": "формирование эффективной команды - team constructor"
   },
-  "confirms": {
-    "do_logout": "Вы действительно хотите выйти?"
-  }
+  "confirm": {
+    "do_logout": "Вы действительно хотите выйти?",
+    "do_delete_project": "Вы действительно хотите выйти?"
+  },
+  "auth": {
+    "identifier": "Имя или email",
+    "pwd": "Пароль",
+    "confirm_pwd": "Повторите пароль",
+    "name": "Имя"
+  },
+  "title": "Название"
 }

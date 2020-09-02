@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import Rodal from "rodal"
 import {useSelector, useDispatch} from "react-redux"
 import style from "./add-member.module.scss"
@@ -7,8 +7,9 @@ import Button from "../../buttons/button/Button"
 import {GrUserAdd} from "react-icons/gr"
 import {getAndDecodeData} from "encoded-data-parser"
 import {useForm} from 'react-hook-form'
-import {setAddMemberModal, setEditedMember, setTeamsData, updateProject} from "../../../../actions/actionCreator";
-import {AiOutlineLoading} from "react-icons/ai";
+import {setEditedMember, updateProject} from "../../../../actions/actionCreator"
+import {AiOutlineLoading} from "react-icons/ai"
+import {useTranslation} from "react-i18next";
 
 
 interface IForm {
@@ -26,6 +27,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
         }
     }, [])
 
+    const {t} = useTranslation()
     const dispatch = useDispatch()
     const teams: Array<ITeam> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
     const editedMemberId: number | null = useSelector((state: GlobalStateType) => state.teamCoopReducer.editedMember)
@@ -46,9 +48,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
         <Rodal
             className='add-member-modal'
             visible={visible}
-            onClose={() => {
-                closeModal()
-            }}
+            onClose={closeModal}
             width={340}
             height={460}
         >
@@ -56,14 +56,14 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                 <form onSubmit={handleSubmit(submitForm)}>
                     <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
                         <label>
-                            <span>Имя работника</span>
+                            <span>{t('team:member_name')}</span>
                             <input
                                 className={style.input}
                                 type="text"
                                 name="name"
                                 defaultValue={defaultProfile.name}
                                 ref={register({
-                                    required: 'Это обязательное поле',
+                                    required: `${t('common:errors.required')}`,
                                     validate: {
                                         duplicateName: value => !isDuplicateName(value, members, editedMemberId)
                                     }
@@ -71,7 +71,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                             />
                         </label>
                         {errors.name && errors.name.type === 'duplicateName' && (
-                            <div className={`item-explain`}>Работник с таким именем уже есть</div>
+                            <div className={`item-explain`}>`${t('common:errors.duplicate_member_name')}`</div>
                         )}
                         {errors.name && <div className={`item-explain`}>{errors.name.message}</div>}
                     </div>
@@ -84,7 +84,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                                 name="position"
                                 defaultValue={defaultProfile.position}
                                 ref={register({
-                                    required: 'Это обязательное поле'
+                                    required: `${t('common:errors.required')}`
                                 })}
                             />
                         </label>
@@ -98,7 +98,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                                 name="encData"
                                 defaultValue={defaultProfile.encData}
                                 ref={register({
-                                    required: 'Это обязательное поле',
+                                    required: `${t('common:errors.required')}`,
                                     validate: {
                                         decode: value => getAndDecodeData('', value).data !== null,
                                         duplicate: value => !isDuplicateData(getAndDecodeData('', value).data, members, editedMemberId)
@@ -107,17 +107,17 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                             />
                         </label>
                         {errors.encData && errors.encData.type === 'decode' && (
-                            <div className={`item-explain`}>Значение невалидно</div>
+                            <div className={`item-explain`}>${t('common:errors.invalid')}</div>
                         )}
                         {errors.encData && errors.encData.type === 'duplicate' && (
-                            <div className={`item-explain`}>Работник с таким результатом уже есть</div>
+                            <div className={`item-explain`}>${t('common:errors.duplicate_member_result')}</div>
                         )}
                         {errors.encData && errors.encData.type !== 'decode' && errors.encData.type !== 'duplicate' &&
                         <div className={`item-explain`}>{errors.encData.message}</div>}
                     </div>
                     <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                         <Button
-                            title={editedMemberId ? 'Сохранить' : 'Добавить'}
+                            title={editedMemberId ? t('common:buttons.save') : t('common:buttons.add')}
                             startIcon={isLoading ? <AiOutlineLoading/> : <GrUserAdd/>}
                             handle={() => void (0)}
                             btnClass={'btn-outlined'}

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import {useSelector} from 'react-redux'
 import DraggableZone from "../../common/team-coop/DraggableZone"
 import TeamCoopResult from "../../common/team-coop/team-coop-result/TeamCoopResult"
@@ -6,44 +6,29 @@ import TeamCoopSidebar from "../../common/team-coop/team-coop-sidebar/TeamCoopSi
 import {GlobalStateType} from "../../../../constants/types";
 import CreateProject from "../../common/team-coop/create-project/CreateProject";
 import BoardInfo from "../../common/team-coop/board-info/BoardInfo";
-import {exitConfirmation} from "../../../../helper/helper";
-import Loader from "../../common/loaders/loader/Loader";
+import {useTranslation} from "react-i18next";
 
 const TeamCoopPage: React.FC = () => {
 
-    const {isLoggedIn, projects} = useSelector((state: GlobalStateType) => state.userData)
+    const {t} = useTranslation()
+    const {isLoggedIn, projects, activeProject} = useSelector((state: GlobalStateType) => state.userData)
     const {isLoading} = useSelector((state: GlobalStateType) => state.appReducer)
-    const [isSidebarFull, setSidebarFull] = useState(false)
-    const [isPageReady, setPageReady] = useState(false)
 
-    // useEffect(() => {
-    //     if (projects && projects.length > 0) {
-    //         setPageReady(true)
-    //     }
-    // }, [])
-    //
-    // if (!isPageReady) {
-    //     return <main className="section main text-center">
-    //         <Loader/>
-    //     </main>
-    // }
 
     if (!isLoggedIn) {
-        return <main className="flex-centered text-center">Пожалуйста, авторизируйтесь</main>
+        return <main className="flex-centered text-center">{t('common:errors.need_to_authorize')}</main>
     }
 
     if (!isLoading && projects.length === 0) {
         return (
             <main className="flex-centered main">
-                <div>
-                    <p style={{fontSize: '24px'}}>У вас еще нет ниодного проекта. <br/>Создайте свой первый проект</p>
+                <div style={{maxWidth: '330px'}}>
+                    <p style={{fontSize: '23px'}}>{t('team:project.no_projects_msg')}</p>
                     <CreateProject/>
                 </div>
             </main>
         )
     }
-
-    // exitConfirmation()
 
     return (
         <>
@@ -52,7 +37,7 @@ const TeamCoopPage: React.FC = () => {
             </div>
             <main className="main">
                 <div className="content">
-                    <BoardInfo/>
+                    {activeProject && <BoardInfo label={t('team:project.project_board', {title: activeProject.title})}/>}
                     <DraggableZone/>
                     <TeamCoopResult/>
                 </div>
@@ -62,3 +47,5 @@ const TeamCoopPage: React.FC = () => {
 };
 
 export default TeamCoopPage;
+
+// Доска проекта <span>{project.title}</span>

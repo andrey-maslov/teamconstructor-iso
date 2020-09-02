@@ -1,7 +1,8 @@
 import React from 'react'
 import {Route, Switch, useLocation} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 import {ToastProvider} from 'react-toast-notifications'
-import {ROUTES} from './../constants/constants'
+import {ROUTES} from '../constants/constants'
 
 import './index.scss'
 
@@ -19,10 +20,11 @@ import ContentPage from "./components/pages/content-page/ContentPage"
 const App: React.FC = () => {
 
     const {pathname} = useLocation()
+    const {isLoggedIn} = useSelector((state: any) => state.userData)
 
     return (
         <ToastProvider>
-            <div className={`app-wrapper ${getPageClass(pathname)} `}>
+            <div className={`app-wrapper ${getPageClass(pathname)} ${isLoggedIn ? 'authorized' : 'unauthorized'}`}>
                 <Header/>
                 <ScrollToTop/>
                 <Switch>

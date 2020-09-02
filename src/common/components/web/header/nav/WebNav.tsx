@@ -1,12 +1,12 @@
-import React from 'react';
-import {FiLogIn} from 'react-icons/fi';
-import {useTranslation} from 'react-i18next';
-import Button from '../../../common/buttons/button/Button';
-import PopoverUser from '../../../common/popovers/popover-user/PopoverUser';
-import LangSwitcher from '../../../common/buttons/lang-switcher/LangSwitcher';
-import {NavLink} from "react-router-dom";
-import style from './web-nav.module.scss';
-import {INavRoute} from "../../../../../constants/types";
+import React from 'react'
+import {FiLogIn} from 'react-icons/fi'
+import {useTranslation} from 'react-i18next'
+import Button from '../../../common/buttons/button/Button'
+import PopoverUser from '../../../common/popovers/popover-user/PopoverUser'
+import LangSwitcher from '../../../common/buttons/lang-switcher/LangSwitcher'
+import {NavLink} from "react-router-dom"
+import style from './web-nav.module.scss'
+import {INavRoute} from "../../../../../constants/types"
 
 export type NavigationType = {
     handleLoginBtn: () => void
@@ -50,4 +50,4 @@ const WebNav: React.FC<NavigationType> = ({isLoggedIn, handleLoginBtn, userEmail
     );
 };
 
-export default WebNav;
+export default WebNav

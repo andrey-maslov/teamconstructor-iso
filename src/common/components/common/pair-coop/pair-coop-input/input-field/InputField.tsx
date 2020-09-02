@@ -38,7 +38,7 @@ const InputField: React.FC<IInputField> = ({label, value, placeholder, nameRef, 
                 />
                 {errors[`data${label}`] && <div className={`item-explain`}>{errors[`data${label}`].message}</div>}
                 {errors[`data${label}`] && errors[`data${label}`].type === 'decode' && (
-                    <div className={`item-explain`}>{t('common:errors.not_valid')}</div>
+                    <div className={`item-explain`}>{t('common:errors.invalid')}</div>
                 )}
             </div>
         </div>

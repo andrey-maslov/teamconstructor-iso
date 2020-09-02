@@ -7,6 +7,7 @@ import style from './droppable-column.module.scss'
 import OutsideClickHandler from 'react-outside-click-handler'
 import {GlobalStateType, ITeam} from "../../../../../constants/types";
 import {updateProject} from "../../../../actions/actionCreator";
+import {useTranslation} from "react-i18next";
 
 interface IForm {
     label: string
@@ -20,21 +21,19 @@ interface ColumnTop {
 
 const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => {
 
-    const [state, setState] = useState({
-        isEdit: false,
-    })
+    const {t} = useTranslation()
+    const [isEdit, setEdit] = useState(false)
     const teams: ITeam[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
     const {activeProject} = useSelector((state: GlobalStateType) => state.userData)
     const dispatch = useDispatch()
     const {register, handleSubmit, errors, reset} = useForm<IForm>()
     const labels: string[] = teams.length > 1 ? teams.map(team => team.title.toLowerCase()) : []
-    // labels.shift()
 
     return (
         <div className={style.top}>
-            {state.isEdit ?
+            {isEdit ?
                 <OutsideClickHandler
-                    onOutsideClick={() => setState({...state, isEdit: !state.isEdit})}
+                    onOutsideClick={() => setEdit(!isEdit)}
                 >
                     <form onSubmit={handleSubmit(submit)}>
                         <div className={`form-group ${errors.label ? 'has-error' : ''} ${style.group}`}>
@@ -46,7 +45,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
                             onFocus={(e: any) => e.target.select()}
                             autoFocus={true}
                             ref={register({
-                                required: 'Это обязательное поле',
+                                required: `${t('common:errors.required')}`,
                                 validate: {
                                     duplicateLabel: value => !labels.includes(value.toLowerCase())
                                 }
@@ -54,7 +53,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
                             autoComplete="off"
                         />
                             {errors.label && errors.label.type === 'duplicateLabel' && (
-                                <div className={`item-explain floating`}>Команда с таком названием уже есть</div>
+                                <div className={`item-explain floating`}>{t('common:errors.duplicate_team_name')}</div>
                             )}
                         </div>
                     </form>
@@ -62,7 +61,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
                 :
                 <button
                     className={style.title}
-                    onClick={() => setState({...state, isEdit: !state.isEdit})}
+                    onClick={() => setEdit(!isEdit)}
                 >
                     {label}
                 </button>}
@@ -83,7 +82,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
         newTeams[columnIndex].title = formData.label
         dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
 
-        setState({...state, isEdit: !state.isEdit})
+        setEdit(!isEdit)
 
         reset()
     }

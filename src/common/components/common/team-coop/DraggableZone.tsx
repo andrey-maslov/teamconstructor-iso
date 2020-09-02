@@ -11,6 +11,7 @@ import {setAddMemberModal, setTeamsData, updateProject} from "../../../actions/a
 import {useToasts} from 'react-toast-notifications'
 import {FiPlus, FiSearch} from 'react-icons/fi'
 import SearchPanel from "./search-panel/SearchPanel";
+import {useTranslation} from "react-i18next";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -66,6 +67,7 @@ const DraggableZone: React.FC = () => {
     const staff: ITeam = teams[0]
     const dispatch = useDispatch();
     const {addToast} = useToasts()
+    const {t} = useTranslation()
 
     const [isReady, setReady] = useState(false)
     const [isSearch, setSearch] = useState(false)
@@ -101,7 +103,7 @@ const DraggableZone: React.FC = () => {
 
             if (!checkDuplicate(0, source.index, dInd)) {
                 const currName = teams[0].items[source.index].name
-                addToast(`Работник ${currName} есть в команде!`, {appearance: 'error', autoDismiss: true})
+                addToast(t('common:errors.duplicate_member', {name: currName}), {appearance: 'error', autoDismiss: true})
                 return
             } else {
                 const newTeams: ITeam[] = [...teams];
@@ -116,7 +118,7 @@ const DraggableZone: React.FC = () => {
 
             if (!checkDuplicate(sInd, source.index, dInd)) {
                 const currName = teams[sInd].items[source.index].name
-                addToast(`Работник ${currName} есть в команде!`, {appearance: 'error', autoDismiss: true})
+                addToast(t('common:errors.duplicate_member', {name: currName}), {appearance: 'error', autoDismiss: true})
                 return
             } else {
                 const newTeams = [...teams];
@@ -136,14 +138,14 @@ const DraggableZone: React.FC = () => {
             <button
                 onClick={addMemberModal}
                 className={'btn btn-widget btn-icon'}
-                aria-label={'добавить пользователя в пул'}
+                aria-label={t('common.buttons.add_member_to_pool')}
             >
                 <FiPlus/>
             </button>
             <button
                 onClick={openSearch}
                 className={`btn btn-widget btn-icon ${isSearch ? 'active' : ''}`}
-                aria-label={'открыть поиск'}
+                aria-label={t('common.buttons.search')}
             >
                 <FiSearch/>
             </button>
@@ -156,7 +158,7 @@ const DraggableZone: React.FC = () => {
         <Button
             handle={addTeam}
             btnClass={'btn btn-widget'}
-            title={'Добавить команду'}
+            title={t('team:add_team')}
         />
     )
 
@@ -164,7 +166,7 @@ const DraggableZone: React.FC = () => {
         <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
             <div className="flex-row mb-sm">
 
-                <Box title="Пул работников" addClass={'store-area'} widget={storeWidget}>
+                <Box title={t('team:pool')} addClass={'store-area'} widget={storeWidget}>
                     {isReady && <DroppableColumnStore
                         items={(filteredMembers && isSearch) ? filteredMembers : staff.items}
                         deleteItem={deleteMemberHandler}
@@ -173,7 +175,7 @@ const DraggableZone: React.FC = () => {
                     />}
                 </Box>
 
-                <Box title={'Команды'} addClass={'teams-area'} widget={teamsWidget}>
+                <Box title={t('team:team_plural')} addClass={'teams-area'} widget={teamsWidget}>
                     <div className={'teams-wrapper'}>
                         {isReady && teams.slice(1).map((team, i) => (
                             <div key={i}>

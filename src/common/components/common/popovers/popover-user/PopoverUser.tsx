@@ -107,7 +107,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({ logoutHandle}) => {
 
 
     function handlerDelete(projectId: number) {
-        if (typeof window !== 'undefined' && window.confirm("Вы действительно хотите удалить проект?")){
+        if (typeof window !== 'undefined' && window.confirm(t('common:confirm:do_delete_project'))){
 
             // const newProjects = projects.length > 1 ? projects.filter((item: {id: number, title: string}) => item.id !== projectId) : []
             // const newActiveProject = newProjects.length > 0 ? {id: newProjects[0].id, title: newProjects[0].title} : null

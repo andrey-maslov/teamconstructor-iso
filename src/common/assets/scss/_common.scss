@@ -538,8 +538,11 @@ $sidebar-width: 17rem;
     overflow-x: auto;
   }
 
-  .footer {
-    margin-left: $sidebar-width;
+  &.authorized {
+
+    .footer {
+      margin-left: $sidebar-width;
+    }
   }
 
   .store-area {

@@ -7,6 +7,7 @@ import {authUser} from "../../../actions/actionCreator"
 import {useForm} from 'react-hook-form'
 import {SET_ERROR} from "../../../actions/actionTypes"
 import {AiOutlineLoading} from 'react-icons/ai'
+import {useTranslation} from "react-i18next";
 
 interface IForm {
     name: string
@@ -18,9 +19,10 @@ interface IForm {
 
 const Register: React.FC = () => {
 
-    const {isLoading, errorApiMessage} = useSelector((state: GlobalStateType) => state.appReducer)
+    const {t} = useTranslation()
     const dispatch = useDispatch()
     const {register, handleSubmit, reset, getValues, errors} = useForm<IForm>()
+    const {isLoading, errorApiMessage} = useSelector((state: GlobalStateType) => state.appReducer)
 
     useEffect(() => {
         return function clearAll() {
@@ -36,14 +38,14 @@ const Register: React.FC = () => {
 
                     <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
                         <label>
-                            <span>Имя</span>
+                            <span>{t('common:auth.name')}</span>
                             <input
                                 className={style.input}
                                 type="text"
                                 name="name"
                                 onFocus={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                                 ref={register({
-                                    required: 'Это обязательное поле'
+                                    required: `${t('common:errors.required')}`
                                 })}
                             />
                         </label>
@@ -58,10 +60,10 @@ const Register: React.FC = () => {
                                 name="email"
                                 onFocus={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                                 ref={register({
-                                    required: 'Это обязательное поле',
+                                    required: `${t('common:errors.required')}`,
                                     pattern: {
                                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                        message: "email должен содержать @"
+                                        message: `${t('common:errors.invalid_email')}`
                                     }
                                 })}
                             />
@@ -71,15 +73,15 @@ const Register: React.FC = () => {
 
                     <div className={`form-group ${errors.password ? 'has-error' : ''}`}>
                         <label>
-                            <span>Пароль</span>
+                            <span>{t('common:auth.pwd')}</span>
                             <input
                                 className={style.input}
                                 type="password"
                                 name="password"
                                 onFocus={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                                 ref={register({
-                                    required: 'Это обязательное поле',
-                                    minLength: {value: 3, message: 'Слишком короткий пароль'}
+                                    required: `${t('common:errors.required')}`,
+                                    minLength: {value: 3, message: `${t('common:errors.short_pwd')}`}
                                 })}
                             />
                         </label>
@@ -88,18 +90,18 @@ const Register: React.FC = () => {
 
                     <div className={`form-group ${errors.passwordConfirm ? 'has-error' : ''}`}>
                         <label>
-                            <span>Повторите пароль</span>
+                            <span>{t('common:confirm.pwd')}</span>
                             <input
                                 className={style.input}
                                 type="password"
                                 name="passwordConfirm"
                                 onFocus={() => dispatch({type: SET_ERROR, errorApiMessage: ''})}
                                 ref={register({
-                                    required: "Пожалуйста, подтвердите пароль!",
+                                    required: `${t('common:errors.confirm_pwd')}`,
                                     validate: {
                                         matchesPreviousPassword: value => {
                                             const {password} = getValues();
-                                            return password === value || "Пароли не совпадают!";
+                                            return password === value || `${t('common:errors.pwd_mismatch')}`;
                                         }
                                     }
                                 })}
@@ -110,7 +112,7 @@ const Register: React.FC = () => {
 
                     <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                         <Button
-                            title={'Зарегистрироваться'}
+                            title={t('common:buttons.register')}
                             startIcon={isLoading && <AiOutlineLoading/>}
                             handle={() => void (0)}
                             btnClass={'btn-outlined btn-loader'}

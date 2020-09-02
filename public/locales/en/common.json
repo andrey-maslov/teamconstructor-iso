@@ -1,57 +1,56 @@
 {
-  "main_page": {
-    "content": "Узнай свой Психологический портрет. Пройди простой тест и узнай, насколько ты классный человек и насколько ты годишьшся для этой работы. Вопросы теста разработаны таким образом, чтобы ты обалдел от происходящего. Всего 10 минут и твой полный психологичский портрет у тебя в кармане, с возможносью экспортирования в другие наши сервисы.",
-    "pretitle": "Узнай свой",
-    "title": "Психологический профиль"
-  },
-  "404_page": {
-    "title": "Ошибка 404",
-    "description": "<p>Вы попали на несуществующую страницу.</p><p>Вероятно, это произошло из-за опечатки или неправильной раскладки клавиатуры.</p>"
-  },
-  "test_page": {
-    "info_block_desc": "В первом блоке информация о Вас",
-    "test_block_desc": "В этом блоке 75 вопросов. Отметье тот пункт, который ближе к утверждению, которое вы считаете верным для себя"
-  },
-  "result_page": {
-    "title": "предлагаем вам полученные результаты и ваши компетенции",
-    "desc": "Описание для страницы результатов",
-    "main_block_title": "Ваш профиль",
-    "key_features": "Ваши ключевые черты",
-    "main_features": "основные характеристики",
-    "revealed": "выявлено",
-    "full_profile_title": "Полный психографический профиль",
-    "show_minimal": "Показать минимальные значения",
-    "real_result": "Реальный результат",
-    "desired_result": "желательный результат",
-    "your_profile": "Ваш профиль"
-  },
   "footer": {
-    "copy": "ООО Центр технологических инвестиций",
-    "author_text": "Разработка приложения:  ",
-    "sharing_text": "Поделитесь с друзьями",
-    "links": {
-      "privacy_policy": "Privacy Policy",
-      "terms": "Terms of Service",
-      "cookie": "Cookie Policy"
-    }
+    "copy": "LLC Center of Technology Investments",
+    "author_text": "Developed by:  ",
+    "sharing_text": "Share"
+  },
+  "nav": {
+    "cookie": "Cookie policy",
+    "privacy_policy": "Privacy policy",
+    "terms": "Terms",
+    "pair": "Pair",
+    "team": "Team"
   },
   "buttons": {
-    "login": "Войти",
-    "logOut": "Выйти",
-    "start_test": "Начать тест",
-    "next": "Далее",
-    "return": "Назад",
-    "to_main": "на главную",
-    "send": "Отправить",
-    "send_example_data": "Отправить шаблонные данные",
-    "send_generated_data": "отправить сгенерированные данные"
+    "login": "Login",
+    "logOut": "Log out",
+    "register": "Register",
+    "calculate": "Calculate",
+    "compare": "Compare",
+    "to_main": "To main",
+    "one_else": "One more",
+    "save": "Save",
+    "add": "Add",
+    "add_member_to_pool": "Add team mate to pool",
+    "search": "Search",
+    "create": "Create"
   },
   "errors": {
-    "take_the_test": "Пройдите тест",
-    "test_failed": "Тест не пройден"
+    "need_to_authorize": "Please, login",
+    "required": "This is a required field",
+    "invalid": "The value is invalid",
+    "invalid_email": "email must contain @",
+    "short_pwd": "Password too short",
+    "confirm_pwd": "Please confirm password!",
+    "pwd_mismatch": "Passwords do not match!",
+    "duplicate_team_name": "There is already a team with the same name",
+    "duplicate_member_name": "There is already an employee with the same name",
+    "duplicate_member": "Team mate {{name}} is already in the team",
+    "duplicate_member_result": "There is already a team mate with the same name"
   },
   "meta": {
-    "description": "description for teamconstructor",
-    "title": "construct your dream teem - temconstructor"
-  }
+    "description": "description for the team constructor",
+    "title": "building an effective team - team constructor"
+  },
+  "confirm": {
+    "do_logout": "Are you sure you want to log out?",
+    "do_delete_project": "Are you sure you want to log out?"
+  },
+  "auth": {
+    "identifier": "Name or email",
+    "pwd": "Password",
+    "confirm_pwd": "Repeat password",
+    "name": "Name"
+  },
+  "title": "Title"
 }

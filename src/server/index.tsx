@@ -87,9 +87,9 @@ i18n
                                             <head>
                                                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                                                 <meta charSet='utf-8' />
-                                                <meta name="description" content="${initialI18nStore[initLang].common.meta.title}">
+                                                <meta name="description" content="${initialI18nStore[initLang].common && initialI18nStore[initLang].common.meta.description}">
                                                 <meta name="viewport" content="width=device-width, initial-scale=1">
-                                                <title>${initialI18nStore[initLang].common.meta.title}</title>
+                                                <title>${initialI18nStore[initLang].common && initialI18nStore[initLang].common.meta.title}</title>
                                                 ${assets.client.css ? `<link rel="stylesheet" href="${assets.client.css}">` : ''}
                                                 <script src="${assets.client.js}" defer></script>
                                                 <script>

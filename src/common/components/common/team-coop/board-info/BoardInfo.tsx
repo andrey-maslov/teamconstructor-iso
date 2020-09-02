@@ -1,39 +1,16 @@
 import React from 'react'
-import {useSelector, useDispatch} from 'react-redux'
 import style from './board-info.module.scss'
-import {FiSave} from 'react-icons/fi'
-import {GlobalStateType} from "../../../../../constants/types";
-import Button from "../../buttons/button/Button";
-import {updateProject} from "../../../../actions/actionCreator";
-import {AiOutlineLoading} from "react-icons/ai";
 
-const BoardInfo: React.FC = () => {
-
-    const {activeProject} = useSelector((state: GlobalStateType) => state.userData)
-    const teams = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
-    const appMode = useSelector((state: GlobalStateType) => state.appReducer)
-    const dispatch = useDispatch()
-    const {isLoading} = appMode
-
-    if (!activeProject) {
-        return null
-    }
+const BoardInfo: React.FC<{ label: string }> = ({label}) => {
 
     return (
         <div className={style.wrapper}>
-            <h2 className={style.title}>Доска проекта <span>{activeProject.title}</span></h2>
-            {/*<Button*/}
-            {/*    title={'Сохранить'}*/}
-            {/*    handle={() => {saveProjectHandle(activeProject.id)}}*/}
-            {/*    btnClass={`btn btn-outlined ${isLoading && 'btn-loader'}`}*/}
-            {/*    startIcon={!isLoading ? <FiSave/> : <AiOutlineLoading/>}*/}
-            {/*/>*/}
+            <h2
+                className={style.title}
+                dangerouslySetInnerHTML={{__html: label}}
+            />
         </div>
     );
-
-    function saveProjectHandle(id:  number) {
-        dispatch(updateProject(id, {pool: teams[0], teams: teams.slice(1)}))
-    }
 }
 
 export default BoardInfo;

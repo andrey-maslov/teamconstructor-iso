@@ -8,14 +8,16 @@ import Button from "../../common/buttons/button/Button"
 import {FiRefreshCw} from "react-icons/fi"
 import {clearPairData} from '../../../actions/actionCreator'
 import CompareLoader from "../../common/loaders/compare-loader/CompareLoader"
+import {useTranslation} from "react-i18next";
 
 const PairCoopPage: React.FC = () => {
 
-    const scheme = useSelector((state: any) => state.termsReducer.terms);
-    const isCompareReady: boolean = useSelector((state: any) => state.pairCoopReducer.isComparisonResultReady);
-    const isComparisonInProcess: boolean = useSelector((state: any) => state.pairCoopReducer.isComparisonInProcess);
-    const dispatch = useDispatch();
-    const history = useHistory();
+    const scheme = useSelector((state: any) => state.termsReducer.terms)
+    const isCompareReady: boolean = useSelector((state: any) => state.pairCoopReducer.isComparisonResultReady)
+    const isComparisonInProcess: boolean = useSelector((state: any) => state.pairCoopReducer.isComparisonInProcess)
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const {t} = useTranslation()
 
     if (!scheme) {
         return <main className='flex-centered'>
@@ -40,7 +42,7 @@ const PairCoopPage: React.FC = () => {
             <div className="container">
                 {isCompareReady &&
                 <Button
-                    title={'Еще раз'}
+                    title={t('common:buttons.one_else')}
                     handle={newComparisonHandler}
                     startIcon={<FiRefreshCw/>}
                     btnClass={'btn-outlined'}

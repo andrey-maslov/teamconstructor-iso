@@ -29,7 +29,7 @@ const Header: React.FC = () => {
 
     const handleLoginBtn = () => {
         if (isLoggedIn) {
-            if(confirm(t('common:confirms.do_logout'))) {
+            if(confirm(t('common:confirm.do_logout'))) {
                 dispatch(logOut())
             }
         } else {

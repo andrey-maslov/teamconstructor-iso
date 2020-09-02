@@ -3,6 +3,7 @@ import Login from "./Login"
 import Register from "./Register"
 
 import style from './auth.module.scss'
+import {useTranslation} from "react-i18next";
 
 
 interface IAuthMode {
@@ -12,6 +13,7 @@ interface IAuthMode {
 const Auth: React.FC = () => {
 
     const [authMode, setAuthMode] = useState<IAuthMode>({mode: 'login'})
+    const {t} = useTranslation()
 
     return (
         <div className={style.wrapper}>
@@ -20,13 +22,13 @@ const Auth: React.FC = () => {
                     className={`${authMode.mode === 'login' ? style.active : ''}`}
                     onClick={() => setAuthMode({mode: 'login'})}
                 >
-                    Вход
+                    {t('common:buttons.login')}
                 </button>
                 <button
                     className={`${authMode.mode === 'register' ? style.active : ''}`}
                     onClick={() => setAuthMode({mode: 'register'})}
                 >
-                    Регистрация
+                    {t('common:buttons.register')}
                 </button>
             </div>
             {authMode.mode === 'login' ?

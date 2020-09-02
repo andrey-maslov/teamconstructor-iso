@@ -1,0 +1,46 @@
+{
+  "project": {
+    "my_projects": "My projects",
+    "no_projects": "There are no projects",
+    "no_projects_msg": "You don't have any project yet. Create your first project",
+    "add_project": "Add project",
+    "delete_project": "Delete project",
+    "project_board": "<span>{{title}}</span> project board",
+    "enter_title": "Enter project title"
+  },
+  "page": {
+    "spec_title": "Team Specialization",
+    "spec_list": [
+      "Universal",
+      "Idea",
+      "Sales",
+      "Implementation",
+      "Quality"
+    ]
+  },
+  "result": {
+    "good": "good result",
+    "excellent": "excellent result"
+  },
+  "team": "Team",
+  "team_plural": "Teams",
+  "member": "Team mate",
+  "member_plural": "Team mates",
+  "team_is_characterized": "The team is characterized by such qualities as {{description}}",
+  "add_team": "Add team",
+  "add_member": "Add team mate",
+  "member_name": "Team mate name",
+  "search": "Search",
+  "edit": "Edit",
+  "delete_member": "Delete team mate",
+  "delete_team": "Delete team",
+  "do_you_want_to_delete_project?": "Are you sure you want to delete the project?",
+  "do_you_want_to_delete_member?": "Are you sure you want to delete the team mate?",
+  "members_limit": "The number of team mates must be between 3 and 9",
+  "profiles": "Team mates profiles",
+  "common_profile": "Common profile",
+  "key_indicators": "Key characteristics",
+  "indicators": "Command characteristic",
+  "pool": "Pool",
+  "empty_pool": "You have no team mates in the pool yet"
+}

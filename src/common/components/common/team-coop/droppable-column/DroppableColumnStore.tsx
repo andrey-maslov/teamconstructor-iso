@@ -4,6 +4,7 @@ import {IDroppableColumn} from "./DroppableColumn"
 import DraggableItem from "./draggable-item/DraggableItem"
 
 import style from './droppable-column.module.scss'
+import {useTranslation} from "react-i18next";
 
 
 const DroppableColumnStore: React.FC<IDroppableColumn> = (
@@ -15,6 +16,8 @@ const DroppableColumnStore: React.FC<IDroppableColumn> = (
     }
 ) => {
 
+    const {t} = useTranslation()
+
     return (
         <Droppable droppableId={id} isDropDisabled={isDropDisabled}>
             {(provided, snapshot) => (
@@ -24,7 +27,7 @@ const DroppableColumnStore: React.FC<IDroppableColumn> = (
                     {...provided.droppableProps}
                 >
                     {items.length === 0 &&
-                    <span>У вас пока нет работников в пуле</span>}
+                    <span>{t('team:empty_pool')}</span>}
                     {items.map((item, index) => (
                         <DraggableItem
                             key={`${item.id}`}
