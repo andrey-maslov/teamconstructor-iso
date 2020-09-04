@@ -1,10 +1,10 @@
 import React from 'react'
-import {Radar} from 'react-chartjs-2'
+import {Polar} from 'react-chartjs-2'
 import {COLORS} from '../../../../../constants/constants'
 import hexToRgba from '../../../../../helper/hexToRgba'
 import {useMediaPredicate} from 'react-media-hook'
-import style from './radar-chart.module.scss'
-import {ITendency} from "../../../../../UserResult"
+import style from './polar-chart.module.scss'
+import {IOctant, ITendency} from "../../../../../UserResult"
 
 const colors = [
     COLORS.orange,
@@ -12,24 +12,21 @@ const colors = [
     COLORS.yellow,
     COLORS.green,
     COLORS.accent2,
-    COLORS.textLight,
+    // COLORS.textLight,
     COLORS.orange,
     COLORS.accent,
     COLORS.yellow,
 ]
 
 type ChartsPropsType = {
-    profiles: ITendency[][]
-    names: string[]
+    portrait: number[]
     labels: string[]
 }
 
-const RadarChart: React.FC<ChartsPropsType> = ({profiles, names, labels}) => {
+const PolarChart: React.FC<ChartsPropsType> = ({portrait, labels}) => {
 
     const chartLabels = labels;
     const chartColors = colors;
-
-    const isTeam = names.length === 1
 
     const chartRadarOptions: any = {
         desktop: {
@@ -49,22 +46,16 @@ const RadarChart: React.FC<ChartsPropsType> = ({profiles, names, labels}) => {
     const currentOptions = !isMobi ? {...chartRadarOptions.desktop} : {...chartRadarOptions.mobi};
 
     const data = {
-        labels: currentOptions.labels,
-        datasets: profiles.map((profile, i) => ({
-            label: names[i],
-            backgroundColor: !isTeam ? hexToRgba(chartColors[i], .5) : 'transparent',
-            pointBackgroundColor: chartColors[i],
-            borderColor: chartColors[i],
-            pointRadius: 7,
-            data: profile.map(item => item.value)
-        })),
+        labels: labels,
+        datasets: [{
+            data: portrait,
+            backgroundColor: chartColors.map(color => hexToRgba(color, .7)),
+            borderColor: chartColors,
+        }],
     };
 
     // chartjs.org/docs/latest/configuration/tooltip.html#tooltip-callbacks
     const options = {
-        legend: {
-            display: !isTeam
-        },
         scale: {
             reverse: false,
             gridLines: {
@@ -92,7 +83,7 @@ const RadarChart: React.FC<ChartsPropsType> = ({profiles, names, labels}) => {
     return (
         <div className={`${style.wrapper} radar-chart block-wrapper`}>
             <div className={style.radar}>
-                <Radar
+                <Polar
                     data={data}
                     options={options}
                     width={currentOptions.width}
@@ -104,4 +95,4 @@ const RadarChart: React.FC<ChartsPropsType> = ({profiles, names, labels}) => {
 
 };
 
-export default RadarChart;
+export default PolarChart;

@@ -3,26 +3,29 @@
 .nav {
   display: flex;
   align-items: center;
+}
 
-  button {
+.list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-right: 3rem;
+
+  li {
     margin-bottom: 0;
+    margin-right: 1rem;
+
+    //&:last-child {
+    //  margin-right: 0;
+    //}
   }
+}
 
-  .list {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin-right: 3rem;
-
-    li {
-      margin-bottom: 0;
-      margin-right: 1rem;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
+ul.auth {
+  border-left: 1px solid rgba($text-light, .5);
+  padding-left: 2rem;
+  margin-left: 2rem;
+  margin-right: 1rem;
 }
 
 

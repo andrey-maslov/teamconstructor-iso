@@ -14,6 +14,7 @@ import ScrollToTop from './components/common/layout/ScrollToTop'
 import Footer from './components/common/layout/footer/Footer'
 import Header from './components/common/layout/header/Header'
 import ContentPage from "./components/pages/content-page/ContentPage"
+import AuthPage from "./components/pages/auth-page/AuthPage";
 
 // import CookiesWarn from "./components/CommonComponents/Modals/CookiesWarn/CookiesWarn";
 
@@ -33,6 +34,11 @@ const App: React.FC = () => {
                     <Route exact path="/cookie-policy" render={() => <ContentPage page={'cookie-policy'} />}/>
                     <Route exact path="/privacy-policy" render={() => <ContentPage page={'privacy-policy'} />}/>
                     <Route exact path="/terms" render={() => <ContentPage page={'terms'} />}/>
+                    <Route exact path="/login" render={() => <AuthPage page={'login'} />}/>
+                    <Route exact path="/login/forgot-password" render={() => <AuthPage page={'forgot_pwd'} />}/>
+                    <Route exact path="/login/forgot-password-success" render={() => <AuthPage page={'forgot_pwd_success'} />}/>
+                    <Route exact path="/login/reset-password" render={() => <AuthPage page={'reset_pwd'} />}/>
+                    <Route exact path="/signup" render={() => <AuthPage page={'signup'} />}/>
                     <Route path="*" render={() => <ErrorPage/>}/>
                 </Switch>
                 <Footer/>

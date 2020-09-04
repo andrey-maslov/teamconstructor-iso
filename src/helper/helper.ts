@@ -168,3 +168,11 @@ export function exitConfirmation() {
         }
     }
 }
+
+export function getQueryFromURL(searchStr: string, key: string):string {
+    if(!searchStr) return ''
+    const queries = searchStr.replace('?', '').split('&')
+    const needList = queries.filter(item => item.match(new RegExp(key))).join()
+    if (!needList) return ''
+    return needList.replace(`${key}=`, '')
+}

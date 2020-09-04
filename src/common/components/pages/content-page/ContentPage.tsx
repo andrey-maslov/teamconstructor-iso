@@ -15,12 +15,12 @@ const ContentPage: React.FC<{ page: string }> = ({page}) => {
 
 
     if (isLoading) {
-        return <main className='page-content flex-centered'><Loader/></main>
+        return <main className='flex-centered'><Loader/></main>
     }
 
 
     return (
-        <main className='section page-content main'>
+        <main className='section main'>
             <div className="container">
                 <div dangerouslySetInnerHTML={{__html: content}} />
             </div>

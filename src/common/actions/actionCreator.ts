@@ -23,12 +23,14 @@ import {
     SET_ACTIVE_PROJECT,
     SET_PROJECTS,
     SET_CREATE_PROJECT_MODAL,
-    SET_EDITED_MEMBER,
+    SET_EDITED_MEMBER, SEND_EMAIL, CHANGE_PWD,
 } from './actionTypes';
-import {ILoginData, IProject, IRegisterData, ITeam,} from "../../constants/types"
-import {CONTENT_API, BASE_API} from "../../constants/constants"
+import {ILoginData, IProject, ISignUpData, ITeam,} from "../../constants/types"
+import {CONTENT_API, BASE_API, authModes} from "../../constants/constants"
 import axios from 'axios'
 import Cookie from "js-cookie"
+import {IForgotForm} from "../components/common/auth/Forgot";
+import {IResetForm} from "../components/common/auth/Reset";
 
 /*
 COMPARISON PROCESS
@@ -237,9 +239,9 @@ export function checkAuth() {
     }
 }
 
-export const authUser = (userData: IRegisterData | ILoginData, authType: 'register' | 'login') => {
+export const authUser = (userData: ISignUpData | ILoginData, authType: keyof typeof authModes) => {
 
-    const url = (authType === 'register') ? `${BASE_API}/auth/local/register` : `${BASE_API}/auth/local`
+    const url = (authType === authModes[1]) ? `${BASE_API}/auth/local/register` : `${BASE_API}/auth/local`
 
     return (dispatch: any) => {
         dispatch(setLoading(true))
@@ -254,14 +256,58 @@ export const authUser = (userData: IRegisterData | ILoginData, authType: 'regist
                 // isBrowser && localStorage.setItem('token', data.jwt)
                 Cookie.set("token", data.jwt)
                 dispatch(fetchProjectsList(data.jwt))
-                dispatch(setAuthModal(false))
                 dispatch(clearErrors())
             })
             .catch(error => {
                 apiErrorHandling(error, dispatch)
                 dispatch(setLoading(false))
             })
-            // .finally(() => dispatch(setLoading(false)))
+    }
+}
+
+
+export const sendForgotEmail = (email: string) => {
+
+    const url = `${BASE_API}/auth/forgot-password`
+
+    return (dispatch: any) => {
+        dispatch(setLoading(true))
+        axios(url, {
+            method: 'POST',
+            data: {email},
+        })
+            .then(res => res.data)
+            .then(data => {
+                dispatch(clearErrors())
+                dispatch({type: SEND_EMAIL, emailSent: true})
+            })
+            .catch(error => {
+                apiErrorHandling(error, dispatch)
+            })
+            .finally(() => dispatch(setLoading(false)))
+    }
+}
+
+
+export const sendNewPassword = (data: {code: string, password: string, passwordConfirmation: string}) => {
+
+    const url = `${BASE_API}/auth/reset-password`
+
+    return (dispatch: any) => {
+        dispatch(setLoading(true))
+        axios(url, {
+            method: 'POST',
+            data: data,
+        })
+            .then(res => res.data)
+            .then(data => {
+                dispatch(clearErrors())
+                dispatch({type: CHANGE_PWD, isPwdChanged: true})
+            })
+            .catch(error => {
+                apiErrorHandling(error, dispatch)
+            })
+        .finally(() => dispatch(setLoading(false)))
     }
 }
 
@@ -448,7 +494,7 @@ export function fetchProjectsList(token: string) {
 
 /*===== UTILS =====*/
 
-function clearErrors(){
+export function clearErrors(){
     return (dispatch: any) => {
         dispatch({type: SET_ERROR, errorApiMessage: ''})
         dispatch({type: PROCESS_FAILED, processFailed: false})

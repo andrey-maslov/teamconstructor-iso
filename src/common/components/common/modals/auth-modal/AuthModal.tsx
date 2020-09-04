@@ -15,7 +15,7 @@ const AuthModal: React.FC<IModalProps> = ({visible, closeModal}) => {
             width={340}
             height={550}
         >
-            <Auth/>
+            Auth modal
         </Rodal>
     )
 };

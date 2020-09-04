@@ -12,12 +12,15 @@
     "team": "Team"
   },
   "buttons": {
-    "login": "Login",
-    "logOut": "Log out",
-    "register": "Register",
+    "login": "Log In",
+    "logOut": "Log Out",
+    "signup": "Sign Up",
+    "forgot_pwd": "Forgot password",
+    "reset_pwd": "Reset password",
     "calculate": "Calculate",
     "compare": "Compare",
     "to_main": "To main",
+    "send": "Send",
     "one_else": "One more",
     "save": "Save",
     "add": "Add",
@@ -50,7 +53,15 @@
     "identifier": "Name or email",
     "pwd": "Password",
     "confirm_pwd": "Repeat password",
-    "name": "Name"
+    "name": "Name",
+    "agreement": "By clicking {{button}}, you acknowledge that you have read and understood, and agree to Teamconstructor's <i>Terms</i> and <i>Privacy Policy</i>",
+    "forgot_pwd_question": "Forgot your password?",
+    "forgot_pwd": "Forgot password",
+    "forgot_pwd_success": "Email sent",
+    "reset_pwd": "Reset password",
+    "login": "Log In",
+    "signup": "Sign Up",
+    "ready_to_login": "Ready to log in?"
   },
   "title": "Title"
 }

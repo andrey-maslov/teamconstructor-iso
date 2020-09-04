@@ -8,6 +8,7 @@ import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
 import {getDescByRange, getKeyResult} from "../../../../../helper/helper"
 import Description from "../../result-common/description/Description"
 import {useTranslation} from "react-i18next";
+import PolarChart from "../../charts/polar-chart/PolarChart";
 
 const TeamCoopResult: React.FC = () => {
 
@@ -107,6 +108,17 @@ const TeamCoopResult: React.FC = () => {
                                 profiles={[teamProfile]}
                                 names={[activeTeam.title]}
                                 labels={scheme.tendencies}
+                            />}
+                        </Box>
+
+                        <Box
+                            addClass="team-radar"
+                            title={`${activeTeam.title}. Психологический портрет`}
+                        >
+                            {profiles.length !== 0 &&
+                            <PolarChart
+                                portrait={teamPortrait.map(item => item.value)}
+                                labels={scheme.psychoTypes}
                             />}
                         </Box>
                     </div>

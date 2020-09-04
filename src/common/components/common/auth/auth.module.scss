@@ -1,5 +1,42 @@
 @import 'src/common/assets/scss/_vars.scss';
 
+.wrapper {
+  width: 20rem;
+  margin: 0 auto 5rem;
+}
+
+.agreement {
+  width: 28rem;
+
+  i {
+    text-decoration: underline;
+    cursor: pointer;
+    font-style: normal;
+
+    &:hover {
+      color: $orange
+    }
+  }
+}
+
+.wrapper {
+
+  button {
+    width: 100%;
+  }
+}
+
+button.forgot {
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    background-color: transparent;
+    color: $orange;
+  }
+}
+
 
 .tabs {
   display: flex;

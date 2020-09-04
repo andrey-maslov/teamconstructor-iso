@@ -43,7 +43,7 @@ export interface IDescWithRange {
     range: [number, number]
 }
 
-export interface IRegisterData {
+export interface ISignUpData {
     username: string
     email: string
     password: string
