@@ -9,6 +9,7 @@ import {getDescByRange, getKeyResult} from "../../../../../helper/helper"
 import Description from "../../result-common/description/Description"
 import {useTranslation} from "react-i18next";
 import PolarChart from "../../charts/polar-chart/PolarChart";
+import {log} from "util";
 
 const TeamCoopResult: React.FC = () => {
 
@@ -32,14 +33,13 @@ const TeamCoopResult: React.FC = () => {
         }
     }, [randomNum, scheme, activeTeamInd,  teamsCount])
 
-    if (!isReady || teamsCount === 1) {
+    if (!isReady) {
         return null
     }
 
-    const teamSpec          = teamCoop.teamSpec
-    const poolMembers       = teamCoop.teams[0].items
-    //FIXME FATAL ERROR when delete last team
-    const teamMembers       = activeTeam.items
+    const teamSpec    = teamCoop.teamSpec
+    const poolMembers = teamCoop.teams[0].items
+    const teamMembers = activeTeam.items
 
     if (activeTeam.items.length < 3 || activeTeam.items.length > 9) {
         return <div className="" style={{textAlign: 'center'}}>{t('team:members_limit')}</div>
@@ -53,15 +53,15 @@ const TeamCoopResult: React.FC = () => {
         return new UserResult(item)
     })
 
+    const names             = activeTeam.items.map((item: IMember) => item.name)
     const profiles          = fullProfiles.map((profile: any) => profile.profile)
-    const names             = activeTeam.items.map((item: IMember) => item.name);
+    const portraits         = fullProfiles.map((profile: any) => profile.portrait)
 
     const teamProfile       = getTeamProfile(profiles)
-    const teamPortrait      = UserResult.getPortrait(teamProfile)
+    const teamPortrait      = getTeamPortrait(portraits)
     const sortedOctantsArr  = fullProfiles.map((item: any) => item.sortedOctants)
-    const maxSectorSq       = getMaxSectorSquare(teamProfile)
+    const maxSectorSq       = getMaxSectorSquare(teamPortrait)
 
-    const allCandidates     = getAllCandidates(poolMembers, teamMembers)
     const crossFunc         = getCrossFunc(teamPortrait, maxSectorSq)
     const interaction       = getInteraction(sortedOctantsArr)
     const emotionalComp     = getEmotionalComp(teamPortrait)
@@ -70,9 +70,10 @@ const TeamCoopResult: React.FC = () => {
     const opinionLeaderName = names[getLeadingMemberByType(2)]
     const commitment        = getCommitment()
     const teamProfileDesc   = getProfileDesc(maxSectorSq, descriptions.complementarityDesc.variants)
-    const needList          = getNeed(maxSectorSq)
-    const candidates        = getCandidates(teamPortrait, teamSpec, allCandidates)
-    const unwanted          = getUnwanted(teamMembers)
+
+    console.log(teamPortrait)
+
+    const teamDescriptionData = getResultTableData()
 
     const keyValues  = [crossFunc, emotionalComp, interaction].map((value, i) => ({
         title: descriptions.keyIndicators[i].title,
@@ -80,8 +81,6 @@ const TeamCoopResult: React.FC = () => {
         more: descriptions.keyIndicators[i].desc,
         value
     }))
-
-    const teamDescriptionData = getResultTableData()
 
     return (
         <div className={'result-wrapper'} id="teamResult">
@@ -117,8 +116,8 @@ const TeamCoopResult: React.FC = () => {
                         >
                             {profiles.length !== 0 &&
                             <PolarChart
-                                portrait={teamPortrait.map(item => item.value)}
-                                labels={scheme.psychoTypes}
+                                portrait={convertPortraitForChart(teamPortrait.map(item => item.value))}
+                                labels={convertPortraitForChart(scheme.psychoTypes)}
                             />}
                         </Box>
                     </div>
@@ -158,8 +157,8 @@ const TeamCoopResult: React.FC = () => {
     );
 
     function getTeamProfile(profiles: ITendency[][]) {
-        const arrSum: any = [[], [], [], [], [], [], [], []];
-        const count = profiles.length;
+        const arrSum: any = [[], [], [], [], [], [], [], []]
+        const count = profiles.length
 
         for (let i = 0; i < count; i++) {
             for (let k = 0; k < 8; k++) {
@@ -173,18 +172,40 @@ const TeamCoopResult: React.FC = () => {
         })
     }
 
+    function getTeamPortrait(portraits: IOctant[][]): IOctant[] {
+        const arrSum: any = [[], [], [], [], [], [], [], []]
+        const count = profiles.length
+
+        console.log(portraits)
+
+        for (let i = 0; i < count; i++) {
+            for (let k = 0; k < 8; k++) {
+                arrSum[k].push(portraits[i][k].value)
+            }
+        }
+
+        return arrSum.map((item: number[], i: number) => {
+            const sum = item.reduce((a, b) => a + b)
+            return {code: portraits[0][i].code, index: i, value: Number((sum / count).toFixed(1))}
+        })
+    }
+
+    function convertPortraitForChart(list: any[]): any[] {
+        const reversed = [...list].reverse()
+        return [...reversed.slice(4), ...reversed.slice(0, 4)];
+    }
+
     function getTeamMaxIntensity(profiles: ITendency[][]): number {
         const maxValues = profiles.map(profile => {
             const sorted = [...profile].sort((a, b) => b.value - a.value)
             return sorted[0].value
         })
-        return maxValues.reduce((a,b) => a + b) / profiles.length
+        return maxValues.reduce((a, b) => a + b) / profiles.length
     }
 
-    function getMaxSectorSquare(profile: ITendency[]): number {
-        const values = profile.map(item => item.value)
-        const max = Math.max.apply(null, values);
-        return (max * max * .7) / 2  // .7 -> sin(45deg); 45 deg -> angle between octant sides;
+    function getMaxSectorSquare(portrait: IOctant[]): number {
+        const sorted = [...portrait].sort((a, b) => (b.value - a.value))
+        return sorted[0].value
     }
 
     function getCrossFunc(portrait: IOctant[], maxSectorSq: number): number {
@@ -263,7 +284,7 @@ const TeamCoopResult: React.FC = () => {
         return t('team:team_is_characterized', {description})
     }
 
-    function getNeed(maxSectorSq: number): number[] {
+    function getNeededPsychoType(maxSectorSq: number): number[] {
         const minorOctants: IOctant[] = teamPortrait.filter((item: IOctant) => item.value < maxSectorSq * .3)
         return minorOctants.map(item => item.index)
     }
@@ -278,7 +299,7 @@ const TeamCoopResult: React.FC = () => {
         const majorOctants = teamPortrait.filter((item: IOctant) => item.value >= maxSectorSq * .3)
         const majorCodes   = majorOctants.map(item => item.code)
 
-        if (!isNeeded(majorOctants, teamSpecInd, specsList)) {
+        if (!isSmbNeeded(majorOctants, teamSpecInd, specsList)) {
             return null
         }
         if (majorOctants.length === 8) {
@@ -310,7 +331,7 @@ const TeamCoopResult: React.FC = () => {
     }
 
     //for function getCandidate
-    function isNeeded(majorOctants: IOctant[], specInd: number, specsList: string[][]): boolean{
+    function isSmbNeeded(majorOctants: IOctant[], specInd: number, specsList: string[][]): boolean{
         const majorOctantsCodes = majorOctants.map(item => item.code)
 
         if (majorOctantsCodes.includes(specsList[specInd][0]) && majorOctantsCodes.includes(specsList[specInd][1])) {
@@ -330,6 +351,8 @@ const TeamCoopResult: React.FC = () => {
 
     function getResultTableData() {
 
+        const allCandidates = getAllCandidates(poolMembers, teamMembers)
+        const candidates = getCandidates(teamPortrait, teamSpec, allCandidates)
         let candidateData: { title: string; desc: string; status: number }
         if (!candidates) {
             candidateData = {title: descriptions.candidatesDesc.title, desc: descriptions.candidatesDesc.variants[1], status: 2}
@@ -340,6 +363,7 @@ const TeamCoopResult: React.FC = () => {
             candidateData = {title: descriptions.candidatesDesc.title, desc: candidates.map(item => item.name).join(', '), status: 1}
         }
 
+        const needList = getNeededPsychoType(maxSectorSq)
         let needData: { title: string; desc: string; status: number }
         if (needList.length === 0) {
             needData = {title: descriptions.needDesc.title, desc: descriptions.needDesc.variants[1], status: 2}
@@ -348,10 +372,11 @@ const TeamCoopResult: React.FC = () => {
             needData = {title: descriptions.needDesc.title, desc: needList.map(i => scheme.psychoTypes[i]).join(', '), status: 1}
         }
 
+        const unwanted = getUnwanted(teamMembers)
         let unwantedData: { title: string; desc: string; status: number }
         if (unwanted.length === 0) {
-            unwantedData = {title: descriptions.unwantedDesc.title, desc: descriptions.unwantedDesc.variants[1], status: 2}
-        } else if (unwanted.length > 1) {
+            unwantedData = {title: descriptions.unwantedDesc.title, desc: descriptions.unwantedDesc.variants[0], status: 2}
+        } else if (unwanted.length > 2) {
             unwantedData = {title: descriptions.unwantedDesc.title, desc: `${unwanted.map(item => item.name).join(', ')} ( ${descriptions.unwantedDesc.variants[1]} )`, status: 0}
         } else {
             unwantedData = {title: descriptions.unwantedDesc.title, desc: unwanted.map(item => item.name).join(', '), status: 1}

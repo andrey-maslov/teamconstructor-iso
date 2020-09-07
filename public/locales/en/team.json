@@ -42,5 +42,9 @@
   "key_indicators": "Key characteristics",
   "indicators": "Command characteristic",
   "pool": "Pool",
-  "empty_pool": "You have no team mates in the pool yet"
+  "empty_pool": "You have no team mates in the pool yet",
+  "member_deleted_from_pool": "The team mate was deleted from pool",
+  "member_deleted_from_team": "The team mate was deleted from team",
+  "team_added": "The team was added",
+  "team_removed": "The team was removed"
 }

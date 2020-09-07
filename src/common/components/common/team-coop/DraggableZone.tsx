@@ -232,7 +232,7 @@ const DraggableZone: React.FC = () => {
 
     //TODO what about pool
     function deleteMemberHandler(colIndex: number, itemIndex: number): void {
-        if (colIndex === 0 && confirm('Вы действительно хотите удалить работника из проекта?')) {
+        if (colIndex === 0 && confirm(t('team:do_you_want_to_delete_member'))) {
             deleteMemberFromPool(colIndex, itemIndex)
         } else if (colIndex !== 0) {
             deleteMemberFromTeam(colIndex, itemIndex)
@@ -243,7 +243,7 @@ const DraggableZone: React.FC = () => {
         const newTeams = [...teams];
         newTeams[colIndex].items.splice(itemIndex, 1);
         dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
-        addToast(`Работник удален из команды`, {appearance: 'success', autoDismiss: true})
+        addToast(t('team:member_deleted_from_team'), {appearance: 'success', autoDismiss: true})
     }
 
 
@@ -254,20 +254,20 @@ const DraggableZone: React.FC = () => {
             items: team.items.filter((item: IMember) => item.baseID !== baseId)
         }))
         dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
-        addToast(`Работник удален из пула`, {appearance: 'success', autoDismiss: true})
+        addToast(t('team:member_deleted_from_pool'), {appearance: 'success', autoDismiss: true})
     }
 
     function addTeam(): void {
         const idList = teams.map((team: ITeam) => team.id)
         const newId = Math.max.apply(null, idList) + 1
-        dispatch(setTeamsData([...teams, {title: `Команда ${newId}`, id: newId, items: []}]))
-        addToast(`Команда добавлена`, {appearance: 'success', autoDismiss: true})
+        dispatch(setTeamsData([...teams, {title: `${t('team:team')} ${newId}`, id: newId, items: []}]))
+        addToast(t('team:team_added'), {appearance: 'success', autoDismiss: true})
     }
 
     function deleteTeam(colIndex: number): void {
         const filteredTeams = [...teams].filter((group, i) => i !== colIndex)
         dispatch(updateProject(activeProject.id, {pool: filteredTeams[0], teams: filteredTeams.slice(1)}))
-        addToast(`Команда удалена из списка`, {appearance: 'success', autoDismiss: true})
+        addToast(t('team:team_removed'), {appearance: 'success', autoDismiss: true})
     }
 
     //if one team includes this member

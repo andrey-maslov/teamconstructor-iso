@@ -163,7 +163,7 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
 
 
     function clearApiError() {
-        console.log('asdasd')
+        // console.log('asdasd')
         // dispatch({type: SET_ERROR, errorApiMessage: ''})
     }
 
