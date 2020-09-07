@@ -3,13 +3,13 @@ import {NavLink} from "react-router-dom"
 import style from './cookies-consent.module.scss'
 import Button from "../../buttons/button/Button"
 import Cookie from "js-cookie"
-
-const cookiesConsentText = 'Мы заботимся о вас, поэтому надо согласиться с нашей политикой куки'
+import {useTranslation} from "react-i18next"
 
 
 export const CookiesConsent: React.FC = () => {
 
     const [isConsented, setConsented] = useState(false)
+    const {t} = useTranslation()
 
     useEffect(() => {
         const consent = Cookie.get('cookie-consent')
@@ -23,10 +23,10 @@ export const CookiesConsent: React.FC = () => {
     return (
         <div className={style.popup}>
             <div className={style.content}>
-                <p>{cookiesConsentText}</p>
-                <NavLink className={style.policyLink} to={'/cookie-policy'}>Политика Куки</NavLink>
+                <p>{t('common:cookie_consent.text')}</p>
+                <NavLink className={style.policyLink} to={'/cookie-policy'}>{t('common:nav.cookie')}</NavLink>
                 <Button
-                    title="Я согласен"
+                    title={t('common:buttons.agree')}
                     btnClass="btn-outlined btn"
                     handle={handleCookiesConsent}
                 />

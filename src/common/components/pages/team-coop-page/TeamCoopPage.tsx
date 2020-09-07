@@ -1,5 +1,6 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 import DraggableZone from "../../common/team-coop/DraggableZone"
 import TeamCoopResult from "../../common/team-coop/team-coop-result/TeamCoopResult"
 import TeamCoopSidebar from "../../common/team-coop/team-coop-sidebar/TeamCoopSidebar"
@@ -16,7 +17,9 @@ const TeamCoopPage: React.FC = () => {
 
 
     if (!isLoggedIn) {
-        return <main className="flex-centered text-center">{t('common:errors.need_to_authorize')}</main>
+        return <main className="flex-centered text-center main">
+            <NavLink to="/login">{t('common:errors.need_to_authorize')}</NavLink>
+        </main>
     }
 
     if (!isLoading && projects.length === 0) {

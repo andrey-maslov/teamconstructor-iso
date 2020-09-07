@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 
 import style from "./auth.module.scss"
 import Button from "../buttons/button/Button"
@@ -6,8 +6,8 @@ import {useForm} from 'react-hook-form'
 import {AiOutlineLoading} from 'react-icons/ai'
 import {useTranslation} from "react-i18next"
 import {ILogin} from "./Login"
-import {useSelector} from "react-redux";
-import ResetSuccess from "./ResetSuccess";
+import {useSelector} from "react-redux"
+import ResetSuccess from "./ResetSuccess"
 
 export interface IResetForm {
     password: string
@@ -30,7 +30,7 @@ const Reset: React.FC<ILogin<IResetForm>> = ({isLoading, errorApiMessage, submit
         <form onSubmit={handleSubmit(submitHandle)}>
             <div className={`form-group ${errors.password ? 'has-error' : ''}`}>
                 <label>
-                    <span>{t('common:auth.pwd')}</span>
+                    <span>{t('common:auth.new_pwd')}</span>
                     <input
                         className={style.input}
                         type="password"

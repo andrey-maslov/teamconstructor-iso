@@ -26,7 +26,8 @@
     "add": "Add",
     "add_member_to_pool": "Add team mate to pool",
     "search": "Search",
-    "create": "Create"
+    "create": "Create",
+    "agree": "i agree"
   },
   "errors": {
     "need_to_authorize": "Please, login",
@@ -61,7 +62,15 @@
     "reset_pwd": "Reset password",
     "login": "Log In",
     "signup": "Sign Up",
-    "ready_to_login": "Ready to log in?"
+    "ready_to_login": "Ready to log in?",
+    "forgot_explanation": "Enter the Email that you provided during registration. You will receive an email with a link to change your password to this mailbox",
+    "forgot_success": "Check your inbox for the link to reset your password",
+    "new_pwd": "New password",
+    "reset_success": "Password changed. You can now log in using the new password through the standard form"
   },
-  "title": "Title"
+  "title": "Title",
+  "cookie_consent": {
+    "text": "We care about you, so you have to agree to our cookie policy",
+    "title": "Cookie policy"
+  }
 }

@@ -34,37 +34,40 @@ const Forgot: React.FC<ILogin<IForgotForm>> = ({isLoading, errorApiMessage, subm
     },[isEmailSent])
 
     return (
-        <form onSubmit={handleSubmit(submitHandle)}>
-            <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
-                <label>
-                    <span>Email</span>
-                    <input
-                        className={style.input}
-                        name="email"
-                        onFocus={clearApiError}
-                        autoComplete="off"
-                        ref={register({
-                            required: `${t('common:errors.required')}`,
-                            pattern: {
-                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: `${t('common:errors.invalid_email')}`
-                            }
-                        })}
-                    />
-                </label>
-                {errors.email && <div className={`item-explain`}>{errors.email.message}</div>}
-            </div>
+        <>
+            <p>{t('common:auth.forgot_explanation')}</p>
+            <form onSubmit={handleSubmit(submitHandle)}>
+                <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
+                    <label>
+                        <span>Email</span>
+                        <input
+                            className={style.input}
+                            name="email"
+                            onFocus={clearApiError}
+                            autoComplete="off"
+                            ref={register({
+                                required: `${t('common:errors.required')}`,
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: `${t('common:errors.invalid_email')}`
+                                }
+                            })}
+                        />
+                    </label>
+                    {errors.email && <div className={`item-explain`}>{errors.email.message}</div>}
+                </div>
 
-            <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
-                <Button
-                    title={t('common:buttons.send')}
-                    startIcon={isLoading && <AiOutlineLoading/>}
-                    handle={() => void (0)}
-                    btnClass={'btn-outlined btn-loader'}
-                />
-                {errorApiMessage && <div className={`item-explain`}>{errorApiMessage}</div>}
-            </div>
-        </form>
+                <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
+                    <Button
+                        title={t('common:buttons.send')}
+                        startIcon={isLoading && <AiOutlineLoading/>}
+                        handle={() => void (0)}
+                        btnClass={'btn-outlined btn-loader'}
+                    />
+                    {errorApiMessage && <div className={`item-explain`}>{errorApiMessage}</div>}
+                </div>
+            </form>
+        </>
     );
 
 }

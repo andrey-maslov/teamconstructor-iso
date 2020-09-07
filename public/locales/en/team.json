@@ -20,7 +20,9 @@
   },
   "result": {
     "good": "good result",
-    "excellent": "excellent result"
+    "excellent": "excellent result",
+    "defective": "defectively",
+    "normal": "normal"
   },
   "team": "Team",
   "team_plural": "Teams",
@@ -46,5 +48,6 @@
   "member_deleted_from_pool": "The team mate was deleted from pool",
   "member_deleted_from_team": "The team mate was deleted from team",
   "team_added": "The team was added",
-  "team_removed": "The team was removed"
+  "team_removed": "The team was removed",
+  "not_enough_members_for_universal": "The number of team members for this specialization must be more than three"
 }

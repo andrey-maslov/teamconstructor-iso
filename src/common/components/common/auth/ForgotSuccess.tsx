@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react'
-import {AiOutlineLoading} from 'react-icons/ai'
+import React from 'react'
 import {useTranslation} from "react-i18next"
-import {NavLink} from "react-router-dom"
+import {FiCheckSquare} from "react-icons/fi";
 
 const ForgotSuccess: React.FC = () => {
 
@@ -10,7 +9,10 @@ const ForgotSuccess: React.FC = () => {
 
     return (
         <div>
-            SUCCESS
+            <div className="auth-icon-success">
+                <FiCheckSquare/>
+            </div>
+            <p>{t('common:auth.forgot_success')}</p>
         </div>
     );
 

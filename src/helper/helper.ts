@@ -153,7 +153,15 @@ export const toPercent = (value: number, digits?: number): { num: number, str: s
 }
 
 export function getKeyResult(value: number, results: string[]): string {
-    return (value > .2 ? (value < .7 ? results[1] : results[2]) : results[0])
+    if (value < .2) {
+        return results[0]
+    } else if (value >= .2 && value < .5) {
+        return results[1]
+    } else if (value >= .5 && value < .8) {
+        return results[2]
+    } else {
+        return results[3]
+    }
 }
 
 export const isBrowser: boolean = typeof window !== 'undefined'

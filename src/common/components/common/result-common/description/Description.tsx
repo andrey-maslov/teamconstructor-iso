@@ -17,7 +17,6 @@ const Description: React.FC<DescriptionProps> = ({teamProfile, data}) => {
                     title={teamProfile.title}
                     description={teamProfile.desc}
                     status={teamProfile.status}
-                    icon={<AiOutlineProfile/>}
                 />
             </div>}
 

@@ -41,10 +41,14 @@
     }
 
     &:nth-child(2) {
+      stop-color: $warning;
+    }
+
+    &:nth-child(3) {
       stop-color: $success;
     }
 
-    &:last-child {
+    &:last-child(4) {
       stop-color: $blue;
     }
   }
@@ -65,14 +69,18 @@
   //padding: 0 .8rem;
 }
 
-.danger {
+.defective {
   color: $danger;
 }
 
-.warning {
+.normal {
+  color: $warning;
+}
+
+.good {
   color: $success;
 }
 
-.success {
+.excellent {
   color: $blue;
 }

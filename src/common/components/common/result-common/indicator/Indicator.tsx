@@ -13,7 +13,7 @@ const Indicator: React.FC<Indicator> = ({title, description, status, icon}) => {
     const statuses = ['danger', 'warning', 'success']
 
     return (
-        <div className={`${style.wrapper} ${statuses[status] ? style[statuses[status]] : ''}`}>
+        <div className={`${style.wrapper} ${statuses[status] ? style[statuses[status]] : style.default}`}>
             <div className={style.top}>
 
                 {icon ?

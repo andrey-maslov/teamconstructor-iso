@@ -7,9 +7,8 @@ import RadarChart from "../../charts/radar-chart/RadarChart"
 import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
 import {getDescByRange, getKeyResult} from "../../../../../helper/helper"
 import Description from "../../result-common/description/Description"
-import {useTranslation} from "react-i18next";
-import PolarChart from "../../charts/polar-chart/PolarChart";
-import {log} from "util";
+import {useTranslation} from "react-i18next"
+import PolarChart from "../../charts/polar-chart/PolarChart"
 
 const TeamCoopResult: React.FC = () => {
 
@@ -33,7 +32,7 @@ const TeamCoopResult: React.FC = () => {
         }
     }, [randomNum, scheme, activeTeamInd,  teamsCount])
 
-    if (!isReady) {
+    if (!isReady || teamsCount === 1) {
         return null
     }
 
@@ -71,13 +70,11 @@ const TeamCoopResult: React.FC = () => {
     const commitment        = getCommitment()
     const teamProfileDesc   = getProfileDesc(maxSectorSq, descriptions.complementarityDesc.variants)
 
-    console.log(teamPortrait)
-
     const teamDescriptionData = getResultTableData()
 
     const keyValues  = [crossFunc, emotionalComp, interaction].map((value, i) => ({
         title: descriptions.keyIndicators[i].title,
-        description: getKeyResult(value, ['', t('team:result.good'), t('team:result.excellent')]),
+        description: getKeyResult(value, [t('team:result.defective'), t('team:result.normal'), t('team:result.good'), t('team:result.excellent')]),
         more: descriptions.keyIndicators[i].desc,
         value
     }))
@@ -147,7 +144,7 @@ const TeamCoopResult: React.FC = () => {
                             title={`${activeTeam.title}.  ${t('team:indicators')}`}
                         >
                             <Description
-                                teamProfile={{title: `${descriptions.complementarityDesc.title}`, desc: teamProfileDesc, status: 1}}
+                                teamProfile={{title: descriptions.complementarityDesc.title, desc: teamProfileDesc.desc, status: teamProfileDesc.status}}
                                 data={teamDescriptionData}
                             />
                         </Box>
@@ -175,8 +172,6 @@ const TeamCoopResult: React.FC = () => {
     function getTeamPortrait(portraits: IOctant[][]): IOctant[] {
         const arrSum: any = [[], [], [], [], [], [], [], []]
         const count = profiles.length
-
-        console.log(portraits)
 
         for (let i = 0; i < count; i++) {
             for (let k = 0; k < 8; k++) {
@@ -252,7 +247,6 @@ const TeamCoopResult: React.FC = () => {
         return topSum / bottomSum
     }
 
-    //TODO need to fix
     //typeInd = number from 1 to 8 of octants. Leader role equals Innovator type, for example
     function getLeadingMemberByType(typeInd: number): number {
         const portraitList: IOctant[][] = fullProfiles.map((item: any) => item.portrait)
@@ -268,7 +262,7 @@ const TeamCoopResult: React.FC = () => {
         return respValsList.reduce((a, b) => a + b)
     }
 
-    function getProfileDesc(maxSectorSq: number, descList: string[]): string {
+    function getProfileDesc(maxSectorSq: number, descList: string[]): {desc: string, status: number} {
 
         const descIndList: number[] = []
         for (let i = 0; i < 8; i++) {
@@ -277,11 +271,11 @@ const TeamCoopResult: React.FC = () => {
             }
         }
         if (descIndList.length === 0) {
-            return descList[8]
+            return {desc: descList[8], status: -1}
         }
         const description = descIndList.map(index => descList[index]).join(', ')
 
-        return t('team:team_is_characterized', {description})
+        return {desc: t('team:team_is_characterized', {description}), status: 2}
     }
 
     function getNeededPsychoType(maxSectorSq: number): number[] {
@@ -354,12 +348,13 @@ const TeamCoopResult: React.FC = () => {
         const allCandidates = getAllCandidates(poolMembers, teamMembers)
         const candidates = getCandidates(teamPortrait, teamSpec, allCandidates)
         let candidateData: { title: string; desc: string; status: number }
-        if (!candidates) {
+        if (teamMembers.length < 4 && teamSpec === 0) {
+            candidateData = {title: descriptions.candidatesDesc.title, desc: t('team:not_enough_members_for_universal'), status: -1}
+        } else if (!candidates) {
             candidateData = {title: descriptions.candidatesDesc.title, desc: descriptions.candidatesDesc.variants[1], status: 2}
         } else if (candidates.length === 0) {
             candidateData = {title: descriptions.candidatesDesc.title, desc: descriptions.candidatesDesc.variants[0], status: 0}
-        }
-        else {
+        } else {
             candidateData = {title: descriptions.candidatesDesc.title, desc: candidates.map(item => item.name).join(', '), status: 1}
         }
 
@@ -367,8 +362,7 @@ const TeamCoopResult: React.FC = () => {
         let needData: { title: string; desc: string; status: number }
         if (needList.length === 0) {
             needData = {title: descriptions.needDesc.title, desc: descriptions.needDesc.variants[1], status: 2}
-        }
-        else {
+        } else {
             needData = {title: descriptions.needDesc.title, desc: needList.map(i => scheme.psychoTypes[i]).join(', '), status: 1}
         }
 

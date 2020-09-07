@@ -11,7 +11,7 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
 
     const roundValue = Math.round(value * 100)
 
-    const color = getKeyResult(value, ['danger', 'warning', 'success'])
+    const color = getKeyResult(value, ['defective', 'normal', 'good', 'excellent'])
 
     const [val, setVal] = useState(0)
     const [isFinish, setFinish] = useState(false)
@@ -44,6 +44,7 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
                 <defs>
                     <linearGradient id="gradient" className={style.gradient}>
                         <stop offset="0%"/>
+                        <stop offset="20%"/>
                         <stop offset="50%"/>
                         <stop offset="100%"/>
                     </linearGradient>
