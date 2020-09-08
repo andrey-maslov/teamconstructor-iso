@@ -278,10 +278,12 @@ export const sendForgotEmail = (email: string) => {
         })
             .then(res => res.data)
             .then(data => {
-                dispatch(clearErrors())
-                dispatch({type: SEND_EMAIL, emailSent: true})
+                console.log('OK')
+                // dispatch(clearErrors())
+                // dispatch({type: SEND_EMAIL, emailSent: true})
             })
             .catch(error => {
+                console.log('ERROR email')
                 apiErrorHandling(error, dispatch)
             })
             .finally(() => dispatch(setLoading(false)))
@@ -289,7 +291,7 @@ export const sendForgotEmail = (email: string) => {
 }
 
 
-export const sendNewPassword = (data: {code: string, password: string, passwordConfirmation: string}) => {
+export const sendNewPassword = (data: { code: string, password: string, passwordConfirmation: string }) => {
 
     const url = `${BASE_API}/auth/reset-password`
 
@@ -307,7 +309,7 @@ export const sendNewPassword = (data: {code: string, password: string, passwordC
             .catch(error => {
                 apiErrorHandling(error, dispatch)
             })
-        .finally(() => dispatch(setLoading(false)))
+            .finally(() => dispatch(setLoading(false)))
     }
 }
 
@@ -399,7 +401,7 @@ export function fetchProject(id: number) {
     };
 }
 
-export function updateProject(id: number, payload: {pool?: ITeam, teams?: ITeam[]}) {
+export function updateProject(id: number, payload: { pool?: ITeam, teams?: ITeam[] }) {
     const url = `${BASE_API}/projects/${id}`
     const token = Cookie.get('token')
 
@@ -494,7 +496,7 @@ export function fetchProjectsList(token: string) {
 
 /*===== UTILS =====*/
 
-export function clearErrors(){
+export function clearErrors() {
     return (dispatch: any) => {
         dispatch({type: SET_ERROR, errorApiMessage: ''})
         dispatch({type: PROCESS_FAILED, processFailed: false})
@@ -504,7 +506,13 @@ export function clearErrors(){
 function apiErrorHandling(error: any, dispatch: any) {
 
     if (error.response) {
-        const msg = Array.isArray(error.response.data.message) ? error.response.data.message[0].messages[0].message : error.response.data.message
+        let msg: string
+        try {
+            msg = Array.isArray(error.response.data.message) ? error.response.data.message[0].messages[0].message : 'Something wrong'
+        } catch {
+            msg = 'Something wrong'
+        }
+        console.log(msg)
         dispatch({
             type: SET_ERROR,
             errorApiMessage: msg

@@ -17,14 +17,17 @@ export const LANGS = [
 export const LANG_DEFAULT = LANGS[0][0]
 
 export const ROUTES = {
-    '/':               'page-main',
-    '/pair':           'page-pair',
-    '/team':           'page-team',
-    '/cookie-policy':  'page-content',
+    '/': 'page-main',
+    '/pair': 'page-pair',
+    '/team': 'page-team',
+    '/cookie-policy': 'page-content',
     '/privacy-policy': 'page-content',
-    '/terms':          'page-content',
-    '/login':          'page-auth',
-    '/signup':         'page-auth',
+    '/terms': 'page-content',
+    '/login': 'page-auth',
+    '/login/forgot-password': 'page-auth',
+    '/login/forgot-password-success': 'page-auth',
+    '/login/reset-password': 'page-auth',
+    '/signup': 'page-auth',
 };
 
 export const BASE_API = 'https://api.teamconstructor.com'
