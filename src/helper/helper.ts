@@ -128,22 +128,6 @@ export const isBase64 = (str: string) => {
     }
 }
 
-export const getDescByRange = (value: number, descList: { title: string, variants: IDescWithRange[] }): { title: string, desc: string, status: number } => {
-
-    let desc = ''
-    let index = null
-
-    for (let i = 0; i < descList.variants.length; i++) {
-        if (value > (descList.variants[i].range[0]) && value <= (descList.variants[i].range[1])) {
-            desc = descList.variants[i].desc
-            index = i
-            break
-        }
-    }
-    const status = index === 0 ? 0 : (index === descList.variants.length ? 2 : 1)
-    return {title: descList.title, desc, status}
-}
-
 export const toPercent = (value: number, digits?: number): { num: number, str: string } => {
     const val = Number((value * 100).toFixed(digits))
     return {
@@ -152,17 +136,6 @@ export const toPercent = (value: number, digits?: number): { num: number, str: s
     }
 }
 
-export function getKeyResult(value: number, results: string[]): string {
-    if (value < .2) {
-        return results[0]
-    } else if (value >= .2 && value < .5) {
-        return results[1]
-    } else if (value >= .5 && value < .8) {
-        return results[2]
-    } else {
-        return results[3]
-    }
-}
 
 export const isBrowser: boolean = typeof window !== 'undefined'
 

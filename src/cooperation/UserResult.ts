@@ -1,36 +1,18 @@
-export type baseTestResultType = number[][];
-export interface IDescWithRange {desc: string, range: [number, number]}
-export interface IOctant {code: string, index: number, value: number}
-export interface ITendency {index: number, value: number}
-
-export interface IUserResult {
-    testResult: baseTestResultType
-    octantCodeList: string[]
-    sortedOctants: IOctant[]
-    profile: ITendency[]
-    portrait: IOctant[]
-    mainOctant: IOctant
-    mainPsychoTypeList: number[]
-    mainTendencyList: number[]
-    // getDescByRange: (value: number, descList: IDescWithRange[]) => string
-    // getIndexByRange: (value: number, descList: IDescWithRange[]) => number
-}
+import {baseTestResultType, IOctant, ITendency} from "./types";
 
 export class UserResult {
 
-    readonly testResult: baseTestResultType
-    readonly octantCodeList: string[]
     readonly sortedOctants: IOctant[]
     readonly profile: ITendency[]
     readonly portrait: IOctant[]
     readonly mainOctant: IOctant
     readonly mainPsychoTypeList: number[]
     readonly mainTendencyList: number[]
+    static octantCodeList = ['A1', 'A2', 'B1', 'B2', 'a1', 'a2', 'b1', 'b2']
 
     constructor(testResult: baseTestResultType) {
-        this.testResult = testResult
-        this.octantCodeList = ['A1', 'A2', 'B1', 'B2', 'a1', 'a2', 'b1', 'b2']
-        this.profile = UserResult.getProfile(this.testResult)
+
+        this.profile = UserResult.getProfile(testResult)
         this.portrait = UserResult.getPortrait(this.profile)
         this.sortedOctants = [...this.portrait].sort((a, b) => (b.value - a.value))
         this.mainOctant = this.sortedOctants[0]
@@ -67,7 +49,7 @@ export class UserResult {
 
     static getPortrait = (profile: ITendency[]): IOctant[] => {
 
-       const codeList = ['A1', 'A2', 'B1', 'B2', 'a1', 'a2', 'b1', 'b2']
+       const codeList = UserResult.octantCodeList
 
         const axisValues = profile.map(item => item.value);
         const axisValuesReversed = [...axisValues.reverse()];
@@ -108,27 +90,5 @@ export class UserResult {
             return [sortedProfile[0].index, sortedProfile[1].index];
         }
         return [sortedProfile[0].index];
-    }
-
-    static getDescByRange = (value: number, descList: IDescWithRange[]): string => {
-
-        let desc = '';
-
-        for (const item of descList) {
-            if (value > (item.range[0]) && value <= (item.range[1])) {
-                desc = item.desc
-            }
-        }
-        return desc
-    }
-
-    static getIndexByRange = (value: number, descList: IDescWithRange[]): number => {
-
-        for (let i = 0; i < descList.length; i++) {
-            if (value > (descList[i].range[0]) && value <= (descList[i].range[1])) {
-                return i;
-            }
-        }
-        return -1
     }
 }

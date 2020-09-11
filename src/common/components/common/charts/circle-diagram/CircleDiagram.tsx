@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
-
+import React, {useEffect, useState} from 'react'
 import style from './circle-diagram.module.scss'
-import {getKeyResult} from "../../../../../helper/helper";
+import {getKeyResult} from "../../../../../cooperation"
 
 interface CircleDiagramProps {
     value: number
@@ -45,7 +44,7 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
                     <linearGradient id="gradient" className={style.gradient}>
                         <stop offset="0%"/>
                         <stop offset="20%"/>
-                        <stop offset="50%"/>
+                        <stop offset="80%"/>
                         <stop offset="100%"/>
                     </linearGradient>
                 </defs>

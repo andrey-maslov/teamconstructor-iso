@@ -4,7 +4,6 @@ import {COLORS} from '../../../../../constants/constants'
 import hexToRgba from '../../../../../helper/hexToRgba'
 import {useMediaPredicate} from 'react-media-hook'
 import style from './polar-chart.module.scss'
-import {IOctant, ITendency} from "../../../../../UserResult"
 
 const colors = [
     COLORS.orange,

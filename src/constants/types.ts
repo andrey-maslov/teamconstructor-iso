@@ -2,11 +2,6 @@ import React from "react";
 
 export type DecodedDataType = [number[], number[][]]
 
-export type AnswerType = {
-    id: string
-    value: string
-}
-
 export interface IMember {
     id: string
     name: string,

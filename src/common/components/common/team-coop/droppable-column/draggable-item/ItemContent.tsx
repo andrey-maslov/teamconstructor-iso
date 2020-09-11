@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react'
-import { UserResult} from "../../../../../../UserResult"
+import { UserResult} from "../../../../../../cooperation/UserResult"
 import style from './draggable-item.module.scss'
 import {Radar} from "react-chartjs-2"
 import {COLORS} from '../../../../../../constants/constants'

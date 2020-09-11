@@ -4,7 +4,7 @@ import {COLORS} from '../../../../../constants/constants'
 import hexToRgba from '../../../../../helper/hexToRgba'
 import {useMediaPredicate} from 'react-media-hook'
 import style from './radar-chart.module.scss'
-import {ITendency} from "../../../../../UserResult"
+import {ITendency} from "../../../../../cooperation"
 
 const colors = [
     COLORS.orange,
