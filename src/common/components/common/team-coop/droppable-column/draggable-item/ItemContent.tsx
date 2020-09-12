@@ -4,6 +4,7 @@ import style from './draggable-item.module.scss'
 import {Radar} from "react-chartjs-2"
 import {COLORS} from '../../../../../../constants/constants'
 import {IMember} from "../../../../../../constants/types";
+import {getPersonProfile} from "../../../../../../cooperation";
 
 interface IItemContent {
     member: IMember
@@ -11,7 +12,7 @@ interface IItemContent {
 
 const ItemContent: React.FC<IItemContent> = ({member}) => {
 
-    const profile = useMemo(() => UserResult.getProfile(member.decData[1]), [member])
+    const profile = useMemo(() => getPersonProfile(member.decData[1]), [member])
 
     const data = {
         labels: ['','','','','','','','',],

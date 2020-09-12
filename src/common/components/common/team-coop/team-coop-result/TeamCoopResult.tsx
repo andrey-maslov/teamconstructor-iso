@@ -47,7 +47,7 @@ const TeamCoopResult: React.FC = () => {
         return item.decData[1]
     })
 
-    const team = new Team(testResultList)
+    const team = Team(testResultList)
 
     const names             = activeTeam.items.map((item: IMember) => item.name)
 
@@ -151,7 +151,7 @@ const TeamCoopResult: React.FC = () => {
     }
 
     function getCandidatesData(): IDescWithStatus {
-        const allCandidates = Team.getAllCandidates(poolMembers, teamMembers)
+        const allCandidates = team.getAllCandidates(poolMembers, teamMembers)
         const candidates = team.getCandidates(teamSpec, allCandidates)
         const {title, variants} = descriptions.candidatesDesc
         if (teamMembers.length < 4 && teamSpec === 0) {

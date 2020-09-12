@@ -35,7 +35,7 @@ const PairCoopOutput: React.FC = () => {
 
     const {compatibilityDesc, efficiencyDesc, complementarityDesc, pairDescriptions: desc} = descriptions
 
-    const pair = new Pair([data1[1], data2[1]])
+    const pair = Pair([data1[1], data2[1]])
 
     //All calculated values for comparison table
     const partnerAcceptance: number = pair.getPartnerAcceptance()

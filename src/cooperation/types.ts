@@ -1,23 +1,42 @@
-export type baseTestResultType = number[][];
+export type baseTestResultType = readonly number[][];
 
 export interface IDescWithRange {
-    desc: string,
-    range: [number, number]
+    readonly desc: string,
+    readonly range: readonly [number, number]
 }
 
 export interface IDescWithStatus {
-    title: string,
-    desc: string,
-    status: number
+    readonly title: string,
+    readonly desc: string,
+    readonly status: number
 }
 
 export interface IOctant {
-    code: string,
-    index: number,
-    value: number
+    readonly code: string,
+    readonly index: number,
+    readonly value: number
 }
 
 export interface ITendency {
-    index: number,
-    value: number
+    readonly index: number,
+    readonly value: number
+}
+
+export type DecodedDataType = [readonly number[], readonly number[][]]
+
+export interface IMember {
+    readonly id: string
+    readonly name: string,
+    readonly position: string,
+    readonly decData: DecodedDataType
+    readonly baseID: number
+}
+
+export interface IUserResult {
+    sortedOctants: IOctant[],
+    profile: ITendency[],
+    portrait: IOctant[],
+    mainOctant: IOctant,
+    mainPsychoTypeList: number[],
+    mainTendencyList: number[],
 }
