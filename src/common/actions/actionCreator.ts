@@ -68,7 +68,7 @@ export function setComparisonResult(isComparisonResultReady: boolean): any {
 PAIR COMPARISON PROCESS
  */
 
-export function setPairData(data1: [] | string, data2: [] | string, name1: string, name2: string): {
+export function setPairData(data1: any, data2: any, name1: string, name2: string): {
     type: string, data1: [] | string, data2: [] | string, name1: string, name2: string
 } {
     return {

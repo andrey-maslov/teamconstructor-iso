@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux"
 import {GlobalStateType, IMember, ITeam} from "../../../../../constants/types"
 import Box from "../../layout/box/Box"
-import {Team, getDescByRange, getKeyResult, baseTestResultType, IDescWithStatus} from "../../../../../cooperation"
+import {Team, getDescByRange, getKeyResult} from "psychology"
+import {baseTestResultType, IDescWithStatus} from "psychology/build/main/types/types"
 import RadarChart from "../../charts/radar-chart/RadarChart"
 import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
 import Description from "../../result-common/description/Description"
@@ -59,7 +60,7 @@ const TeamCoopResult: React.FC = () => {
     const altLeaderName = names[team.getLeadingMemberByType(2)]
     const commitment    = team.getCommitment()
     const descIndexes   = team.getDescIndexes()
-    const teamDesc      = getTeamDesc(descIndexes, descriptions.complementarityDesc.variants)
+    const teamDesc      = getTeamDesc(descIndexes, descriptions.complementarityDesc.options)
 
     const fullDescription   = getResultTableData()
 
@@ -153,15 +154,15 @@ const TeamCoopResult: React.FC = () => {
     function getCandidatesData(): IDescWithStatus {
         const allCandidates = team.getAllCandidates(poolMembers, teamMembers)
         const candidates = team.getCandidates(teamSpec, allCandidates)
-        const {title, variants} = descriptions.candidatesDesc
+        const {title, options} = descriptions.candidatesDesc
         if (teamMembers.length < 4 && teamSpec === 0) {
             return {title, desc: t('team:not_enough_members_for_universal'), status: -1}
         }
         if (!candidates) {
-            return {title, desc: variants[1], status: 2}
+            return {title, desc: options[1], status: 2}
         }
         if (candidates && candidates.length === 0) {
-            return {title, desc: variants[0], status: 0}
+            return {title, desc: options[0], status: 0}
         }
         return {title, desc: candidates.map(item => item.name).join(', '), status: 1}
     }
@@ -169,9 +170,9 @@ const TeamCoopResult: React.FC = () => {
 
     function getNeedfulData() {
         const NeedfulList = team.getNeedfulPsychoType()
-        const {title, variants} = descriptions.needDesc
+        const {title, options} = descriptions.needDesc
         if (NeedfulList.length === 0) {
-            return {title, desc: variants[1], status: 2}
+            return {title, desc: options[1], status: 2}
         }
         return {title, desc: NeedfulList.map(i => scheme.psychoTypes[i]).join(', '), status: 1}
     }
@@ -179,12 +180,12 @@ const TeamCoopResult: React.FC = () => {
 
     function getUnwontedData() {
         const unwanted = team.getUnwanted(teamMembers)
-        const {title, variants} = descriptions.unwantedDesc
+        const {title, options} = descriptions.unwantedDesc
         if (unwanted.length === 0) {
-            return {title, desc: variants[0], status: 2}
+            return {title, desc: options[0], status: 2}
         }
         if (unwanted.length > 2) {
-            return {title, desc: `${unwanted.map(item => item.name).join(', ')} ( ${variants[1]} )`, status: 0}
+            return {title, desc: `${unwanted.map(item => item.name).join(', ')} ( ${options[1]} )`, status: 0}
         }
          return {title, desc: unwanted.map(item => item.name).join(', '), status: 1}
     }
@@ -195,8 +196,8 @@ const TeamCoopResult: React.FC = () => {
         return [
             getDescByRange(loyalty, descriptions.loyaltyDesc),
             getDescByRange(commitment, descriptions.commitmentDesc),
-            {title: descriptions.leaderDesc.variants[0], desc: leaderName, status: 2},
-            {title: descriptions.leaderDesc.variants[1], desc: altLeaderName, status: altLeaderName !== leaderName ? 2 : 1},
+            {title: descriptions.leaderDesc.options[0], desc: leaderName, status: 2},
+            {title: descriptions.leaderDesc.options[1], desc: altLeaderName, status: altLeaderName !== leaderName ? 2 : 1},
             getNeedfulData(),
             getCandidatesData(),
             getUnwontedData()
@@ -206,7 +207,7 @@ const TeamCoopResult: React.FC = () => {
     /**
      *
      */
-    function getTeamDesc(descIndexes: number[], descList: string[]): {desc: string, status: number} {
+    function getTeamDesc(descIndexes: readonly number[], descList: string[]): {desc: string, status: number} {
         if (descIndexes.length === 0) {
             return {desc: descList[8], status: -1}
         }

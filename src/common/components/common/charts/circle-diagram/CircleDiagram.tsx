@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import style from './circle-diagram.module.scss'
-import {getKeyResult} from "../../../../../cooperation"
+import {getKeyResult} from "psychology"
 
 interface CircleDiagramProps {
     value: number

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
-import {Pair, getDescByRange} from '../../../../../cooperation'
+import {Pair, getDescByRange} from 'psychology'
 import RadarChart from "../../charts/radar-chart/RadarChart"
 import Box from "../../layout/box/Box"
 import Table from "../../tables/table/Table"
@@ -9,6 +9,7 @@ import {GlobalStateType} from "../../../../../constants/types"
 import {BsTable} from "react-icons/bs"
 import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
 import {useTranslation} from "react-i18next"
+import {toPercent} from "../../../../../helper/helper";
 
 const PairCoopOutput: React.FC = () => {
 
@@ -38,13 +39,13 @@ const PairCoopOutput: React.FC = () => {
     const pair = Pair([data1[1], data2[1]])
 
     //All calculated values for comparison table
-    const partnerAcceptance: number = pair.getPartnerAcceptance()
-    const understanding: number = pair.getUnderstanding()
-    const attraction: number[] = pair.getAttraction()
-    const lifeAttitudes: number = pair.getLifeAttitudes()
-    const similarityThinking: number = pair.getSimilarityThinking()
-    const complementarity: number[] = pair.getComplementarity()
-    const maturity: number[] = pair.getPsyMaturity()
+    const partnerAcceptance  = pair.getPartnerAcceptance()
+    const understanding      = pair.getUnderstanding()
+    const attraction         = pair.getAttraction()
+    const lifeAttitudes      = pair.getLifeAttitudes()
+    const similarityThinking = pair.getSimilarityThinking()
+    const complementarity    = pair.getComplementarity()
+    const maturity           = pair.getPsyMaturity()
 
     const valuesForEfficiency: number[] = [partnerAcceptance, understanding, lifeAttitudes, similarityThinking];
     const efficiency: number = valuesForEfficiency.reduce((a, b) => a + b) / valuesForEfficiency.length;
@@ -152,27 +153,27 @@ const PairCoopOutput: React.FC = () => {
     function getComparisonTableData() {
 
         return [
-            [desc[0], `${partnerAcceptance * 100}%`],
-            [desc[1], `${understanding * 100}%`],
-            [desc[2], `${name1} - ${attraction[0] * 100}%,</br>${name2} - ${attraction[1] * 100}%`],
-            [desc[3], `${lifeAttitudes * 100}%`],
-            [desc[4], `${similarityThinking * 100}%`],
+            [desc[0], toPercent(partnerAcceptance).str],
+            [desc[1], toPercent(understanding).str],
+            [desc[2], `${name1} - ${toPercent(attraction[0]).str},</br>${name2} - ${toPercent(attraction[1]).str}`],
+            [desc[3], toPercent(lifeAttitudes).str],
+            [desc[4], toPercent(similarityThinking).str],
             [desc[6], getComplementarityData(complementarity)],
-            [desc[7], `${name1} - ${maturity[0]}%,</br>${name2} - ${maturity[1]}%`],
+            [desc[7], `${name1} - ${toPercent(maturity[0]).str},</br>${name2} - ${toPercent(maturity[1]).str}`],
         ]
     }
 
     /**
      * Дополняемость
      */
-    function getComplementarityData(indexes: number[]): string {
+    function getComplementarityData(indexes: readonly number[]): string {
 
         if (indexes.length === 1) {
-            return t('pair:both_bring_in_pair', {name1, name2, description: complementarityDesc.variants[indexes[0]]})
+            return t('pair:both_bring_in_pair', {name1, name2, description: complementarityDesc.options[indexes[0]]})
         }
 
-        return `${t('pair:one_brings_in_pair', {name: name1, description: complementarityDesc.variants[indexes[0]]})}.<br/> 
-                ${t('pair:one_brings_in_pair', {name: name2, description: complementarityDesc.variants[indexes[1]]})}`
+        return `${t('pair:one_brings_in_pair', {name: name1, description: complementarityDesc.options[indexes[0]]})}.<br/> 
+                ${t('pair:one_brings_in_pair', {name: name2, description: complementarityDesc.options[indexes[1]]})}`
     }
 
 }

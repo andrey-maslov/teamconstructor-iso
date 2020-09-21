@@ -4,7 +4,7 @@ import {COLORS} from '../../../../../constants/constants'
 import hexToRgba from '../../../../../helper/hexToRgba'
 import {useMediaPredicate} from 'react-media-hook'
 import style from './radar-chart.module.scss'
-import {ITendency} from "../../../../../cooperation"
+import {ITendency} from "psychology/build/main/types/types"
 
 const colors = [
     COLORS.orange,
@@ -19,7 +19,7 @@ const colors = [
 ]
 
 type ChartsPropsType = {
-    profiles: ITendency[][]
+    profiles: readonly (readonly ITendency[])[]
     names: string[]
     labels: string[]
 }

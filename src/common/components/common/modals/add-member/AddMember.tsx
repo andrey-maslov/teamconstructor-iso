@@ -2,14 +2,15 @@ import React, {useEffect} from "react"
 import Rodal from "rodal"
 import {useSelector, useDispatch} from "react-redux"
 import style from "./add-member.module.scss"
-import {GlobalStateType, IModalProps, ITeam, IMember, DecodedDataType} from "../../../../../constants/types"
+import {GlobalStateType, IModalProps, ITeam} from "../../../../../constants/types"
 import Button from "../../buttons/button/Button"
 import {GrUserAdd} from "react-icons/gr"
-import {getAndDecodeData} from "encoded-data-parser"
+import { IMember, DecodedDataType} from 'psychology/build/main/types/types'
+import {getAndDecodeData} from "psychology"
 import {useForm} from 'react-hook-form'
 import {setEditedMember, updateProject} from "../../../../actions/actionCreator"
 import {AiOutlineLoading} from "react-icons/ai"
-import {useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next"
 
 
 interface IForm {
@@ -135,6 +136,10 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
 
         const data = getAndDecodeData('', formData.encData)
 
+        if (data.data === null) {
+            return
+        }
+
         //generate new base id as max of list of ids + 1
         const baseIdList = teams[0].items.map((item: IMember) => item.baseID)
         const newBaseID = baseIdList.length !== 0 ? Math.max.apply(null, baseIdList) + 1 : 0
@@ -176,7 +181,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
         }
     }
 
-    function isDuplicateData(data: DecodedDataType, members: IMember[], edMember: number | null): boolean {
+    function isDuplicateData(data: DecodedDataType | null, members: IMember[], edMember: number | null): boolean {
         const strData = JSON.stringify(data)
         const dataList = members.filter(member => member.baseID !== edMember).map(member => JSON.stringify(member.decData))
         return dataList.includes(strData)
