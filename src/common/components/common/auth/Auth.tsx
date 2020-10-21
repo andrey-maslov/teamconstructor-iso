@@ -32,10 +32,6 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
 
     useEffect(() => {
 
-        if (isLoggedIn) {
-           history.push('/team')
-        }
-
         let termsLink: Element | null
         let privacyLink: Element | null
         if (agreement) {
@@ -60,6 +56,10 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
         }
     }, [agreement, isLoggedIn])
 
+    if (isLoggedIn) {
+        history.push('/')
+    }
+
     const Form = () => {
         switch (page) {
             case authModes[0] :
@@ -71,7 +71,7 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
                             submitHandle={logIn}
                             clearApiError={clearApiError}
                         />
-                        <NavLink to="/login/forgot-password">{t('common:auth.forgot_pwd_question')}</NavLink>
+                        <NavLink to="/signin/forgot-password">{t('common:auth.forgot_pwd_question')}</NavLink>
                     </>
                 )
             case authModes[1] :
@@ -92,7 +92,7 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
                             submitHandle={forgotHandle}
                             clearApiError={clearApiError}
                         />
-                        <NavLink to="/login">{t('common:auth.ready_to_login')}</NavLink>
+                        <NavLink to="/signin">{t('common:auth.ready_to_login')}</NavLink>
                     </>
                 )
             case authModes[3] :
@@ -104,14 +104,14 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
                             submitHandle={resetHandle}
                             clearApiError={clearApiError}
                         />
-                        <NavLink to="/login">{t('common:auth.ready_to_login')}</NavLink>
+                        <NavLink to="/signin">{t('common:auth.ready_to_login')}</NavLink>
                     </>
                 )
             case authModes[4] :
                 return (
                     <>
                         <ForgotSuccess />
-                        <NavLink to="/login">{t('common:auth.ready_to_login')}</NavLink>
+                        <NavLink to="/signin">{t('common:auth.ready_to_login')}</NavLink>
                     </>
                 )
             default :
@@ -134,7 +134,7 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
     );
 
     function logIn(data: ILoginForm): void {
-        dispatch(authUser(data, 'login'))
+        dispatch(authUser(data, 'signin'))
     }
 
     function forgotHandle(data: IForgotForm): void {
@@ -157,7 +157,7 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
             email: data.email,
             password: data.password,
         }
-        dispatch(authUser(userData, 'signup'))
+        dispatch(authUser(userData, 'registration'))
     }
 
 

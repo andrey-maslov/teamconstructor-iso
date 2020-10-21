@@ -1,35 +1,31 @@
-/* eslint-disable import/no-dynamic-require */
-import React from 'react';
-import { StaticRouter } from 'react-router-dom';
-import { renderToString } from 'react-dom/server';
-import { Provider } from 'react-redux';
+import React from 'react'
+import {StaticRouter} from 'react-router-dom'
+import {renderToString} from 'react-dom/server'
+import {Provider} from 'react-redux'
+import index from '../common/store/index'
+import express from 'express'
+import path from 'path'
+import fs from 'fs'
+import {LANGS, LANG_DEFAULT, ROUTES} from '../constants/constants'
+import {I18nextProvider} from 'react-i18next'
+import Backend from 'i18next-fs-backend'
+import i18n from '../i18n'
+import App from '../common/App'
+import {stripCountry} from '../helper/helper'
 
-import index from '../common/store/index';
+const cookieParser = require('cookie-parser')
 
-import express from 'express';
-import path from 'path';
-import fs from 'fs';
-import qs from 'qs';
-import { LANGS, LANG_DEFAULT, ROUTES } from '../constants/constants';
-import { I18nextProvider } from 'react-i18next';
-import Backend from 'i18next-fs-backend';
-import i18n from '../i18n';
-import App from '../common/App';
+const appDirectory = fs.realpathSync(process.cwd())
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)
 
-import { stripCountry } from '../helper/helper';
+const assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
 
-// Make sure any symlinks in the project folder are resolved:
-// https://github.com/facebookincubator/create-react-app/issues/637
-const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = (relativePath: any) => path.resolve(appDirectory, relativePath);
+const i18nextMiddleware = require('i18next-http-middleware')
 
-const assets = require(process.env.RAZZLE_ASSETS_MANIFEST!);
+const languages = LANGS.map(item => item[0])
+const publicDir = process.env.RAZZLE_PUBLIC_DIR || 'public'
 
-const i18nextMiddleware = require('i18next-http-middleware');
-
-const languages = LANGS.map(item => item[0]);
-
-const server = express();
+const server = express()
 
 i18n
     .use(Backend)
@@ -38,49 +34,48 @@ i18n
         {
             debug: false,
             preload: ['en', 'ru'],
-            // @ts-ignore
             whitelist: languages,
             ns: ['common', 'team', 'pair', '404'],
             defaultNS: 'common',
             backend: {
-                loadPath: `${process.env.RAZZLE_PUBLIC_DIR!}/locales/{{lng}}/{{ns}}.json`,
-                addPath: `${process.env.RAZZLE_PUBLIC_DIR!}/locales/{{lng}}/{{ns}}.missing.json`,
+                loadPath: `${publicDir}/locales/{{lng}}/{{ns}}.json`,
+                addPath: `${publicDir}/locales/{{lng}}/{{ns}}.missing.json`,
             },
         },
         () => {
             server
                 .disable('x-powered-by')
                 .use(i18nextMiddleware.handle(i18n))
-                .use('/locales', express.static(`${process.env.RAZZLE_PUBLIC_DIR!}/locales`))
-                .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
+                .use(cookieParser())
+                .use('/locales', express.static(`${publicDir}/locales`))
+                .use(express.static(publicDir))
                 .get('/*', (req, res) => {
-                    const context = {};
+                    const context = {}
 
                     const markup = renderToString(
-                        // @ts-ignore
                         <I18nextProvider i18n={req.i18n}>
                             <Provider store={index}>
                                 <StaticRouter context={context} location={req.url}>
-                                    <App/>
+                                    <App />
                                 </StaticRouter>
                             </Provider>
                         </I18nextProvider>,
-                    );
+                    )
 
-                    // @ts-ignore
-                    const {url} = context;
+                    const {url} = context
                     if (url) {
-                        res.redirect(url);
+                        res.redirect(url)
+                    } else if ((req.path === '/signin' || req.path === '/registration') && req.cookies.token) {
+                        res.redirect('/')
+                    } else if ((req.path === '/profile') && !req.cookies.token) {
+                        res.redirect('/')
                     } else {
-                        const initialI18nStore = {};
-                        // @ts-ignore
+                        const initialI18nStore = {}
                         req.i18n.languages.forEach(l => {
-                            // @ts-ignore
                             initialI18nStore[l] = req.i18n.services.resourceStore.data[l];
                         });
-                        // @ts-ignore
-                        const initialLanguage = req.i18n.language;
-                        const initLang: string = stripCountry(initialLanguage) || LANG_DEFAULT;
+                        const initialLanguage = req.i18n.language
+                        const initLang = stripCountry(initialLanguage) || LANG_DEFAULT;
 
                         const indexHTML = `<!doctype html>
                                             <html lang="${initLang}">
@@ -104,21 +99,12 @@ i18n
                                         </html>`;
 
                         if (!Object.keys(ROUTES).includes(req.path)) {
-                            res.status(404).send(indexHTML);
+                            res.status(404).send(indexHTML)
                         }
-
-                        res.status(200).send(indexHTML);
-
+                        res.status(200).send(indexHTML)
                     }
-
-                });
+                })
         },
-    );
+    )
 
-export default server;
-
-
-
-
-
-
+export default server

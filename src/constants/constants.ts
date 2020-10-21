@@ -23,11 +23,11 @@ export const ROUTES = {
     '/cookie-policy': 'page-content',
     '/privacy-policy': 'page-content',
     '/terms': 'page-content',
-    '/login': 'page-auth',
-    '/login/forgot-password': 'page-auth',
-    '/login/forgot-password-success': 'page-auth',
-    '/login/reset-password': 'page-auth',
-    '/signup': 'page-auth',
+    '/signin': 'page-auth',
+    '/signin/forgot-password': 'page-auth',
+    '/signin/forgot-password-success': 'page-auth',
+    '/signin/reset-password': 'page-auth',
+    '/registration': 'page-auth',
 };
 
 export const BASE_API = 'https://api.teamconstructor.com'
@@ -46,8 +46,8 @@ export const COLORS = {
 }
 
 export enum authModes {
-    'login',
-    'signup',
+    'signin',
+    'registration',
     'forgot_pwd',
     'reset_pwd',
     'forgot_pwd_success'

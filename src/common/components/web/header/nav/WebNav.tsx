@@ -1,10 +1,10 @@
 import React from 'react'
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import PopoverUser from '../../../common/popovers/popover-user/PopoverUser'
 import LangSwitcher from '../../../common/buttons/lang-switcher/LangSwitcher'
-import {NavLink} from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import style from './web-nav.module.scss'
-import {INavRoute} from "../../../../../constants/types"
+import { INavRoute } from "../../../../../constants/types"
 
 export type NavigationType = {
     handleLoginBtn: () => void
@@ -13,13 +13,13 @@ export type NavigationType = {
     routes: INavRoute[]
 }
 
-const WebNav: React.FC<NavigationType> = ({isLoggedIn, handleLoginBtn, userEmail, routes}) => {
+const WebNav: React.FC<NavigationType> = ({ isLoggedIn, handleLoginBtn, routes }) => {
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     return (
         <div className={style.nav}>
-            <LangSwitcher/>
+            <LangSwitcher />
             <ul className={style.list}>
                 {routes.map(route => (
                     <li key={route.title}>
@@ -40,19 +40,19 @@ const WebNav: React.FC<NavigationType> = ({isLoggedIn, handleLoginBtn, userEmail
                 /> :
                 <ul className={`${style.list} ${style.auth}`}>
                     <li>
-                        <NavLink to="/login" className={style.link}>
+                        <NavLink to="/signin" className={style.link}>
                             {t('common:buttons.login')}
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/signup" className={style.link}>
+                        <NavLink to="/registration" className={style.link}>
                             {t('common:buttons.signup')}
                         </NavLink>
                     </li>
                 </ul>
             }
         </div>
-    );
-};
+    )
+}
 
 export default WebNav

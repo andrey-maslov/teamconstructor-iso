@@ -30,7 +30,7 @@ const Forgot: React.FC<ILogin<IForgotForm>> = ({isLoading, errorApiMessage, subm
     const {register, handleSubmit, reset, errors} = useForm<IForgotForm>()
 
     useEffect(() => {
-        isEmailSent && history.push('/login/forgot-password-success')
+        isEmailSent && history.push('/signin/forgot-password-success')
     },[isEmailSent])
 
     return (

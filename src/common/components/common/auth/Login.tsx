@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import style from "./auth.module.scss"
 import Button from "../buttons/button/Button"
 import {useForm} from 'react-hook-form'
@@ -20,7 +20,7 @@ export interface ILogin<T> {
 const Login: React.FC<ILogin<ILoginForm>> = ({isLoading, errorApiMessage, submitHandle, clearApiError}) => {
 
     const {t} = useTranslation()
-    const {register, handleSubmit, reset, errors} = useForm<ILoginForm>()
+    const {register, handleSubmit, errors} = useForm<ILoginForm>()
 
     return (
         <form onSubmit={handleSubmit(submitHandle)}>
@@ -66,9 +66,7 @@ const Login: React.FC<ILogin<ILoginForm>> = ({isLoading, errorApiMessage, submit
                 {errorApiMessage && <div className={`item-explain`}>{errorApiMessage}</div>}
             </div>
         </form>
-    );
-
-
+    )
 }
 
 export default Login
