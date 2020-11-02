@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react'
-import {NavLink} from "react-router-dom"
+import React, { useEffect, useState } from 'react'
+import { NavLink } from "react-router-dom"
 import style from './cookies-consent.module.scss'
 import Button from "../../buttons/button/Button"
 import Cookie from "js-cookie"
-import {useTranslation} from "react-i18next"
+import { useTranslation } from "react-i18next"
 
 
 export const CookiesConsent: React.FC = () => {
 
     const [isConsented, setConsented] = useState(false)
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     useEffect(() => {
         const consent = Cookie.get('cookie-consent')
@@ -38,4 +38,4 @@ export const CookiesConsent: React.FC = () => {
         setConsented(true)
         Cookie.set('cookie-consent', 'OK')
     }
-};
+}

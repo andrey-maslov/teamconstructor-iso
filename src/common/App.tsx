@@ -14,15 +14,15 @@ import Footer from './components/common/layout/footer/Footer'
 import Header from './components/common/layout/header/Header'
 import ContentPage from "./components/pages/content-page/ContentPage"
 import AuthPage from "./components/pages/auth-page/AuthPage";
-import TeamCoopPage from "./components/pages/profile-page/TeamCoopPage";
-import ProfilePage from "./components/pages/team-coop-page/ProfilePage";
+import TeamCoopPage from "./components/pages/team-coop-page/TeamCoopPage";
+import ProfilePage from "./components/pages/profile-page/ProfilePage";
 
 // import CookiesWarn from "./components/CommonComponents/Modals/CookiesWarn/CookiesWarn";
 
 const App: React.FC = () => {
 
     const { pathname } = useLocation()
-    const { isLoggedIn } = useSelector((state: any) => state.userData)
+    const { isLoggedIn } = useSelector((state: any) => state.user)
 
     return (
         <ToastProvider>

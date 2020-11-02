@@ -1,7 +1,7 @@
-import {createStore, compose, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
-import {saveState} from './sessionStorage';
+import { createStore, compose, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import rootReducer from '../reducers'
+import { saveState } from './sessionStorage'
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers =
@@ -10,7 +10,7 @@ const composeEnhancers =
     // @ts-ignore
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
         // @ts-ignore
-        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose
 /* eslint-enable */
 
 const configureStore = (preloadedState: any) => {
@@ -20,27 +20,26 @@ const configureStore = (preloadedState: any) => {
         composeEnhancers(
             applyMiddleware(thunk)
         ),
-    );
+    )
 
     if (module.hot) {
         // Enable Webpack hot module replacement for reducers
         module.hot.accept('../reducers', () => {
-            const nextRootReducer = require('../reducers').default;
-            store.replaceReducer(nextRootReducer);
-        });
+            const nextRootReducer = require('../reducers').default
+            store.replaceReducer(nextRootReducer)
+        })
     }
-
     return store
 
-};
+}
 
 const index = configureStore({});
 
 index.subscribe(() => {
-    saveState('terms', index.getState().termsReducer)
-    saveState('userData', index.getState().userData)
-    saveState('pair', index.getState().pairCoopReducer)
+    saveState('terms', index.getState().terms)
+    saveState('userData', index.getState().user)
+    saveState('pair', index.getState().pair)
     // saveState('teams', index.getState().teamCoopReducer)
-});
+})
 
-export default index;
+export default index

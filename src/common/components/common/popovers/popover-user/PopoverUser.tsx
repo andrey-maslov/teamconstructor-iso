@@ -5,7 +5,7 @@ import {FiUser, FiUserCheck, FiLogOut, FiChevronDown, FiStar} from "react-icons/
 import {Popover} from "../Popover"
 import {useTranslation} from 'react-i18next'
 import OutsideClickHandler from 'react-outside-click-handler'
-import {GlobalStateType} from "../../../../../constants/types"
+import {globalStoreType} from "../../../../../constants/types"
 import {deleteProject, fetchProject, setCreateProjectModal} from "../../../../actions/actionCreator"
 
 interface PopoverUserProps {
@@ -16,7 +16,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({ logoutHandle}) => {
 
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
-    const userData = useSelector((state: GlobalStateType) => state.userData)
+    const userData = useSelector((state: globalStoreType) => state.user)
     const {projects, activeProject, email, username} = userData
     const {t} = useTranslation();
 

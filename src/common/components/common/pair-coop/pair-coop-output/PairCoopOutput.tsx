@@ -1,25 +1,25 @@
-import React, {useEffect, useState} from 'react'
-import {useSelector} from 'react-redux'
-import {Pair, getDescByRange} from 'psychology'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Pair, getDescByRange } from 'psychology'
 import RadarChart from "../../charts/radar-chart/RadarChart"
 import Box from "../../layout/box/Box"
 import Table from "../../tables/table/Table"
 import ComparisonTable from "./comparison-table/ComparisonTable"
-import {GlobalStateType} from "../../../../../constants/types"
-import {BsTable} from "react-icons/bs"
+import { globalStoreType } from "../../../../../constants/types"
+import { BsTable } from "react-icons/bs"
 import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
-import {useTranslation} from "react-i18next"
-import {toPercent} from "../../../../../helper/helper";
+import { useTranslation } from "react-i18next"
+import { toPercent } from "../../../../../helper/helper"
 
 const PairCoopOutput: React.FC = () => {
 
-    const {t} = useTranslation();
+    const { t } = useTranslation()
 
     //Initial data
-    const {terms: scheme, descriptions} = useSelector((state: GlobalStateType) => state.termsReducer)
-    const {partner1, partner2, isComparisonResultReady} = useSelector((state: GlobalStateType) => state.pairCoopReducer)
-    const {name: name1, data: data1} = partner1
-    const {name: name2, data: data2} = partner2
+    const { terms: scheme, descriptions } = useSelector((state: globalStoreType) => state.terms)
+    const { partner1, partner2, isComparisonResultReady } = useSelector((state: globalStoreType) => state.pair)
+    const { name: name1, data: data1 } = partner1
+    const { name: name2, data: data2 } = partner2
 
     //if all resources are fetched, calculated and ready to display
     const [isReady, setReady] = useState(false)
@@ -31,21 +31,21 @@ const PairCoopOutput: React.FC = () => {
     }, [isComparisonResultReady, scheme, descriptions])
 
     if (!isReady) {
-        return null;
+        return null
     }
 
-    const {compatibilityDesc, efficiencyDesc, complementarityDesc, pairDescriptions: desc} = descriptions
+    const { compatibilityDesc, efficiencyDesc, complementarityDesc, pairDescriptions: desc } = descriptions
 
     const pair = Pair([data1[1], data2[1]])
 
     //All calculated values for comparison table
-    const partnerAcceptance  = pair.getPartnerAcceptance()
-    const understanding      = pair.getUnderstanding()
-    const attraction         = pair.getAttraction()
-    const lifeAttitudes      = pair.getLifeAttitudes()
+    const partnerAcceptance = pair.getPartnerAcceptance()
+    const understanding = pair.getUnderstanding()
+    const attraction = pair.getAttraction()
+    const lifeAttitudes = pair.getLifeAttitudes()
     const similarityThinking = pair.getSimilarityThinking()
-    const complementarity    = pair.getComplementarity()
-    const maturity           = pair.getPsyMaturity()
+    const complementarity = pair.getComplementarity()
+    const maturity = pair.getPsyMaturity()
 
     const valuesForEfficiency: number[] = [partnerAcceptance, understanding, lifeAttitudes, similarityThinking];
     const efficiency: number = valuesForEfficiency.reduce((a, b) => a + b) / valuesForEfficiency.length;
@@ -70,7 +70,7 @@ const PairCoopOutput: React.FC = () => {
         <>
             <Box
                 addClass='result-box'
-                title={`${t('pair:result_for_pair', {name1, name2})}`}
+                title={`${t('pair:result_for_pair', { name1, name2 })}`}
             >
                 <div className="row around-md">
                     <RadarChart
@@ -94,11 +94,11 @@ const PairCoopOutput: React.FC = () => {
             <Box
                 addClass='result-box'
                 title={t('pair:descriptions')}
-                icon={<BsTable/>}
+                icon={<BsTable />}
             >
                 <div className="row center-md">
                     <div className="col-md-11">
-                        <ComparisonTable tableData={getComparisonTableData()}/>
+                        <ComparisonTable tableData={getComparisonTableData()} />
                     </div>
                 </div>
             </Box>
@@ -139,7 +139,7 @@ const PairCoopOutput: React.FC = () => {
                         />
                     </div>
                     <div className="col-md-6 col-lg-5">
-                        <strong>{name2}</strong><br/>
+                        <strong>{name2}</strong><br />
                         <Table
                             tableData={pair.partner2.sortedOctants.map((item) => [scheme.psychoTypes[item.index], item.value])}
                             tableHeader={['октант', 'значение']}
@@ -148,7 +148,7 @@ const PairCoopOutput: React.FC = () => {
                 </div>
             </Box>
         </>
-    );
+    )
 
     function getComparisonTableData() {
 
@@ -169,13 +169,13 @@ const PairCoopOutput: React.FC = () => {
     function getComplementarityData(indexes: readonly number[]): string {
 
         if (indexes.length === 1) {
-            return t('pair:both_bring_in_pair', {name1, name2, description: complementarityDesc.options[indexes[0]]})
+            return t('pair:both_bring_in_pair', { name1, name2, description: complementarityDesc.options[indexes[0]] })
         }
 
-        return `${t('pair:one_brings_in_pair', {name: name1, description: complementarityDesc.options[indexes[0]]})}.<br/> 
-                ${t('pair:one_brings_in_pair', {name: name2, description: complementarityDesc.options[indexes[1]]})}`
+        return `${t('pair:one_brings_in_pair', { name: name1, description: complementarityDesc.options[indexes[0]] })}.<br/> 
+                ${t('pair:one_brings_in_pair', { name: name2, description: complementarityDesc.options[indexes[1]] })}`
     }
 
 }
 
-export default PairCoopOutput;
+export default PairCoopOutput

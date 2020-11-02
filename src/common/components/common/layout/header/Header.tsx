@@ -1,25 +1,26 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useMediaPredicate } from 'react-media-hook'
-import {checkAuth, logOut, setAuthModal} from '../../../../actions/actionCreator'
+import { checkAuth, logOut } from '../../../../actions/actionCreator'
 import MobiHeader from '../../../mobi/header/MobiHeader'
 import WebHeader from '../../../web/header/WebHeader'
-import {FiDollarSign, FiHome} from "react-icons/fi"
-import {GlobalStateType} from "../../../../../constants/types"
-import {useTranslation} from "react-i18next";
+import { FiDollarSign, FiHome } from "react-icons/fi"
+import { globalStoreType } from "../../../../../constants/types"
+import { useTranslation } from "react-i18next"
 
 const Header: React.FC = () => {
 
     const dispatch = useDispatch()
-    const {t} = useTranslation()
-    const {isLoggedIn, userEmail} = useSelector((state: GlobalStateType) => state.userData)
+    const { t } = useTranslation()
+    const { isLoggedIn, userEmail } = useSelector((state: globalStoreType) => state.user)
 
     const routes = [
-        {title: t('common:nav.pair'), path: '/', access: 'all', icon: <FiHome/>},
-        {title: t('common:nav.team'), path: '/team', access: 'auth', icon: <FiDollarSign/>},
+        { title: t('common:nav.pair'), path: '/', access: 'all', icon: <FiHome /> },
+        { title: t('common:nav.team'), path: '/team', access: 'auth', icon: <FiDollarSign /> },
+        { title: t('common:nav.profile'), path: '/profile', access: 'auth', icon: <FiDollarSign /> },
     ];
 
-    const isTablet = useMediaPredicate('(max-width: 992px)');
+    const isTablet = useMediaPredicate('(max-width: 992px)')
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -29,13 +30,11 @@ const Header: React.FC = () => {
 
     const handleLoginBtn = () => {
         if (isLoggedIn) {
-            if(confirm(t('common:confirm.do_logout'))) {
+            if (confirm(t('common:confirm.do_logout'))) {
                 dispatch(logOut())
             }
-        } else {
-            dispatch(setAuthModal(true))
         }
-    };
+    }
 
     if (isTablet) {
         return <MobiHeader

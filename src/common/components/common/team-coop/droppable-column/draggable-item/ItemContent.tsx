@@ -1,20 +1,20 @@
-import React, {useMemo} from 'react'
+import React, { useMemo } from 'react'
 import style from './draggable-item.module.scss'
-import {Radar} from "react-chartjs-2"
-import {COLORS} from '../../../../../../constants/constants'
-import {IMember} from "../../../../../../constants/types";
-import {getPersonProfile} from "psychology";
+import { Radar } from "react-chartjs-2"
+import { COLORS } from '../../../../../../constants/constants'
+import { IMember } from '../../../../../../constants/types'
+import { getPersonProfile } from 'psychology'
 
 interface IItemContent {
     member: IMember
 }
 
-const ItemContent: React.FC<IItemContent> = ({member}) => {
+const ItemContent: React.FC<IItemContent> = ({ member }) => {
 
     const profile = useMemo(() => getPersonProfile(member.decData[1]), [member])
 
     const data = {
-        labels: ['','','','','','','','',],
+        labels: ['', '', '', '', '', '', '', '',],
         datasets:
             [
                 {
@@ -71,8 +71,8 @@ const ItemContent: React.FC<IItemContent> = ({member}) => {
                 />
             </div>
             <div className={style.content}>
-                <div className={style.name} dangerouslySetInnerHTML={{__html: member.name}}/>
-                <div className={style.position} dangerouslySetInnerHTML={{__html: member.position}} />
+                <div className={style.name} dangerouslySetInnerHTML={{ __html: member.name }} />
+                <div className={style.position} dangerouslySetInnerHTML={{ __html: member.position }} />
             </div>
         </div>
     );

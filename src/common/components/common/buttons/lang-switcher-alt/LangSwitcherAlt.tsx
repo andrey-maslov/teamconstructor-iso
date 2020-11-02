@@ -1,18 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import OutsideClickHandler from 'react-outside-click-handler';
-import {fetchContent, fetchTerms, setLanguage} from '../../../../actions/actionCreator';
-import {LANGS} from '../../../../../constants/constants';
-import {Popover} from '../../popovers/Popover';
+import { fetchContent, fetchTerms } from '../../../../actions/actionCreator';
+import { LANGS } from '../../../../../constants/constants';
+import { Popover } from '../../popovers/Popover';
 import style from './lang-switcher-alt.module.scss';
-import {useTranslation} from "react-i18next";
-import {isBrowser, stripCountry} from "../../../../../helper/helper";
+import { useTranslation } from "react-i18next";
+import { isBrowser, stripCountry } from "../../../../../helper/helper";
+import Cookie from "js-cookie";
 
 const LangSwitcherAlt: React.FC = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch()
-    const {i18n, t} = useTranslation();
+    const { i18n, t } = useTranslation();
 
     const currentLang = stripCountry(i18n.language);
     const currentLangLabel = LANGS.filter(item => item[0] === currentLang)[0][1];
@@ -27,9 +28,9 @@ const LangSwitcherAlt: React.FC = () => {
 
         i18n.changeLanguage(lng)
             .then(res => {
+                Cookie.set("i18next", lng)
                 dispatch(fetchTerms(lng))
                 dispatch(fetchContent(lng))
-                dispatch(setLanguage(lng))
                 localizeMeta(lng)
                 if (isOpen) {
                     setIsOpen(false)

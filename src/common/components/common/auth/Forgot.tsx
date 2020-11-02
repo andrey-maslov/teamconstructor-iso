@@ -26,7 +26,7 @@ const Forgot: React.FC<ILogin<IForgotForm>> = ({isLoading, errorApiMessage, subm
 
     const {t} = useTranslation()
     const history = useHistory()
-    const isEmailSent = useSelector((state: any) => state.appReducer.emailSent)
+    const isEmailSent = useSelector((state: any) => state.app.emailSent)
     const {register, handleSubmit, reset, errors} = useForm<IForgotForm>()
 
     useEffect(() => {

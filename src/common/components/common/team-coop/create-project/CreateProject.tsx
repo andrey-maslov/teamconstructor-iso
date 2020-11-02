@@ -2,7 +2,7 @@ import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form'
 import {AiOutlineLoading} from 'react-icons/ai'
-import {GlobalStateType} from "../../../../../constants/types"
+import {globalStoreType} from "../../../../../constants/types"
 import {createProject} from "../../../../actions/actionCreator"
 import Button from "../../buttons/button/Button"
 import style from './create-project.module.scss'
@@ -15,7 +15,7 @@ interface IForm {
 
 const CreateProject: React.FC = () => {
 
-    const {isLoading, errorApiMessage} = useSelector((state: GlobalStateType) => state.appReducer)
+    const {isLoading, errorApiMessage} = useSelector((state: globalStoreType) => state.app)
     const {register, handleSubmit, errors} = useForm<IForm>()
     const dispatch = useDispatch()
     const {t} = useTranslation()

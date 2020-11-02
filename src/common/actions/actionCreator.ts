@@ -1,20 +1,15 @@
 import {
     SET_PAIR_DATA,
-    CLEAR_PAIR_DATA,
     SET_TEAMS_DATA,
     SET_POOL,
-    SET_ACTIVE_TEAM,
     SET_ROW_DATA1,
     SET_ROW_DATA2,
     ADD_AUTH_DATA,
     CLEAR_USER_DATA,
-    SET_LANG,
     FETCH_TERMS,
     SET_COMPARISON_READY,
     COMPARISON_IN_PROCESS,
-    SET_RANDOM,
     SET_ADD_MEMBER_MODAL,
-    SET_AUTH_MODAL,
     FETCH_CONTENT,
     SET_ERROR,
     PROCESS_FAILED,
@@ -23,51 +18,40 @@ import {
     SET_ACTIVE_PROJECT,
     SET_PROJECTS,
     SET_CREATE_PROJECT_MODAL,
-    SET_EDITED_MEMBER, SEND_EMAIL, CHANGE_PWD,
+    SET_EDITED_MEMBER,
+    CHANGE_PWD,
 } from './actionTypes';
 import {ILoginData, IProject, ISignUpData, ITeam,} from "../../constants/types"
 import {CONTENT_API, BASE_API, authModes} from "../../constants/constants"
 import axios from 'axios'
 import Cookie from "js-cookie"
-import {IForgotForm} from "../components/common/auth/Forgot";
-import {IResetForm} from "../components/common/auth/Reset";
 
 /*
 COMPARISON PROCESS
- */
-
-export function setComparisonProcess(isComparisonInProcess: boolean): { type: string, isComparisonInProcess: boolean } {
-    return {
-        type: COMPARISON_IN_PROCESS,
-        isComparisonInProcess
-    };
-}
+*/
 
 export function setComparisonResult(isComparisonResultReady: boolean): any {
-
     return (dispatch: any) => {
         dispatch({
             type: SET_COMPARISON_READY,
             isComparisonResultReady
-        });
+        })
         dispatch({
             type: COMPARISON_IN_PROCESS,
             isComparisonInProcess: true
-        });
+        })
         setTimeout(() => {
             dispatch({
                 type: COMPARISON_IN_PROCESS,
                 isComparisonInProcess: false
             })
-        }, 500)
+        }, 1500)
     }
 }
-
 
 /*
 PAIR COMPARISON PROCESS
  */
-
 export function setPairData(data1: any, data2: any, name1: string, name2: string): {
     type: string, data1: [] | string, data2: [] | string, name1: string, name2: string
 } {
@@ -77,12 +61,6 @@ export function setPairData(data1: any, data2: any, name1: string, name2: string
         data2,
         name1,
         name2
-    };
-}
-
-export function clearPairData(): { type: string } {
-    return {
-        type: CLEAR_PAIR_DATA,
     };
 }
 
@@ -104,7 +82,6 @@ export function setRowData(encData1: string, encData2: string) {
     }
 }
 
-
 /*
 TEAM COOPERATION PROCESS
  */
@@ -113,20 +90,6 @@ export function setTeamsData(teamsData: ITeam[]): { type: string, teams: ITeam[]
         type: SET_TEAMS_DATA,
         teams: teamsData
     };
-}
-
-export function setActiveTeam(teamIndex: number): { type: string, activeTeam: number } {
-    return {
-        type: SET_ACTIVE_TEAM,
-        activeTeam: teamIndex
-    }
-}
-
-export function setRandomNum(randomNum: number): { type: string, randomNum: number } {
-    return {
-        type: SET_RANDOM,
-        randomNum
-    }
 }
 
 /*
@@ -152,14 +115,6 @@ export function setCreateProjectModal(isCreateProjectModal: boolean): { type: st
         isCreateProjectModal
     }
 }
-
-export function setAuthModal(isAuthModal: boolean): { type: string, isAuthModal: boolean } {
-    return {
-        type: SET_AUTH_MODAL,
-        isAuthModal
-    }
-}
-
 
 /*===== FETCHING DATA =====*/
 export const fetchTerms = (lang: string) => {
@@ -194,15 +149,7 @@ export const fetchContent = (lang: string) => {
     };
 };
 
-
 /*===== AUTH =====*/
-export function setLanguage(language: string): { type: string, language: string } {
-    Cookie.set("i18next", language)
-    return {
-        type: SET_LANG,
-        language,
-    };
-}
 
 function setUser(id: number, username: string, email: string, role: any, projects: IProject[] | [], activeProject: IProject | null) {
     return {
@@ -265,7 +212,6 @@ export const authUser = (userData: ISignUpData | ILoginData, authType: keyof typ
     }
 }
 
-
 export const sendForgotEmail = (email: string) => {
 
     const url = `${BASE_API}/auth/forgot-password`
@@ -290,7 +236,6 @@ export const sendForgotEmail = (email: string) => {
     }
 }
 
-
 export const sendNewPassword = (data: { code: string, password: string, passwordConfirmation: string }) => {
 
     const url = `${BASE_API}/auth/reset-password`
@@ -312,7 +257,6 @@ export const sendNewPassword = (data: { code: string, password: string, password
             .finally(() => dispatch(setLoading(false)))
     }
 }
-
 
 export function logOut(): { type: string } {
     Cookie.remove('token')

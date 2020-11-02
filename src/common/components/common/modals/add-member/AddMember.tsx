@@ -1,16 +1,16 @@
-import React, {useEffect} from "react"
-import Rodal from "rodal"
-import {useSelector, useDispatch} from "react-redux"
-import style from "./add-member.module.scss"
-import {GlobalStateType, IModalProps, ITeam} from "../../../../../constants/types"
-import Button from "../../buttons/button/Button"
-import {GrUserAdd} from "react-icons/gr"
-import { IMember, DecodedDataType} from 'psychology/build/main/types/types'
-import {getAndDecodeData} from "psychology"
-import {useForm} from 'react-hook-form'
-import {setEditedMember, updateProject} from "../../../../actions/actionCreator"
-import {AiOutlineLoading} from "react-icons/ai"
-import {useTranslation} from "react-i18next"
+import React, { useEffect } from 'react'
+import Rodal from 'rodal'
+import { useSelector, useDispatch } from 'react-redux'
+import style from './add-member.module.scss'
+import { globalStoreType, IModalProps, ITeam } from '../../../../../constants/types'
+import Button from '../../buttons/button/Button'
+import { GrUserAdd } from 'react-icons/gr'
+import { IMember, DecodedDataType } from 'psychology/build/main/types/types'
+import { getAndDecodeData } from 'psychology'
+import { useForm } from 'react-hook-form'
+import { setEditedMember, updateProject } from '../../../../actions/actionCreator'
+import { AiOutlineLoading } from 'react-icons/ai'
+import { useTranslation } from 'react-i18next'
 
 
 interface IForm {
@@ -19,7 +19,11 @@ interface IForm {
     encData: string;
 }
 
-export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
+export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
+
+    const { t } = useTranslation()
+    const dispatch = useDispatch()
+    const { register, handleSubmit, reset, errors } = useForm<IForm>({ criteriaMode: 'all' })
 
     useEffect(() => {
         return function clearAll() {
@@ -28,20 +32,15 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
         }
     }, [])
 
-    const {t} = useTranslation()
-    const dispatch = useDispatch()
-    const teams: Array<ITeam> = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
-    const editedMemberId: number | null = useSelector((state: GlobalStateType) => state.teamCoopReducer.editedMember)
-    const {activeProject} = useSelector((state: GlobalStateType) => state.userData)
-    const {isLoading, errorApiMessage} = useSelector((state: GlobalStateType) => state.appReducer)
-    const {register, handleSubmit, reset, errors} = useForm<IForm>({criteriaMode: 'all'})
+    const { teams, editedMember } = useSelector((state: globalStoreType) => state.team)
+    const { activeProject } = useSelector((state: globalStoreType) => state.user)
+    const { isLoading, errorApiMessage } = useSelector((state: globalStoreType) => state.app)
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
+    let defaultProfile = { name: '', position: '', encData: '' }
 
-    let defaultProfile = {name: '', position: '', encData: ''}
-
-    if (editedMemberId !== null) {
-        const member = members.filter((item: IMember) => item.baseID === editedMemberId)[0]
-        defaultProfile = {name: member.name, position: member.position, encData: btoa(JSON.stringify(member.decData))}
+    if (editedMember !== null) {
+        const member = members.filter((item: IMember) => item.baseID === editedMember)[0]
+        defaultProfile = { name: member.name, position: member.position, encData: btoa(JSON.stringify(member.decData)) }
     }
 
 
@@ -66,7 +65,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                                 ref={register({
                                     required: `${t('common:errors.required')}`,
                                     validate: {
-                                        duplicateName: value => !isDuplicateName(value, members, editedMemberId)
+                                        duplicateName: value => !isDuplicateName(value, members, editedMember)
                                     }
                                 })}
                             />
@@ -102,7 +101,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                                     required: `${t('common:errors.required')}`,
                                     validate: {
                                         decode: value => getAndDecodeData('', value).data !== null,
-                                        duplicate: value => !isDuplicateData(getAndDecodeData('', value).data, members, editedMemberId)
+                                        duplicate: value => !isDuplicateData(getAndDecodeData('', value).data, members, editedMember)
                                     }
                                 })}
                             />
@@ -118,8 +117,8 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                     </div>
                     <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                         <Button
-                            title={editedMemberId ? t('common:buttons.save') : t('common:buttons.add')}
-                            startIcon={isLoading ? <AiOutlineLoading/> : <GrUserAdd/>}
+                            title={editedMember ? t('common:buttons.save') : t('common:buttons.add')}
+                            startIcon={isLoading ? <AiOutlineLoading /> : <GrUserAdd />}
                             handle={() => void (0)}
                             btnClass={'btn-outlined'}
                         />
@@ -130,7 +129,6 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
             </div>
         </Rodal>
     )
-
 
     function submitForm(formData: IForm): void {
 
@@ -152,12 +150,11 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
             baseID: newBaseID
         }
 
-
         let newTeams = [...teams]
 
-        if (editedMemberId === null) {
+        if (editedMember === null) {
             newTeams[0].items.push(newMember)
-            dispatch(updateProject(activeProject.id, {pool: newTeams[0]}))
+            dispatch(updateProject(activeProject.id, { pool: newTeams[0] }))
             console.log('add')
         } else {
             console.log('edit')
@@ -165,7 +162,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                 return {
                     ...team,
                     items: team.items.map((item: IMember) => {
-                        if (item.baseID === editedMemberId) {
+                        if (item.baseID === editedMember) {
                             return {
                                 ...item,
                                 name: newMember.name,
@@ -177,7 +174,7 @@ export const AddMember: React.FC<IModalProps> = ({visible, closeModal}) => {
                     })
                 }
             })
-            dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
+            dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
         }
     }
 

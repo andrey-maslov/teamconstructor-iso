@@ -5,33 +5,31 @@ import {
     COMPARISON_IN_PROCESS,
     SET_ROW_DATA1,
     SET_ROW_DATA2,
-} from "../actions/actionTypes";
-import {loadState} from "../store/sessionStorage";
+} from "../actions/actionTypes"
+import { loadState } from "../store/sessionStorage"
 
-let STATE = loadState('pair');
-// let STATE: any = null;
+let STATE = loadState('pair')
 
 if (!STATE) {
     STATE = {
-        type: '',
         isComparisonResultReady: false,
         isComparisonInProcess: false,
         partner1: {
-            encData: '',
-            data: [],
-            name: '',
+            encData: null,
+            data: null,
+            name: null,
         },
         partner2: {
-            encData: '',
-            data: [],
-            name: '',
+            encData: null,
+            data: null,
+            name: null,
         },
     }
 }
 
-export type pairCoopReducerType = typeof STATE;
+export type pairStoreType = typeof STATE
 
-export const pairCoopReducer = (state = STATE, {
+export const pair = (state = STATE, {
     type,
     isComparisonResultReady,
     isComparisonInProcess,
@@ -41,18 +39,18 @@ export const pairCoopReducer = (state = STATE, {
     encData2,
     name1,
     name2,
-}: any) => {
+}: pairStoreType) => {
     switch (type) {
         case SET_COMPARISON_READY :
             return {
                 ...state,
                 isComparisonResultReady,
-            };
+            }
         case COMPARISON_IN_PROCESS :
             return {
                 ...state,
                 isComparisonInProcess,
-            };
+            }
         case SET_PAIR_DATA :
             return {
                 ...state,
@@ -66,7 +64,7 @@ export const pairCoopReducer = (state = STATE, {
                     data: data2,
                     name: name2,
                 },
-            };
+            }
         case SET_ROW_DATA1 :
             return {
                 ...state,
@@ -74,7 +72,7 @@ export const pairCoopReducer = (state = STATE, {
                     ...state.partner1,
                     encData: encData1
                 },
-            };
+            }
         case SET_ROW_DATA2 :
             return {
                 ...state,
@@ -82,23 +80,24 @@ export const pairCoopReducer = (state = STATE, {
                     ...state.partner2,
                     encData: encData2
                 },
-            };
+            }
         case CLEAR_PAIR_DATA :
             return {
                 ...state,
                 isComparisonResultReady: false,
+                isComparisonInProcess: false,
                 partner1: {
-                    encData: '',
-                    data: [],
-                    name: ''
+                    encData: null,
+                    data: null,
+                    name: null,
                 },
                 partner2: {
-                    encData: '',
-                    data: [],
-                    name: ''
+                    encData: null,
+                    data: null,
+                    name: null,
                 },
-            };
+            }
         default:
-            return state;
+            return state
     }
-};
+}

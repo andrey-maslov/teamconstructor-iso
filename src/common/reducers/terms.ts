@@ -1,7 +1,7 @@
-import {FETCH_CONTENT, FETCH_TERMS} from "../actions/actionTypes";
-import {loadState} from "../store/sessionStorage";
+import {FETCH_CONTENT, FETCH_TERMS} from "../actions/actionTypes"
+import {loadState} from "../store/sessionStorage"
 
-let PSYCHO = loadState('psychology');
+let PSYCHO = loadState('psychology')
 
 if (!PSYCHO) {
     PSYCHO = {
@@ -10,17 +10,13 @@ if (!PSYCHO) {
     }
 }
 
-export type TermsReducerType = {
-    type: string
-    terms: null | any
-    descriptions: null | any
-};
+export type TermsStoreType = typeof PSYCHO
 
-export const termsReducer = (state = PSYCHO, {
+export const terms = (state = PSYCHO, {
     type,
     terms,
     descriptions,
-}: TermsReducerType) => {
+}: TermsStoreType) => {
     switch (type) {
         case FETCH_TERMS :
             return {

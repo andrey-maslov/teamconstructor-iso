@@ -1,0 +1,78 @@
+@import '../../../../assets/scss/vars';
+@import '../../../../assets/scss/mixins';
+
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.enc {
+  //@include ellipsis;
+  position: relative;
+  display: inline-block;
+  padding: .5rem 1rem;
+  border-radius: $border-radius-lg;
+  background-color: $grey-bg;
+  font-size: 75%;
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+  height: auto;
+  margin-right: .5rem;
+  resize: none;
+}
+
+.btn {
+  color: $grey;
+  padding: .5rem;
+  border-radius: $border-radius-lg;
+  background-color: $grey-bg;
+  border: 0;
+  cursor: pointer;
+  transition: .2s;
+
+  svg {
+    font-size: 1.5rem;
+    position: relative;
+    bottom: -.25rem;
+  }
+
+  &:hover {
+    background-color: darken($grey-bg, 5%);
+  }
+
+  &.success {
+    color: $success;
+    border-color: rgba($success, .5) !important;
+  }
+}
+
+.withBtn {
+
+  .btn {
+    height: 4.5rem;
+    width: 10rem;
+    line-height: 1.2;
+  }
+}
+
+
+@media(max-width: 992px) {
+
+  .enc {
+    //@include ellipsis;
+    height: auto;
+    margin-right: 0;
+    margin-bottom: .5rem;
+  }
+
+  .wrapper {
+    flex-wrap: wrap;
+
+    button.btn {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+}

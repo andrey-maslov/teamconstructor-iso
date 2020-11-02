@@ -79,19 +79,14 @@
   border-radius: $border-radius-sm;
   transition: color .2s;
   cursor: pointer;
+  margin-right: 3px;
 
   &:hover {
-  }
-
-  &:first-child {
-    margin-right: 3px;
-
-    &:hover {
-      color: #fff;
-    }
+    color: #fff;
   }
 
   &:last-child {
+    margin-right: 0;
 
     &:hover {
       color: $danger;

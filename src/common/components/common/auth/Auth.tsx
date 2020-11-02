@@ -4,7 +4,7 @@ import Login, {ILoginForm} from "./Login"
 import Signup, {ISignUpForm} from "./Signup"
 import {useTranslation} from "react-i18next"
 import {useDispatch, useSelector} from "react-redux"
-import {GlobalStateType} from "../../../../constants/types"
+import {globalStoreType} from "../../../../constants/types"
 import {authUser, sendForgotEmail, sendNewPassword} from "../../../actions/actionCreator"
 import {SET_ERROR} from "../../../actions/actionTypes"
 import Forgot, {IForgotForm} from "./Forgot"
@@ -27,8 +27,8 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
     const location = useLocation()
     const dispatch = useDispatch()
     const agreement = useRef<HTMLDivElement>(null)
-    const {isLoggedIn} = useSelector((state: GlobalStateType) => state.userData)
-    const {isLoading, errorApiMessage} = useSelector((state: GlobalStateType) => state.appReducer)
+    const {isLoggedIn} = useSelector((state: globalStoreType) => state.user)
+    const {isLoading, errorApiMessage} = useSelector((state: globalStoreType) => state.app)
 
     useEffect(() => {
 

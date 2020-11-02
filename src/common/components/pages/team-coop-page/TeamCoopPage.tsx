@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import DraggableZone from '../../common/team-coop/DraggableZone'
 import TeamCoopResult from '../../common/team-coop/team-coop-result/TeamCoopResult'
 import TeamCoopSidebar from '../../common/team-coop/team-coop-sidebar/TeamCoopSidebar'
-import { GlobalStateType } from '../../../../constants/types'
+import { globalStoreType } from '../../../../constants/types'
 import CreateProject from '../../common/team-coop/create-project/CreateProject'
 import BoardInfo from '../../common/team-coop/board-info/BoardInfo'
 import { useTranslation } from 'react-i18next'
@@ -12,8 +12,8 @@ import { useTranslation } from 'react-i18next'
 const TeamCoopPage: React.FC = () => {
 
     const { t } = useTranslation()
-    const { isLoggedIn, projects, activeProject } = useSelector((state: GlobalStateType) => state.userData)
-    const { isLoading } = useSelector((state: GlobalStateType) => state.appReducer)
+    const { isLoggedIn, projects, activeProject } = useSelector((state: globalStoreType) => state.user)
+    const { isLoading } = useSelector((state: globalStoreType) => state.app)
 
 
     if (!isLoggedIn) {
@@ -47,9 +47,7 @@ const TeamCoopPage: React.FC = () => {
                 </div>
             </main>
         </>
-    );
-};
+    )
+}
 
-export default TeamCoopPage;
-
-// Доска проекта <span>{project.title}</span>
+export default TeamCoopPage

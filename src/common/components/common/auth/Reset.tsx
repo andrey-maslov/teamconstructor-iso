@@ -18,7 +18,7 @@ const Reset: React.FC<ILogin<IResetForm>> = ({isLoading, errorApiMessage, submit
 
     const {t} = useTranslation()
     const {register, handleSubmit, reset, getValues, errors} = useForm<IResetForm>()
-    const {isPwdChanged} = useSelector((state: any) => state.appReducer)
+    const {isPwdChanged} = useSelector((state: any) => state.app)
 
     if (isPwdChanged) {
         return (

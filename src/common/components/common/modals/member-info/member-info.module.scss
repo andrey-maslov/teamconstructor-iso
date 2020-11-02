@@ -1,0 +1,21 @@
+@import 'src/common/assets/scss/_vars.scss';
+
+.content {
+  padding-top: 2rem;
+  max-height: 530px;
+  overflow-y: auto;
+
+  button {
+
+    svg {
+      path {
+        stroke: $text-light
+      }
+      color: $text-light ;
+    }
+  }
+}
+
+
+
+

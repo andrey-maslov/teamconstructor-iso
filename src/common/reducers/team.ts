@@ -2,20 +2,14 @@ import {
     T_COMPARISON_IN_PROCESS,
     T_SET_COMPARISON_READY,
     SET_TEAMS_DATA,
-    SET_ACTIVE_TEAM, SET_RANDOM, ADD_MEMBER, SET_EDITED_MEMBER, SET_TEAM_SPEC, CLEAR_USER_DATA, SET_POOL
-
-} from "../actions/actionTypes";
-import {loadState} from "../store/sessionStorage";
-
-// const initialStaff = [
-//     {
-//         id: `0-${new Date().getTime()}`,
-//         name: 'Мария',
-//         position: 'Manager',
-//         encData: 'W1syLDMsMF0sW1stMSwtMSw1LDMsLTFdLFstNCwtMywtMywtMiwtMV0sWzEsMCwtNCwzLC0xXSxbLTIsNiwwLDEsLTRdLFs0LDEsMSwtNCwtM11dXQ==',
-//         decData: [[2, 3, 0], [[-1, -1, 5, 3, -1], [-4, -3, -3, -2, -1], [1, 0, -4, 3, -1], [-2, 6, 0, 1, -4], [4, 1, 1, -4, -3]]]
-//     },
-// ]
+    SET_ACTIVE_TEAM,
+    SET_RANDOM,
+    ADD_MEMBER,
+    SET_EDITED_MEMBER,
+    SET_TEAM_SPEC,
+    CLEAR_USER_DATA,
+    SET_POOL
+} from "../actions/actionTypes"
 
 // let STATE = loadState('teams');
 let STATE: any = null;
@@ -24,17 +18,19 @@ if (!STATE) {
     STATE = {
         isComparisonResultReady: false,
         isComparisonInProcess: false,
-        teams: [],
+        teams: null,
+        pool: null,
         activeTeam: 0,
         teamSpec: 0,
         editedMember: null,
-        randomNum: 0,
+        member: null,
+        randomNum: 0
     }
 }
 
-type teamCoopReducerType = typeof STATE;
+export type teamStoreType = typeof STATE;
 
-export const teamCoopReducer = (state = STATE, {
+export const team = (state = STATE, {
     type,
     isComparisonResultReady,
     isComparisonInProcess,
@@ -45,7 +41,7 @@ export const teamCoopReducer = (state = STATE, {
     randomNum,
     editedMember,
     member,
-}: any) => {
+}: teamStoreType) => {
     switch (type) {
         case T_SET_COMPARISON_READY :
             return {
@@ -100,9 +96,17 @@ export const teamCoopReducer = (state = STATE, {
         case CLEAR_USER_DATA :
             return {
                 ...state,
-                teams: []
+                isComparisonResultReady: false,
+                isComparisonInProcess: false,
+                teams: null,
+                pool: null,
+                activeTeam: null,
+                teamSpec: 0,
+                editedMember: null,
+                member: null,
+                randomNum: 0
             }
         default:
-            return state;
+            return state
     }
-};
+}

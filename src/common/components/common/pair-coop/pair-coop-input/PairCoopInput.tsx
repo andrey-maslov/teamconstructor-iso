@@ -1,16 +1,16 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import InputField from "./input-field/InputField"
-import {useDispatch, useSelector} from "react-redux"
-import {setComparisonResult, setPairData,} from "../../../../actions/actionCreator"
-import {getAndDecodeData} from "psychology"
+import { useDispatch, useSelector } from "react-redux"
+import { setComparisonResult, setPairData, } from "../../../../actions/actionCreator"
+import { getAndDecodeData } from "psychology"
 import Button from "../../buttons/button/Button"
-import {FaReact} from "react-icons/fa"
-import {GoRocket} from "react-icons/go"
+import { FaReact } from "react-icons/fa"
+import { GoRocket } from "react-icons/go"
 import ProfileGenerator from "./profile-generator/ProfileGenerator"
 import style from './pair-coop-input.module.scss'
-import {GlobalStateType} from "../../../../../constants/types"
-import {useForm} from 'react-hook-form'
-import {useTranslation} from "react-i18next"
+import { globalStoreType } from "../../../../../constants/types"
+import { useForm } from 'react-hook-form'
+import { useTranslation } from "react-i18next"
 
 interface IPairLocalState {
     data1: string
@@ -27,11 +27,11 @@ interface IForm {
 
 
 const PairCoopInput: React.FC = () => {
-    const dispatch = useDispatch();
-    const encData1 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner1.encData);
-    const encData2 = useSelector((state: GlobalStateType) => state.pairCoopReducer.partner2.encData);
-    const {register, handleSubmit, reset, errors} = useForm()
-    const {t} = useTranslation();
+    const dispatch = useDispatch()
+    const encData1 = useSelector((state: globalStoreType) => state.pair.partner1.encData)
+    const encData2 = useSelector((state: globalStoreType) => state.pair.partner2.encData)
+    const { register, handleSubmit, errors } = useForm()
+    const { t } = useTranslation()
 
     const encDataFromURL = getAndDecodeData().encoded;
 
@@ -83,7 +83,7 @@ const PairCoopInput: React.FC = () => {
                 <div className={style.buttons}>
                     <Button
                         title={t('common:buttons.compare')}
-                        startIcon={<GoRocket/>}
+                        startIcon={<GoRocket />}
                         handle={() => void (0)}
                         btnClass={'btn-outlined'}
                     />
@@ -93,17 +93,17 @@ const PairCoopInput: React.FC = () => {
             <button
                 className={style.floatBtn}
                 onClick={() => {
-                    setLocalState({...localState, isGenerator: !localState.isGenerator})
+                    setLocalState({ ...localState, isGenerator: !localState.isGenerator })
                 }}
             >
-                <FaReact/>
+                <FaReact />
             </button>
         </>
     );
 
     function submitCompare(data: IForm) {
 
-        const {data1, data2, name1, name2} = data
+        const { data1, data2, name1, name2 } = data
 
         const decData1 = getAndDecodeData('', data1).data
         const decData2 = getAndDecodeData('', data2).data

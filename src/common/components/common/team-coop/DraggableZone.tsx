@@ -1,17 +1,17 @@
-import React, {useState, useEffect} from 'react'
-import {DragDropContext, DropResult} from "react-beautiful-dnd"
+import React, { useState, useEffect } from 'react'
+import { DragDropContext, DropResult } from "react-beautiful-dnd"
 import Button from "../buttons/button/Button"
 import Box from '../layout/box/Box'
 import DroppableColumn from "./droppable-column/DroppableColumn"
 import ColumnTop from "./droppable-column/ColumnTop"
 import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
-import {GlobalStateType, IMember, ITeam} from "../../../../constants/types"
-import {useDispatch, useSelector} from "react-redux";
-import {setAddMemberModal, setTeamsData, updateProject} from "../../../actions/actionCreator";
-import {useToasts} from 'react-toast-notifications'
-import {FiPlus, FiSearch} from 'react-icons/fi'
+import { globalStoreType, IMember, ITeam } from "../../../../constants/types"
+import { useDispatch, useSelector } from "react-redux";
+import { setAddMemberModal, setTeamsData, updateProject } from "../../../actions/actionCreator";
+import { useToasts } from 'react-toast-notifications'
+import { FiPlus, FiSearch } from 'react-icons/fi'
 import SearchPanel from "./search-panel/SearchPanel";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -32,13 +32,13 @@ const reorder = (list: any, startIndex: number, endIndex: number) => {
  * Copy an item from one list to another list.
  */
 const copy = (source: any, destination: any, droppableSource: any, droppableDestination: any) => {
-    const sourceClone = Array.from(source);
-    const destClone = Array.from(destination);
+    const sourceClone = Array.from(source)
+    const destClone = Array.from(destination)
     const item = new Object(sourceClone[droppableSource.index])
 
-    destClone.splice(droppableDestination.index, 0, {...item, id: `${new Date().getTime()}`});
+    destClone.splice(droppableDestination.index, 0, { ...item, id: `${new Date().getTime()}` })
 
-    return destClone;
+    return destClone
 };
 
 
@@ -46,69 +46,71 @@ const copy = (source: any, destination: any, droppableSource: any, droppableDest
  * Moves an item from one list to another list.
  */
 const move = (source: any, destination: any, droppableSource: any, droppableDestination: any) => {
-    const sourceClone = Array.from(source);
-    const destClone = Array.from(destination);
-    const [removed] = sourceClone.splice(droppableSource.index, 1);
+    const sourceClone = Array.from(source)
+    const destClone = Array.from(destination)
+    const [removed] = sourceClone.splice(droppableSource.index, 1)
 
-    destClone.splice(droppableDestination.index, 0, removed);
+    destClone.splice(droppableDestination.index, 0, removed)
 
-    const result = {};
-    result[droppableSource.droppableId] = sourceClone;
-    result[droppableDestination.droppableId] = destClone;
+    const result = {}
+    result[droppableSource.droppableId] = sourceClone
+    result[droppableDestination.droppableId] = destClone
 
-    return result;
-};
-
+    return result
+}
 
 const DraggableZone: React.FC = () => {
 
-    const teams: ITeam[] = useSelector((state: GlobalStateType) => state.teamCoopReducer.teams)
-    const {activeProject} = useSelector((state: GlobalStateType) => state.userData)
-    const staff: ITeam = teams[0]
-    const dispatch = useDispatch();
-    const {addToast} = useToasts()
-    const {t} = useTranslation()
+    const teams: ITeam[] = useSelector((state: globalStoreType) => state.team.teams)
+    const { activeProject } = useSelector((state: globalStoreType) => state.user)
+    const staff: ITeam | Record<string, unknown> = teams ? teams[0] : {}
+    const dispatch = useDispatch()
+    const { addToast } = useToasts()
+    const { t } = useTranslation()
 
     const [isReady, setReady] = useState(false)
     const [isSearch, setSearch] = useState(false)
     const [filteredMembers, setFilteredMembers] = useState<IMember[] | null>(null)
 
     useEffect(() => {
-        if (staff && staff.items !== 0) {
+        if (staff && staff?.items) {
             setReady(true)
         }
     }, [staff])
 
 
     function onDragEnd(result: DropResult) {
-        const {source, destination} = result;
+        const { source, destination } = result
 
         // dropped outside the list
         if (!destination) {
             return;
         }
-        const sInd = +source.droppableId;
-        const dInd = +destination.droppableId;
+        const sInd = +source.droppableId
+        const dInd = +destination.droppableId
 
         if (sInd === dInd) {
 
-            const items = reorder(teams[sInd].items, source.index, destination.index);
-            const newTeams: ITeam[] = [...teams];
-            newTeams[sInd].items = items;
-            dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
+            const items = reorder(teams[sInd].items, source.index, destination.index)
+            const newTeams: ITeam[] = [...teams]
+            newTeams[sInd].items = items
+            dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
 
         } else if (sInd === 0) {
 
-            const result = copy(teams[0].items, teams[dInd].items, source, destination); //new destination team array
+            const result = copy(teams[0].items, teams[dInd].items, source, destination) //new destination team array
 
             if (!checkDuplicate(0, source.index, dInd)) {
                 const currName = teams[0].items[source.index].name
-                addToast(t('common:errors.duplicate_member', {name: currName}), {appearance: 'error', autoDismiss: true})
+                addToast(t('common:errors.duplicate_member', { name: currName }), {
+                    appearance: 'error',
+                    autoDismiss: true
+                })
                 return
             } else {
                 const newTeams: ITeam[] = [...teams];
                 newTeams[dInd].items = result;
-                dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
+                dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
             }
 
         } else if (dInd === 0) {
@@ -118,13 +120,16 @@ const DraggableZone: React.FC = () => {
 
             if (!checkDuplicate(sInd, source.index, dInd)) {
                 const currName = teams[sInd].items[source.index].name
-                addToast(t('common:errors.duplicate_member', {name: currName}), {appearance: 'error', autoDismiss: true})
+                addToast(t('common:errors.duplicate_member', { name: currName }), {
+                    appearance: 'error',
+                    autoDismiss: true
+                })
                 return
             } else {
                 const newTeams = [...teams];
                 newTeams[sInd].items = result[sInd];
                 newTeams[dInd].items = result[dInd];
-                dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
+                dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
             }
         }
     }
@@ -140,14 +145,14 @@ const DraggableZone: React.FC = () => {
                 className={'btn btn-widget btn-icon'}
                 aria-label={t('common.buttons.add_member_to_pool')}
             >
-                <FiPlus/>
+                <FiPlus />
             </button>
             <button
                 onClick={openSearch}
                 className={`btn btn-widget btn-icon ${isSearch ? 'active' : ''}`}
                 aria-label={t('common.buttons.search')}
             >
-                <FiSearch/>
+                <FiSearch />
             </button>
             {isSearch && <SearchPanel changeHandler={filterStaff} />}
         </div>
@@ -206,7 +211,7 @@ const DraggableZone: React.FC = () => {
         dispatch(setAddMemberModal(true))
     }
 
-    function openSearch():void {
+    function openSearch(): void {
         setSearch(!isSearch)
         if (!isSearch) {
             setFilteredMembers(staff.items)
@@ -242,8 +247,8 @@ const DraggableZone: React.FC = () => {
     function deleteMemberFromTeam(colIndex: number, itemIndex: number) {
         const newTeams = [...teams];
         newTeams[colIndex].items.splice(itemIndex, 1);
-        dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
-        addToast(t('team:member_deleted_from_team'), {appearance: 'success', autoDismiss: true})
+        dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
+        addToast(t('team:member_deleted_from_team'), { appearance: 'success', autoDismiss: true })
     }
 
 
@@ -253,21 +258,21 @@ const DraggableZone: React.FC = () => {
             ...team,
             items: team.items.filter((item: IMember) => item.baseID !== baseId)
         }))
-        dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
-        addToast(t('team:member_deleted_from_pool'), {appearance: 'success', autoDismiss: true})
+        dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
+        addToast(t('team:member_deleted_from_pool'), { appearance: 'success', autoDismiss: true })
     }
 
     function addTeam(): void {
         const idList = teams.map((team: ITeam) => team.id)
         const newId = Math.max.apply(null, idList) + 1
-        dispatch(setTeamsData([...teams, {title: `${t('team:team')} ${newId}`, id: newId, items: []}]))
-        addToast(t('team:team_added'), {appearance: 'success', autoDismiss: true})
+        dispatch(setTeamsData([...teams, { title: `${t('team:team')} ${newId}`, id: newId, items: [] }]))
+        addToast(t('team:team_added'), { appearance: 'success', autoDismiss: true })
     }
 
     function deleteTeam(colIndex: number): void {
         const filteredTeams = [...teams].filter((group, i) => i !== colIndex)
-        dispatch(updateProject(activeProject.id, {pool: filteredTeams[0], teams: filteredTeams.slice(1)}))
-        addToast(t('team:team_removed'), {appearance: 'success', autoDismiss: true})
+        dispatch(updateProject(activeProject.id, { pool: filteredTeams[0], teams: filteredTeams.slice(1) }))
+        addToast(t('team:team_removed'), { appearance: 'success', autoDismiss: true })
     }
 
     //if one team includes this member
@@ -280,6 +285,5 @@ const DraggableZone: React.FC = () => {
         return includesNum === 0
     }
 }
-
 
 export default DraggableZone

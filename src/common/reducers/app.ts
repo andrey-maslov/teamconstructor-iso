@@ -7,28 +7,30 @@ import {
 const APP = {
     isLoading: false,
     errorApiMessage: null,
+    setToast: null,
     processFailed: false,
-    emailSent: false,
-    isPwdChanged: false
+    emailSent: null,
+    isPwdChanged: null
 }
 
-export type AppReducerType = {
+export type appStoreType = {
     type: string
     isLoading: boolean
+    setToast: number | null
     errorApiMessage: '' | null
     processFailed: boolean
-    emailSent: boolean
-    isPwdChanged: boolean
+    emailSent: boolean | null
+    isPwdChanged: boolean | null
 }
 
-export const appReducer = (state = APP, {
+export const app = (state = APP, {
     type,
     isLoading,
     errorApiMessage,
     processFailed,
     emailSent,
     isPwdChanged
-}: AppReducerType) => {
+}: appStoreType) => {
     switch (type) {
         case LOADING :
             return {
@@ -39,22 +41,22 @@ export const appReducer = (state = APP, {
             return {
                 ...state,
                 errorApiMessage
-            };
+            }
         case PROCESS_FAILED :
             return {
                 ...state,
                 processFailed
-            };
+            }
         case SEND_EMAIL :
             return {
                 ...state,
                 emailSent
-            };
+            }
         case CHANGE_PWD :
             return {
                 ...state,
                 isPwdChanged
-            };
+            }
         default:
             return state
     }

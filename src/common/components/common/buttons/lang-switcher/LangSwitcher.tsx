@@ -91,5 +91,5 @@ interface LangSwitcherState {
 }
 
 export default connect((state: LangSwitcherState) => ({
-    // currentLang: state.userData.language
+    // currentLang: state.user.language
 }), {fetchTerms})(LangSwitcher);

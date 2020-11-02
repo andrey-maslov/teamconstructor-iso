@@ -1,4 +1,5 @@
-import {IDescWithRange} from "../constants/types";
+import { IDescWithRange } from "../constants/types";
+import axios from "axios";
 
 export const stringToBoolean = (string: string) => {
     switch (string.toLowerCase().trim()) {
@@ -23,7 +24,7 @@ export const checkAnswers = (answers: any, callback: any) => {
 
         if (!answers[i].value) {
             let targetElem: any = document.querySelector(`.visible [data-item-index="${i + 1}"]`);
-            targetElem.scrollIntoView({block: 'center', behavior: 'smooth'});
+            targetElem.scrollIntoView({ block: 'center', behavior: 'smooth' });
             console.log('not validated');
             return false;
         }
@@ -150,8 +151,8 @@ export function exitConfirmation() {
     }
 }
 
-export function getQueryFromURL(searchStr: string, key: string):string {
-    if(!searchStr) return ''
+export function getQueryFromURL(searchStr: string, key: string): string {
+    if (!searchStr) return ''
     const queries = searchStr.replace('?', '').split('&')
     const needList = queries.filter(item => item.match(new RegExp(key))).join()
     if (!needList) return ''

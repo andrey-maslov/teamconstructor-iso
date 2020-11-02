@@ -1,22 +1,22 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import 'rodal/lib/rodal.css'
-import {AddMember} from "./add-member/AddMember"
-import {setAddMemberModal, setAuthModal, setCreateProjectModal} from "../../../actions/actionCreator"
-import {useSelector, useDispatch} from "react-redux"
-import {GlobalStateType} from "../../../../constants/types"
-import AuthModal from "./auth-modal/AuthModal"
-import LoaderRequest from "../loaders/loader-request/LoaderRequest";
-import {CreateProjectModal} from "./create-project-modal/CreateProjectModal";
-import {CookiesConsent} from "../popovers/cookies-consent/CookiesConsent";
-
-// import { CookiesConsent } from '../cookies-consent/CookiesConsent'
-
+import { AddMember } from './add-member/AddMember'
+import { setAddMemberModal, setCreateProjectModal } from '../../../actions/actionCreator'
+import { useSelector, useDispatch } from 'react-redux'
+import { globalStoreType } from '../../../../constants/types'
+import { CreateProjectModal } from './create-project-modal/CreateProjectModal'
+import { CookiesConsent } from '../popovers/cookies-consent/CookiesConsent'
+import { SET_MEMBER_INFO_MODAL } from "../../../actions/actionTypes";
+import { MemberInfo } from "./member-info/MemberInfo";
 
 const Modals: React.FC = () => {
 
-    const dispatch = useDispatch();
-    const modals = useSelector((state: GlobalStateType) => state.modalsReducer)
-    const {isAddMemberModal, isAuthModal, isCreateProjectModal, isCookiesConsented} = modals
+    const dispatch = useDispatch()
+    const {
+        isAddMemberModal,
+        isCreateProjectModal,
+        isMemberInfoModal
+    } = useSelector((state: globalStoreType) => state.modals)
 
     return (
         <>
@@ -28,25 +28,22 @@ const Modals: React.FC = () => {
                 }}
             />}
 
+            {isMemberInfoModal && <MemberInfo
+                visible={isMemberInfoModal}
+                closeModal={() => {
+                    dispatch({type: SET_MEMBER_INFO_MODAL, isMemberInfoModal: false})
+                }}
+            />}
+
             {isCreateProjectModal && <CreateProjectModal
                 visible={isCreateProjectModal}
                 closeModal={() => {
                     dispatch(setCreateProjectModal(false))
                 }}
             />}
-
-            {isAuthModal && <AuthModal
-                visible={isAuthModal}
-                closeModal={() => {
-                    dispatch(setAuthModal(false))
-                }}
-            />}
-
-            <CookiesConsent/>
-
+            <CookiesConsent />
         </>
-    );
-};
+    )
+}
 
-
-export default Modals;
+export default Modals

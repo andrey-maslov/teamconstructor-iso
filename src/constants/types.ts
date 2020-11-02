@@ -1,4 +1,9 @@
-import React from "react";
+import { userStoreType } from '../common/reducers/user'
+import { teamStoreType } from '../common/reducers/team'
+import { pairStoreType } from '../common/reducers/pair'
+import { TermsStoreType } from '../common/reducers/terms'
+import { modalsStoreType } from '../common/reducers/modals'
+import { appStoreType } from '../common/reducers/app'
 
 export type DecodedDataType = [number[], number[][]]
 
@@ -49,4 +54,15 @@ export interface ILoginData {
 }
 export type TableRow = (string | number)[] | null
 
-export type GlobalStateType = any
+export type globalStoreType = {
+    user: userStoreType
+    team: teamStoreType
+    pair: pairStoreType
+    terms: TermsStoreType
+    modals: modalsStoreType
+    app: appStoreType
+}
+
+export interface IOneFieldForm<T> {
+    [key: string]: T
+}

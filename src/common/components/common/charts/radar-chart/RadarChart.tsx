@@ -1,10 +1,10 @@
 import React from 'react'
-import {Radar} from 'react-chartjs-2'
-import {COLORS} from '../../../../../constants/constants'
+import { Radar } from 'react-chartjs-2'
+import { COLORS } from '../../../../../constants/constants'
 import hexToRgba from '../../../../../helper/hexToRgba'
-import {useMediaPredicate} from 'react-media-hook'
+import { useMediaPredicate } from 'react-media-hook'
 import style from './radar-chart.module.scss'
-import {ITendency} from "psychology/build/main/types/types"
+import { ITendency } from 'psychology/build/main/types/types'
 
 const colors = [
     COLORS.orange,
@@ -24,12 +24,12 @@ type ChartsPropsType = {
     labels: string[]
 }
 
-const RadarChart: React.FC<ChartsPropsType> = ({profiles, names, labels}) => {
+const RadarChart: React.FC<ChartsPropsType> = ({ profiles, names, labels }) => {
 
     const chartLabels = labels;
     const chartColors = colors;
 
-    const isTeam = names.length === 1
+    const isTeam = names.length > 1
 
     const chartRadarOptions: any = {
         desktop: {
@@ -42,28 +42,28 @@ const RadarChart: React.FC<ChartsPropsType> = ({profiles, names, labels}) => {
             height: 300,
             labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
         }
-    };
+    }
 
     const isMobi = useMediaPredicate('(max-width: 600px)');
 
-    const currentOptions = !isMobi ? {...chartRadarOptions.desktop} : {...chartRadarOptions.mobi};
+    const currentOptions = !isMobi ? { ...chartRadarOptions.desktop } : { ...chartRadarOptions.mobi };
 
     const data = {
         labels: currentOptions.labels,
         datasets: profiles.map((profile, i) => ({
             label: names[i],
-            backgroundColor: !isTeam ? hexToRgba(chartColors[i], .5) : 'transparent',
+            backgroundColor: isTeam ? hexToRgba(chartColors[i], .5) : 'transparent',
             pointBackgroundColor: chartColors[i],
             borderColor: chartColors[i],
             pointRadius: 7,
             data: profile.map(item => item.value)
         })),
-    };
+    }
 
     // chartjs.org/docs/latest/configuration/tooltip.html#tooltip-callbacks
     const options = {
         legend: {
-            display: !isTeam
+            display: isTeam
         },
         scale: {
             reverse: false,
@@ -87,7 +87,7 @@ const RadarChart: React.FC<ChartsPropsType> = ({profiles, names, labels}) => {
                 },
             }
         },
-    };
+    }
 
     return (
         <div className={`${style.wrapper} radar-chart block-wrapper`}>
@@ -100,8 +100,7 @@ const RadarChart: React.FC<ChartsPropsType> = ({profiles, names, labels}) => {
                 />
             </div>
         </div>
-    );
+    )
+}
 
-};
-
-export default RadarChart;
+export default RadarChart
