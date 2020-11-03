@@ -12,14 +12,14 @@ import { CLEAR_PAIR_DATA } from "../../../actions/actionTypes"
 
 const PairCoopPage: React.FC = () => {
 
-    const scheme = useSelector((state: any) => state.terms.terms)
+    const { terms } = useSelector((state: any) => state.terms)
     const isCompareReady: boolean = useSelector((state: any) => state.pair.isComparisonResultReady)
     const isComparisonInProcess: boolean = useSelector((state: any) => state.pair.isComparisonInProcess)
     const dispatch = useDispatch()
     const history = useHistory()
     const { t } = useTranslation()
 
-    if (!scheme) {
+    if (!terms) {
         return <main className='flex-centered'>
             <div className="container">
                 <Loader />
@@ -34,7 +34,7 @@ const PairCoopPage: React.FC = () => {
 
     const newComparisonHandler = () => {
         dispatch({ type: CLEAR_PAIR_DATA })
-        history.push('/')
+        history.push('/pair')
     }
 
     return (

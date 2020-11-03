@@ -12,12 +12,11 @@ import Modals from './components/common/modals/Modals'
 import ScrollToTop from './components/common/layout/ScrollToTop'
 import Footer from './components/common/layout/footer/Footer'
 import Header from './components/common/layout/header/Header'
-import ContentPage from "./components/pages/content-page/ContentPage"
-import AuthPage from "./components/pages/auth-page/AuthPage";
-import TeamCoopPage from "./components/pages/team-coop-page/TeamCoopPage";
-import ProfilePage from "./components/pages/profile-page/ProfilePage";
-
-// import CookiesWarn from "./components/CommonComponents/Modals/CookiesWarn/CookiesWarn";
+import ContentPage from './components/pages/content-page/ContentPage'
+import AuthPage from './components/pages/auth-page/AuthPage'
+import TeamCoopPage from './components/pages/team-coop-page/TeamCoopPage'
+import ProfilePage from './components/pages/profile-page/ProfilePage'
+import LandingPage from './components/pages/landing-page/LandingPage'
 
 const App: React.FC = () => {
 
@@ -26,11 +25,12 @@ const App: React.FC = () => {
 
     return (
         <ToastProvider>
-            <div className={`app-wrapper ${getPageClass(pathname)} ${isLoggedIn ? 'authorized' : 'unauthorized'}`}>
+            <div className={`app ${getPageClass(pathname)} ${isLoggedIn ? 'authorized' : 'unauthorized'}`}>
                 <Header />
                 <ScrollToTop />
                 <Switch>
-                    <Route exact path="/" render={() => <PairCoopPage />} />
+                    <Route exact path="/" render={() => <LandingPage />} />
+                    <Route exact path="/pair" render={() => <PairCoopPage />} />
                     <Route exact path="/team" render={() => <TeamCoopPage />} />
                     <Route exact path="/profile" render={() => <ProfilePage />} />
                     <Route exact path="/cookie-policy" render={() => <ContentPage page="cookie-policy" />} />
@@ -48,14 +48,13 @@ const App: React.FC = () => {
                 <Modals />
             </div>
         </ToastProvider>
-    );
+    )
 
     function getPageClass(path: string): string {
-
         const pages = ROUTES
-
         return pages[path] || 'page-404'
     }
-};
+}
 
-export default App;
+export default App
+

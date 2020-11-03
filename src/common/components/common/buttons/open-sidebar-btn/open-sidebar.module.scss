@@ -5,15 +5,21 @@
   height: 55px;
   position: absolute;
   right: 0;
-  top: 0;
+  top: 51px;
   font-size: 28px;
   background-color: $overlay-light;
   border: 0;
   color: $text-light;
   z-index: 100;
+  transition: background-color .2s ease-in-out;
 
   svg {
     position: relative;
     bottom: -3px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: lighten($overlay-light, 5%);
   }
 }

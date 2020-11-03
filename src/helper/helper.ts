@@ -1,5 +1,6 @@
 import { IDescWithRange } from "../constants/types";
 import axios from "axios";
+import { getAndDecodeData } from "psychology";
 
 export const stringToBoolean = (string: string) => {
     switch (string.toLowerCase().trim()) {
@@ -120,7 +121,6 @@ export const stripCountry = (lang: string): string => {
         .split("-")[0];
 }
 
-
 export const isBase64 = (str: string) => {
     try {
         return btoa(atob(str)) == str;
@@ -136,7 +136,6 @@ export const toPercent = (value: number, digits?: number): { num: number, str: s
         str: `${val}%`
     }
 }
-
 
 export const isBrowser: boolean = typeof window !== 'undefined'
 
@@ -157,4 +156,23 @@ export function getQueryFromURL(searchStr: string, key: string): string {
     const needList = queries.filter(item => item.match(new RegExp(key))).join()
     if (!needList) return ''
     return needList.replace(`${key}=`, '')
+}
+
+export function extractEncData(data: string): {
+    encoded: string | null, decoded: string | null, data: any | null
+} {
+    if (!data) {
+        return {
+            encoded: null,
+            decoded: null,
+            data: null
+        }
+    }
+
+    if (getAndDecodeData('', data).data) {
+        return getAndDecodeData('', data)
+    }
+    const query = data.split('?'). slice(1).join()
+    const params = parseQueryString(query)
+    return getAndDecodeData('', decodeURIComponent(params.encdata))
 }

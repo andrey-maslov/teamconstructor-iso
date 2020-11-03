@@ -63,7 +63,11 @@ body {
   align-items: center;
 }
 
-.app-wrapper {
+.site-wrapper {
+  background: $base-bg;
+}
+
+.app {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -99,6 +103,30 @@ body {
       position: relative;
 
     }
+  }
+}
+
+/*===== LANDING PAGE =====*/
+
+.landing {
+  color: $text-light;
+
+  .main {
+    position: relative;
+    flex: 1 0 auto;
+    min-height: auto;
+    width: 100%;
+  }
+}
+
+.page-main {
+
+  &:before {
+    content: none;
+  }
+
+  .header {
+    background-color: transparent;
   }
 }
 
@@ -802,4 +830,11 @@ input, textarea {
     }
   }
 
+}
+
+@media(max-width: 576px) {
+
+  .btn-accent {
+    width: 100%;
+  }
 }

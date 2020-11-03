@@ -1,16 +1,17 @@
-import React, { useState } from "react"
-import InputField from "./input-field/InputField"
-import { useDispatch, useSelector } from "react-redux"
-import { setComparisonResult, setPairData, } from "../../../../actions/actionCreator"
-import { getAndDecodeData } from "psychology"
-import Button from "../../buttons/button/Button"
-import { FaReact } from "react-icons/fa"
-import { GoRocket } from "react-icons/go"
-import ProfileGenerator from "./profile-generator/ProfileGenerator"
+import React, { useState } from 'react'
+import InputField from './input-field/InputField'
+import { useDispatch, useSelector } from 'react-redux'
+import { setComparisonResult, setPairData, } from '../../../../actions/actionCreator'
+import { getAndDecodeData } from 'psychology'
+import Button from '../../buttons/button/Button'
+import { FaReact } from 'react-icons/fa'
+import { GoRocket } from 'react-icons/go'
+import ProfileGenerator from './profile-generator/ProfileGenerator'
 import style from './pair-coop-input.module.scss'
-import { globalStoreType } from "../../../../../constants/types"
+import { globalStoreType } from '../../../../../constants/types'
 import { useForm } from 'react-hook-form'
-import { useTranslation } from "react-i18next"
+import { useTranslation } from 'react-i18next'
+import { extractEncData } from '../../../../../helper/helper'
 
 interface IPairLocalState {
     data1: string
@@ -71,7 +72,7 @@ const PairCoopInput: React.FC = () => {
                                 dataRef={register({
                                     required: `${t('common:errors.required')}`,
                                     validate: {
-                                        decode: value => getAndDecodeData('', value).data !== null
+                                        decode: value => extractEncData(value).data !== null
                                     }
                                 })}
                                 errors={errors}
@@ -99,14 +100,14 @@ const PairCoopInput: React.FC = () => {
                 <FaReact />
             </button>
         </>
-    );
+    )
 
     function submitCompare(data: IForm) {
 
         const { data1, data2, name1, name2 } = data
 
-        const decData1 = getAndDecodeData('', data1).data
-        const decData2 = getAndDecodeData('', data2).data
+        const decData1 = extractEncData(data1).data
+        const decData2 = extractEncData(data2).data
 
         dispatch(setComparisonResult(true))
         dispatch(setPairData(decData1, decData2, name1, name2))
@@ -129,4 +130,4 @@ const PairCoopInput: React.FC = () => {
     }
 }
 
-export default PairCoopInput;
+export default PairCoopInput

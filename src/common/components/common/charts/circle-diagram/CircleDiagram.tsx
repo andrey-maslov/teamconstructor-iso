@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import style from './circle-diagram.module.scss'
-import {getKeyResult} from "psychology"
+import {getKeyResult} from 'psychology'
 
 interface CircleDiagramProps {
     value: number
@@ -16,16 +16,20 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
     const [isFinish, setFinish] = useState(false)
 
     useEffect(() => {
-        if (val < roundValue) {
-           setTimeout( increment, 20)
-        } else if (val === roundValue) {
-            setFinish(true)
-        } else if (val > roundValue) {
-            setTimeout( decrement, 20)
+        function spidometer() {
+            if (val < roundValue) {
+                setTimeout( increment, 20)
+            } else if (val === roundValue) {
+                setFinish(true)
+            } else if (val > roundValue) {
+                setTimeout( decrement, 20)
+            }
         }
 
-        return function cleanUp() {
-            const val = 0
+        spidometer()
+
+        return function cleanup() {
+            spidometer()
         }
     }, [val, roundValue])
 
@@ -35,7 +39,6 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
     function decrement() {
         setVal(val - 1)
     }
-
 
     return (
         <div className={style.wrapper}>
@@ -67,7 +70,7 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
             </svg>
             <div className={`${style.value} ${isFinish ? style[color] : ''}`}>{val}%</div>
         </div>
-    );
+    )
 }
 
-export default CircleDiagram;
+export default CircleDiagram

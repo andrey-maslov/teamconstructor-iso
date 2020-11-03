@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import OutsideClickHandler from 'react-outside-click-handler';
-import { fetchContent, fetchTerms } from '../../../../actions/actionCreator';
-import { LANGS } from '../../../../../constants/constants';
-import { Popover } from '../../popovers/Popover';
-import style from './lang-switcher-alt.module.scss';
-import { useTranslation } from "react-i18next";
-import { isBrowser, stripCountry } from "../../../../../helper/helper";
-import Cookie from "js-cookie";
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import OutsideClickHandler from 'react-outside-click-handler'
+import { fetchContent, fetchTerms } from '../../../../actions/actionCreator'
+import { LANGS } from '../../../../../constants/constants'
+import { Popover } from '../../popovers/Popover'
+import style from './lang-switcher-alt.module.scss'
+import { useTranslation } from 'react-i18next'
+import { isBrowser, stripCountry } from '../../../../../helper/helper'
+import Cookie from 'js-cookie'
 
 const LangSwitcherAlt: React.FC = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch()
-    const { i18n, t } = useTranslation();
+    const { i18n, t } = useTranslation()
 
     const currentLang = stripCountry(i18n.language);
     const currentLangLabel = LANGS.filter(item => item[0] === currentLang)[0][1];
@@ -27,7 +27,7 @@ const LangSwitcherAlt: React.FC = () => {
     const changeLanguage = (lng: any) => {
 
         i18n.changeLanguage(lng)
-            .then(res => {
+            .then(() => {
                 Cookie.set("i18next", lng)
                 dispatch(fetchTerms(lng))
                 dispatch(fetchContent(lng))
@@ -39,7 +39,7 @@ const LangSwitcherAlt: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchTerms(currentLang)
+        dispatch(fetchTerms(currentLang))
         dispatch(fetchContent(currentLang))
     }, [])
 
@@ -62,9 +62,9 @@ const LangSwitcherAlt: React.FC = () => {
                 <Popover isVisible={isOpen} className={`lang-popover-alt ${style.popover}`}>
                     <ul className={style.links}>
                         {LANGS.map(lang => {
-                            let activeClass = '';
+                            let activeClass = ''
                             if (lang[0] === currentLang) {
-                                activeClass = 'current';
+                                activeClass = 'current'
                             }
                             return (
                                 <li key={lang[0]}
@@ -85,7 +85,7 @@ const LangSwitcherAlt: React.FC = () => {
                 </Popover>
             </div>
         </OutsideClickHandler>
-    );
+    )
 
     function localizeMeta(lang: string) {
         if (isBrowser) {
@@ -100,4 +100,4 @@ const LangSwitcherAlt: React.FC = () => {
     }
 }
 
-export default LangSwitcherAlt;
+export default LangSwitcherAlt

@@ -1,21 +1,49 @@
 @import 'src/common/assets/scss/_vars.scss';
 
 .content {
-  padding-top: 2rem;
-  max-height: 530px;
+  color: currentColor;
+}
+
+.header {
+  font-family: $font-mono;
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba($text-light, .1);
+}
+
+.scrollable {
+
+  max-height: 480px;
   overflow-y: auto;
+  overflow-x: hidden;
 
-  button {
+  &::-webkit-scrollbar,
+  &::-webkit-scrollbar-track {
+    width: 6px;
+  }
+}
 
-    svg {
-      path {
-        stroke: $text-light
-      }
-      color: $text-light ;
+.tableWrapper {
+
+  table {
+
+    td {
+      font-size: .9rem;
     }
   }
 }
 
+.block {
+  margin-bottom: 2rem;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
 
-
+.title {
+  font-size: 1.2em;
+  margin-bottom: 1rem;
+}

@@ -6,12 +6,12 @@ import DroppableColumn from "./droppable-column/DroppableColumn"
 import ColumnTop from "./droppable-column/ColumnTop"
 import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
 import { globalStoreType, IMember, ITeam } from "../../../../constants/types"
-import { useDispatch, useSelector } from "react-redux";
-import { setAddMemberModal, setTeamsData, updateProject } from "../../../actions/actionCreator";
+import { useDispatch, useSelector } from "react-redux"
+import { setAddMemberModal, setTeamsData, updateProject } from "../../../actions/actionCreator"
 import { useToasts } from 'react-toast-notifications'
 import { FiPlus, FiSearch } from 'react-icons/fi'
-import SearchPanel from "./search-panel/SearchPanel";
-import { useTranslation } from "react-i18next";
+import SearchPanel from "./search-panel/SearchPanel"
+import { useTranslation } from "react-i18next"
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -200,6 +200,9 @@ const DraggableZone: React.FC = () => {
 
                             </div>
                         ))}
+                        <button className="btn-add-team" aria-label="add-team" onClick={addTeam}>
+                            <span /><span />
+                        </button>
                     </div>
                 </Box>
 

@@ -21,20 +21,18 @@ const TeamCoopSidebar: React.FC = () => {
     const isMedium = useMediaPredicate('(max-width: 1400px)')
     const [isCompact, setCompact] = useState(false)
     const { t } = useTranslation()
-    const mediumClasses = isCompact ? 'compact' : 'full'
+    const mediumClass = isCompact ? 'compact' : 'full'
 
     useEffect(() => {
-        isMedium ? setCompact(true) : setCompact(false)
-    }, [isMedium, teams])
+        // isMedium ? setCompact(true) : setCompact(false)
+    }, [teams])
 
     return (
-        <aside className={`${style.aside} ${isMedium ? style[mediumClasses] : ''}`}>
-            {isMedium &&
-            <
-                OpenSidebarBtn
+        <aside className={`${style.aside} ${style[mediumClass]}`}>
+            <OpenSidebarBtn
                 handler={() => setCompact(!isCompact)}
                 isCompact={isCompact}
-            />}
+            />
             <div className={`${style.body}`}>
                 <TeamSpec
                     teamSpec={teamSpec}

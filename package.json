@@ -27,6 +27,7 @@
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
     "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
     "eslint": "^7.6.0",
     "eslint-plugin-react": "^7.20.5",
     "express": "^4.17.1",

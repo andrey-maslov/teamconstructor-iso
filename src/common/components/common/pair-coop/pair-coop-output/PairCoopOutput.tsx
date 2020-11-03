@@ -34,6 +34,10 @@ const PairCoopOutput: React.FC = () => {
         return null
     }
 
+    if (!data1 || !data2 ) {
+        return <div className="flex-centered section">Data failed</div>
+    }
+
     const { compatibilityDesc, efficiencyDesc, complementarityDesc, pairDescriptions: desc } = descriptions
 
     const pair = Pair([data1[1], data2[1]])
@@ -158,8 +162,8 @@ const PairCoopOutput: React.FC = () => {
             [desc[2], `${name1} - ${toPercent(attraction[0]).str},</br>${name2} - ${toPercent(attraction[1]).str}`],
             [desc[3], toPercent(lifeAttitudes).str],
             [desc[4], toPercent(similarityThinking).str],
-            [desc[6], getComplementarityData(complementarity)],
-            [desc[7], `${name1} - ${toPercent(maturity[0]).str},</br>${name2} - ${toPercent(maturity[1]).str}`],
+            [desc[5], getComplementarityData(complementarity)],
+            [desc[6], `${name1} - ${toPercent(maturity[0]).str},</br>${name2} - ${toPercent(maturity[1]).str}`],
         ]
     }
 

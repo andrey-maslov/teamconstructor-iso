@@ -197,6 +197,37 @@ input[type=submit] {
   }
 }
 
+.btn-add-team {
+  position: relative;
+  background-color: transparent;
+  border: 2px dashed $overlay-light;
+  border-radius: $border-radius-sm;
+  width: 44px;
+  height: 44px;
+  margin-left: 1rem;
+  margin-top: 40px;
+  transition: border-color .2s ease-in-out;
+
+  span {
+    position: absolute;
+    display: inline-block;
+    top: 8px;
+    left: 19px;
+    height: 24px;
+    width: 2px;
+    background-color: darken( $text-light, 10%);
+
+    &:last-child {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    border-color: darken( $text-light, 16%);
+  }
+}
+
 
 //.btn-share {
 //  display: inline-block;

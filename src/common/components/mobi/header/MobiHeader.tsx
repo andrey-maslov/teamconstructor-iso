@@ -6,7 +6,7 @@ import { IHeaderProps } from '../../web/header/WebHeader';
 import style from './mobi-header.module.scss';
 import LangSwitcher from '../../common/buttons/lang-switcher/LangSwitcher';
 
-const MobiHeader = ({isLoggedIn, handleLoginBtn, userEmail, routes}: IHeaderProps) => {
+const MobiHeader = ({isLoggedIn, handleLoginBtn, setProject, userEmail, routes}: IHeaderProps) => {
 
     const [isMobiNavOpened, setMobiNav] = useState(false);
 
@@ -27,9 +27,8 @@ const MobiHeader = ({isLoggedIn, handleLoginBtn, userEmail, routes}: IHeaderProp
         <header className={style.header}>
             <div className="container">
                 <div className={style.bar}>
-                    <MobileNavToggle handler={mobileNavOpen}/>
-                    <LangSwitcher/>
                     <TopLogo/>
+                    <MobileNavToggle handler={mobileNavOpen}/>
                 </div>
             </div>
             <MobiNav

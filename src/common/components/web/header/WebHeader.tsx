@@ -1,12 +1,13 @@
-import React from 'react';
-import TopLogo from '../../common/layout/header/top-logo/TopLogo';
-import WebNav from './nav/WebNav';
-import style from './web-header.module.scss';
-import {INavRoute} from "../../../../constants/types";
+import React from 'react'
+import TopLogo from '../../common/layout/header/top-logo/TopLogo'
+import WebNav from './nav/WebNav'
+import style from './web-header.module.scss'
+import { INavRoute } from '../../../../constants/types'
 
 export interface IHeaderProps {
     isLoggedIn: boolean
     handleLoginBtn: () => void
+    setProject: (id: number) => void
     userEmail: string
     routes: INavRoute[]
 }
@@ -17,14 +18,14 @@ const WebHeader: React.FC<IHeaderProps> = (props) => {
         <header className={`${style.header} header`}>
             <div className="container-wide">
                 <nav className={style.bar}>
-                    <TopLogo/>
+                    <TopLogo />
                     <WebNav
                         {...props}
                     />
                 </nav>
             </div>
         </header>
-    );
-};
+    )
+}
 
-export default WebHeader;
+export default WebHeader

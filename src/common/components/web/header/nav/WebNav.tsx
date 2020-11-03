@@ -8,18 +8,19 @@ import { INavRoute } from "../../../../../constants/types"
 
 export type NavigationType = {
     handleLoginBtn: () => void
+    setProject: (id: number) => void
     isLoggedIn: boolean
     userEmail: string
     routes: INavRoute[]
 }
 
-const WebNav: React.FC<NavigationType> = ({ isLoggedIn, handleLoginBtn, routes }) => {
+const WebNav: React.FC<NavigationType> = ({ isLoggedIn, setProject, handleLoginBtn, routes }) => {
 
     const { t } = useTranslation()
 
     return (
         <div className={style.nav}>
-            <LangSwitcher />
+            {/*<LangSwitcher />*/}
             <ul className={style.list}>
                 {routes.map(route => (
                     <li key={route.title}>
@@ -37,6 +38,7 @@ const WebNav: React.FC<NavigationType> = ({ isLoggedIn, handleLoginBtn, routes }
             {isLoggedIn ?
                 <PopoverUser
                     logoutHandle={handleLoginBtn}
+                    setProject={setProject}
                 /> :
                 <ul className={`${style.list} ${style.auth}`}>
                     <li>

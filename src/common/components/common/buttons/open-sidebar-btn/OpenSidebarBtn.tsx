@@ -8,5 +8,5 @@ export const OpenSidebarBtn: React.FC<{handler: ()=>void, isCompact: boolean}> =
         <button className={style.btn} onClick={handler}>
             {!isCompact ? <AiOutlineMenuFold/> : <AiOutlineMenuUnfold/>}
         </button>
-    );
+    )
 }
