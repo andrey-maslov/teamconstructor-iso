@@ -8,8 +8,6 @@
   }
 }
 
-<<<<<<< HEAD
-=======
 @media (max-width: 1400px) {
 
   .page-team {
@@ -36,7 +34,6 @@
 
 }
 
->>>>>>> 9bf3a8a344c85fd949c3d314d367b833b5a2f513
 /*===== < 1300px =====*/
 @media (max-width: $xl-breakpoint) {
 
@@ -55,13 +52,8 @@
 
     .header {
       position: relative;
-<<<<<<< HEAD
-      padding-left: 75px;
-      z-index: 1;
-=======
       padding-left: $gutter-width / 2;
       padding-right: $gutter-width / 2;
->>>>>>> 9bf3a8a344c85fd949c3d314d367b833b5a2f513
     }
 
     .footer {
@@ -99,10 +91,7 @@
       .box-content {
         padding-right: .2rem;
         padding-left: .2rem;
-<<<<<<< HEAD
-=======
         max-width: 400px;
->>>>>>> 9bf3a8a344c85fd949c3d314d367b833b5a2f513
       }
     }
   }
