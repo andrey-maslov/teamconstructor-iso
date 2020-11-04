@@ -11,34 +11,29 @@ import { useMediaPredicate } from 'react-media-hook'
 import { OpenSidebarBtn } from "../../buttons/open-sidebar-btn/OpenSidebarBtn"
 import { useTranslation } from "react-i18next"
 
-interface TeamCoopSidebar {
-    minifySidebar: () => void
-    isCompact: boolean
-}
-
-const TeamCoopSidebar: React.FC<TeamCoopSidebar> = ({minifySidebar, isCompact}) => {
+const TeamCoopSidebar: React.FC = () => {
 
     const teamsState = useSelector((state: globalStoreType) => state.team)
     const teams: ITeam[] = teamsState.teams ? teamsState.teams.slice(1) : []
     const activeTeam: number = teamsState.activeTeam
     const teamSpec: number = teamsState.teamSpec
     const dispatch = useDispatch()
-
+    const isMedium = useMediaPredicate('(max-width: 1400px)')
+    const [isCompact, setCompact] = useState(false)
     const { t } = useTranslation()
-    const sidebarType = isCompact ? 'compact' : 'full'
-
+    const mediumClass = isCompact ? 'compact' : 'full'
 
     useEffect(() => {
         // isMedium ? setCompact(true) : setCompact(false)
     }, [teams])
 
     return (
-        <aside className={`${style.aside} ${style[sidebarType]}`}>
+        <aside className={`${style.aside} ${style[mediumClass]}`}>
             <OpenSidebarBtn
-                handler={minifySidebar}
+                handler={() => setCompact(!isCompact)}
                 isCompact={isCompact}
             />
-            <div className={`${style.body} sidebar-body`}>
+            <div className={`${style.body}`}>
                 <TeamSpec
                     teamSpec={teamSpec}
                     changeSpec={changeSpec}
