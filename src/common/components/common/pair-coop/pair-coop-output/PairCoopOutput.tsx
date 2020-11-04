@@ -1,32 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Pair, getDescByRange } from 'psychology'
-import RadarChart from '../../charts/radar-chart/RadarChart'
-import Box from '../../layout/box/Box'
-import ComparisonTable from './comparison-table/ComparisonTable'
-import { globalStoreType } from '../../../../../constants/types'
-import { BsTable } from 'react-icons/bs'
-import KeyIndicator from '../../result-common/key-indicator/KeyIndicator'
-import { useTranslation } from 'react-i18next'
-import { toPercent } from '../../../../../helper/helper'
+import RadarChart from "../../charts/radar-chart/RadarChart"
+import Box from "../../layout/box/Box"
+import Table from "../../tables/table/Table"
+import ComparisonTable from "./comparison-table/ComparisonTable"
+import { globalStoreType } from "../../../../../constants/types"
+import { BsTable } from "react-icons/bs"
+import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
+import { useTranslation } from "react-i18next"
+import { toPercent } from "../../../../../helper/helper"
 
 const PairCoopOutput: React.FC = () => {
 
     const { t } = useTranslation()
 
     //Initial data
-    const { terms, descriptions } = useSelector((state: globalStoreType) => state.terms)
+    const { terms: scheme, descriptions } = useSelector((state: globalStoreType) => state.terms)
     const { partner1, partner2, isComparisonResultReady } = useSelector((state: globalStoreType) => state.pair)
     const { name: name1, data: data1 } = partner1
     const { name: name2, data: data2 } = partner2
 
+    //if all resources are fetched, calculated and ready to display
     const [isReady, setReady] = useState(false)
 
     useEffect(() => {
-        if (isComparisonResultReady && terms && descriptions) {
+        if (isComparisonResultReady && scheme && descriptions) {
             setReady(true)
         }
-    }, [isComparisonResultReady, terms, descriptions])
+    }, [isComparisonResultReady, scheme, descriptions])
 
     if (!isReady) {
         return null
@@ -40,6 +42,7 @@ const PairCoopOutput: React.FC = () => {
 
     const pair = Pair([data1[1], data2[1]])
 
+    //All calculated values for comparison table
     const partnerAcceptance = pair.getPartnerAcceptance()
     const understanding = pair.getUnderstanding()
     const attraction = pair.getAttraction()
@@ -73,11 +76,11 @@ const PairCoopOutput: React.FC = () => {
                 addClass='result-box'
                 title={`${t('pair:result_for_pair', { name1, name2 })}`}
             >
-                <div className="row around-xl center-xs">
+                <div className="row around-md">
                     <RadarChart
                         profiles={[pair.profile1, pair.profile2]}
                         names={[name1, name2]}
-                        labels={terms.tendencies}
+                        labels={scheme.tendencies}
                     />
                     <div className="keys">
                         {keyValues.map((item, i) => (
@@ -104,10 +107,55 @@ const PairCoopOutput: React.FC = () => {
                 </div>
             </Box>
 
+            <Box addClass='result-box additional-profile' title={'Привязанность-отдельность'}>
+                <div className="row center-md">
+                    <div className="col-md-11">
+                        <Table
+                            tableData={[[name1, ...data1[1][3]], [name2, ...data2[1][3]]]}
+                            tableHeader={['', ...(scheme.subAxes[3])]}
+                        />
+                    </div>
+                </div>
+            </Box>
+            <Box addClass='result-box full-profile' title={'Профили пользователей'}>
+                <div className="row around-md">
+                    <div className="col-md-6 col-lg-5">
+                        <strong>{name1}</strong>
+                        <Table
+                            tableData={pair.profile1.map((item, i) => [scheme.tendencies[i], item.value])}
+                        />
+                    </div>
+                    <div className="col-md-6 col-lg-5">
+                        <strong>{name2}</strong>
+                        <Table
+                            tableData={pair.profile2.map((item, i) => [scheme.tendencies[i], item.value])}
+                        />
+                    </div>
+                </div>
+            </Box>
+            <Box addClass='result-box additional-profile' title={'Отсортированные психотипы'}>
+                <div className="row around-md">
+                    <div className="col-md-6 col-lg-5">
+                        <strong>{name1}</strong>
+                        <Table
+                            tableData={pair.partner1.sortedOctants.map((item) => [scheme.psychoTypes[item.index], item.value])}
+                            tableHeader={['октант', 'значение']}
+                        />
+                    </div>
+                    <div className="col-md-6 col-lg-5">
+                        <strong>{name2}</strong><br />
+                        <Table
+                            tableData={pair.partner2.sortedOctants.map((item) => [scheme.psychoTypes[item.index], item.value])}
+                            tableHeader={['октант', 'значение']}
+                        />
+                    </div>
+                </div>
+            </Box>
         </>
     )
 
     function getComparisonTableData() {
+
         return [
             [desc[0], toPercent(partnerAcceptance).str],
             [desc[1], toPercent(understanding).str],
@@ -123,6 +171,7 @@ const PairCoopOutput: React.FC = () => {
      * Дополняемость
      */
     function getComplementarityData(indexes: readonly number[]): string {
+
         if (indexes.length === 1) {
             return t('pair:both_bring_in_pair', { name1, name2, description: complementarityDesc.options[indexes[0]] })
         }
