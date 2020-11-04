@@ -8,8 +8,8 @@ import {
 } from "../actions/actionTypes"
 import { loadState } from "../store/sessionStorage"
 
-let STATE = loadState('pair')
-// let STATE: any;
+// let STATE = loadState('pair')
+let STATE: any;
 
 if (!STATE) {
     STATE = {

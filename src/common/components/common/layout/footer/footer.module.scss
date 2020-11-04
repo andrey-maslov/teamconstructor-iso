@@ -60,33 +60,28 @@
 }
 
 .copy {
-  padding: 1.5rem 0 .5rem;
+  padding: 20px 10px;
   border-top: 1px solid rgba(#fff, .1);
   font-size: 14px;
 
+  div {
+
+    &:first-child {
+      text-align: left;
+    }
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+
   a {
     color: currentColor;
-    text-decoration: none;
+    text-decoration: underline;
 
     &:hover {
       color: #fff;
     }
-  }
-}
-
-.copyBox {
-  margin-bottom: 1rem;
-
-  &:first-child {
-    text-align: left;
-  }
-
-  &:nth-child(2) {
-    text-align: center;
-  }
-
-  &:last-child {
-    text-align: right;
   }
 }
 

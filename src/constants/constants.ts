@@ -1,5 +1,4 @@
 export const SITE_TITLE = 'Teamconstructor'
-export const CONTACT_EMAIL = 'contact@teamconstructor.com'
 
 // export const LANGS = [
 //     ['ru', 'Русский'],

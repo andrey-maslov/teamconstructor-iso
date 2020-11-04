@@ -1,5 +1,4 @@
 @import "src/common/assets/scss/vars.scss";
-@import "src/common/assets/scss/flexgridcustom.scss";
 
 .wrapper {
   position: relative;
@@ -43,16 +42,8 @@
   width: 230px;
 }
 
-@media(max-width: $xl-breakpoint) {
 
-  .wrapper {
-    margin-bottom: 2rem;
-  }
-
-}
-
-
-@media(max-width: $lg-breakpoint) {
+@media(max-width: 992px) {
 
   .wrapper {
     flex-wrap: wrap;

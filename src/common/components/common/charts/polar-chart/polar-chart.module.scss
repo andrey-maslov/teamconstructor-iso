@@ -1,1 +1,64 @@
 @import "src/common/assets/scss/vars.scss";
+
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 20px;
+  border-bottom: 1px solid $overlay-light;
+
+  .title {
+    margin-bottom: 20px;
+  }
+}
+
+.title {
+  margin-bottom: 30px;
+}
+
+.radar {
+
+  canvas {
+    margin: 0 auto;
+    max-width: 550px;
+    max-height: 430px;
+  }
+}
+
+.legend {
+  padding: 20px;
+  border: 1px solid rgba($accent, .5);
+  background-color: rgba($accent, .1);
+  border-radius: 5px;
+  margin-left: 20px;
+  width: 230px;
+}
+
+
+@media(max-width: 992px) {
+
+  .wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .radar {
+    margin-bottom: 30px;
+  }
+
+  .desc {
+    max-width: unset;
+    width: 100%;
+    padding: 0;
+    border: 0;
+  }
+
+}
