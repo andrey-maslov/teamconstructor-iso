@@ -1,13 +1,16 @@
 @import 'src/common/assets/scss/_vars.scss';
 
 .aside {
-  position: relative;
+  position: fixed;
+  top: 0;
+  background-color: $overlay-dark;
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: 100%;
   transition: all .1s ease-in-out;
   animation: fadeIn .3s;
   padding-top: 56px;
+  overflow-y: auto;
 
   &.full {
     color: currentColor;
@@ -40,7 +43,7 @@
 .body {
   width: 100%;
   height: auto;
-  padding: 5rem 1.25rem 1.25rem;
+  padding: 4.5rem 1.25rem 1.25rem;
   background-color: $overlay-dark;
 }
 

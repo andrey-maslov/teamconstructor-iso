@@ -49,6 +49,7 @@ const Footer: React.FC = () => {
                 <div className={style.copy}>
                     <div className="row justify-content-between">
                         <div className="col-md-4">
+<<<<<<< HEAD
                             © {new Date().getFullYear()} | {t('common:footer.copy')}
                         </div>
                         <div className="col-md-4" style={{textAlign: 'center'}}>
@@ -56,6 +57,21 @@ const Footer: React.FC = () => {
                         </div>
                         <div className="col-md-4">
                             <LangSwitcherAlt />
+=======
+                            <div className={style.copyBox}>
+                                © {new Date().getFullYear()} | {t('common:footer.copy')}
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className={style.copyBox}>
+                                <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className={style.copyBox}>
+                                <LangSwitcherAlt />
+                            </div>
+>>>>>>> 9bf3a8a344c85fd949c3d314d367b833b5a2f513
                         </div>
                     </div>
                 </div>

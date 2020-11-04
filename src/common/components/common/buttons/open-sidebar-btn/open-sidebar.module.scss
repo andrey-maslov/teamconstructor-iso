@@ -1,11 +1,12 @@
 @import 'src/common/assets/scss/_vars.scss';
+@import 'src/common/assets/scss/flexgridcustom';
 
 .btn {
   width: 4rem;
   height: 55px;
   position: absolute;
   right: 0;
-  top: 51px;
+  top: 56px;
   font-size: 28px;
   background-color: $overlay-light;
   border: 0;
@@ -21,5 +22,12 @@
   &:hover {
     cursor: pointer;
     background-color: lighten($overlay-light, 5%);
+  }
+}
+
+@media(max-width: $lg-breakpoint) {
+
+  .btn {
+    top: 50px
   }
 }
