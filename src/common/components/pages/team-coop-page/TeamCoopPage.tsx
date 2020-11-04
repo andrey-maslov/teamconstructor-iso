@@ -8,14 +8,17 @@ import { globalStoreType } from '../../../../constants/types'
 import CreateProject from '../../common/team-coop/create-project/CreateProject'
 import BoardInfo from '../../common/team-coop/board-info/BoardInfo'
 import { useTranslation } from 'react-i18next'
+import { OpenSidebarBtn } from "../../common/buttons/open-sidebar-btn/OpenSidebarBtn";
+import { useMediaPredicate } from "react-media-hook";
+import { isBrowser } from "../../../../helper/helper";
 
 const TeamCoopPage: React.FC = () => {
 
     const { t } = useTranslation()
-    // const [isCompact, setCompact] = useState(false)
+    const isMedium = useMediaPredicate('(max-width: 1400px)')
+    const [isCompact, setCompact] = useState(isMedium)
     const { isLoggedIn, projects, activeProject } = useSelector((state: globalStoreType) => state.user)
     const { isLoading } = useSelector((state: globalStoreType) => state.app)
-    // const sidebarType = isCompact ? 'compact' : 'full'
 
 
     if (!isLoggedIn) {
@@ -36,27 +39,25 @@ const TeamCoopPage: React.FC = () => {
     }
 
     return (
-        <>
-            <div className={`team-sidebar`}>
+        <div className={`work-board ${isCompact ? 'compact-sidebar' : 'full-sidebar'}`}>
+            <div className="team-sidebar">
                 <TeamCoopSidebar
-                    // minifySidebar={minifySidebar}
-                    // type={sidebarType}
+                    minifySidebar={minifySidebar}
+                    isCompact={isCompact}
                 />
             </div>
             <main className="main">
-                <div className="content">
-                    {activeProject &&
-                    <BoardInfo label={t('team:project.project_board', { title: activeProject.title })} />}
-                    <DraggableZone />
-                    <TeamCoopResult />
-                </div>
+                {activeProject &&
+                <BoardInfo label={t('team:project.project_board', { title: activeProject.title })} />}
+                <DraggableZone />
+                <TeamCoopResult />
             </main>
-        </>
+        </div>
     )
 
-    // function minifySidebar() {
-    //     console.log('some')
-    // }
+    function minifySidebar() {
+        setCompact(!isCompact)
+    }
 }
 
 export default TeamCoopPage

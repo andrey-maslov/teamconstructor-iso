@@ -1,9 +1,9 @@
 import React from 'react'
-import {Polar} from 'react-chartjs-2'
-import {COLORS} from '../../../../../constants/constants'
+import { Polar } from 'react-chartjs-2'
+import { COLORS } from '../../../../../constants/constants'
 import hexToRgba from '../../../../../helper/hexToRgba'
-import {useMediaPredicate} from 'react-media-hook'
-import style from './polar-chart.module.scss'
+import { useMediaPredicate } from 'react-media-hook'
+import style from '../radar-chart/radar-chart.module.scss'
 
 const colors = [
     COLORS.orange,
@@ -22,10 +22,10 @@ type ChartsPropsType = {
     labels: string[]
 }
 
-const PolarChart: React.FC<ChartsPropsType> = ({portrait, labels}) => {
+const PolarChart: React.FC<ChartsPropsType> = ({ portrait, labels }) => {
 
-    const chartLabels = labels;
-    const chartColors = colors;
+    const chartLabels = labels
+    const chartColors = colors
 
     const chartRadarOptions: any = {
         desktop: {
@@ -40,9 +40,9 @@ const PolarChart: React.FC<ChartsPropsType> = ({portrait, labels}) => {
         }
     };
 
-    const isMobi = useMediaPredicate('(max-width: 600px)');
+    const isMobi = useMediaPredicate('(max-width: 1300px)')
 
-    const currentOptions = !isMobi ? {...chartRadarOptions.desktop} : {...chartRadarOptions.mobi};
+    const currentOptions = !isMobi ? { ...chartRadarOptions.desktop } : { ...chartRadarOptions.mobi }
 
     const data = {
         labels: labels,
@@ -51,7 +51,7 @@ const PolarChart: React.FC<ChartsPropsType> = ({portrait, labels}) => {
             backgroundColor: chartColors.map(color => hexToRgba(color, .7)),
             borderColor: chartColors,
         }],
-    };
+    }
 
     // chartjs.org/docs/latest/configuration/tooltip.html#tooltip-callbacks
     const options = {
@@ -77,7 +77,7 @@ const PolarChart: React.FC<ChartsPropsType> = ({portrait, labels}) => {
                 },
             }
         },
-    };
+    }
 
     return (
         <div className={`${style.wrapper} radar-chart block-wrapper`}>
@@ -90,8 +90,7 @@ const PolarChart: React.FC<ChartsPropsType> = ({portrait, labels}) => {
                 />
             </div>
         </div>
-    );
+    )
+}
 
-};
-
-export default PolarChart;
+export default PolarChart

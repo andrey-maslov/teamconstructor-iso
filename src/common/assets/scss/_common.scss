@@ -276,10 +276,10 @@ body *::-webkit-scrollbar-track {
 
 .store-area .box-content,
 textarea,
-.team-sidebar {
+.team-sidebar aside {
   &::-webkit-scrollbar,
   &::-webkit-scrollbar-track {
-    width: 10px;
+    width: 6px;
   }
 }
 
@@ -560,12 +560,47 @@ th, td {
 
 /*===== TEAM COOPERATION =====*/
 
-$sidebar-width: 17rem;
+.work-board {
+  display: flex;
+}
 
 .page-team {
 
   .main {
     overflow-x: auto;
+  }
+
+  .team-sidebar {
+    height: 100%;
+    z-index: 2;
+    overflow-y: auto;
+    margin-right: 2rem;
+    box-shadow: $box-shadow-lg;
+    background-color: $overlay-dark;
+  }
+
+  .full-sidebar {
+
+    .team-sidebar {
+      width: $sidebar-width;
+      min-width: $sidebar-width;
+    }
+
+    .main {
+      width: calc(100% - #{$sidebar-width} - #{$gutter-width});
+    }
+  }
+
+  .compact-sidebar {
+
+    .main {
+      width: calc(100% - 4rem - #{$gutter-width});
+    }
+
+    .team-sidebar {
+      width: 4rem;
+      min-width: 4rem;
+    }
   }
 
   &.authorized {
@@ -602,23 +637,22 @@ $sidebar-width: 17rem;
     }
   }
 
-  .content {
-    flex-grow: 1;
-    flex-shrink: 0;
+  .work-board {
     overflow-x: auto;
-    margin-left: calc(#{$sidebar-width} + #{$gutter-width});
-    min-width: 1170px;
+
+    .main {
+      min-width: 1100px;
+    }
   }
 
-  .team-sidebar {
-    position: fixed;
-    top: 0;
-    height: 100%;
-    z-index: 2;
-    overflow-y: auto;
-    box-shadow: $box-shadow-lg;
-    background-color: $overlay-dark;
-  }
+  //.content {
+  //  flex-grow: 1;
+  //  flex-shrink: 0;
+  //  overflow-x: auto;
+  //  margin-left: calc(#{$sidebar-width} + #{$gutter-width});
+  //  min-width: 1170px;
+  //}
+
 }
 
 .teams-wrapper {

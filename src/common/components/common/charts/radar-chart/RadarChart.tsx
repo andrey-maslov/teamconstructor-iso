@@ -44,9 +44,7 @@ const RadarChart: React.FC<ChartsPropsType> = ({ profiles, names, labels }) => {
         }
     }
 
-    const isMobi = useMediaPredicate('(max-width: 768px)');
-
-    console.log(isMobi)
+    const isMobi = useMediaPredicate('(max-width: 1300px)');
 
     const currentOptions = !isMobi ? { ...chartRadarOptions.desktop } : { ...chartRadarOptions.mobi };
 

@@ -1,10 +1,13 @@
 @import 'src/common/assets/scss/vars';
+@import 'src/common/assets/scss/flexgridcustom';
 
 .header {
   position: relative;
   border-bottom: 1px solid rgba($grey, .2);
   background-color: $overlay-dark;
   z-index: 99;
+  padding-left: $gutter-width / 2;
+  padding-right: $gutter-width / 2;
 }
 
 .bar {
