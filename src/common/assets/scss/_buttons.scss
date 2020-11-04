@@ -203,6 +203,7 @@ input[type=submit] {
   border: 2px dashed $overlay-light;
   border-radius: $border-radius-sm;
   width: 44px;
+  min-width: 44px;
   height: 44px;
   margin-left: 1rem;
   margin-top: 40px;
