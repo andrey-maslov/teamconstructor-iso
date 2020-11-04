@@ -1,10 +1,10 @@
 import React from 'react'
-import { useTranslation } from "react-i18next"
-import TopLogo from "../header/top-logo/TopLogo"
-import { NavLink } from "react-router-dom"
-import LangSwitcherAlt from "../../buttons/lang-switcher-alt/LangSwitcherAlt"
+import { useTranslation } from 'react-i18next'
+import TopLogo from '../header/top-logo/TopLogo'
+import { NavLink } from 'react-router-dom'
+import LangSwitcherAlt from '../../buttons/lang-switcher-alt/LangSwitcherAlt'
 import style from './footer.module.scss'
-import { CONTACT_EMAIL } from "../../../../../constants/constants";
+import { CONTACT_EMAIL } from '../../../../../constants/constants'
 
 const Footer: React.FC = () => {
 
@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
             link: '/cookie-policy',
             title: t('common:nav.cookie'),
         },
-    ];
+    ]
 
     const FooterLinks = () => {
         return (
