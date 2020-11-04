@@ -1,6 +1,128 @@
-.result {
+@import './vars.scss';
+@import './flexgridcustom.scss';
 
-  &-box {
+@media (max-width: 1920px) {
 
+  .container-wide {
+    padding: 0 15px;
   }
+}
+
+/*===== < 1300px =====*/
+@media (max-width: $xl-breakpoint) {
+
+  .page-team {
+
+    h1 {
+      font-size: 1.75rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .main {
+      padding-top: 40px;
+    }
+
+    .header {
+      position: relative;
+      padding-left: 75px;
+      z-index: 1;
+    }
+
+    .footer {
+      margin-left: 60px;
+    }
+
+    .container-wide {
+      position: relative;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    .team-sidebar {
+      transition: transform .2s ease-in-out;
+
+      &.visible {
+        transform: translateX(0);
+      }
+
+      &.full {
+        position: fixed;
+        width: 20rem;
+        top: 80px;
+        right: 5px;
+      }
+
+    }
+
+    .content {
+      margin-left: 4rem + $gutter-width / 2;
+    }
+
+    .team-radar {
+
+      .box-content {
+        padding-right: .2rem;
+        padding-left: .2rem;
+      }
+    }
+  }
+
+  .teams-wrapper {
+
+    & > div {
+      margin-right: .5rem;
+    }
+  }
+}
+
+
+/*===== < 992px =====*/
+
+@media (max-width: $lg-breakpoint) {
+
+  .app {
+
+    .main {
+      padding-top: 3rem;
+    }
+  }
+
+  .section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .content-page {
+    padding: 20px 0;
+
+    h1 {
+      margin-bottom: 20px;
+    }
+  }
+
+}
+
+
+/*===== < 768px =====*/
+
+@media (max-width: $md-breakpoint) {
+
+  .btn-accent {
+    width: 100%;
+  }
+
+  .btn-outlined {
+    width: 100%;
+  }
+
+}
+
+
+/*===== < 576px =====*/
+
+@media(max-width: $sm-breakpoint) {
+
+
 }

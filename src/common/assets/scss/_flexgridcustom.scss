@@ -3,19 +3,20 @@ $gutter-width: 2rem;
 $sm-max: 540px;
 $md-max: 720px;
 $lg-max: 980px;
-$xl-max: 1290px;
+$xl-max: 1270px;
 
 $xs-breakpoint: 0;
 $sm-breakpoint: 576px;
 $md-breakpoint: 768px;
 $lg-breakpoint: 992px;
-$xl-breakpoint: 1400px;
+$xl-breakpoint: 1300px;
 
 
 $grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1400px);
 $container-max-widths: (sm: 540px, md: 720px, lg: 980px, xl: 1290px) !default;
 
 .container {
+  width: 100%;
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;

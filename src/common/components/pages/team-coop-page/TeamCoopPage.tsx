@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import DraggableZone from '../../common/team-coop/DraggableZone'
@@ -12,8 +12,10 @@ import { useTranslation } from 'react-i18next'
 const TeamCoopPage: React.FC = () => {
 
     const { t } = useTranslation()
+    // const [isCompact, setCompact] = useState(false)
     const { isLoggedIn, projects, activeProject } = useSelector((state: globalStoreType) => state.user)
     const { isLoading } = useSelector((state: globalStoreType) => state.app)
+    // const sidebarType = isCompact ? 'compact' : 'full'
 
 
     if (!isLoggedIn) {
@@ -36,7 +38,10 @@ const TeamCoopPage: React.FC = () => {
     return (
         <>
             <div className={`team-sidebar`}>
-                <TeamCoopSidebar />
+                <TeamCoopSidebar
+                    // minifySidebar={minifySidebar}
+                    // type={sidebarType}
+                />
             </div>
             <main className="main">
                 <div className="content">
@@ -48,6 +53,10 @@ const TeamCoopPage: React.FC = () => {
             </main>
         </>
     )
+
+    // function minifySidebar() {
+    //     console.log('some')
+    // }
 }
 
 export default TeamCoopPage
