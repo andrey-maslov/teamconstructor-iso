@@ -2,9 +2,9 @@ import React, { Suspense } from 'react';
 import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import index from '../common/store';
-import App from '../common/App';
-import Loader from '../common/components/common/loaders/loader/Loader';
+import index from '../store';
+import App from '../App';
+import Loader from '../components/common/loaders/loader/Loader';
 
 import 'focus-visible/dist/focus-visible.js';
 

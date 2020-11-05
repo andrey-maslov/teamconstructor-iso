@@ -1,0 +1,75 @@
+@import '../../../../assets/scss/vars';
+@import '../../../../assets/scss/flexgridcustom';
+
+.body {
+  overflow-x: auto;
+}
+
+.content {
+  color: currentColor;
+  min-width: 500px;
+}
+
+.header {
+  font-family: $font-mono;
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba($text-light, .1);
+}
+
+.scrollable {
+
+  max-height: 480px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar,
+  &::-webkit-scrollbar-track {
+    width: 6px;
+  }
+}
+
+.tableWrapper {
+
+  table {
+
+    td {
+      font-size: .9rem;
+    }
+  }
+}
+
+.block {
+  margin-bottom: 2rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.title {
+  font-size: 1.2em;
+  margin-bottom: 1rem;
+}
+
+.radar {
+  color: currentColor;
+}
+
+@media (max-width: $xl-breakpoint) {
+
+  .radar {
+    max-width: 350px;
+    max-height: 275px;
+    margin: 1rem auto;
+  }
+}
+
+@media (max-width: $sm-breakpoint) {
+
+  .radar {
+    margin: 1rem auto 1rem 1rem;
+  }
+}

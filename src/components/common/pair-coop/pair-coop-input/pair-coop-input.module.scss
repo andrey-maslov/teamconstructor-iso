@@ -1,0 +1,32 @@
+@import "../../../../assets/scss/vars";
+
+.fields {
+  margin-bottom: 5rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.floatBtn {
+  position: fixed;
+  right: 0;
+  top: 20%;
+  background-color: $text-light;
+  border: 0;
+  box-shadow: $box-shadow-md;
+  cursor: pointer;
+  padding: .3rem .5rem;
+
+  svg {
+    position: relative;
+    bottom: -3px
+  }
+}
+
+@media (max-width: 992px) {
+  .fields {
+    margin-bottom: 0;
+  }
+}

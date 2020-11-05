@@ -1,0 +1,147 @@
+@import '../../../../assets/scss/vars';
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/flexgridcustom';
+
+@mixin line-horizontal() {
+  position: absolute;
+  content: '';
+  display: block;
+  height: 2px;
+  width: 18px;
+  top: 16px;
+  left: calc(50% - 9px);
+  background-color: $text-light;
+}
+
+.delete {
+  position: relative;
+  display: block;
+  border: 1px solid $text-light;
+  border-radius: $border-radius-sm;
+  height: 36px;
+  width: 36px;
+  background-color: transparent;
+  cursor: pointer;
+  opacity: .6;
+  transition: all .2s;
+
+  &:before {
+    @include line-horizontal()
+  }
+
+  &:hover {
+    opacity: 1;
+    background-color: rgba($warning, .4);
+  }
+}
+
+.create {
+  display: block;
+  position: relative;
+  border: 1px solid $text-light;
+  border-radius: $border-radius-sm;
+  height: 36px;
+  width: 36px;
+  margin-right: 2px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all .2s;
+
+  &:before, &:after {
+    @include line-horizontal();
+    transition: all .2s;
+  }
+
+  &:after {
+    transform: rotate(90deg);
+  }
+
+  &:hover {
+    opacity: 1;
+    background-color: transparent;
+    border-color: $orange;
+
+    &:after, &:before {
+      background-color: $orange;
+    }
+  }
+
+}
+
+.project {
+  display: inline-block;
+  background-color: transparent;
+  border: 0;
+  color: currentColor;
+  @include ellipsis();
+  width: calc(100% - 50px);
+  height: 100%;
+  max-width: calc(100% - 50px);
+  padding: 0;
+  text-align: left;
+  border-right: 1px solid $overlay-dark;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listWrapper {
+  max-height: 300px;
+  overflow-y: auto;
+  @include scrollbar(6px);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: .5rem 1rem;
+  border: 0;
+  text-align: left;
+  margin-bottom: 0;
+  margin-top: 0;
+  background: transparent;
+  transition: background-color .2s ease-in-out;
+
+
+  &.active {
+    background-color: $overlay-light;
+    border-left: 5px solid rgba($orange, .8);
+  }
+
+  &:hover {
+    background-color: $overlay-light;
+  }
+
+  &.title {
+    font-weight: 700;
+    padding-bottom: 1rem;
+    //border-bottom: 1px solid $overlay-light;
+    box-shadow: 0 5px 6px rgba($base, .6);
+
+    &:hover {
+      background-color: $overlay-dark;
+    }
+
+    svg {
+      position: relative;
+      bottom: -3px;
+      margin-right: 10px;
+    }
+  }
+}
+
+@media (max-width: $lg-breakpoint) {
+
+  .listWrapper {
+    max-height: 200px;
+  }
+}

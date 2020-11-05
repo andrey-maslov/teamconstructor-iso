@@ -1,0 +1,266 @@
+@import 'animations';
+@import 'vars';
+
+// shadanger styles
+input[type=submit],
+.btn {
+  position: relative;
+  font-size: 1.2rem;
+  display: inline-block;
+  text-transform: uppercase;
+  min-width: 11rem;
+  padding: 0 10px;
+  vertical-align: middle;
+  text-decoration: none;
+  text-align: center;
+  transition: all .2s ease-out;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+a.btn {
+  height: 3rem;
+  line-height: 3rem;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+button.btn-link {
+  color: $text-light;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  height: auto;
+  min-width: unset;
+
+  &:hover {
+    box-shadow: none;
+    background-color: $overlay-light;
+  }
+}
+
+.btn-outlined {
+  background-color: transparent;
+  border: 1px solid $text-light;
+  color: $text-light;
+
+  &:hover {
+    background-color: rgba($overlay-dark, .6);
+  }
+}
+
+.btn-loader {
+
+  svg {
+    animation: loader 1s linear infinite;
+  }
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+// Small button
+.btn-small {
+  height: 55px !important;
+  line-height: 55px;
+}
+
+// Long button
+.btn {
+  &.btn-lg {
+    height: 4rem;
+    //line-height: 47px;
+    min-width: 15rem;
+    max-width: unset;
+  }
+}
+
+button[type=submit]:hover {
+  //background-color: $accent-hover !important;
+  //border-color: $accent-hover;
+
+}
+
+input[type=submit]:focus,
+input[type=submit]:hover,
+input[type=submit]:active {
+  //background-color: $accent-hover !important;
+  //border-color: $accent-hover;
+}
+
+// Disabled shadanger style
+.btn.disabled,
+.btn-invert.disabled,
+.btn-large.disabled,
+.btn-small.disabled,
+.btn:disabled,
+.btn-large:disabled,
+.btn-small:disabled,
+.btn[disabled],
+.btn-large[disabled],
+.btn-small[disabled] {
+  pointer-events: none;
+  box-shadow: none;
+  cursor: default;
+  opacity: .5;
+}
+
+
+// Color Button
+.btn-accent,
+input[type=submit] {
+  color: #fff;
+  background-color: $accent;
+  border: none;
+
+  &:hover {
+    background-color: $accent-hover;
+    color: #fff;
+  }
+
+  &:active {
+    background-color: $accent-hover;
+  }
+}
+
+.btn-accent2{
+  color: #fff;
+  background-color: $accent2;
+  border: none;
+
+  &:hover {
+    background-color: $accent2-hover;
+  }
+
+  &:active {
+    background-color: $accent2-hover;
+  }
+}
+
+.btn-white {
+  color: $accent;
+  background-color: #fff;
+  border: 1px solid #fff;
+
+  &:hover {
+    background-color: transparent;
+    color: #fff;
+  }
+
+  &:active {
+    background-color: transparent;
+    color: #fff;
+  }
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: $danger;
+  border: none;
+
+  &:hover {
+    background-color: darken($danger, 10%);
+    color: #fff;
+  }
+
+  &:active {
+    background-color: darken($danger, 10%);
+    color: #fff;
+  }
+}
+
+
+.btn {
+  
+  &-facebook {
+    background-color: #3b5998;
+  }
+
+  &-linkedin {
+    background-color: #0077b5;
+  }
+
+  &-google {
+    background-color: #ea4335;
+  }
+}
+
+.btn-add-team {
+  position: relative;
+  background-color: transparent;
+  border: 2px dashed $overlay-light;
+  border-radius: $border-radius-sm;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  margin-left: 1rem;
+  margin-top: 40px;
+  transition: border-color .2s ease-in-out;
+
+  span {
+    position: absolute;
+    display: inline-block;
+    top: 8px;
+    left: 19px;
+    height: 24px;
+    width: 2px;
+    background-color: darken( $text-light, 10%);
+
+    &:last-child {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    border-color: darken( $text-light, 16%);
+  }
+}
+
+
+//.btn-share {
+//  display: inline-block;
+//  position: relative;
+//  font-size: 20px;
+//  border-radius: $border-radius;
+//  width: 40px;
+//  height: 40px;
+//  padding: 0;
+//  vertical-align: middle;
+//  text-decoration: none;
+//  text-align: center;
+//  transition: all .2s ease-out;
+//  cursor: pointer;
+//  color: #fff;
+//  line-height: 40px;
+//  margin: 0 5px;
+//
+//  .react-share__ShareButton {
+//    width: 100%;
+//    height: 100%;
+//    display: flex;
+//    justify-content: center;
+//    align-items: center;
+//  }
+//
+//  &:first-child {
+//    margin-left: 0;
+//  }
+//
+//  &:last-child {
+//    margin-right: 0;
+//  }
+//}

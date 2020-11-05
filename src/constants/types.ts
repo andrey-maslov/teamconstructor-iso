@@ -1,9 +1,9 @@
-import { userStoreType } from '../common/reducers/user'
-import { teamStoreType } from '../common/reducers/team'
-import { pairStoreType } from '../common/reducers/pair'
-import { TermsStoreType } from '../common/reducers/terms'
-import { modalsStoreType } from '../common/reducers/modals'
-import { appStoreType } from '../common/reducers/app'
+import { userStoreType } from '../reducers/user'
+import { teamStoreType } from '../reducers/team'
+import { pairStoreType } from '../reducers/pair'
+import { TermsStoreType } from '../reducers/terms'
+import { modalsStoreType } from '../reducers/modals'
+import { appStoreType } from '../reducers/app'
 
 export type DecodedDataType = [number[], number[][]]
 
@@ -36,6 +36,7 @@ export interface INavRoute {
 export interface IModalProps {
     visible: boolean
     closeModal: () => void
+    isLarge?: boolean
 }
 
 export interface IDescWithRange {

@@ -1,0 +1,182 @@
+@import '../../../../assets/scss/vars';
+
+$color__primary: $accent;
+
+$checkbox__size: 20px;
+$switch__size: $checkbox__size;
+
+$checkbox__border__size: 2px;
+
+$checkbox__checkmark__size: $checkbox__size - (2*$checkbox__border__size);
+$checkbox__checkmark__size--indeterminate: 2px;
+$checkbox__checkmark__color: $color__primary;
+$checkbox__checkmark__color--disabled: $grey-bg;
+
+
+// CHECKBOXES
+
+.label {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  //user-select: none;
+}
+
+.input {
+  position: relative;
+  flex-shrink: 0;
+  margin-right: ($checkbox__size / 2);
+  width: $checkbox__size;
+  height: $checkbox__size;
+  border-radius: 3px;
+  appearance: none;
+  outline: none; // TODO: manage :focus
+  background: transparent;
+  cursor: pointer;
+  border: $checkbox__border__size solid rgba($accent, .5);
+
+  &:focus {
+    border-color: $accent;
+  }
+
+  &::before {
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    bottom: 50%;
+    left: 50%;
+    transition: all .1s;
+    background: $checkbox__checkmark__color;
+  }
+
+  &:checked,
+  &:indeterminate {
+    &::before {
+      top: $checkbox__border__size;
+      right: $checkbox__border__size;
+      bottom: $checkbox__border__size;
+      left: $checkbox__border__size;
+    }
+  }
+  &:checked {
+    border-color: $accent;
+  }
+
+  &:indeterminate {
+    &::before {
+      top: ($checkbox__checkmark__size / 2) - ($checkbox__checkmark__size--indeterminate / 2);
+      bottom: ($checkbox__checkmark__size / 2) - ($checkbox__checkmark__size--indeterminate / 2);
+    }
+  }
+
+  &:disabled {
+    border-color: $grey-bg;
+    cursor: default;
+
+    &::before {
+      background-color: $checkbox__checkmark__color--disabled;
+    }
+
+    + .label { //TODO fix
+      color: $grey;
+      cursor: default;
+    }
+  }
+}
+
+
+.hasErrorInput {
+  border-color: red;
+  background-color: rgba(red, .2);
+
+  &::before {
+    background-color: red;
+  }
+}
+
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+}
+
+.switchInput {
+  width: (2 * $switch__size) - (2 * $checkbox__border__size);
+  height: $switch__size;
+  border: $checkbox__border__size solid rgba($accent, .5);
+  border-radius: $checkbox__checkmark__size;
+
+  &::before {
+    top: $checkbox__border__size;
+    right: $switch__size - $checkbox__border__size;
+    bottom: $checkbox__border__size;
+    left: $checkbox__border__size;
+    border-radius: 50%;
+    background: rgba($accent, .5);
+  }
+
+  &:checked {
+    border-color: rgba($accent, 1);
+
+    &::before {
+      right: $checkbox__border__size;
+      left: $switch__size - $checkbox__border__size;
+      background: $accent;
+    }
+  }
+}
+
+
+//.container {
+//  position: relative;
+//  padding-left: 36px;
+//}
+//
+//.box {
+//  display: inline-block;
+//  position: absolute;
+//  left: 0;
+//  top: 0;
+//  width: 24px;
+//  height: 24px;
+//  background: #fff;
+//  border: 1px solid #d2d7dc;
+//  box-sizing: border-box;
+//  box-shadow: 0px 1px 4px #EFF1F4;
+//  border-radius: 3px;
+//  margin-right: 10px;
+//  opacity: .7;
+//  transition: all .2s ease-in-out;
+//
+//  &:hover {
+//    cursor: pointer;
+//    box-shadow: 0px 1px 5px rgba(#000, .2);
+//  }
+//
+//  .icon {
+//    position: absolute;
+//    top: 50%;
+//    left: 50%;
+//    transform: translateX(-50%) translateY(-50%);
+//  }
+//
+//  &.active {
+//    opacity: 1;
+//  }
+//}
+//
+//.text {
+//  font-size: 18px;
+//}
+//
+//@media (max-width: 992px) {
+//
+//  .text {
+//    font-size: 16px;
+//  }
+//
+//  .box {
+//    top: 2px;
+//  }
+//}

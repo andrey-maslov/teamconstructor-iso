@@ -1,0 +1,41 @@
+@import '../../../../../assets/scss/vars';
+
+.block {
+  margin-bottom: .5rem;
+  padding: .5rem .8rem;
+  border: 1px solid $overlay-light;
+  border-radius: $border-radius;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: $box-shadow-md;
+  }
+
+  &.active {
+    border-color: $orange;
+  }
+}
+
+.count {
+
+  svg {
+    margin-right: .8rem;
+    font-size: 1rem;
+  }
+
+  span {
+    font-size: 1.2rem;
+  }
+}
+
+.title {
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: .3rem;
+  text-transform: uppercase;
+}
+
+.compact {
+  color: currentColor;
+  text-align: center;
+}

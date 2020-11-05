@@ -1,0 +1,59 @@
+@import '../../../../assets/scss/vars';
+
+.aside {
+  position: fixed;
+  top: 0;
+  background-color: $overlay-dark;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: all .1s ease-in-out;
+  animation: fadeIn .3s;
+  padding-top: 56px;
+  overflow-y: auto;
+
+  &.full {
+    color: currentColor;
+    width: 17rem;
+  }
+
+  &.compact {
+    padding-left: .5rem;
+    padding-right: .5rem;
+    width: 4rem;
+
+    .body {
+      padding: 5rem 0 0;
+    }
+
+    .bottom {
+      padding: 0;
+    }
+
+    button {
+
+      span {
+        margin: 0;
+      }
+    }
+
+  }
+}
+
+.body {
+  width: 100%;
+  height: auto;
+  padding: 4.5rem 1.25rem 1.25rem;
+  background-color: $overlay-dark;
+}
+
+.bottom {
+  padding: 0 1.25rem 1rem;
+
+  button {
+    max-width: unset;
+    min-width: unset;
+    width: 100%;
+    padding: 0;
+  }
+}

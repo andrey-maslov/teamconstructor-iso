@@ -1,0 +1,72 @@
+@import '../../../../../assets/scss/vars';
+@import '../../../../../assets/scss/flexgridcustom';
+
+.wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.label {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.label > input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.label > svg {
+  display: inline-block;
+  vertical-align: middle;
+  width:  1.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
+  transition: 0.2s;
+  opacity: .5;
+}
+
+.label:hover > svg {
+  opacity: 1;
+}
+.label > input:checked + svg {
+  color: $orange;
+  opacity: 1;
+}
+
+.wrapper {
+
+  &.compact {
+
+    .title {
+      display: none;
+    }
+
+    .label {
+
+      span {
+        display: none;
+      }
+
+      & > svg {
+        margin-right: auto;
+        margin-left: auto;
+      }
+    }
+
+  }
+
+  &.full {
+
+  }
+}

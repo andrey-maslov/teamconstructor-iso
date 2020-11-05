@@ -31,7 +31,7 @@
     "jest",
     "razzle.config.js",
     "src/helper/hexToRgba.js",
-    "./src/common/components/common/media/svgflag/SVGFlag.js"
+    "./src/components/common/media/svgflag/SVGFlag.js"
   ],
   "types": ["typePatches", "node", "webpack-env"]
 }

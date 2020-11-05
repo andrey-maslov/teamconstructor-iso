@@ -1,0 +1,43 @@
+@import '../../../../assets/scss/vars';
+
+.popup {
+  width: 300px;
+  height: auto;
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background-color: $overlay-light;
+  border-radius: 5px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.2);
+  padding: 20px;
+  z-index: 20;
+  //border: 1px solid $orange;
+
+  button {
+    width: 100%;
+  }
+
+  .policyLink {
+    display: block;
+    text-decoration: underline;
+    margin-bottom: 20px;
+  }
+
+  p {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+}
+
+@media(max-width: 992px) {
+  .popup {
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+
+    p {
+      margin-bottom: 5px;
+    }
+  }
+}
