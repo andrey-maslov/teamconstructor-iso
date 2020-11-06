@@ -6,7 +6,11 @@ const ProfilePage: React.FC = () => {
     return (
         <main className="main">
             <div className="container">
-                <UserProfile />
+                <div className="row center-xs">
+                    <div className="col-xl-8">
+                        <UserProfile />
+                    </div>
+                </div>
             </div>
         </main>
     )

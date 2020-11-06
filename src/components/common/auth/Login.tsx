@@ -29,7 +29,7 @@ const Login: React.FC<ILogin<ILoginForm>> = ({isLoading, errorApiMessage, submit
                 <label>
                     <span>{t('common:auth.identifier')}</span>
                     <input
-                        className={style.input}
+                        className={`${style.input} input-autofill`}
                         type="text"
                         name="identifier"
                         onFocus={clearApiError}

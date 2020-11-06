@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { useSelector, useDispatch } from 'react-redux'
 import { useToasts } from 'react-toast-notifications'
 import style from './profile.module.scss'
-import { globalStoreType } from '../../../constants/types'
-import { NavLink, useHistory } from "react-router-dom"
-import Loader from "../../../components/common/loaders/loader/Loader"
-import InputTransformer from "../../../components/common/Inputs/input-transformer/InputTransformer"
-import CodeBox from "../../../components/common/Inputs/code-box/CodeBox"
-import { SET_TOAST } from "../../../actions/actionTypes"
+import { globalStoreType, IOneFieldForm } from '../../../constants/types'
+import { NavLink, useHistory } from 'react-router-dom'
+import Loader from '../../../components/common/loaders/loader/Loader'
+import { useForm } from 'react-hook-form'
+import InputTransformer from '../../../components/common/Inputs/input-transformer/InputTransformer'
+import CodeBox from '../../../components/common/Inputs/code-box/CodeBox'
+import { SET_TOAST } from '../../../actions/actionTypes'
 
 const UserProfile = () => {
     const {
@@ -27,6 +28,7 @@ const UserProfile = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const encData = testResult
+    const { register, handleSubmit, errors, reset } = useForm<IOneFieldForm<string>>()
 
     const [localUser, setLocalUser] = useState({
         firstName,
@@ -36,9 +38,6 @@ const UserProfile = () => {
     })
 
     useEffect(() => {
-        if (!isLoggedIn) {
-            history.push('/')
-        }
 
         if (email) {
             setReady(true)
@@ -91,22 +90,22 @@ const UserProfile = () => {
 
     const textFields = [
         {
-            label: t('signin:extra.first_name'),
+            label: t('common:profile.first_name'),
             key: 'firstName',
             value: localUser.firstName,
-            defaultValue: t('signin:extra.first_name')
+            defaultValue: t('common:profile.first_name')
         },
         {
-            label: t('signin:extra.last_name'),
+            label: t('common:profile.last_name'),
             key: 'lastName',
             value: localUser.lastName,
-            defaultValue: t('signin:extra.last_name')
+            defaultValue: t('common:profile.last_name')
         },
         {
-            label: t('signin:extra.position'),
+            label: t('common:profile.position'),
             key: 'position',
             value: localUser.position,
-            defaultValue: t('signin:extra.position')
+            defaultValue: t('common:profile.position')
         }
     ]
 
@@ -114,7 +113,8 @@ const UserProfile = () => {
 
     return (
         <div className={style.wrapper}>
-            <div className={style.header}>
+
+            <div className={`${style.header} ${style.box}`}>
                 <h2 className={style.title}>Account Settings</h2>
                 <p>Here you can change your personal data and privacy settings.</p>
                 <p>
@@ -128,63 +128,57 @@ const UserProfile = () => {
                 </p>
             </div>
 
-            <div className="row">
-                <div className="col-md-6">
-                    <div className={`${style.box} ${style.account}`}>
-                        <h5 className={style.box_title}>Account</h5>
-                        <div className={`${style.box_content}`}>
-                            <div className={`${style.list} flex`}>
-                                {textFields.map(item => (
-                                    <div
-                                        className={`${style.item} ${
-                                            !item.value ? style.default : ''
-                                        }`}
-                                        key={item.key}>
-                                        <span className={style.label}>{item.label}</span>
-                                        <InputTransformer
-                                            initValue={item.value || item.defaultValue}
-                                            rules={{
-                                                pattern: {
-                                                    value: /^[^<>!]*$/i,
-                                                    message: `${t('common:errors.invalid')}`
-                                                }
-                                            }}
-                                            objectKey={item.key}
-                                            handler={updateProfile}
-                                            {...{ type: 'text', autoComplete: 'off' }}
-                                        />
-                                    </div>
-                                ))}
-                                <div className={style.item} key="email">
-                                    <span className={style.label}>Email:</span>
-                                    <div className={style.field}>{email}</div>
-                                </div>
+            <div className={`${style.box} ${style.account}`}>
+                <h5 className={style.box_title}>Account</h5>
+                <div className={`${style.box_content}`}>
+                    <div className={style.list}>
+                        {textFields.map(item => (
+                            <div
+                                className={`${style.item} ${
+                                    !item.value ? style.default : ''
+                                }`}
+                                key={item.key}>
+                                <span className={style.label}>{item.label}</span>
+                                <InputTransformer
+                                    initValue={item.value || item.defaultValue}
+                                    rules={{
+                                        pattern: {
+                                            value: /^[^<>!]*$/i,
+                                            message: `${t('common:errors.invalid')}`
+                                        }
+                                    }}
+                                    objectKey={item.key}
+                                    handler={updateProfile}
+                                    {...{ type: 'text', autoComplete: 'off' }}
+                                />
                             </div>
+                        ))}
+                        <div className={style.item} key="email">
+                            <span className={style.label}>Email:</span>
+                            <div className={style.field}>{email}</div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div className="col-md-6">
-                    <div className={`${style.box} ${style.services}`}>
-                        <h5 className={style.box_title}>Services</h5>
+            <div className={`${style.box} ${style.services}`}>
+                <h5 className={style.box_title}>Psychological Profile</h5>
 
-                        <div>
-                            <div className={`${style.item} flex between-xs`}>
-                                {encData ? (
-                                    <CodeBox content={encData} />
-                                ) : (
-                                    <NavLink to="/test">Пройдите тест</NavLink>
-                                )}
-                            </div>
+                <div className={`${style.box_content}`}>
+                    <div className={`${style.item} flex between-xs`}>
+                        {encData ? (
+                            <CodeBox content={encData} />
+                        ) : (
+                            <NavLink to="/test">need to pass the test</NavLink>
+                        )}
+                    </div>
 
-                            <div className={`${style.item} flex between-xs`}>
-                                {encData ? (
-                                    <NavLink to="/test/result">Перейти к психологическому профилю</NavLink>
-                                ) : (
-                                    <NavLink to="/test">Пройдите тест</NavLink>
-                                )}
-                            </div>
-                        </div>
+                    <div className={`${style.item} flex between-xs`}>
+                        {encData ? (
+                            <NavLink to="/test/result">Перейти к психологическому профилю</NavLink>
+                        ) : (
+                            <NavLink to="/test">need to pass the test</NavLink>
+                        )}
                     </div>
                 </div>
             </div>
@@ -215,7 +209,7 @@ const UserProfile = () => {
         </div>
     )
 
-    function updateProfile(formData: {[key: string]: string}) {
+    function updateProfile(formData: { [key: string]: string }) {
         // dispatch(
         //     updateUserData({
         //         firstName,

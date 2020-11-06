@@ -21,6 +21,7 @@ export const ROUTES = {
     '/': 'page-main',
     '/pair': 'page-pair',
     '/team': 'page-team',
+    '/profile': 'page-profile',
     '/cookie-policy': 'page-content',
     '/privacy-policy': 'page-content',
     '/terms': 'page-content',

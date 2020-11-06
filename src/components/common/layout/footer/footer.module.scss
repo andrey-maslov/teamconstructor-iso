@@ -72,22 +72,25 @@
       color: #fff;
     }
   }
+
+  & > div > div {
+
+    &:first-child {
+      text-align: left;
+    }
+
+    &:nth-child(2) {
+      text-align: center;
+    }
+
+    &:last-child {
+      text-align: right;
+    }
+  }
 }
 
 .copyBox {
   margin-bottom: 1rem;
-
-  &:first-child {
-    text-align: left;
-  }
-
-  &:nth-child(2) {
-    text-align: center;
-  }
-
-  &:last-child {
-    text-align: right;
-  }
 }
 
 .list {

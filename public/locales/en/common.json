@@ -71,6 +71,23 @@
     "new_pwd": "New password",
     "reset_success": "Password changed. You can now log in using the new password through the standard form"
   },
+  "profile": {
+    "title": "Additional information",
+    "desc": "Additional information that will help us to better represent you",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "want_to_open": "I want to open my profile data for searching within the service",
+    "looking_for_job": "I am open to job offers",
+    "position": "Position",
+    "hello": "Hello ${name}. This is your profile",
+    "name": "Name",
+    "salary_est": "Salary_est",
+    "show": "Show me!",
+    "meta": {
+      "title": "title for profile page",
+      "description": "description for profile page"
+    }
+  },
   "title": "Title",
   "cookie_consent": {
     "text": "We care about you, so you have to agree to our cookie policy",
