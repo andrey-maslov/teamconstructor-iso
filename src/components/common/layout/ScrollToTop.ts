@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
-// @ts-ignore
-import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 export default function ScrollToTop() {
 
@@ -8,6 +7,6 @@ export default function ScrollToTop() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [pathname]);
-    return null;
+    }, [pathname])
+    return null
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Button from "../../buttons/button/Button"
 import { globalStoreType, ITeam } from "../../../../constants/types"
 import { useDispatch, useSelector } from "react-redux"
@@ -7,7 +7,6 @@ import { GoRocket } from "react-icons/go"
 import TeamModule from "./team-module/TeamModule"
 import TeamSpec from "./team-spec/TeamSpec"
 import { SET_ACTIVE_TEAM, SET_RANDOM, SET_TEAM_SPEC } from "../../../../actions/actionTypes"
-import { useMediaPredicate } from 'react-media-hook'
 import { OpenSidebarBtn } from "../../buttons/open-sidebar-btn/OpenSidebarBtn"
 import { useTranslation } from "react-i18next"
 
@@ -25,15 +24,9 @@ const TeamCoopSidebar: React.FC<TeamCoopSidebar> = ({minifySidebar, isCompact}) 
     const dispatch = useDispatch()
 
     const { t } = useTranslation()
-    const sidebarType = isCompact ? 'compact' : 'full'
-
-
-    useEffect(() => {
-        // isMedium ? setCompact(true) : setCompact(false)
-    }, [teams])
 
     return (
-        <aside className={`${style.aside} ${style[sidebarType]}`}>
+        <aside className={`${style.aside} ${style[isCompact ? 'compact' : 'full']}`}>
             <OpenSidebarBtn
                 handler={minifySidebar}
                 isCompact={isCompact}

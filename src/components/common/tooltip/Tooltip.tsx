@@ -7,7 +7,7 @@ interface TooltipProps {
     direction: 'top' | 'bottom' | 'left' | 'right'
 }
 
-export const Tooltip: React.FunctionComponent<TooltipProps> = ({children, tip, direction}) => {
+export const Tooltip: React.FunctionComponent<TooltipProps> = ({ children, tip, direction }) => {
 
     const tipClass = 'tooltip' + direction.charAt(0).toUpperCase() + direction.slice(1);
 
@@ -18,5 +18,5 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({children, tip, d
         >
             {children}
         </span>
-    );
-};
+    )
+}

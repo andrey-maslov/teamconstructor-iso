@@ -12,7 +12,6 @@ import { setEditedMember, updateProject } from '../../../../actions/actionCreato
 import { AiOutlineLoading } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
 
-
 interface IForm {
     name: string
     position: string;

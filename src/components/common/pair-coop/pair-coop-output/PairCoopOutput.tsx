@@ -32,7 +32,7 @@ const PairCoopOutput: React.FC = () => {
         return null
     }
 
-    if (!data1 || !data2 ) {
+    if (!data1 || !data2) {
         return <div className="flex-centered section">Data failed</div>
     }
 

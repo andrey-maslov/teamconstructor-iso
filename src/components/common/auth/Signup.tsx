@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import style from "./auth.module.scss"
 import Button from "../buttons/button/Button"
-import {useForm} from 'react-hook-form'
-import {AiOutlineLoading} from 'react-icons/ai'
-import {useTranslation} from "react-i18next"
-import {ILogin} from "./Login"
+import { useForm } from 'react-hook-form'
+import { AiOutlineLoading } from 'react-icons/ai'
+import { useTranslation } from "react-i18next"
+import { ILogin } from "./Login"
 
 export interface ISignUpForm {
     name: string
@@ -14,10 +14,10 @@ export interface ISignUpForm {
     errors: any
 }
 
-const Signup: React.FC<ILogin<ISignUpForm>> = ({isLoading, errorApiMessage, submitHandle, clearApiError}) => {
+const Signup: React.FC<ILogin<ISignUpForm>> = ({ isLoading, errorApiMessage, submitHandle, clearApiError }) => {
 
-    const {t} = useTranslation()
-    const {register, handleSubmit, reset, getValues, errors} = useForm<ISignUpForm>()
+    const { t } = useTranslation()
+    const { register, handleSubmit, reset, getValues, errors } = useForm<ISignUpForm>()
 
     return (
         <form onSubmit={handleSubmit(submitHandle)}>
@@ -67,7 +67,7 @@ const Signup: React.FC<ILogin<ISignUpForm>> = ({isLoading, errorApiMessage, subm
                         onFocus={clearApiError}
                         ref={register({
                             required: `${t('common:errors.required')}`,
-                            minLength: {value: 3, message: `${t('common:errors.short_pwd')}`}
+                            minLength: { value: 3, message: `${t('common:errors.short_pwd')}` }
                         })}
                     />
                 </label>
@@ -86,7 +86,7 @@ const Signup: React.FC<ILogin<ISignUpForm>> = ({isLoading, errorApiMessage, subm
                             required: `${t('common:errors.confirm_pwd')}`,
                             validate: {
                                 matchesPreviousPassword: value => {
-                                    const {password} = getValues();
+                                    const { password } = getValues();
                                     return password === value || `${t('common:errors.pwd_mismatch')}`;
                                 }
                             }
@@ -99,7 +99,7 @@ const Signup: React.FC<ILogin<ISignUpForm>> = ({isLoading, errorApiMessage, subm
             <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                 <Button
                     title={t('common:buttons.signup')}
-                    startIcon={isLoading && <AiOutlineLoading/>}
+                    startIcon={isLoading && <AiOutlineLoading />}
                     handle={() => void (0)}
                     btnClass={'btn-outlined btn-loader'}
                 />

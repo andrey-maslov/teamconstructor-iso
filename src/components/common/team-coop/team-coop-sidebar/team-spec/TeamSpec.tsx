@@ -1,15 +1,15 @@
 import React from 'react'
 import style from './team-spec.module.scss'
-import {IoMdConstruct} from "react-icons/io"
-import {FaLightbulb, FaAward, FaUniversalAccess, FaShoppingCart} from "react-icons/fa"
-import {useTranslation} from "react-i18next";
+import { IoMdConstruct } from "react-icons/io"
+import { FaLightbulb, FaAward, FaUniversalAccess, FaShoppingCart } from "react-icons/fa"
+import { useTranslation } from "react-i18next"
 
 const icons = [
-    <FaUniversalAccess key={0}/>,
-    <FaLightbulb key={1}/>,
-    <FaShoppingCart key={2}/>,
-    <IoMdConstruct key={3}/>,
-    <FaAward key={4}/>
+    <FaUniversalAccess key={0} />,
+    <FaLightbulb key={1} />,
+    <FaShoppingCart key={2} />,
+    <IoMdConstruct key={3} />,
+    <FaAward key={4} />
 ]
 
 
@@ -19,10 +19,10 @@ interface TeamSpecProps {
     isCompact: boolean
 }
 
-const TeamSpec: React.FC<TeamSpecProps> = ({teamSpec, changeSpec, isCompact}) => {
+const TeamSpec: React.FC<TeamSpecProps> = ({ teamSpec, changeSpec, isCompact }) => {
 
-    const {t} = useTranslation()
-    const values: string[] = t('team:page.spec_list', {returnObjects: true})
+    const { t } = useTranslation()
+    const values: string[] = t('team:page.spec_list', { returnObjects: true })
 
     return (
         <div className={`${style.wrapper} ${isCompact ? style.compact : style.full}`}>
@@ -43,7 +43,7 @@ const TeamSpec: React.FC<TeamSpecProps> = ({teamSpec, changeSpec, isCompact}) =>
                 ))}
             </form>
         </div>
-    );
+    )
 }
 
-export default TeamSpec;
+export default TeamSpec

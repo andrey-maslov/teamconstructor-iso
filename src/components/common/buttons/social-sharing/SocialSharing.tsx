@@ -1,5 +1,5 @@
 import React from 'react';
-import {FaFacebookF, FaLinkedinIn, FaVk, FaTelegramPlane, FaTwitter} from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn, FaVk, FaTelegramPlane, FaTwitter } from "react-icons/fa";
 import {
     FacebookShareButton,
     LinkedinShareButton,
@@ -16,27 +16,27 @@ const SocialSharing: React.FC = () => {
         <div>
             <div>
                 <FacebookShareButton url={url}>
-                    <FaFacebookF/>
+                    <FaFacebookF />
                 </FacebookShareButton>
             </div>
             <div>
                 <LinkedinShareButton url={url}>
-                    <FaLinkedinIn/>
+                    <FaLinkedinIn />
                 </LinkedinShareButton>
             </div>
             <div>
                 <TelegramShareButton url={url}>
-                    <FaTelegramPlane/>
+                    <FaTelegramPlane />
                 </TelegramShareButton>
             </div>
             <div>
                 <TwitterShareButton url={url}>
-                    <FaTwitter/>
+                    <FaTwitter />
                 </TwitterShareButton>
             </div>
             <div>
                 <VKShareButton url={url}>
-                    <FaVk/>
+                    <FaVk />
                 </VKShareButton>
             </div>
         </div>

@@ -1,12 +1,11 @@
 import React from 'react'
-
 import style from "./auth.module.scss"
 import Button from "../buttons/button/Button"
-import {useForm} from 'react-hook-form'
-import {AiOutlineLoading} from 'react-icons/ai'
-import {useTranslation} from "react-i18next"
-import {ILogin} from "./Login"
-import {useSelector} from "react-redux"
+import { useForm } from 'react-hook-form'
+import { AiOutlineLoading } from 'react-icons/ai'
+import { useTranslation } from "react-i18next"
+import { ILogin } from "./Login"
+import { useSelector } from "react-redux"
 import ResetSuccess from "./ResetSuccess"
 
 export interface IResetForm {
@@ -14,15 +13,15 @@ export interface IResetForm {
     passwordConfirm: string
 }
 
-const Reset: React.FC<ILogin<IResetForm>> = ({isLoading, errorApiMessage, submitHandle, clearApiError}) => {
+const Reset: React.FC<ILogin<IResetForm>> = ({ isLoading, errorApiMessage, submitHandle, clearApiError }) => {
 
-    const {t} = useTranslation()
-    const {register, handleSubmit, reset, getValues, errors} = useForm<IResetForm>()
-    const {isPwdChanged} = useSelector((state: any) => state.app)
+    const { t } = useTranslation()
+    const { register, handleSubmit, reset, getValues, errors } = useForm<IResetForm>()
+    const { isPwdChanged } = useSelector((state: any) => state.app)
 
     if (isPwdChanged) {
         return (
-            <ResetSuccess/>
+            <ResetSuccess />
         )
     }
 
@@ -38,7 +37,7 @@ const Reset: React.FC<ILogin<IResetForm>> = ({isLoading, errorApiMessage, submit
                         onFocus={clearApiError}
                         ref={register({
                             required: `${t('common:errors.required')}`,
-                            minLength: {value: 3, message: `${t('common:errors.short_pwd')}`}
+                            minLength: { value: 3, message: `${t('common:errors.short_pwd')}` }
                         })}
                     />
                 </label>
@@ -57,7 +56,7 @@ const Reset: React.FC<ILogin<IResetForm>> = ({isLoading, errorApiMessage, submit
                             required: `${t('common:errors.confirm_pwd')}`,
                             validate: {
                                 matchesPreviousPassword: value => {
-                                    const {password} = getValues();
+                                    const { password } = getValues();
                                     return password === value || `${t('common:errors.pwd_mismatch')}`;
                                 }
                             }
@@ -70,7 +69,7 @@ const Reset: React.FC<ILogin<IResetForm>> = ({isLoading, errorApiMessage, submit
             <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                 <Button
                     title={t('common:buttons.reset_pwd')}
-                    startIcon={isLoading && <AiOutlineLoading/>}
+                    startIcon={isLoading && <AiOutlineLoading />}
                     handle={() => void (0)}
                     btnClass={'btn-outlined btn-loader'}
                 />

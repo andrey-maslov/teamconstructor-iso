@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { globalStoreType, IMember, ITeam } from "../../../../constants/types"
 import Box from "../../layout/box/Box"
 import { Team, getDescByRange, getKeyResult } from "psychology"
-import { baseTestResultType, IDescWithStatus, IOctant } from "psychology/build/main/types/types"
+import { baseTestResultType, IDescWithStatus } from "psychology/build/main/types/types"
 import RadarChart from "../../charts/radar-chart/RadarChart"
 import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
 import Description from "../../result-common/description/Description"
@@ -213,7 +213,9 @@ const TeamCoopResult: React.FC = () => {
     }
 
     /**
-     *
+     * Get team description
+     * @param descIndexes
+     * @param descList
      */
     function getTeamDesc(descIndexes: readonly number[], descList: string[]): { desc: string, status: number } {
         if (descIndexes.length === 0) {

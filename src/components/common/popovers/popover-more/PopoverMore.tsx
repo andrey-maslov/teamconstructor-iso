@@ -7,14 +7,13 @@ interface PopoverMoreProps {
     data: string[]
 }
 
-const PopoverMore: React.FC<PopoverMoreProps> = ({data}) => {
+const PopoverMore: React.FC<PopoverMoreProps> = ({ data }) => {
 
-    const [isOpen, setOpen] = useState(false);
+    const [isOpen, setOpen] = useState(false)
 
     const outsideMoreHandler = () => {
         setOpen(false)
-    };
-
+    }
 
     return (
         <OutsideClickHandler onOutsideClick={outsideMoreHandler}>
@@ -31,7 +30,7 @@ const PopoverMore: React.FC<PopoverMoreProps> = ({data}) => {
                 {data.map((item: string, i: number) => <div className={style.item} key={i}>{item}</div>)}
             </div>
         </OutsideClickHandler>
-    );
-};
+    )
+}
 
-export default PopoverMore;
+export default PopoverMore

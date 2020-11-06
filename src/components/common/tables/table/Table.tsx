@@ -1,8 +1,6 @@
-import React from 'react';
-import style from "./table.module.scss";
-import {TableRow} from "../../../../constants/types";
-
-type Value = string | number | any
+import React from 'react'
+import style from "./table.module.scss"
+import { TableRow } from "../../../../constants/types"
 
 interface TableProps {
     tableHeader?: TableRow
@@ -10,7 +8,7 @@ interface TableProps {
     addClasses?: ('striped' | 'small')[]
 }
 
-const Table: React.FC<TableProps> = ({tableHeader, tableData, addClasses,}) => {
+const Table: React.FC<TableProps> = ({ tableHeader, tableData, addClasses, }) => {
 
     let tableClasses = '';
     if (addClasses) {
@@ -31,7 +29,7 @@ const Table: React.FC<TableProps> = ({tableHeader, tableData, addClasses,}) => {
                     return (
                         item && <tr key={index}>
                             {item.map((value, i) => (<td key={`${index}-${i}`}>
-                                <span dangerouslySetInnerHTML={{__html: `${value}`}}/>
+                                <span dangerouslySetInnerHTML={{ __html: `${value}` }} />
                             </td>))}
                         </tr>)
                 })
@@ -39,7 +37,7 @@ const Table: React.FC<TableProps> = ({tableHeader, tableData, addClasses,}) => {
                 </tbody>
             </table>
         </div>
-    );
+    )
 }
 
-export default Table;
+export default Table

@@ -1,10 +1,10 @@
 import React from "react"
-import {Droppable} from "react-beautiful-dnd"
-import {IDroppableColumn} from "./DroppableColumn"
+import { Droppable } from "react-beautiful-dnd"
+import { IDroppableColumn } from "./DroppableColumn"
 import DraggableItem from "./draggable-item/DraggableItem"
 
 import style from './droppable-column.module.scss'
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 
 const DroppableColumnStore: React.FC<IDroppableColumn> = (
@@ -16,7 +16,7 @@ const DroppableColumnStore: React.FC<IDroppableColumn> = (
     }
 ) => {
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     return (
         <Droppable droppableId={id} isDropDisabled={isDropDisabled}>

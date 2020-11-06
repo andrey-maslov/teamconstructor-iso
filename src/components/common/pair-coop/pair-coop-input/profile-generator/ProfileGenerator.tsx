@@ -1,7 +1,7 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import style from './profile-generator.module.scss';
-import {setRowData} from "../../../../../actions/actionCreator";
+import { setRowData } from "../../../../../actions/actionCreator";
 
 interface ProfileGeneratorProps {
     label: string
@@ -9,7 +9,7 @@ interface ProfileGeneratorProps {
     getRowData: (p: string) => void
 }
 
-const ProfileGenerator: React.FC<ProfileGeneratorProps> = ({label, id, getRowData}) => {
+const ProfileGenerator: React.FC<ProfileGeneratorProps> = ({ label, id, getRowData }) => {
 
     const dispatch = useDispatch()
 
@@ -19,7 +19,7 @@ const ProfileGenerator: React.FC<ProfileGeneratorProps> = ({label, id, getRowDat
     const generate = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const arr: number[][] = [[],[],[],[],[]];
+        const arr: number[][] = [[], [], [], [], []];
 
         for (let i = 1; i < 6; i++) {
 
@@ -30,7 +30,7 @@ const ProfileGenerator: React.FC<ProfileGeneratorProps> = ({label, id, getRowDat
             }
         }
 
-        const encData = btoa(JSON.stringify([[1,1,1], arr]))
+        const encData = btoa(JSON.stringify([[1, 1, 1], arr]))
 
         if (id === 'profile_1') {
             dispatch(setRowData(encData, ''))
@@ -50,7 +50,8 @@ const ProfileGenerator: React.FC<ProfileGeneratorProps> = ({label, id, getRowDat
                     {list.map(num => (
                         <div className={style.group} key={num}>
                             <small>{labels[num - 1]}</small>
-                            {list.map(k => <input type="number" name={`field${num}_${k}`} defaultValue={0} key={`${num}${k}`} onFocus={(e: any) => e.target.select()}/>)}
+                            {list.map(k => <input type="number" name={`field${num}_${k}`} defaultValue={0}
+                                                  key={`${num}${k}`} onFocus={(e: any) => e.target.select()} />)}
                         </div>
                     ))}
                 </div>

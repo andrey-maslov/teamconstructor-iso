@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './input-field.module.scss'
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next"
 
 interface IInputField {
     label: string
@@ -11,9 +11,9 @@ interface IInputField {
     errors: any
 }
 
-const InputField: React.FC<IInputField> = ({label, value, placeholder, nameRef, dataRef, errors}) => {
+const InputField: React.FC<IInputField> = ({ label, value, placeholder, nameRef, dataRef, errors }) => {
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <div className={style.wrapper}>

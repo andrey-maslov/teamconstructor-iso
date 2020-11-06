@@ -10,13 +10,13 @@ export interface IKeyIndicator {
     more?: string
 }
 
-const KeyIndicator: React.FC<IKeyIndicator> = ({title, description, value, more}) => {
+const KeyIndicator: React.FC<IKeyIndicator> = ({ title, description, value, more }) => {
 
     return (
         <div className={style.comp}>
-            {more && <div className={style.more}><PopoverMore data={[more]}/></div>}
+            {more && <div className={style.more}><PopoverMore data={[more]} /></div>}
             <h5>{title}</h5>
-            <CircleDiagram value={value}/>
+            <CircleDiagram value={value} />
             <div className={style.desc}>{description || ''}</div>
         </div>
     )

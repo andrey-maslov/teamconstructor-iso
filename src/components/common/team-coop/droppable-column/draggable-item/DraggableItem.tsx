@@ -5,11 +5,9 @@ import { IMember } from '../../../../../constants/types'
 import ItemContent from './ItemContent'
 import { setAddMemberModal, setEditedMember } from '../../../../../actions/actionCreator'
 import { FaTimes, FaInfo } from 'react-icons/fa'
-import { FiEdit3, FiInfo } from 'react-icons/fi'
-
+import { FiEdit3 } from 'react-icons/fi'
 import style from './draggable-item.module.scss'
-import { SET_MEMBER_INFO_MODAL } from "../../../../../actions/actionTypes";
-
+import { SET_MEMBER_INFO_MODAL } from "../../../../../actions/actionTypes"
 
 export interface IDraggableItem {
     index: number,
@@ -80,7 +78,7 @@ const DraggableItem: React.FC<IDraggableItem> = ({ index, member, colIndex, dele
 
     function openInfo(id: number) {
         dispatch(setEditedMember(id))
-        dispatch({type: SET_MEMBER_INFO_MODAL, isMemberInfoModal: true})
+        dispatch({ type: SET_MEMBER_INFO_MODAL, isMemberInfoModal: true })
     }
 }
 

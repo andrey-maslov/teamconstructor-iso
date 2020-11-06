@@ -1,14 +1,12 @@
 import React from 'react'
 import Indicator from "../indicator/Indicator"
 
-import {AiOutlineProfile} from "react-icons/ai";
-
 interface DescriptionProps {
-    teamProfile: {title: string, desc: string, status: number}
-    data: {title: string, desc: string, status: number}[]
+    teamProfile: { title: string, desc: string, status: number }
+    data: { title: string, desc: string, status: number }[]
 }
 
-const Description: React.FC<DescriptionProps> = ({teamProfile, data}) => {
+const Description: React.FC<DescriptionProps> = ({ teamProfile, data }) => {
 
     return (
         <div className="row">
@@ -31,7 +29,7 @@ const Description: React.FC<DescriptionProps> = ({teamProfile, data}) => {
                     </div>
             })}
         </div>
-    );
+    )
 }
 
-export default Description;
+export default Description

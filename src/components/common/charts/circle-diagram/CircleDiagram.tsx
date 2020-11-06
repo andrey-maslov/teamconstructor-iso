@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './circle-diagram.module.scss'
-import {getKeyResult} from 'psychology'
+import { getKeyResult } from 'psychology'
 
 interface CircleDiagramProps {
     value: number
 }
 
-const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
+const CircleDiagram: React.FC<CircleDiagramProps> = ({ value }) => {
 
     const roundValue = Math.round(value * 100)
 
@@ -18,11 +18,11 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
     useEffect(() => {
         function spidometer() {
             if (val < roundValue) {
-                setTimeout( increment, 20)
+                setTimeout(increment, 20)
             } else if (val === roundValue) {
                 setFinish(true)
             } else if (val > roundValue) {
-                setTimeout( decrement, 20)
+                setTimeout(decrement, 20)
             }
         }
 
@@ -36,6 +36,7 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
     function increment() {
         setVal(val + 1)
     }
+
     function decrement() {
         setVal(val - 1)
     }
@@ -45,10 +46,10 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({value}) => {
             <svg viewBox="0 0 100 50" className={style.donut}>
                 <defs>
                     <linearGradient id="gradient" className={style.gradient}>
-                        <stop offset="0%"/>
-                        <stop offset="20%"/>
-                        <stop offset="80%"/>
-                        <stop offset="100%"/>
+                        <stop offset="0%" />
+                        <stop offset="20%" />
+                        <stop offset="80%" />
+                        <stop offset="100%" />
                     </linearGradient>
                 </defs>
 

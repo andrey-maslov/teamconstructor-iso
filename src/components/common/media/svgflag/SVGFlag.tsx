@@ -201,7 +201,7 @@ function SVGFlag(props: any) {
                 viewBox={viewBox}
                 className={props.tagClass}
             >
-                <use xlinkHref={'#' + prefix + '-' + props.id}/>
+                <use xlinkHref={'#' + prefix + '-' + props.id} />
             </svg>
         );
 
@@ -220,7 +220,7 @@ function SVGSource() {
                         <g
                             key={fileIndex}
                             id={prefix + '-' + fileId}
-                            dangerouslySetInnerHTML={{__html: file.data}}
+                            dangerouslySetInnerHTML={{ __html: file.data }}
                         >
                         </g>
                     );

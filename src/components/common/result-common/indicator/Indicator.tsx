@@ -8,7 +8,7 @@ export interface Indicator {
     icon?: React.ReactNode
 }
 
-const Indicator: React.FC<Indicator> = ({title, description, status, icon}) => {
+const Indicator: React.FC<Indicator> = ({ title, description, status, icon }) => {
 
     const statuses = ['danger', 'warning', 'success']
 
@@ -18,7 +18,7 @@ const Indicator: React.FC<Indicator> = ({title, description, status, icon}) => {
 
                 {icon ?
                     <span className={`${style.icon}`}>{icon}</span> :
-                    <div className={`${style.circle} ${style.icon}`}/>}
+                    <div className={`${style.circle} ${style.icon}`} />}
                 <span>{title}</span>
             </div>
             {description && <div className={style.desc}>{description}</div>}

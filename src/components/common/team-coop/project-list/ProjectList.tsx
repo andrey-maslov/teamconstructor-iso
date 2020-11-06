@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom"
 import { useTranslation } from 'react-i18next'
 import { useSelector, useDispatch } from 'react-redux'
 import { globalStoreType } from '../../../../constants/types'

@@ -7,11 +7,11 @@ interface SelectProps {
     selected: string
 }
 
-export const Select: React.FC<SelectProps> = ({handler, values, selected}) => {
+export const Select: React.FC<SelectProps> = ({ handler, values, selected }) => {
 
     return (
         <select className={style.select} onChange={handler} defaultValue={selected}>
-            {values.map((value) => <option value={value} key={value} >{value}</option>)}
+            {values.map((value) => <option value={value} key={value}>{value}</option>)}
         </select>
     )
 };

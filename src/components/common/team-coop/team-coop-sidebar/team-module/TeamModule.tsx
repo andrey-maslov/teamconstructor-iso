@@ -1,6 +1,6 @@
 import React from 'react'
-import {FaUserAlt} from 'react-icons/fa'
-import {ITeam} from "../../../../../constants/types"
+import { FaUserAlt } from 'react-icons/fa'
+import { ITeam } from "../../../../../constants/types"
 
 import style from './team-module.module.scss'
 
@@ -12,7 +12,7 @@ interface TeamModuleProps {
     isCompact?: boolean
 }
 
-const TeamModule: React.FC<TeamModuleProps> = ({team, index, isActive, handler, isCompact}) => {
+const TeamModule: React.FC<TeamModuleProps> = ({ team, index, isActive, handler, isCompact }) => {
 
     return (
         <div
@@ -26,7 +26,7 @@ const TeamModule: React.FC<TeamModuleProps> = ({team, index, isActive, handler, 
                     <>
                         <div className={style.title}>{team.title}</div>
                         <div className={style.count}>
-                            <FaUserAlt/>
+                            <FaUserAlt />
                             <span>{`x `}{team.items.length}</span>
                         </div>
                     </>
@@ -34,7 +34,7 @@ const TeamModule: React.FC<TeamModuleProps> = ({team, index, isActive, handler, 
                 :
                 <div>{index + 1}</div>}
         </div>
-    );
+    )
 }
 
-export default TeamModule;
+export default TeamModule

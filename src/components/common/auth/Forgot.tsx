@@ -1,15 +1,11 @@
 import React, {useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import style from "./auth.module.scss"
-import Button from "../buttons/button/Button"
+import style from './auth.module.scss'
+import Button from '../buttons/button/Button'
 import {useForm} from 'react-hook-form'
 import {AiOutlineLoading} from 'react-icons/ai'
-import {useTranslation} from "react-i18next"
-import {NavLink} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {SET_ERROR} from "../../../actions/actionTypes";
-import ForgotSuccess from "./ForgotSuccess";
+import {useTranslation} from 'react-i18next'
 
 export interface IForgotForm {
     email: string
@@ -68,8 +64,7 @@ const Forgot: React.FC<ILogin<IForgotForm>> = ({isLoading, errorApiMessage, subm
                 </div>
             </form>
         </>
-    );
-
+    )
 }
 
 export default Forgot

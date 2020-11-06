@@ -1,12 +1,12 @@
-import React from 'react';
-import style from "./popover.module.scss";
+import React from 'react'
+import style from "./popover.module.scss"
 
 interface PopoverProps {
     isVisible: boolean
     className?: string
 }
 
-export const Popover: React.FC<PopoverProps> = ({children, isVisible, className }) => {
+export const Popover: React.FC<PopoverProps> = ({ children, isVisible, className }) => {
 
     if (!isVisible) {
         return null
@@ -16,5 +16,5 @@ export const Popover: React.FC<PopoverProps> = ({children, isVisible, className 
         <div className={`${style.wrapper} ${className}`}>
             {children}
         </div>
-    );
+    )
 }

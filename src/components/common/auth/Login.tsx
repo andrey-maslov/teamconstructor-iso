@@ -1,9 +1,9 @@
 import React from 'react'
 import style from "./auth.module.scss"
 import Button from "../buttons/button/Button"
-import {useForm} from 'react-hook-form'
-import {AiOutlineLoading} from 'react-icons/ai'
-import {useTranslation} from "react-i18next"
+import { useForm } from 'react-hook-form'
+import { AiOutlineLoading } from 'react-icons/ai'
+import { useTranslation } from "react-i18next"
 
 export interface ILoginForm {
     identifier: string
@@ -17,10 +17,10 @@ export interface ILogin<T> {
     clearApiError: () => void
 }
 
-const Login: React.FC<ILogin<ILoginForm>> = ({isLoading, errorApiMessage, submitHandle, clearApiError}) => {
+const Login: React.FC<ILogin<ILoginForm>> = ({ isLoading, errorApiMessage, submitHandle, clearApiError }) => {
 
-    const {t} = useTranslation()
-    const {register, handleSubmit, errors} = useForm<ILoginForm>()
+    const { t } = useTranslation()
+    const { register, handleSubmit, errors } = useForm<ILoginForm>()
 
     return (
         <form onSubmit={handleSubmit(submitHandle)}>
@@ -59,7 +59,7 @@ const Login: React.FC<ILogin<ILoginForm>> = ({isLoading, errorApiMessage, submit
             <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                 <Button
                     title={t('common:buttons.login')}
-                    startIcon={isLoading && <AiOutlineLoading/>}
+                    startIcon={isLoading && <AiOutlineLoading />}
                     handle={() => void (0)}
                     btnClass={'btn-outlined btn-loader'}
                 />

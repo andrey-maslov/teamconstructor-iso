@@ -5,7 +5,6 @@ import Button from "../../buttons/button/Button"
 import Cookie from "js-cookie"
 import { useTranslation } from "react-i18next"
 
-
 export const CookiesConsent: React.FC = () => {
 
     const [isConsented, setConsented] = useState(false)

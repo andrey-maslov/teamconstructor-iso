@@ -1,34 +1,32 @@
-import React, {useRef, useEffect, useState} from 'react'
-import {NavLink, useHistory, useLocation} from 'react-router-dom'
-import Login, {ILoginForm} from "./Login"
-import Signup, {ISignUpForm} from "./Signup"
-import {useTranslation} from "react-i18next"
-import {useDispatch, useSelector} from "react-redux"
-import {globalStoreType} from "../../../constants/types"
-import {authUser, sendForgotEmail, sendNewPassword} from "../../../actions/actionCreator"
-import {SET_ERROR} from "../../../actions/actionTypes"
-import Forgot, {IForgotForm} from "./Forgot"
-import Reset, {IResetForm} from "./Reset"
-import {authModes} from "../../../constants/constants"
-
+import React, { useRef, useEffect } from 'react'
+import { NavLink, useHistory, useLocation } from 'react-router-dom'
+import Login, { ILoginForm } from './Login'
+import Signup, { ISignUpForm } from './Signup'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { globalStoreType } from '../../../constants/types'
+import { authUser, sendForgotEmail, sendNewPassword } from '../../../actions/actionCreator'
+import Forgot, { IForgotForm } from './Forgot'
+import Reset, { IResetForm } from './Reset'
+import { authModes } from '../../../constants/constants'
 import style from './auth.module.scss'
-import ForgotSuccess from "./ForgotSuccess";
-import {getQueryFromURL} from "../../../helper/helper";
+import ForgotSuccess from './ForgotSuccess'
+import { getQueryFromURL } from '../../../helper/helper'
 
 
 export interface IAuthMode {
     page: keyof typeof authModes
 }
 
-const Auth: React.FC<IAuthMode> = ({page}) => {
+const Auth: React.FC<IAuthMode> = ({ page }) => {
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const history = useHistory()
     const location = useLocation()
     const dispatch = useDispatch()
     const agreement = useRef<HTMLDivElement>(null)
-    const {isLoggedIn} = useSelector((state: globalStoreType) => state.user)
-    const {isLoading, errorApiMessage} = useSelector((state: globalStoreType) => state.app)
+    const { isLoggedIn } = useSelector((state: globalStoreType) => state.user)
+    const { isLoading, errorApiMessage } = useSelector((state: globalStoreType) => state.app)
 
     useEffect(() => {
 
@@ -123,12 +121,12 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
         <div>
             <div className={style.wrapper}>
                 <h1 className={style.title}>{t(`common:auth.${page}`)}</h1>
-                <Form/>
+                <Form />
             </div>
             <div
                 ref={agreement}
                 className={style.agreement}
-                dangerouslySetInnerHTML={{__html: t('common:auth.agreement', {button: t('common:buttons.signup')})}}
+                dangerouslySetInnerHTML={{ __html: t('common:auth.agreement', { button: t('common:buttons.signup') }) }}
             />
         </div>
     );
@@ -159,7 +157,6 @@ const Auth: React.FC<IAuthMode> = ({page}) => {
         }
         dispatch(authUser(userData, 'registration'))
     }
-
 
 
     function clearApiError() {
