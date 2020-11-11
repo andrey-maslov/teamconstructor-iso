@@ -5,7 +5,7 @@
   width: 100%;
   border-bottom: 1px solid $overlay-light;
   //background-color: rgba($overflow, .3);
-  background-color: #23262c;
+  background-color: $overlay-dark;
   box-shadow: $box-shadow-lg;
   z-index: 99;
 }
