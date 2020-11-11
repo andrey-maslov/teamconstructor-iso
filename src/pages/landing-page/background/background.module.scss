@@ -1,0 +1,53 @@
+@import '../../../assets/scss/vars';
+
+.section {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.list {
+  position: relative;
+}
+
+.item {
+
+}
+
+.solution {
+  position: relative;
+  background-color: $overlay-dark;
+  padding: 3rem 4rem;
+  border-radius: $border-radius-sm;
+  box-shadow: $box-shadow-lg;
+
+  svg {
+    color: $yellow;
+    font-size: 3rem;
+    position: absolute;
+    top: -4rem;
+    left: -4rem;
+    animation: arrow infinite 2000ms ease-in-out;
+  }
+}
+
+@keyframes arrow {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(5px, 5px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+
+@media (max-width: 992px) {
+
+}
+
+
+@media (max-width: 768px) {
+
+}
