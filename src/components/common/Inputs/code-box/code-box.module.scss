@@ -10,9 +10,9 @@
   //@include ellipsis;
   position: relative;
   display: inline-block;
-  padding: .5rem 1rem;
-  border-radius: $border-radius-lg;
-  background-color: $grey-bg;
+  padding: .6rem 1rem;
+  border-radius: $border-radius-sm;
+  background-color: $overlay-light;
   font-size: 75%;
   width: 100%;
   max-width: 100%;
@@ -24,9 +24,12 @@
 
 .btn {
   color: $grey;
-  padding: .5rem;
-  border-radius: $border-radius-lg;
-  background-color: $grey-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3rem;
+  border-radius: $border-radius-sm;
+  background-color: $overlay-light;
   border: 0;
   cursor: pointer;
   transition: .2s;
@@ -34,11 +37,12 @@
   svg {
     font-size: 1.5rem;
     position: relative;
-    bottom: -.25rem;
+    bottom: 0 !important;
+
   }
 
   &:hover {
-    background-color: darken($grey-bg, 5%);
+    background-color: darken($overlay-light, 5%);
   }
 
   &.success {

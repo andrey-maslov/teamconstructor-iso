@@ -67,6 +67,11 @@
   border-color: $yellow;
   color: $yellow;
   margin: 0 auto;
+
+  &:hover {
+    border-color: $orange;
+    color: $orange;
+  }
 }
 
 @media (max-width: 992px) {

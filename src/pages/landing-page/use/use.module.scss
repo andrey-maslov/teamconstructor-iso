@@ -1,0 +1,87 @@
+@import '../../../assets/scss/vars';
+
+.section {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+
+  .title {
+
+    &:before {
+      content: '04'
+    }
+  }
+
+  a[class] {
+
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.itemTitle {
+  font-family: $font-default;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+
+  span {
+    display: inline-block;
+    font-size: 2rem;
+    opacity: 40%;
+    margin-right: .5rem;
+  }
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  width: 33.33%;
+  border: 1px solid $overlay-light;
+
+  &:first-child {
+    padding: 0 2.5rem 2.5rem 0;
+    border: none;
+  }
+
+  &:nth-child(2) {
+    padding: 0 2.5rem 2.5rem;
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  &:nth-child(3) {
+    padding: 0 0 2.5rem 2.5rem;
+    border: none;
+  }
+
+  &:nth-child(4) {
+    padding: 2.5rem 2.5rem 2.5rem 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+  }
+
+  &:nth-child(5) {
+    padding: 2.5rem;
+    border-bottom: 0;
+  }
+
+  &:nth-child(6) {
+    padding: 2.5rem 0 2.5rem 2.5rem;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+  }
+}
+
+
+@media (max-width: 992px) {
+
+}
+
+
+@media (max-width: 768px) {
+
+}

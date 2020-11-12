@@ -1,0 +1,78 @@
+@import '../../../assets/scss/vars';
+
+.section {
+  padding-top: 6rem;
+  padding-bottom: 46rem;
+
+  .title {
+
+    &:before {
+      content: '05'
+    }
+  }
+}
+
+.col {
+
+  &:nth-child(2) {
+
+    .card {
+      background-color: $overlay-dark;
+
+      .btn {
+        color: $yellow;
+        border-color: $yellow;
+      }
+    }
+  }
+}
+
+.card {
+  border-radius: $border-radius-sm;
+  padding: 2.5rem;
+  border: 1px solid $overlay-dark;
+
+  .features {
+    list-style: disc;
+    margin-bottom: 2rem;
+  }
+}
+
+.cardTitle {
+  color: $yellow;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.amount {
+  font-family: $font-mono;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+
+  &:before {
+    content: "$"
+  }
+}
+
+.item {
+  margin-left: 2rem;
+
+  &::marker {
+    color: $yellow
+  }
+}
+
+.btn {
+  width: 100%;
+}
+
+
+
+@media (max-width: 992px) {
+
+}
+
+
+@media (max-width: 768px) {
+
+}

@@ -116,7 +116,7 @@ body {
   }
 
   .header {
-    background-color: transparent;
+    background-color: $base;
   }
 }
 
@@ -125,6 +125,8 @@ body {
   flex: 1 0 auto;
   min-height: auto;
   font-size: 16px;
+  max-width: 100%;
+  overflow-x: hidden;
 
   .section-title {
     text-align: left;
@@ -160,14 +162,14 @@ body {
     &.marker-square {
 
       li {
-        padding-left: 3rem;
+        padding-left: 2rem;
         position: relative;
 
         &::before {
           content: '';
           display: block;
-          width: 1rem;
-          height: 1rem;
+          width: .8rem;
+          height: .8rem;
           border-radius: 3px;
           background-color: $yellow;
           position: absolute;

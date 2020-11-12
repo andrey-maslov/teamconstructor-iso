@@ -1,3 +1,164 @@
+$main-robot-duration: 6s;
+
+.antenna-anim {
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-name: antenna;
+  animation-timing-function: linear;
+}
+
+.antenna1 {
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-name: antenna1;
+  animation-timing-function: linear;
+}
+.antenna2 {
+  animation-duration: 4s;
+  animation-delay: .5s;
+  animation-iteration-count: infinite;
+  animation-name: antenna1;
+  animation-timing-function: linear;
+}
+
+/* The antenna curls animation */
+@keyframes antenna {
+  0% {
+    transform: scaleX(1);
+    z-index: 1;
+  }
+  25% {
+    transform: scaleX(0) skewY(20deg);
+    z-index: -1;
+  }
+  50% {
+    transform: scaleX(-1);
+    z-index: 1;
+  }
+  75% {
+    transform: scaleX(0) skewY(-20deg);
+    z-index: -1;
+  }
+  100% {
+    transform: scaleX(1)
+  }
+}
+
+//robot-tall
+@keyframes antenna1 {
+  0% {
+    transform: translateY(8px);
+  }
+  50% {
+    transform: translateY(16px);
+  }
+  100% {
+    transform: translateY(8px);
+  }
+}
+
+
+.hand-anim {
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  animation-name: hand;
+  animation-timing-function: linear;
+}
+
+/* The hands animation */
+@keyframes hand {
+  0% {
+    transform: rotate(10deg)
+  }
+  10% {
+    transform: rotate(20deg) translateX(3px);
+  }
+  20% {
+    transform: rotate(10deg)
+  }
+}
+
+
+.eye-anim {
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-name: eye;
+  animation-timing-function: linear;
+}
+
+/* The eye animation */
+@keyframes eye {
+  0% {
+    transform: scaleY(1)
+  }
+  2% {
+    transform: scaleY(.1);
+  }
+  4% {
+    transform: scaleY(1)
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.right-hand-anim {
+  animation-duration: $main-robot-duration;
+  animation-iteration-count: infinite;
+  animation-name: right-hand;
+  animation-timing-function: linear;
+  animation-delay: 4s;
+}
+
+@keyframes right-hand {
+  0% {
+    transform: translateY(0);
+  }
+  3% {
+    transform: translateY(-5px);
+  }
+  7% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(-5px);
+  }
+  13% {
+    transform: translateY(0);
+  }
+}
+
+.question-anim {
+  animation-duration: $main-robot-duration;
+  animation-iteration-count: infinite;
+  animation-name: question;
+  animation-timing-function: linear;
+}
+
+@keyframes question {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @keyframes fontPulse {
   0% {
     font-size: 200%;

@@ -1,0 +1,75 @@
+@import '../../../assets/scss/vars';
+
+.section {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+
+  .title {
+
+    &:before {
+      content: '02'
+    }
+  }
+}
+
+.header {
+  padding-left: 2rem;
+  position: relative;
+  margin-bottom: 3rem;
+
+  &:before {
+    position: absolute;
+    content: '';
+    display: block;
+    width: .3rem;
+    height: 100%;
+    left: 0;
+    background: linear-gradient(to bottom, $yellow, $orange);
+    border-radius: $border-radius-sm;
+  }
+
+}
+
+
+.teamImg {
+  position: relative;
+  width: 750px;
+  height: 431px;
+}
+
+.workboard {
+  position: absolute;
+  top: 59px;
+  right: 92px;
+  height: 325px;
+  width: 470px;
+  overflow-y: scroll;
+}
+
+.subtitle {
+  font-weight: 700;
+}
+
+.box {
+  margin-bottom: 8rem;
+}
+
+ul.list {
+  position: relative;
+  background-color: $overlay-dark;
+  padding: 2rem 2rem 1rem 3rem;
+  border-radius: $border-radius-sm;
+
+  .item {
+    list-style: disc;
+  }
+}
+
+@media (max-width: 992px) {
+
+}
+
+
+@media (max-width: 768px) {
+
+}
