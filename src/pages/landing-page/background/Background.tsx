@@ -16,17 +16,17 @@ const Background: React.FC = () => {
     ]
 
     return (
-        <section className={style.section}>
+        <section className={`${style.section} section`}>
             <div className="container">
                 <h2 className={`section-title`}>Предпосылки</h2>
                 <div className="row between-sm">
-                    <div className="col-lg-5">
+                    <div className="col-xl-5 col-lg-6">
                         <h3 className={`section-subtitle`}>Проблемы</h3>
                         <ul className={`${style.list} marker-square`}>
                             {problems.map((item, i) => <li className={style.item} key={`${i}`}>{item}</li>)}
                         </ul>
                     </div>
-                    <div className="col-lg-5">
+                    <div className="col-xl-5 col-lg-6">
                         <div className={style.solution}>
                             <FiArrowDownRight />
                             <h3 className={`section-subtitle`}>Решение</h3>

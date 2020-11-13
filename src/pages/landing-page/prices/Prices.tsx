@@ -58,7 +58,7 @@ const Prices: React.FC = () => {
     ]
 
     return (
-        <section className={style.section}>
+        <section className={`${style.section} section`}>
             <div className="container">
                 <h2 className={`section-title ${style.title}`}>Стоимость</h2>
                 <div className="row">

@@ -18,6 +18,20 @@
     background: url('../../../assets/img/tc-logo-bw.png') no-repeat center bottom/cover;
     opacity: .2;
   }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 13rem;
+    display: block;
+    width: 323px;
+    height: 316px;
+    background: url('../../../assets/img/tc-logo-bw.png') no-repeat -175px -177px;
+    opacity: .1;
+  }
+
+
 }
 
 .content {
@@ -84,8 +98,8 @@
   }
 }
 
-
-@media (max-width: 768px) {
+// <768
+@media (max-width: $md-breakpoint) {
 
   .title {
     font-size: 2rem;

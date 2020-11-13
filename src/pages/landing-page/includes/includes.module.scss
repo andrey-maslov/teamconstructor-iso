@@ -1,14 +1,26 @@
 @import '../../../assets/scss/vars';
 
 .section {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding-bottom: 1rem;
 
   .title {
 
     &:before {
       content: '02'
     }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 11rem;
+    left: -3rem;
+    display: block;
+    width: 500px;
+    height: 500px;
+    background: url('../../../assets/img/tc-logo-bw.png') no-repeat center bottom/cover;
+    opacity: .2;
+    transform: rotate(90deg);
   }
 }
 
@@ -24,17 +36,18 @@
     width: .3rem;
     height: 100%;
     left: 0;
-    background: linear-gradient(to bottom, $yellow, $orange);
+    //background: linear-gradient(to bottom, $yellow, $orange);
+    background-color: $yellow;
     border-radius: $border-radius-sm;
   }
 
 }
 
-
 .teamImg {
   position: relative;
   width: 750px;
   height: 431px;
+  margin-left: 3rem;
 }
 
 .workboard {
@@ -43,14 +56,24 @@
   right: 92px;
   height: 325px;
   width: 470px;
-  overflow-y: scroll;
+  overflow-y: hidden;
+
+  img {
+    animation: scroll 16000ms linear infinite;
+    transform: translateY(0);
+
+    &:hover {
+      //transform: translateY(0);
+      //animation: none;
+    }
+  }
 }
 
 .subtitle {
   font-weight: 700;
 }
 
-.box {
+.box:not(:last-child) {
   margin-bottom: 8rem;
 }
 
@@ -65,7 +88,31 @@ ul.list {
   }
 }
 
-@media (max-width: 992px) {
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(0);
+  }
+  70% {
+    transform: translateY(-670px);
+  }
+  92% {
+    transform: translateY(-670px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: $xl-breakpoint) {
+  .teamImg {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: $lg-breakpoint) {
 
 }
 

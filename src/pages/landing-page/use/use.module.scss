@@ -1,8 +1,6 @@
 @import '../../../assets/scss/vars';
 
 .section {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
 
   .title {
 
@@ -16,6 +14,19 @@
     padding-left: 2rem;
     padding-right: 2rem;
   }
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 2%;
+    display: block;
+    width: 323px;
+    height: 316px;
+    background: url('../../../assets/img/tc-logo-bw.png') no-repeat -175px -177px;
+    opacity: .2;
+    transform: rotate(180deg);
+  }
 }
 
 .itemTitle {
@@ -25,7 +36,7 @@
 
   span {
     display: inline-block;
-    font-size: 2rem;
+    font-size: 2.2rem;
     opacity: 40%;
     margin-right: .5rem;
   }
@@ -76,12 +87,12 @@
   }
 }
 
-
-@media (max-width: 992px) {
-
+.accentBtn {
+  color: $yellow;
+  border-color: $yellow;
 }
 
-
-@media (max-width: 768px) {
+// <992
+@media (max-width: $lg-breakpoint) {
 
 }

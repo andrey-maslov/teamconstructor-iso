@@ -1,5 +1,4 @@
 @import 'vars';
-@import 'flexgridcustom';
 
 
 html {
@@ -48,6 +47,7 @@ body {
 .section {
   padding-top: 3rem;
   padding-bottom: 3rem;
+  position: relative;
 }
 
 .table-wrapper {
@@ -121,38 +121,43 @@ body {
 }
 
 .landing {
-  color: $text-light;
+  color:  $text-light;
   flex: 1 0 auto;
   min-height: auto;
   font-size: 16px;
   max-width: 100%;
   overflow-x: hidden;
 
-  .section-title {
-    text-align: left;
-    font-family: $font-default;
-    position: relative;
-    text-transform: uppercase;
-    margin-bottom: 6rem;
-    font-size: 3rem;
+  .section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
 
-    &:before {
-      content: '01';
-      font-family: $font-mono;
-      font-weight: 700;
-      color: $overlay-dark;
-      font-size: 8rem;
-      position: absolute;
-      left: -11rem;
-      bottom: -21px;
+    &-title {
+      text-align: left;
+      font-family: $font-default;
+      position: relative;
+      text-transform: uppercase;
+      margin-bottom: 6rem;
+      font-size: 3rem;
+
+      &:before {
+        content: '01';
+        font-family: $font-mono;
+        font-weight: 700;
+        color: $overlay-dark;
+        font-size: 8rem;
+        position: absolute;
+        left: -11rem;
+        bottom: -21px;
+      }
     }
-  }
 
-  .section-subtitle {
-    font-family: $font-default;
-    position: relative;
-    margin-bottom: 2rem;
-    font-size: 1.75rem;
+    &-subtitle {
+      font-family: $font-default;
+      position: relative;
+      margin-bottom: 2rem;
+      font-size: 1.75rem;
+    }
   }
 
   ul {

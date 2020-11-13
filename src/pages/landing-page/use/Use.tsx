@@ -2,8 +2,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import style from './use.module.scss'
 import { FiExternalLink } from 'react-icons/fi'
-import { TEST_URL } from "../../../constants/constants";
-import CodeBox from "../../../components/common/Inputs/code-box/CodeBox";
+import { TEST_URL } from "../../../constants/constants"
+import CodeBox from "../../../components/common/Inputs/code-box/CodeBox"
 
 const Use: React.FC = () => {
 
@@ -35,7 +35,7 @@ const Use: React.FC = () => {
     ]
 
     return (
-        <section className={style.section}>
+        <section className={`${style.section} section`}>
             <div className="container">
                 <h2 className={`section-title ${style.title}`}>Как пользоваться</h2>
 
@@ -43,7 +43,8 @@ const Use: React.FC = () => {
                     <div className={style.item}>
                         <h3 className={style.itemTitle}><span>a.</span>{content[0].title}</h3>
                         <p dangerouslySetInnerHTML={{ __html: content[0].text }} />
-                        <NavLink to="/registration" className="btn btn-outlined">Регистрация</NavLink>
+                        <NavLink to="/registration"
+                                 className={`btn btn-outlined ${style.accentBtn}`}>Регистрация</NavLink>
                     </div>
                     <div className={style.item}>
                         <h3 className={style.itemTitle}><span>b.</span>{content[1].title}</h3>

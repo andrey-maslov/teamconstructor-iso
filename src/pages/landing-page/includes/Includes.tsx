@@ -1,11 +1,10 @@
 import React from 'react'
-import testImg from '../../../assets/img/tc-logo-bw.png'
 import workBoard from '../../../assets/img/workboard.png'
 import device from '../../../assets/img/device.png'
 import workBoard2x from '../../../assets/img/workboard@2x.png'
 import device2x from '../../../assets/img/device@2x.png'
 import style from './includes.module.scss'
-import RobotQuestion from "../../../components/common/media/robot-question/RobotQuestion";
+import RobotQuestion from "../../../components/common/media/robot-question/RobotQuestion"
 
 const Includes: React.FC = () => {
 
@@ -26,7 +25,7 @@ const Includes: React.FC = () => {
     ]
 
     return (
-        <section className={style.section}>
+        <section className={`${style.section} section`}>
             <div className="container">
                 <h2 className={`section-title ${style.title}`}>Что включает в себя сервис</h2>
 
@@ -50,7 +49,7 @@ const Includes: React.FC = () => {
                 </div>
 
                 <div className={`row between-sm middle-xs ${style.box}`}>
-                    <div className="col-lg-6">
+                    <div className="col-lg-5">
                         <div className={style.header}>
                             <h3 className={`section-subtitle`}>Формирование команды</h3>
                             <p className={style.subtitle}>
@@ -63,7 +62,7 @@ const Includes: React.FC = () => {
                         </ul>
                     </div>
 
-                    <div className="col-lg-5">
+                    <div className="col-lg-7">
                         <div className={`${style.teamImg}`}>
                             <img src={device} srcSet={`${device2x} 2x`} alt="mac book" />
                             <div className={style.workboard}>
