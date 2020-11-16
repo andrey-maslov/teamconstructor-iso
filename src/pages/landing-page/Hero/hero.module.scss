@@ -2,22 +2,32 @@
 
 .section {
   position: relative;
-  padding-top: 10rem;
-  padding-bottom: 5rem;
-  height: 100%;
-  //background: url('../../../assets/img/hero-section-bg.jpg') no-repeat center bottom/cover;
-  //color: lighten($text-light, 15%);
+  padding-top: 16rem;
+  padding-bottom: 10rem;
+  height: auto;
+  min-height: calc(100vh - 30rem);
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: -3rem;
+    display: block;
+    width: 500px;
+    height: 500px;
+    background: url('../../../assets/img/tc-logo-bw.png') no-repeat center bottom/cover;
+    opacity: .2;
+  }
 
   &:before {
     content: '';
     position: absolute;
-    pointer-events: none;
+    top: 20%;
+    left: 13rem;
     display: block;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    background-color: $overlay-dark;
+    width: 323px;
+    height: 316px;
+    background: url('../../../assets/img/tc-logo-bw.png') no-repeat -175px -177px;
     opacity: .1;
   }
 }
@@ -25,50 +35,95 @@
 .content {
   position: relative;
   z-index: 2;
+  text-align: center;
 }
 
 .title {
-  font-size: 6rem;
-  text-align: center;
+  font-family: $font-default;
+  letter-spacing: 2px;
+  font-size: 5.5rem;
   filter: drop-shadow(0 1px 3px rgba($base, .5));
   margin-bottom: 4rem;
 
   span {
-    font-size: 3rem;
-    display: inline-block;
-    margin-top: 2rem;
+
+    &:first-child {
+      color: $yellow
+    }
+
+    &:nth-child(2) {
+      color: $orange
+    }
+
+    &:nth-child(3) {
+      color: $blue
+    }
+
+    &:last-child {
+      color: $green;
+    }
   }
 }
 
-.subtitle {
-  text-align: center;
-  font-size: 1.5rem;
+.supTitle {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-
+.subtitle {
+  font-size: 1.3rem;
+  max-width: 600px;
+  margin: 0 auto 4rem;
+}
 
 .btn {
   display: block;
   width: 10rem;
-  border-color: $orange;
-  color: $orange;
+  border-color: $yellow;
+  color: $yellow;
   margin: 0 auto;
+
+  &:hover {
+    border-color: $orange;
+    color: $orange;
+  }
 }
 
+@media (max-width: $lg-breakpoint) {
 
-@media (max-width: 768px) {
+  .section {
+    padding-top: 6rem;
+    padding-bottom: 5rem;
+
+    &:after, &:before {
+      content: none;
+    }
+  }
 
   .title {
-    font-size: 2rem;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+  }
+}
 
-    span {
-      font-size: 1.2rem ;
-    }
+// <768
+@media (max-width: $md-breakpoint) {
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .supTitle, .subtitle {
+    font-size: 1.25rem;
   }
 
   .section {
     position: relative;
     padding-top: 5rem;
     padding-bottom: 3rem;
+  }
+
+  .btn {
+    width: 100%;
   }
 }

@@ -1,0 +1,67 @@
+@import '../../../assets/scss/vars';
+
+.section {
+
+  .title {
+
+    &:before {
+      content: '01';
+    }
+  }
+}
+
+.list {
+  position: relative;
+}
+
+.solution {
+  position: relative;
+  background-color: $overlay-dark;
+  padding: 3rem 4rem;
+  border-radius: $border-radius-sm;
+  box-shadow: $box-shadow-lg;
+
+  svg {
+    color: $yellow;
+    font-size: 3rem;
+    position: absolute;
+    top: -4rem;
+    left: -4rem;
+    animation: arrow infinite 2000ms ease-in-out;
+  }
+}
+
+@keyframes arrow {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(5px, 5px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+
+@media (max-width: $lg-breakpoint) {
+
+  .section {
+
+    .list {
+      margin-bottom: 3rem;
+    }
+
+    .solution svg {
+      display: none;
+    }
+  }
+}
+
+
+@media (max-width: $md-breakpoint) {
+
+  .solution {
+    padding: 2rem;
+  }
+}

@@ -12,6 +12,7 @@ $yellow: #FFC734;
 $orange: #FF5E34;
 $text: #203152;
 $blue: #36A9E0;
+$green: #2FE77F;
 
 
 // team page sidebar
@@ -48,7 +49,7 @@ $base-gradient: linear-gradient(90deg, $overlay-light, $base);
 
 $blue: #5D9EFC;
 $text-light: #b9b9b0;
-$text-light2: #e8e8e8;
+$text-light2: lighten($text-light, 15%);
 
 /// OK/NO colors
 $danger: #D8596C;
@@ -93,3 +94,21 @@ $telegram: #0088cc;
   }
 }
 
+// Rewrite values in flexgridcustom.scss
+
+$gutter-width: 2rem;
+
+$sm-max: 540px;
+$md-max: 720px;
+$lg-max: 980px;
+$xl-max: 1300px;
+
+$xs-breakpoint: 0;
+$sm-breakpoint: 576px;
+$md-breakpoint: 768px;
+$lg-breakpoint: 992px;
+$xl-breakpoint: 1370px;
+
+
+$grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1400px);
+$container-max-widths: (sm: 540px, md: 720px, lg: 980px, xl: 1290px) !default;

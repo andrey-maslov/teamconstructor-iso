@@ -1,0 +1,155 @@
+@import '../../../assets/scss/vars';
+
+.section {
+  padding-bottom: 1rem;
+
+  .title {
+
+    &:before {
+      content: '02'
+    }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 11rem;
+    left: -3rem;
+    display: block;
+    width: 500px;
+    height: 500px;
+    background: url('../../../assets/img/tc-logo-bw.png') no-repeat center bottom/cover;
+    opacity: .2;
+    transform: rotate(90deg);
+  }
+}
+
+.header {
+  padding-left: 2rem;
+  position: relative;
+  margin-bottom: 3rem;
+
+  &:before {
+    position: absolute;
+    content: '';
+    display: block;
+    width: .3rem;
+    height: 100%;
+    left: 0;
+    //background: linear-gradient(to bottom, $yellow, $orange);
+    background-color: $yellow;
+    border-radius: $border-radius-sm;
+  }
+
+}
+
+.teamImg {
+  position: relative;
+  width: 750px;
+  height: 431px;
+  margin-left: 3rem;
+}
+
+.workboard {
+  position: absolute;
+  top: 59px;
+  right: 92px;
+  height: 325px;
+  width: 470px;
+  overflow-y: hidden;
+
+  img {
+    animation: scroll 16000ms linear infinite;
+    transform: translateY(0);
+
+    &:hover {
+      //transform: translateY(0);
+      //animation: none;
+    }
+  }
+}
+
+.subtitle {
+  font-weight: 700;
+}
+
+.box:not(:last-child) {
+  margin-bottom: 8rem;
+}
+
+ul.list {
+  position: relative;
+  background-color: $overlay-dark;
+  padding: 2rem 2rem 1rem 3rem;
+  border-radius: $border-radius-sm;
+
+  .item {
+    list-style: disc;
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(0);
+  }
+  70% {
+    transform: translateY(-670px);
+  }
+  92% {
+    transform: translateY(-670px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+// < 1300px
+@media (max-width: $xl-breakpoint) {
+
+  .teamImg {
+    margin-left: 0;
+  }
+}
+
+// < 992px
+@media (max-width: $lg-breakpoint) {
+
+  .section {
+
+    &:after {
+      content: none;
+    }
+
+    .list {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .robot {
+
+    &>div {
+      margin: 0 auto 2rem;
+    }
+  }
+}
+
+// < 768px
+@media (max-width: $md-breakpoint) {
+
+  .teamImg {
+    display: none;
+  }
+
+  .box:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  .section {
+    .list {
+      margin-bottom: 0;
+    }
+  }
+}

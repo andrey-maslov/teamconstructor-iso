@@ -27,7 +27,7 @@ const App: React.FC = () => {
         <ToastProvider>
             <div className={`app ${getPageClass(pathname)} ${isLoggedIn ? 'authorized' : 'unauthorized'}`}>
                 <Header />
-                <ScrollToTop />
+                {/*<ScrollToTop />*/}
                 <Switch>
                     <Route exact path="/" render={() => <LandingPage />} />
                     <Route exact path="/pair" render={() => <PairCoopPage />} />

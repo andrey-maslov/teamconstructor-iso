@@ -1,0 +1,115 @@
+@import '../../../assets/scss/vars';
+
+.section {
+
+  .title {
+
+    &:before {
+      content: '06'
+    }
+  }
+}
+
+.item {
+  position: relative;
+  border-bottom: 1px solid $overlay-dark;
+  padding: 1rem;
+  overflow-y: hidden;
+  margin-bottom: 1rem;
+
+  .q {
+    padding-right: 3rem;
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+    background-color: transparent;
+    margin-bottom: 0;
+    border: 0;
+    color: $text-light2;
+    font-size: 1.2rem;
+    padding-left: 0;
+    transition: color .2s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      color: $yellow
+    }
+  }
+
+  .a {
+    max-height: 0;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+  }
+
+  &.opened {
+    background-color: $overlay-dark;
+    border-radius: $border-radius-sm;
+
+    .a {
+      opacity: 1;
+      max-height: 14rem;
+      display: block;
+      overflow-y: auto;
+    }
+
+    .icon {
+
+      span {
+        transition: transform .2s ease-in-out;
+
+        &:first-child {
+          transform: rotate(90deg);
+        }
+
+        &:last-child {
+          display: none;
+        }
+      }
+    }
+  }
+
+}
+
+.icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: transparent;
+  border: 2px solid $yellow;
+  border-radius: 3px;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  transition: border-color .2s ease-in-out;
+
+  span {
+    position: absolute;
+    display: inline-block;
+    top: 5px;
+    left: 9px;
+    height: 10px;
+    width: 2px;
+    background-color: $yellow;
+
+    &:last-child {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    border-color: darken( $text-light, 16%);
+  }
+}
+
+// <992
+@media (max-width: $md-breakpoint) {
+
+  .item {
+
+    .q {
+      font-size: 1rem;
+    }
+  }
+}

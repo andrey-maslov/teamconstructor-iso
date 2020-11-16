@@ -1,5 +1,5 @@
 @import 'vars';
-@import 'flexgridcustom';
+
 
 @media (max-width: 1920px) {
 
@@ -36,6 +36,26 @@
 
 /*===== < 1300px =====*/
 @media (max-width: $xl-breakpoint) {
+
+  .landing {
+
+    .section {
+      padding-top: 3rem;
+      padding-bottom: 4rem;
+
+      &-title {
+        margin-bottom: 5rem;
+        font-size: 2.5rem;
+
+        &:before {
+          font-size: 6rem;
+          position: absolute;
+          left: -9rem;
+          bottom: -16px;
+        }
+      }
+    }
+  }
 
   .page-team {
 
@@ -106,7 +126,6 @@
 
 
 /*===== < 992px =====*/
-
 @media (max-width: $lg-breakpoint) {
 
   .app {
@@ -133,7 +152,6 @@
 
 
 /*===== < 768px =====*/
-
 @media (max-width: $md-breakpoint) {
 
   .btn-accent {
@@ -153,11 +171,25 @@
     }
   }
 
+  .landing {
+
+    .section {
+
+      &-title {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+      }
+
+      &-subtitle {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
 }
 
 
 /*===== < 576px =====*/
-
 @media(max-width: $sm-breakpoint) {
 
 

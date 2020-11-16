@@ -1,0 +1,168 @@
+@import '../../../assets/scss/vars';
+
+$border: 1px solid $overlay-light;
+
+.section {
+
+  .title {
+
+    &:before {
+      content: '04'
+    }
+  }
+
+  a[class] {
+
+    min-width: 190px;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 2%;
+    display: block;
+    width: 323px;
+    height: 316px;
+    background: url('../../../assets/img/tc-logo-bw.png') no-repeat -175px -177px;
+    opacity: .2;
+    transform: rotate(180deg);
+  }
+}
+
+.itemTitle {
+  font-family: $font-default;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+
+  span {
+    display: inline-block;
+    font-size: 2.2rem;
+    opacity: 40%;
+    margin-right: .5rem;
+  }
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  width: 33.33%;
+  border: $border;
+
+  &:first-child {
+    padding: 0 2.5rem 2.5rem 0;
+    border: none;
+  }
+
+  &:nth-child(2) {
+    padding: 0 2.5rem 2.5rem;
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  &:nth-child(3) {
+    padding: 0 0 2.5rem 2.5rem;
+    border: none;
+  }
+
+  &:nth-child(4) {
+    padding: 2.5rem 2.5rem 2.5rem 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+  }
+
+  &:nth-child(5) {
+    padding: 2.5rem;
+    border-bottom: 0;
+  }
+
+  &:nth-child(6) {
+    padding: 2.5rem 0 2.5rem 2.5rem;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+  }
+}
+
+.accentBtn {
+  color: $yellow;
+  border-color: $yellow;
+}
+
+// <992
+@media (max-width: $lg-breakpoint) {
+
+  .section {
+
+    &:after {
+      content: none;
+    }
+  }
+
+  .item {
+    width: 50%;
+
+    &:first-child {
+      padding: 0 2.5rem 2.5rem 0;
+      border: none;
+    }
+
+    &:nth-child(2) {
+      padding: 0 0 2.5rem 2.5rem;
+      border-top: 0;
+      border-bottom: 0;
+      border-right: 0;
+    }
+
+    &:nth-child(3) {
+      padding: 2.5rem 2.5rem 2.5rem 0 ;
+      border-top: $border;
+      border-right: $border;
+    }
+
+    &:nth-child(4) {
+      padding: 2.5rem 0 2.5rem 2.5rem;
+    }
+
+    &:nth-child(5) {
+      padding: 2.5rem 2.5rem 2.5rem 0;
+      border-left: none;
+    }
+
+    &:nth-child(6) {
+      padding: 2.5rem 0 2.5rem 2.5rem;
+      border-right: 0;
+      border-bottom: 0;
+      border-left: 0;
+    }
+  }
+}
+
+// <768px
+@media (max-width: $lg-breakpoint) {
+
+  .section {
+
+    .item {
+      width: 100%;
+      padding: 0;
+      border: 0;
+
+      &:not(:last-child) {
+        margin-bottom: 3rem;
+      }
+    }
+
+    .itemTitle {
+      font-size: 1.25rem;
+
+      span {
+        font-size: 1.25rem;
+      }
+    }
+  }
+}

@@ -26,6 +26,12 @@ a.btn {
   height: 3rem;
   line-height: 3rem;
 
+  svg {
+    position: relative;
+    bottom: -2px;
+    margin-right: .5rem;
+  }
+
   &:hover {
     text-decoration: none;
   }

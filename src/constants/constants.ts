@@ -34,6 +34,7 @@ export const ROUTES = {
 
 export const BASE_API = 'https://api.teamconstructor.com'
 export const CONTENT_API = 'https://api.salary2.me'
+export const TEST_URL = 'https://salary.nobugs.today/test'
 
 export const COLORS = {
     // accent: '#556587',
