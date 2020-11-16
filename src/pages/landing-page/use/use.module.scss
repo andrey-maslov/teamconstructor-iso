@@ -1,5 +1,7 @@
 @import '../../../assets/scss/vars';
 
+$border: 1px solid $overlay-light;
+
 .section {
 
   .title {
@@ -11,8 +13,7 @@
 
   a[class] {
 
-    padding-left: 2rem;
-    padding-right: 2rem;
+    min-width: 190px;
   }
 
   &:after {
@@ -49,7 +50,7 @@
 
 .item {
   width: 33.33%;
-  border: 1px solid $overlay-light;
+  border: $border;
 
   &:first-child {
     padding: 0 2.5rem 2.5rem 0;
@@ -95,4 +96,73 @@
 // <992
 @media (max-width: $lg-breakpoint) {
 
+  .section {
+
+    &:after {
+      content: none;
+    }
+  }
+
+  .item {
+    width: 50%;
+
+    &:first-child {
+      padding: 0 2.5rem 2.5rem 0;
+      border: none;
+    }
+
+    &:nth-child(2) {
+      padding: 0 0 2.5rem 2.5rem;
+      border-top: 0;
+      border-bottom: 0;
+      border-right: 0;
+    }
+
+    &:nth-child(3) {
+      padding: 2.5rem 2.5rem 2.5rem 0 ;
+      border-top: $border;
+      border-right: $border;
+    }
+
+    &:nth-child(4) {
+      padding: 2.5rem 0 2.5rem 2.5rem;
+    }
+
+    &:nth-child(5) {
+      padding: 2.5rem 2.5rem 2.5rem 0;
+      border-left: none;
+    }
+
+    &:nth-child(6) {
+      padding: 2.5rem 0 2.5rem 2.5rem;
+      border-right: 0;
+      border-bottom: 0;
+      border-left: 0;
+    }
+  }
+}
+
+// <768px
+@media (max-width: $lg-breakpoint) {
+
+  .section {
+
+    .item {
+      width: 100%;
+      padding: 0;
+      border: 0;
+
+      &:not(:last-child) {
+        margin-bottom: 3rem;
+      }
+    }
+
+    .itemTitle {
+      font-size: 1.25rem;
+
+      span {
+        font-size: 1.25rem;
+      }
+    }
+  }
 }

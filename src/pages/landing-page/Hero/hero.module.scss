@@ -30,8 +30,6 @@
     background: url('../../../assets/img/tc-logo-bw.png') no-repeat -175px -177px;
     opacity: .1;
   }
-
-
 }
 
 .content {
@@ -52,12 +50,15 @@
     &:first-child {
       color: $yellow
     }
+
     &:nth-child(2) {
       color: $orange
     }
+
     &:nth-child(3) {
       color: $blue
     }
+
     &:last-child {
       color: $green;
     }
@@ -88,13 +89,20 @@
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: $lg-breakpoint) {
 
   .section {
+    padding-top: 6rem;
+    padding-bottom: 5rem;
 
-    &:after {
+    &:after, &:before {
       content: none;
     }
+  }
+
+  .title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
   }
 }
 
@@ -102,16 +110,20 @@
 @media (max-width: $md-breakpoint) {
 
   .title {
-    font-size: 2rem;
+    font-size: 2.5rem;
+  }
 
-    span {
-      font-size: 1.2rem ;
-    }
+  .supTitle, .subtitle {
+    font-size: 1.25rem;
   }
 
   .section {
     position: relative;
     padding-top: 5rem;
     padding-bottom: 3rem;
+  }
+
+  .btn {
+    width: 100%;
   }
 }

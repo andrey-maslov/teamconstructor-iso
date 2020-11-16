@@ -40,7 +40,7 @@ const Faq: React.FC = () => {
             <div className="container">
                 <h2 className={`section-title ${style.title}`}>Часто задаваемые вопросы</h2>
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-lg-6">
                         {odd.map((item, i) => (
                             <FaqItem
                                 question={item[0]}
@@ -49,7 +49,7 @@ const Faq: React.FC = () => {
                             />
                         ))}
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-lg-6">
                         {even.map((item, i) => (
                             <FaqItem
                                 question={item[0]}

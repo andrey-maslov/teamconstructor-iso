@@ -14,10 +14,6 @@
   position: relative;
 }
 
-.item {
-
-}
-
 .solution {
   position: relative;
   background-color: $overlay-dark;
@@ -48,11 +44,24 @@
 }
 
 
-@media (max-width: 992px) {
+@media (max-width: $lg-breakpoint) {
 
+  .section {
+
+    .list {
+      margin-bottom: 3rem;
+    }
+
+    .solution svg {
+      display: none;
+    }
+  }
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: $md-breakpoint) {
 
+  .solution {
+    padding: 2rem;
+  }
 }

@@ -171,6 +171,21 @@
     }
   }
 
+  .landing {
+
+    .section {
+
+      &-title {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+      }
+
+      &-subtitle {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
 }
 
 

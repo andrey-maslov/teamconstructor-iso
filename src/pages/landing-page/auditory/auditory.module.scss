@@ -42,4 +42,21 @@
 // <992
 @media (max-width: $lg-breakpoint) {
 
+  .item {
+    margin-bottom: 1rem;
+  }
+}
+
+// <768
+@media (max-width: $md-breakpoint) {
+
+  .item {
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .img {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
 }

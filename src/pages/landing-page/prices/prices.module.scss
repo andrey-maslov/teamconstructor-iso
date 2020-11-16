@@ -66,11 +66,29 @@
 
 
 
-@media (max-width: 992px) {
+@media (max-width: $lg-breakpoint) {
 
+  .card {
+    margin-bottom: 1rem;
+  }
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: $md-breakpoint) {
+
+  .card {
+    margin-bottom: 1rem;
+    padding: 2rem;
+  }
+
+  .cardTitle {
+    font-size: 1.25rem;
+    margin-bottom: .5rem;
+  }
+
+  .amount {
+    font-size: 2rem;
+    margin-bottom: .5rem;
+  }
 
 }

@@ -106,17 +106,50 @@ ul.list {
   }
 }
 
+// < 1300px
 @media (max-width: $xl-breakpoint) {
+
   .teamImg {
     margin-left: 0;
   }
 }
 
+// < 992px
 @media (max-width: $lg-breakpoint) {
 
+  .section {
+
+    &:after {
+      content: none;
+    }
+
+    .list {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .robot {
+
+    &>div {
+      margin: 0 auto 2rem;
+    }
+  }
 }
 
+// < 768px
+@media (max-width: $md-breakpoint) {
 
-@media (max-width: 768px) {
+  .teamImg {
+    display: none;
+  }
 
+  .box:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  .section {
+    .list {
+      margin-bottom: 0;
+    }
+  }
 }

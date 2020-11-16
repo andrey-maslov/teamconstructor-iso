@@ -29,7 +29,7 @@ const Auditory: React.FC = () => {
                 <h2 className={`section-title ${style.title}`}>Для кого этот сервис</h2>
                 <div className="row around-sm">
                     {texts.map(item => (
-                        <div key={item.title} className="col-md-6">
+                        <div key={item.title} className="col-lg-6">
                             <div className={style.item}>
                                 <div className={style.img}>
                                     <img src={item.img} srcSet={`${item.img2x} 2x`} alt={item.title} />
