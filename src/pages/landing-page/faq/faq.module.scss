@@ -107,9 +107,19 @@
 @media (max-width: $md-breakpoint) {
 
   .item {
+    padding: .5rem 0;
 
     .q {
       font-size: 1rem;
     }
+
+    &.opened {
+      background-color: transparent;
+    }
+  }
+
+  .icon {
+    top: .6rem;
+    right: 0;
   }
 }
