@@ -4,40 +4,18 @@ import style from './use.module.scss'
 import { FiExternalLink } from 'react-icons/fi'
 import { TEST_URL } from "../../../constants/constants"
 import CodeBox from "../../../components/common/Inputs/code-box/CodeBox"
+import { useTranslation } from 'react-i18next'
 
 const Use: React.FC = () => {
 
-    const content = [
-        {
-            title: 'Пройти регистрацию',
-            text: 'Создать новый аккаунт или авторизироваться, если аккаунт уже есть. '
-        },
-        {
-            title: 'Пройти экспрес-тест',
-            text: 'Найти 10 - 15 минут свободного времени, уединиться и долго не задумываясь ответить на вопросы психологического теста'
-        },
-        {
-            title: 'Выслать ссылку сотрудникам',
-            text: 'Сотрудники из которых Вы собираетесь формировать команды должны пройти тест и отдать Вам результаты'
-        },
-        {
-            title: 'Создать проект',
-            text: 'Используя сервис teamconstructor создайте свой первый проект'
-        },
-        {
-            title: 'Создать пул работников',
-            text: 'Если Ваши работники зарегистрировались в сервисе, то Вы можете легко найти их данные. Если же нет, то Вы можете внести из вручную'
-        },
-        {
-            title: 'Сформировать команды',
-            text: 'Путем перетаскивания карточек Ваших сотрудников из пула сформируйте несколько варантов команд и выберите наиболее эффективный'
-        },
-    ]
+    const { t } = useTranslation()
+
+    const content: {title: string, text: string}[] = t('landing:use.steps', { returnObjects: true })
 
     return (
         <section className={`${style.section} section`}>
             <div className="container">
-                <h2 className={`section-title ${style.title}`}>Как пользоваться</h2>
+                <h2 className={`section-title ${style.title}`}>{t('landing:use.title')}</h2>
 
                 <div className={style.grid}>
                     <div className={style.item}>

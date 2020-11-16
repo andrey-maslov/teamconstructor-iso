@@ -1,27 +1,13 @@
 import React from 'react'
 import style from './faq.module.scss'
-import FaqItem from "./FaqItem";
+import FaqItem from './FaqItem'
+import { useTranslation } from 'react-i18next'
 
 const Faq: React.FC = () => {
 
-    const faq: string[][] = [
-        [
-            'Какая методология использовалась построения системы расчетов?',
-            'Научная основа: разработки Л.Н.Собчик (Теория ведущих тенденций); Р. Акофф, Ф. Эмери. (О целеустремленных системах.), У.Шутц (Теория межличностных отношений), а также исследования врожденных и приобретенных особенностей мозга.'
-        ],
-        [
-            'где брались данные для построения модели?',
-            'Данные для построения модели брались из многочисленных эспериментов, проведенных на реальных командах'
-        ],
-        [
-            'вы жулики?',
-            'нет, мы не жулики, наши расчеты основаны на ….'
-        ],
-        [
-            'Ещще один интересный вопрос для массы?',
-            'А это замечательный и развернеутый ответ на такой же замечательный и развернутый вопрос. В этом ответе рассмотрены все стороны вопроса и более не должно остаться никаких сомнений в нашей компетентности'
-        ]
-    ]
+    const { t } = useTranslation()
+
+    const faq: string[][] = t('landing:faq.faq_list', { returnObjects: true })
 
     const odd: string[][] = []
     const even: string[][] = []
@@ -38,7 +24,7 @@ const Faq: React.FC = () => {
     return (
         <section className={`${style.section} section`}>
             <div className="container">
-                <h2 className={`section-title ${style.title}`}>Часто задаваемые вопросы</h2>
+                <h2 className={`section-title ${style.title}`}>{t('landing:faq.title')}</h2>
                 <div className="row">
                     <div className="col-lg-6">
                         {odd.map((item, i) => (

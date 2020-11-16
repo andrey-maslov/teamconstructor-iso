@@ -1,75 +1,54 @@
 import React from 'react'
 import style from './prices.module.scss'
-import { NavLink } from "react-router-dom";
-import { FiExternalLink } from "react-icons/fi";
+import { NavLink } from 'react-router-dom'
+import { FiExternalLink } from 'react-icons/fi'
+import { useTranslation } from 'react-i18next'
+
+interface IText { title: string, period: string, desc: string, features: string[], link_title: string }
+interface ITariff { amount: number, link: { route: string, isExternal: boolean } }
+const tariffs: ITariff[] = [
+    {
+        amount: 0,
+        link: {
+            route: '/registration',
+            isExternal: false
+        }
+    },
+    {
+        amount: 29.99,
+        link: {
+            route: '/',
+            isExternal: true
+        }
+    },
+    {
+        amount: 299.99,
+        link: {
+            route: '/',
+            isExternal: true
+        }
+    },
+]
 
 const Prices: React.FC = () => {
 
-    const tariffs = [
-        {
-            title: 'Бесплатный',
-            amount: 0,
-            period: '',
-            desc: 'Для каждого пользователя, который хочет узнать свой психологический профиль и проверить свое взаимодействие с одним партнером',
-            features: [
-                'Личный кабинет',
-                'Парное сравнение',
-                'Индивидуальный профиль',
-            ],
-            link: {
-                title: 'Зарегистрироваться',
-                route: '/registration',
-                isExternal: false
-            }
-        },
-        {
-            title: 'Менеджер',
-            amount: 29.99,
-            period: 'в месяц',
-            desc: 'Для каждого пользователя, который хочет формировать команду и оценивать эффективность командного взаимодействия',
-            features: [
-                'Личный кабинет',
-                'Парное сравнение',
-                'Индивидуальный профиль',
-                'Формирование команд и проекта',
-            ],
-            link: {
-                title: 'Оплатить',
-                route: '/',
-                isExternal: true
-            }
-        },
-        {
-            title: 'Руководитель',
-            amount: 299.99,
-            period: 'в год',
-            desc: 'Для каждого пользователя, который хочет узнать свой психологический профиль и проверить свое взаимодействие с одним партнером',
-            features: [
-                'Личный кабинет',
-                'Парное сравнение',
-                'Индивидуальный профиль',
-            ],
-            link: {
-                title: 'Оплатить',
-                route: '/',
-                isExternal: true
-            }
-        },
-    ]
+    const { t } = useTranslation()
+
+    const texts: IText[] = t('landing:prices.tariffs', { returnObjects: true })
 
     return (
         <section className={`${style.section} section`}>
             <div className="container">
-                <h2 className={`section-title ${style.title}`}>Стоимость</h2>
+                <h2 className={`section-title ${style.title}`}>{t('landing:prices.title')}</h2>
                 <div className="row">
-                    {tariffs && tariffs.map(tariff => (
-                        <div className={`col-lg-4 ${style.col}`} key={tariff.title}>
+                    {tariffs && tariffs.map((tariff, i) => (
+                        <div className={`col-lg-4 ${style.col}`} key={texts[i].title}>
                             <div className={style.card}>
-                                <div className={style.cardTitle}>{tariff.title}</div>
+                                <div className={style.cardTitle}>{texts[i].title}</div>
                                 <div className={style.amount}>{tariff.amount}</div>
-                                <p className={style.desc}>{tariff.desc}</p>
+                                <p className={style.desc}>{texts[i].desc}</p>
                                 <ul className={style.features}>
-                                    {tariff.features && tariff.features.map((item: string, i) => (
+                                    {texts[i].features && texts[i].features.map((item: string, i) => (
                                         <li className={style.item} key={i}>{item}</li>
                                     ))}
                                 </ul>
@@ -81,11 +60,11 @@ const Prices: React.FC = () => {
                                         rel="noopener noreferrer"
                                     >
                                         <FiExternalLink />
-                                        {tariff.link.title}
+                                        {texts[i].link_title}
                                     </a>
                                 ) : (
                                     <NavLink to={tariff.link.route} className={`btn btn-outlined ${style.btn}`}>
-                                        {tariff.link.title}
+                                        {texts[i].link_title}
                                     </NavLink>
                                 )}
                             </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Hero from './Hero/Hero'
 import Background from './background/Background'
-import Includes from './includes/Includes'
+import Consist from './consist/Consist'
 import Use from './use/Use'
 import Prices from './prices/Prices'
 import Faq from './faq/Faq'
@@ -13,7 +13,7 @@ const LandingPage: React.FC = () => {
         <div className='landing'>
             <Hero />
             <Background />
-            <Includes />
+            <Consist />
             <Auditory />
             <Use />
             <Prices />

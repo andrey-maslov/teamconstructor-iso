@@ -4,35 +4,30 @@ import hr from '../../../assets/img/hr_alt.png'
 import hr2x from '../../../assets/img/hr_alt@2x.png'
 import manager from '../../../assets/img/manager_alt.png'
 import manager2x from '../../../assets/img/manager_alt@2x.png'
+import { useTranslation } from 'react-i18next'
 
 const Auditory: React.FC = () => {
 
-    const texts = [
-        {
-            title: 'Руководителям подразделений',
-            desc: 'формировать команды из подходящих друг другу людей либо под необходимые задачи с учетом специализации (продажи, аналитика, творчество, обеспечение качества и тд)',
-            img: manager,
-            img2x: manager2x,
-        },
-        {
-            title: 'Специалистам по человеческим ресурсам',
-            desc: 'узнать психологический профиль кандидата и его потенциальную совместимость с имеющейся командой',
-            img: hr,
-            img2x: hr2x,
-        },
+    const { t } = useTranslation()
+
+    const images = [
+        [manager, manager2x],
+        [hr, hr2x]
     ]
+
+    const roles: {title: string, desc: string}[] = t('landing:auditory.roles', { returnObjects: true })
 
 
     return (
         <section className={`${style.section} section`}>
             <div className="container">
-                <h2 className={`section-title ${style.title}`}>Для кого этот сервис</h2>
+                <h2 className={`section-title ${style.title}`}>{t('landing:use.title')}</h2>
                 <div className="row around-sm">
-                    {texts.map(item => (
+                    {roles.map((item, i) => (
                         <div key={item.title} className="col-lg-6">
                             <div className={style.item}>
                                 <div className={style.img}>
-                                    <img src={item.img} srcSet={`${item.img2x} 2x`} alt={item.title} />
+                                    <img src={images[i] ? images[i][0] : ''} srcSet={`${images[i] ? images[i][1] : ''} 2x`} alt={item.title} />
                                 </div>
                                 <div>
                                     <h3 className={style.header}>{item.title}</h3>

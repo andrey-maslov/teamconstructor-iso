@@ -82,6 +82,7 @@
   min-width: 24px;
   height: 24px;
   transition: border-color .2s ease-in-out;
+  pointer-events: none;
 
   span {
     position: absolute;

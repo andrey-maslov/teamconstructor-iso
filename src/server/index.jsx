@@ -35,7 +35,7 @@ i18n
             debug: false,
             preload: ['en', 'ru'],
             whitelist: languages,
-            ns: ['common', 'team', 'pair', '404'],
+            ns: ['common', 'team', 'pair', '404', 'landing'],
             defaultNS: 'common',
             backend: {
                 loadPath: `${ publicDir }/locales/{{lng}}/{{ns}}.json`,

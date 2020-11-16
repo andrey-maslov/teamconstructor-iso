@@ -1,0 +1,148 @@
+{
+  "hero": {
+    "title": "",
+    "sup_title": "Create an effective team",
+    "sub_title": "analysis of the team and candidates in terms of the compatibility of psychological profiles",
+    "description": "",
+    "button_title": "Get started!"
+  },
+  "background": {
+    "title": "Prerequisites",
+    "problems": "Problems",
+    "solution": "Solution",
+    "problems_list": [
+      "The manager forms the team without considering the psychological characteristics of the team members. This often leads to intra-team conflicts, reduced productivity, efficiency and the risk of employee leaving.",
+      "Lack of people with the necessary soft skills to effectively solve the necessary tasks, taking into account the specialization of the team, for example, sales, development (employees with different types of character, psychological portraits are required)",
+      "It is difficult to choose the right candidate for the team. It is necessary to consider not only the technical skills, but also the psychological characteristics of the candidate."
+    ],
+    "solutions_list": [
+      "We give an understandable tool for solving these problems - <strong> TEAM CONSTRUCTOR </strong>",
+      "Each user must pass a small test and then we take over all calculations of intra-team interaction."
+    ]
+  },
+  "consist": {
+    "title": "What the service includes",
+    "unique_test": "Unique test",
+    "test_desc": "After passing our test, the user receives a detailed detailed description of his psychological portrait",
+    "team_building": "Team Building",
+    "team_desc": "Having the test results of different people, you can predict the interaction between them, in particular",
+    "test_list": [
+      "Consists of 75 questions, the completion takes an average of 15 minutes",
+      "Scientific basis: developments by L.N.Sobchik (Theory of leading trends); R. Ackoff, F. Emery. (On purposeful systems.), W. Schutz (Theory of interpersonal relations), as well as studies of congenital and acquired features of the brain.",
+      "Maintains high accuracy, while being convenient for fast passage",
+      "Cross-cultural, understandable for all ages in any environment in any language",
+      "The result is processed and encoded, it is convenient for saving and transferring between services"
+    ],
+    "team_list": [
+      "Determine the informal leader in the team",
+      "Understand the level of mutual understanding and effectiveness of team interaction",
+      "Determine those with whom or without whom the team will interact more effectively",
+      "To understand how well this or that candidate will fit into the team in terms of the microclimate of the team",
+      "Create teams to solve specific problems (sales, service, quality control, etc.)"
+    ]
+  },
+  "auditory": {
+    "title": "Who is this service for",
+    "roles": [
+      {
+        "title": "Heads of departments",
+        "desc": "to form teams of suitable people or for the necessary tasks, taking into account specialization (sales, analytics, creativity, quality assurance, etc.)"
+      },
+      {
+        "title": "Human Resource Professionals",
+        "desc": "find out the psychological profile of the candidate and his potential compatibility with the existing team"
+      }
+    ]
+  },
+  "use": {
+    "title": "How to use",
+    "steps": [
+      {
+        "title": "Register now",
+        "text": "Create a new account or log in if you already have an account."
+      },
+      {
+        "title": "Pass express test",
+        "text": "Find 10-15 minutes of free time, retire and answer the questions of the psychological test without hesitation"
+      },
+      {
+        "title": "Send link to employees",
+        "text": "Employees from whom you are going to form teams must pass the test and give you the results"
+      },
+      {
+        "title": "Create project",
+        "text": "Using the teamconstructor service create your first project"
+      },
+      {
+        "title": "Create a pool of workers",
+        "text": "If your employees are registered in the service, then you can easily find their data. If not, you can enter them manually."
+      },
+      {
+        "title": "Form teams",
+        "text": "By dragging and dropping your employees' cards from the pool, form several team guards and choose the most effective one."
+      }
+    ]
+  },
+  "prices": {
+    "title": "Cost",
+    "tariffs": [
+      {
+        "title": "Free",
+        "period": "",
+        "desc": "For every user who wants to know his psychological profile and check his interaction with one partner",
+        "features": [
+          "Personal Area",
+          "Pairwise comparison",
+          "Individual profile"
+        ],
+        "link_title": "Register"
+      },
+      {
+        "title": "Manager",
+        "period": "per month",
+        "desc": "For every user who wants to form a team and evaluate the effectiveness of team interaction",
+        "features": [
+          "Personal Area",
+          "Pairwise comparison",
+          "Individual profile",
+          "Forming teams and projects"
+        ],
+        "link_title": "Pay"
+      },
+      {
+        "title": "Manager",
+        "period": "per year",
+        "desc": "For every user who wants to know his psychological profile and check his interaction with one partner",
+        "features": [
+          "Personal Area",
+          "Pairwise comparison",
+          "Individual profile"
+        ],
+        "link_title": "Pay"
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "faq_list": [
+      [
+        "What methodology was used to build the settlement system?",
+        "Scientific basis: developments by L.N.Sobchik (Theory of leading trends); R. Ackoff, F. Emery. (On purposeful systems.), W. Schutz (Theory of interpersonal relations), as well as studies of congenital and acquired features of the brain."
+      ],
+      [
+        "where was the data taken to build the model?",
+        "Data for building the model was taken from numerous experiments carried out on real teams."
+      ],
+      [
+        "are you crooks?",
+        "no, we are not crooks, our calculations are based on ...."
+      ],
+      [
+        "Another interesting question for the masses?",
+        "And this is a wonderful and detailed answer to an equally wonderful and detailed question. This answer addresses all aspects of the question and there should no longer be any doubts about our competence."
+      ]
+    ]
+  },
+  "common": {
+  }
+}
