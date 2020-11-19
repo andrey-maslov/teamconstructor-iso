@@ -20,7 +20,6 @@ const Faq: React.FC = () => {
         }
     })
 
-
     return (
         <section className={`${style.section} section`}>
             <div className="container">
