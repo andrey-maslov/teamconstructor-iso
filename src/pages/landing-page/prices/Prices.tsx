@@ -42,7 +42,7 @@ const Prices: React.FC = () => {
                 <h2 className={`section-title ${style.title}`}>{t('landing:prices.title')}</h2>
                 <div className="row">
                     {tariffs && tariffs.map((tariff, i) => (
-                        <div className={`col-lg-4 ${style.col}`} key={texts[i].title}>
+                        <div className={`col-lg-4 ${style.col}`} key={`${tariff.amount}`}>
                             <div className={style.card}>
                                 <div className={style.cardTitle}>{texts[i].title}</div>
                                 <div className={style.amount}>{tariff.amount}</div>

@@ -12,6 +12,8 @@ import Backend from 'i18next-fs-backend'
 import i18n from '../i18n'
 import App from '../App'
 import { stripCountry } from '../helper/helper'
+import { maintainRedirect } from "./maintainRedirect";
+import { saveEmails } from "./saveEmails";
 
 const cookieParser = require('cookie-parser')
 
@@ -49,6 +51,8 @@ i18n
                 .use(cookieParser())
                 .use('/locales', express.static(`${ publicDir }/locales`))
                 .use(express.static(publicDir))
+                .use('/save-email', saveEmails)
+                .use(maintainRedirect)
                 .get('/*', (req, res) => {
                     const context = {}
 

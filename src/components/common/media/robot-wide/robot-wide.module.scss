@@ -1,0 +1,290 @@
+@import '../../../../assets/scss/vars';
+
+$black: #000;
+$red: darken($accent, 10%);
+$light-blue: $accent;
+$dark-blue: $overlay-light;
+$orange: $text-light;
+
+$em: 1rem;
+$border-radius-xl: .5 * $em;
+$border-radius-md: .4 * $em;
+
+.robot {
+  position: relative;
+  width: 20 * $em;
+  display: flex;
+
+  &, *, *:before, *:after {
+    box-sizing: border-box;
+  }
+}
+
+.center {
+  width: 15 * $em;
+  z-index: 1;
+}
+
+.head {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 9.7 * $em;
+
+  .leftPart {
+    background-color: $red;
+    width: 40%;
+    align-self: stretch;
+    border-radius: $border-radius-xl 0 0 $border-radius-xl;
+  }
+
+  .rightPart {
+    background-color: $light-blue;
+    width: 60%;
+    align-self: stretch;
+    border-radius: 0 $border-radius-xl $border-radius-xl 0;
+  }
+}
+
+.eyes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 25%;
+
+  .eye {
+    position: relative;
+    border-radius: 50%;
+    background-color: #fff;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      height: .3 * $em;
+      width: .3 * $em;
+      border-radius: 50%;
+      background-color: $black;
+    }
+
+    &:first-child {
+      width: 3.9 * $em;
+      height: 3.9 * $em;
+      margin-right: $em;
+      border: .3 *$em solid $orange;
+    }
+
+    &:last-child {
+      width: 2.5 * $em;
+      height: 2.5 * $em;
+    }
+
+  }
+
+}
+
+.mouth {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 18%;
+  background-color: $dark-blue;
+  height: .65 * $em;
+  width: 4.5 * $em;
+  border-radius: .3 * $em;
+}
+
+.pic {
+  position: absolute;
+  top: $em;
+  right: .6 * $em;
+  width: 1.5 * $em;
+
+  div {
+    border-radius: .4 * $em;
+    background-color: #fff;
+    margin-bottom: .2 * $em;
+    height: .4 * $em;
+
+    &:nth-child(1) {
+      background-color: $yellow;
+      width: 1.5 * $em;
+    }
+
+    &:nth-child(2) {
+      width: 1 * $em;
+    }
+
+    &:nth-child(3), &:nth-child(4), &:nth-child(5) {
+      width: .5 * $em;
+      border-radius: 50%;
+    }
+  }
+}
+
+.body {
+  background-color: $dark-blue;
+  border-radius: 0 0 $border-radius-md $border-radius-md;
+  height: .8 * $em;
+  width: 10 * $em;
+  margin: 0 auto;
+}
+
+.legs {
+  display: flex;
+  justify-content: space-between;
+  width: 8.75 * $em;
+  margin: 0 auto;
+}
+
+.leg {
+  display: flex;
+  flex-direction: column;
+  width: 3.5 * $em;
+
+  div {
+    background-color: $orange;
+    width: 1.5 * $em;
+    height: .45 * $em;
+    margin-top: .1 * $em;
+    border-radius: $border-radius-md;
+
+    &:last-child {
+      width: 100%;
+      height: 1.3 * $em;
+      background-color: $dark-blue;
+    }
+  }
+
+  &:first-child {
+    align-items: flex-end;
+
+    div:not(:last-child) {
+      margin-right: .4 * $em;
+    }
+  }
+
+  &:last-child {
+
+    div:not(:last-child) {
+      margin-left: .4 * $em;
+    }
+  }
+}
+
+.top {
+  width: 15 * $em;
+}
+
+.antenna {
+  position: relative;
+  width: .9 * $em;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+
+  .apex {
+    position: relative;
+    bottom: -.34 * $em;
+    height: .3 * $em;
+    border-radius: .3 * $em;
+    background-color: $text-light;
+    width: 100%;
+  }
+
+  .vertical {
+    height: 2.5 * $em;
+    width: .2 * $em;
+    background-color: $text-light;
+  }
+
+  .curls {
+    position: absolute;
+    width: 1 * $em;
+    top: 30%;
+    transform: scaleX(.5);
+
+    div {
+      position: relative;
+      margin: 0 0 (-.1 * $em) auto;
+      width: 60%;
+      background-color: transparent;
+      height: .6 * $em;;
+      border-top: solid $text-light .2 * $em;
+      border-right: solid $text-light .2 * $em;
+      border-bottom: solid $text-light .2 * $em;
+      border-left: solid #fff 0 * $em;
+      border-radius: 0 50% 50% 0 / 0 50% 50% 0;
+    }
+  }
+}
+
+.arm {
+  position: relative;
+  margin-top: 8.5 * $em;
+  width: 2.5 * $em;
+
+  &.leftArm {
+    color: currentColor;
+  }
+
+  .shoulder {
+    position: absolute;
+    right: 0;
+    background-color: $orange;
+    height: 3 * $em;
+    width: .7 * $em;
+    border-radius: $border-radius-md 0 0 $border-radius-md;
+    z-index: 1;
+  }
+
+  .handWrap {
+    position: absolute;
+    right: 1.7 * $em;
+    top: -.7 * $em;
+    transform: rotate(10deg);
+    //animation: 3s linear 1s hands;
+  }
+
+  .cubit {
+    position: absolute;
+    width: 8 * $em;
+    height: 8 * $em;
+    background-color: transparent;
+    border-top: solid transparent 1.1 * $em;
+    border-right: solid transparent 1.1 * $em;
+    border-bottom: solid transparent 1.1 * $em;
+    border-left: solid $light-blue 1.1 * $em;
+    transform: rotate(10deg);
+    top: .2 * $em;
+    left: .2 * $em;
+    border-radius: 50%;
+  }
+
+  .hand {
+    position: absolute;
+    top: 5.8 * $em;
+    right: -2.9 * $em;
+    height: 1.2 * $em;
+    width: 2.7 * $em;
+    background-color: $dark-blue;
+    border-radius: $border-radius-md;
+    transform: rotate(-35deg);
+  }
+
+  &.rightArm {
+    transform: scaleX(-1);
+
+    .cubit {
+      border-left-color: $red;
+    }
+  }
+}

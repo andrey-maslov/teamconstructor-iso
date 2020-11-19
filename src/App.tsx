@@ -17,15 +17,25 @@ import AuthPage from './pages/auth-page/AuthPage'
 import TeamCoopPage from './pages/team-coop-page/TeamCoopPage'
 import ProfilePage from './pages/profile-page/ProfilePage'
 import LandingPage from './pages/landing-page/LandingPage'
+import ComingSoon from "./pages/coming-soon-page/ComingSoon";
 
 const App: React.FC = () => {
 
     const { pathname } = useLocation()
     const { isLoggedIn } = useSelector((state: any) => state.user)
+    const isApp = pathname !== '/'
+
+    if (process.env.RAZZLE_IS_UNDER_CONSTRUCTION == '1') {
+        return (
+            <div className="site">
+                <ComingSoon />
+            </div>
+        )
+    }
 
     return (
         <ToastProvider>
-            <div className={`app ${getPageClass(pathname)} ${isLoggedIn ? 'authorized' : 'unauthorized'}`}>
+            <div className={`${isApp ? 'app' : 'site'} ${getPageClass(pathname)} ${isLoggedIn ? 'authorized' : 'unauthorized'}`}>
                 <Header />
                 {/*<ScrollToTop />*/}
                 <Switch>

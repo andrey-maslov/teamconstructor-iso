@@ -30,6 +30,7 @@ export const ROUTES = {
     '/signin/forgot-password-success': 'page-auth',
     '/signin/reset-password': 'page-auth',
     '/registration': 'page-auth',
+    '/save-email': 'save-email',
 };
 
 export const BASE_API = 'https://api.teamconstructor.com'

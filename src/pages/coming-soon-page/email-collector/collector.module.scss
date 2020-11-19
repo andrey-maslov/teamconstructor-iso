@@ -1,0 +1,31 @@
+@import '../../../assets/scss/vars';
+
+.wrapper {
+
+}
+
+.label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  height: 37px;
+  background-color: $yellow;
+  color: $base;
+  margin-bottom: 1rem;
+  width: 100%;
+
+  &:hover {
+    background-color: darken($yellow, 20%);
+    color: $base;
+  }
+}
+
+.error {
+  color: $danger
+}
+
+.success {
+  color: $yellow
+}

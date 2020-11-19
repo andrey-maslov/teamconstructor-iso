@@ -10,7 +10,7 @@ import {
 
 const SocialSharing: React.FC = () => {
 
-    const url: string = 'https://salary2.me';
+    const url = 'https://salary2.me'
 
     return (
         <div>
