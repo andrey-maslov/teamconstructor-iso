@@ -93,8 +93,8 @@ i18n
                                                 <title>${ initialI18nStore[initLang].landing && initialI18nStore[initLang].landing.meta.title }</title>
                                                 ${ assets.client.css ? `<link rel="stylesheet" href="${ assets.client.css }">` : '' }
                                                 
-                                                <link rel="preload" href="fonts/montserrat-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-                                                <link rel="preload" href="fonts/montserrat-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<!--                                                <link rel="preload" href="fonts/***.woff2" as="font" type="font/woff2" crossorigin="anonymous">-->
+<!--                                                <link rel="preload" href="fonts/***.woff2" as="font" type="font/woff2" crossorigin="anonymous">-->
                                                 
                                                 <script src="${ assets.client.js }" defer></script>
                                                 <script>
