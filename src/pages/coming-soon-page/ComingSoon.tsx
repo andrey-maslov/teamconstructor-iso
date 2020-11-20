@@ -2,15 +2,12 @@ import React from 'react'
 import { useTranslation } from "react-i18next"
 import IEmailCollecor from "./email-collector/EmailCollector"
 import SocialLinks from "../../components/common/social/social-links/SocialLinks"
-import { useMediaPredicate } from "react-media-hook"
-import RobotWide from "../../components/common/media/robot-wide/RobotWide"
 import TopLogo from "../../components/common/layout/header/top-logo/TopLogo";
 
 
 const ComingSoon: React.FC = () => {
 
     const { t: any } = useTranslation()
-    const isMoby = useMediaPredicate('(max-width: 768px)')
 
     return (
         <main className='main coming-soon-page'>
@@ -24,12 +21,8 @@ const ComingSoon: React.FC = () => {
 
                         <div className="headline">
                             <h1>Наш сервис скоро будет готов</h1>
-                            <p>Для записи на раннее тестирование отправьте свой email с помощью формы ниже</p>
+                            <p>Для записи на <strong>раннее тестирование сервиса Teamconstructor</strong> отправьте свой email с помощью формы ниже. Как только будет доступно использование функционала, мы вышлем вам приглашение</p>
                         </div>
-
-                        {/*{!isMoby && <div className="robot">*/}
-                        {/*    <RobotWide />*/}
-                        {/*</div>}*/}
 
                         <div className="email-collector">
                             <IEmailCollecor />

@@ -44,10 +44,6 @@
     "duplicate_member": "Team mate {{name}} is already in the team",
     "duplicate_member_result": "There is already a team mate with the same name"
   },
-  "meta": {
-    "description": "description for the team constructor",
-    "title": "building an effective team - team constructor"
-  },
   "confirm": {
     "do_logout": "Are you sure you want to log out?",
     "do_delete_project": "Are you sure you want to log out?"

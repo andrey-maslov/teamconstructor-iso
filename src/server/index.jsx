@@ -78,6 +78,8 @@ i18n
                         req.i18n.languages.forEach(l => {
                             initialI18nStore[l] = req.i18n.services.resourceStore.data[l];
                         });
+
+                        console.log(initialI18nStore)
                         const initialLanguage = req.i18n.language
                         const initLang = stripCountry(initialLanguage) || LANG_DEFAULT;
 
@@ -86,10 +88,14 @@ i18n
                                             <head>
                                                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                                                 <meta charSet='utf-8' />
-                                                <meta name="description" content="${ initialI18nStore[initLang].common && initialI18nStore[initLang].common.meta.description }">
+                                                <meta name="description" content="${ initialI18nStore[initLang].landing && initialI18nStore[initLang].landing.meta.description }">
                                                 <meta name="viewport" content="width=device-width, initial-scale=1">
-                                                <title>${ initialI18nStore[initLang].common && initialI18nStore[initLang].common.meta.title }</title>
+                                                <title>${ initialI18nStore[initLang].landing && initialI18nStore[initLang].landing.meta.title }</title>
                                                 ${ assets.client.css ? `<link rel="stylesheet" href="${ assets.client.css }">` : '' }
+                                                
+                                                <link rel="preload" href="fonts/montserrat-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+                                                <link rel="preload" href="fonts/montserrat-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+                                                
                                                 <script src="${ assets.client.js }" defer></script>
                                                 <script>
                                                   window.initialI18nStore = JSON.parse('${ JSON.stringify(initialI18nStore) }');

@@ -44,10 +44,6 @@
     "duplicate_member": "Работник {{name}} уже есть в команде",
     "duplicate_member_result": "Работник с таким именем уже есть"
   },
-  "meta": {
-    "description": "описание для тимконструктора",
-    "title": "формирование эффективной команды - team constructor"
-  },
   "confirm": {
     "do_logout": "Вы действительно хотите выйти?",
     "do_delete_project": "Вы действительно хотите выйти?"

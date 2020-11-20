@@ -143,6 +143,8 @@
       ]
     ]
   },
-  "common": {
+  "meta": {
+    "title": "Teamconstructor - building an effective team",
+    "description": "Analysis of the team and candidates based on the compatibility of psychological profiles | metrics | recommendations"
   }
 }

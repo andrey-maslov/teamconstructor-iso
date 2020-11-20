@@ -30,6 +30,7 @@ const IEmailCollecor: React.FC = () => {
                         name="email"
                         placeholder="your email"
                         onFocus={clearApiError}
+                        aria-label="email"
                         ref={register({
                             required: `${t('common:errors.required')}`,
                             pattern: {
