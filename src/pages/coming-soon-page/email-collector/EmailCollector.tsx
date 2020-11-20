@@ -23,8 +23,8 @@ const IEmailCollecor: React.FC = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit(submitHandle)}>
+        <div className={style.wrapper}>
+            <form className={style.form} onSubmit={handleSubmit(submitHandle)}>
                 <label className={style.label}>
                     <input
                         name="email"
@@ -40,8 +40,8 @@ const IEmailCollecor: React.FC = () => {
                     />
                 </label>
                 <button type="submit" className={`btn btn-accent ${style.btn}`}>{t('common:buttons.send')}</button>
-                {errors.email && <div className={`item-explain ${style.error}`}>{errors.email.message}</div>}
             </form>
+            {errors.email && <div className={`item-explain ${style.error}`}>{errors.email.message}</div>}
             <small>*Ваши данные не попадут в плохие руки</small>
         </div>
     )
