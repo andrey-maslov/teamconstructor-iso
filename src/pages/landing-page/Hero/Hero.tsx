@@ -1,13 +1,14 @@
 import React from 'react'
 import style from './hero.module.scss'
-import { useSelector } from 'react-redux'
-import { globalStoreType } from '../../../constants/types'
-import { useTranslation } from 'react-i18next'
+import {useSelector} from 'react-redux'
+import {globalStoreType} from '../../../constants/types'
+import {useTranslation} from 'react-i18next'
+import {NavLink} from "react-router-dom";
 
 const Hero: React.FC = () => {
 
-    const { t } = useTranslation()
-    const { isLoggedIn } = useSelector((state: globalStoreType) => state.user)
+    const {t} = useTranslation()
+    const {isLoggedIn} = useSelector((state: globalStoreType) => state.user)
 
     return (
         <section className={style.section}>
@@ -21,9 +22,11 @@ const Hero: React.FC = () => {
                         {t('landing:hero.sub_title')}
                     </p>
                     <div className={style.buttons}>
-                        <a href={isLoggedIn ? 'team' : '/registration'} className={`btn btn-outlined ${style.btn}`}>
+                        <NavLink
+                            to={isLoggedIn ? '/team' : '/registration'}
+                                 className="btn btn-outlined-yellow">
                             {t('landing:hero.button_title')}
-                        </a>
+                        </NavLink>
                     </div>
                 </div>
             </div>

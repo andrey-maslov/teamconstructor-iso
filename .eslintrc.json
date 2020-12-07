@@ -28,6 +28,7 @@
         "react-hooks"
     ],
     "rules": {
+        "jsx-a11y/no-onchange": 0,
         "@typescript-eslint/no-var-requires": 0,
         "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
         "no-static-element-interactions": 0,

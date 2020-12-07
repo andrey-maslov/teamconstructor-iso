@@ -82,6 +82,7 @@ ul.list {
   background-color: $overlay-dark;
   padding: 2rem 2rem 1rem 3rem;
   border-radius: $border-radius-sm;
+  margin-bottom: 2rem !important;
 
   .item {
     list-style: disc;

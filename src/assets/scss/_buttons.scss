@@ -18,7 +18,7 @@ input[type=submit],
   border-radius: $border-radius-sm;
 
   &:focus {
-    outline: none;
+    //outline: none;
   }
 }
 
@@ -41,7 +41,7 @@ button.btn-link {
   color: $text-light;
   background-color: transparent;
   border: 0;
-  outline: none;
+  //outline: none;
   height: auto;
   min-width: unset;
 
@@ -58,6 +58,22 @@ button.btn-link {
 
   &:hover {
     background-color: rgba($overlay-dark, .6);
+  }
+}
+
+.btn-outlined-yellow {
+  background-color: transparent;
+  border: 1px solid $yellow;
+  color:  $yellow;
+
+  &:hover {
+    background-color:  $yellow;
+    color:  $base;
+  }
+
+  &:focus {
+    background-color:  darken($yellow, 15%);
+    color:  $base;
   }
 }
 
@@ -153,6 +169,21 @@ input[type=submit] {
 
   &:active {
     background-color: $accent2-hover;
+  }
+}
+
+
+.btn-accent-yellow{
+  color: $base-bg;
+  background-color: $yellow;
+  border: none;
+
+  &:hover {
+    background-color: darken($yellow, 15%);
+  }
+
+  &:active {
+    background-color: darken($yellow, 15%);
   }
 }
 
