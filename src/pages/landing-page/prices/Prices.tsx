@@ -48,8 +48,8 @@ const Prices: React.FC = () => {
                                 <div className={style.amount}>{tariff.amount}</div>
                                 <p className={style.desc}>{texts[i].desc}</p>
                                 <ul className={style.features}>
-                                    {texts[i].features && texts[i].features.map((item: string, i) => (
-                                        <li className={style.item} key={i}>{item}</li>
+                                    {texts[i].features && texts[i].features.map((item: string, index) => (
+                                        <li className={style.item} key={index}>{item}</li>
                                     ))}
                                 </ul>
                                 {tariff.link.isExternal ? (

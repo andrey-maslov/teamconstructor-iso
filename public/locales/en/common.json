@@ -1,8 +1,8 @@
 {
   "footer": {
-    "copy": "LLC Center of Technology Investments",
+    "copy": "Center of Technology Investments LLC",
     "author_text": "Developed by:  ",
-    "sharing_text": "Share"
+    "sharing_text": "Share with friends"
   },
   "nav": {
     "cookie": "Cookie policy",
@@ -36,33 +36,33 @@
     "required": "This is a required field",
     "invalid": "The value is invalid",
     "invalid_email": "email must contain @",
-    "short_pwd": "Password too short",
+    "short_pwd": "Password is too short",
     "confirm_pwd": "Please confirm password!",
-    "pwd_mismatch": "Passwords do not match!",
-    "duplicate_team_name": "There is already a team with the same name",
-    "duplicate_member_name": "There is already an employee with the same name",
+    "pwd_mismatch": "Passwords do not match each other!",
+    "duplicate_team_name": "Team with the same name already exists",
+    "duplicate_member_name": "Employee with the same name already exists",
     "duplicate_member": "Team mate {{name}} is already in the team",
-    "duplicate_member_result": "There is already a team mate with the same name"
+    "duplicate_member_result": "Team mate with the same name already exists"
   },
   "confirm": {
     "do_logout": "Are you sure you want to log out?",
-    "do_delete_project": "Are you sure you want to log out?"
+    "do_delete_project": "Are you sure you want to delete this project?"
   },
   "auth": {
     "identifier": "Name or email",
     "pwd": "Password",
     "confirm_pwd": "Repeat password",
     "name": "Name",
-    "agreement": "By clicking {{button}}, you acknowledge that you have read and understood, and agree to Teamconstructor's <i>Terms</i> and <i>Privacy Policy</i>",
+    "agreement": "By clicking {{button}}, you acknowledge that you have read and understood, and agree with Teamconstructor app <i>Terms</i> and <i>Privacy Policy</i>",
     "forgot_pwd_question": "Forgot your password?",
     "forgot_pwd": "Forgot password",
-    "forgot_pwd_success": "Email sent",
+    "forgot_pwd_success": "Email with password recovery link was sent to your email adsress",
     "reset_pwd": "Reset password",
     "signin": "Log In",
     "signup": "Sign Up",
     "registration": "Registration",
     "ready_to_login": "Ready to log in?",
-    "forgot_explanation": "Enter the Email that you provided during registration. You will receive an email with a link to change your password to this mailbox",
+    "forgot_explanation": "Enter the email address that you provided during registration. You will receive an email with a link to change your password to this mailbox",
     "forgot_success": "Check your inbox for the link to reset your password",
     "new_pwd": "New password",
     "reset_success": "Password changed. You can now log in using the new password through the standard form"
@@ -81,8 +81,9 @@
     "show": "Show me!",
     "meta": {
       "title": "title for profile page",
-      "description": "description for profile page"
-    }
+      "description": "Description for profile page"
+    },
+    "onboarding": "Welcome to Salary2.me !"
   },
   "title": "Title",
   "cookie_consent": {

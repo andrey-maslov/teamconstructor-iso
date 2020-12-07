@@ -79,7 +79,6 @@ i18n
                             initialI18nStore[l] = req.i18n.services.resourceStore.data[l];
                         });
 
-                        console.log(initialI18nStore)
                         const initialLanguage = req.i18n.language
                         const initLang = stripCountry(initialLanguage) || LANG_DEFAULT;
 

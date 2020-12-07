@@ -29,6 +29,10 @@
     left: -4rem;
     animation: arrow infinite 2000ms ease-in-out;
   }
+
+  h3 {
+    color: $yellow;
+  }
 }
 
 @keyframes arrow {

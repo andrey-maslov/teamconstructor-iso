@@ -7,7 +7,7 @@
     "button_title": "Get started!"
   },
   "background": {
-    "title": "Prerequisites",
+    "title": "Premise",
     "problems": "Problems",
     "solution": "Solution",
     "problems_list": [
@@ -22,10 +22,10 @@
   },
   "consist": {
     "title": "What the service includes",
-    "unique_test": "Unique test",
-    "test_desc": "After passing our test, the user receives a detailed detailed description of his psychological portrait",
+    "unique_test": "Unique test, developed by team of high-skilled specialists",
+    "test_desc": "After passing our test, the user receives a detailed description of his psychological portrait",
     "team_building": "Team Building",
-    "team_desc": "Having the test results of different people, you can predict the interaction between them, in particular",
+    "team_desc": "When you have test results of potential team members, you can predict the interaction between them, whether their common work is stable, responsible and convinient for each other",
     "test_list": [
       "Consists of 75 questions, the completion takes an average of 15 minutes",
       "Scientific basis: developments by L.N.Sobchik (Theory of leading trends); R. Ackoff, F. Emery. (On purposeful systems.), W. Schutz (Theory of interpersonal relations), as well as studies of congenital and acquired features of the brain.",
@@ -46,11 +46,11 @@
     "roles": [
       {
         "title": "Heads of departments",
-        "desc": "to form teams of suitable people or for the necessary tasks, taking into account specialization (sales, analytics, creativity, quality assurance, etc.)"
+        "desc": "to configure teams with suitable personalities or with profiles for special business direction (sales, analytics, creativity, quality assurance, etc.)"
       },
       {
-        "title": "Human Resource Professionals",
-        "desc": "find out the psychological profile of the candidate and his potential compatibility with the existing team"
+        "title": "HR professionals",
+        "desc": "find out the psychological profile of the candidate and his best potential compatibility with existing teams"
       }
     ]
   },
@@ -127,19 +127,19 @@
     "faq_list": [
       [
         "What methodology was used to build the settlement system?",
-        "Scientific basis: developments by L.N.Sobchik (Theory of leading trends); R. Ackoff, F. Emery. (On purposeful systems.), W. Schutz (Theory of interpersonal relations), as well as studies of congenital and acquired features of the brain."
+        "To develop the test methodology, our team took as a basis more than 40 years of research by L. N. Sobchik, while the form of the test is understandable and based on the American school of psychology. Compatibility is calculated on the basis of the works of R. Ackoff and F. Emery, who developed a theory of the combination of the intensity of display of personal qualities."
       ],
       [
-        "where was the data taken to build the model?",
-        "Data for building the model was taken from numerous experiments carried out on real teams."
+        "Where was the data taken to build the model?",
+        "Data for building the model was taken from numerous experiments carried out on real teams. The model is based on more than 10 years of experience in applying the model in neuromarketing and dozens of successful cases. Now we want to apply this model to HR services."
       ],
       [
-        "are you crooks?",
-        "no, we are not crooks, our calculations are based on ...."
+        "Is that another horoscope?",
+        "No, this is not a horoscope. Try our free test and see how accurately it describes your personality"
       ],
       [
-        "Another interesting question for the masses?",
-        "And this is a wonderful and detailed answer to an equally wonderful and detailed question. This answer addresses all aspects of the question and there should no longer be any doubts about our competence."
+        "Why should people show their character to others?",
+        "Our mission is that a person at work is perceived not only as a function, but also as a personality. The more accurately we can describe the preferences and aspirations of a person, the more comfortable team he/she can find for him/herself."
       ]
     ]
   },
