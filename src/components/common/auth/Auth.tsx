@@ -1,16 +1,15 @@
 import React, { useRef, useEffect } from 'react'
-import { NavLink, useHistory, useLocation } from 'react-router-dom'
-import Login, { ILoginForm } from './Login'
+import { NavLink, useHistory } from 'react-router-dom'
+import Login, { ISigninForm } from './Login'
 import Signup, { ISignUpForm } from './Signup'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { globalStoreType } from '../../../constants/types'
+import { AnyType, globalStoreType } from '../../../constants/types'
 import { authUser, sendForgotEmail, sendNewPassword } from '../../../actions/actionCreator'
 import Forgot, { IForgotForm } from './Forgot'
 import Reset, { IResetForm } from './Reset'
 import { authModes } from '../../../constants/constants'
 import style from './auth.module.scss'
-import ForgotSuccess from './ForgotSuccess'
 import { getQueryFromURL } from '../../../helper/helper'
 
 
@@ -22,11 +21,10 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
 
     const { t } = useTranslation()
     const history = useHistory()
-    const location = useLocation()
     const dispatch = useDispatch()
     const agreement = useRef<HTMLDivElement>(null)
     const { isLoggedIn } = useSelector((state: globalStoreType) => state.user)
-    const { isLoading, errorApiMessage } = useSelector((state: globalStoreType) => state.app)
+    const { accountApiErrorMsg, redirectUrl } = useSelector((state: globalStoreType) => state.app)
 
     useEffect(() => {
 
@@ -52,11 +50,13 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
             termsLink && termsLink.removeEventListener('click', toTerms)
             privacyLink && privacyLink.removeEventListener('click', toPrivacy)
         }
-    }, [agreement, isLoggedIn])
+    }, [ agreement, isLoggedIn ])
 
-    if (isLoggedIn) {
-        history.push('/')
-    }
+    useEffect(() => {
+        if (isLoggedIn) {
+            history.push(redirectUrl || '/')
+        }
+    }, [ isLoggedIn ])
 
     const Form = () => {
         switch (page) {
@@ -64,10 +64,9 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
                 return (
                     <>
                         <Login
-                            isLoading={isLoading}
-                            errorApiMessage={errorApiMessage}
-                            submitHandle={logIn}
-                            clearApiError={clearApiError}
+                            isLoading={false}
+                            errorApiMessage={accountApiErrorMsg}
+                            submitHandle={signIn}
                         />
                         <NavLink to="/signin/forgot-password">{t('common:auth.forgot_pwd_question')}</NavLink>
                     </>
@@ -75,20 +74,18 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
             case authModes[1] :
                 return (
                     <Signup
-                        isLoading={isLoading}
-                        errorApiMessage={errorApiMessage}
+                        isLoading={false}
+                        errorApiMessage={accountApiErrorMsg}
                         submitHandle={signUp}
-                        clearApiError={clearApiError}
                     />
                 )
             case authModes[2] :
                 return (
                     <>
                         <Forgot
-                            isLoading={isLoading}
-                            errorApiMessage={errorApiMessage}
+                            isLoading={false}
+                            errorApiMessage={accountApiErrorMsg}
                             submitHandle={forgotHandle}
-                            clearApiError={clearApiError}
                         />
                         <NavLink to="/signin">{t('common:auth.ready_to_login')}</NavLink>
                     </>
@@ -97,18 +94,10 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
                 return (
                     <>
                         <Reset
-                            isLoading={isLoading}
-                            errorApiMessage={errorApiMessage}
+                            isLoading={false}
+                            errorApiMessage={accountApiErrorMsg}
                             submitHandle={resetHandle}
-                            clearApiError={clearApiError}
                         />
-                        <NavLink to="/signin">{t('common:auth.ready_to_login')}</NavLink>
-                    </>
-                )
-            case authModes[4] :
-                return (
-                    <>
-                        <ForgotSuccess />
                         <NavLink to="/signin">{t('common:auth.ready_to_login')}</NavLink>
                     </>
                 )
@@ -129,41 +118,39 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
                 dangerouslySetInnerHTML={{ __html: t('common:auth.agreement', { button: t('common:buttons.signup') }) }}
             />
         </div>
-    );
+    )
 
-    function logIn(data: ILoginForm): void {
-        dispatch(authUser(data, 'signin'))
+    function signIn(data: ISigninForm, setError: AnyType): void {
+        dispatch(authUser(data, 'signin', setError))
     }
 
-    function forgotHandle(data: IForgotForm): void {
-        dispatch(sendForgotEmail(data.email))
+    function signUp(data: ISignUpForm, setError: AnyType): void {
+        const userData = {
+            firstName: '',
+            lastName: '',
+            city: {
+                id: 0,
+                name: 'city'
+            },
+            service: 2,
+            ...data
+        }
+        dispatch(authUser(userData, 'registration', setError))
     }
 
-    function resetHandle(data: IResetForm): void {
-        const code = getQueryFromURL(location.search, 'code')
+    function forgotHandle(data: IForgotForm, setError: AnyType): void {
+        dispatch(sendForgotEmail(data.email, setError))
+    }
+
+    function resetHandle(data: IResetForm, setError: AnyType): void {
+        const code = getQueryFromURL(window.location.search, 'code')
         const newData = {
             code,
-            password: data.password,
-            passwordConfirmation: data.passwordConfirm,
+            newPassword: data.password,
+            email: data.email
         }
-        dispatch(sendNewPassword(newData))
+        dispatch(sendNewPassword(newData, setError))
     }
-
-    function signUp(data: ISignUpForm): void {
-        const userData = {
-            username: data.name,
-            email: data.email,
-            password: data.password,
-        }
-        dispatch(authUser(userData, 'registration'))
-    }
-
-
-    function clearApiError() {
-        // console.log('asdasd')
-        // dispatch({type: SET_ERROR, errorApiMessage: ''})
-    }
-
 }
 
-export default Auth;
+export default Auth

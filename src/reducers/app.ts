@@ -1,16 +1,20 @@
 import {
     LOADING,
     SET_ERROR,
-    PROCESS_FAILED, SEND_EMAIL, CHANGE_PWD
+    PROCESS_FAILED,
+    SEND_EMAIL,
+    CHANGE_PWD, SET_AUTH_ERROR, REDIRECT_URL
 } from "../actions/actionTypes"
 
 const APP = {
     isLoading: false,
     errorApiMessage: null,
+    accountApiErrorMsg: null,
+    redirectUrl: null,
     setToast: null,
     processFailed: false,
-    emailSent: null,
-    isPwdChanged: null
+    isEmailSent: false,
+    isPwdChanged: false
 }
 
 export type appStoreType = {
@@ -18,9 +22,11 @@ export type appStoreType = {
     isLoading: boolean
     setToast: number | null
     errorApiMessage: '' | null
+    accountApiErrorMsg: string | null
+    redirectUrl: string | null
     processFailed: boolean
-    emailSent: boolean | null
-    isPwdChanged: boolean | null
+    isEmailSent: boolean
+    isPwdChanged: boolean
 }
 
 export const app = (state = APP, {
@@ -28,8 +34,10 @@ export const app = (state = APP, {
     isLoading,
     errorApiMessage,
     processFailed,
-    emailSent,
-    isPwdChanged
+    isEmailSent,
+    isPwdChanged,
+    accountApiErrorMsg,
+    redirectUrl
 }: appStoreType) => {
     switch (type) {
         case LOADING :
@@ -42,6 +50,16 @@ export const app = (state = APP, {
                 ...state,
                 errorApiMessage
             }
+        case SET_AUTH_ERROR:
+            return {
+                ...state,
+                accountApiErrorMsg
+            }
+        case REDIRECT_URL:
+            return {
+                ...state,
+                redirectUrl
+            }
         case PROCESS_FAILED :
             return {
                 ...state,
@@ -50,7 +68,7 @@ export const app = (state = APP, {
         case SEND_EMAIL :
             return {
                 ...state,
-                emailSent
+                isEmailSent
             }
         case CHANGE_PWD :
             return {

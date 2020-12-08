@@ -7,9 +7,9 @@ import {
     SET_ROW_DATA2,
 } from "../actions/actionTypes"
 import { loadState } from "../store/sessionStorage"
+import { AnyType } from "../constants/types"
 
 let STATE = loadState('pair')
-// let STATE: any;
 
 if (!STATE) {
     STATE = {
@@ -40,7 +40,7 @@ export const pair = (state = STATE, {
     encData2,
     name1,
     name2,
-}: pairStoreType) => {
+}: pairStoreType): AnyType => {
     switch (type) {
         case SET_COMPARISON_READY :
             return {

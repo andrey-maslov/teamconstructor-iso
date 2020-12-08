@@ -1,0 +1,27 @@
+@import '../../../../../assets/scss/vars';
+
+.btn {
+  user-select: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border-radius: 20px;
+  transition: background .1s ease-in;
+
+  &:hover {
+    background: rgba(#fff, .3);
+  }
+
+  &:active {
+    border-radius: 20px;
+  }
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+  fill: $base;
+  flex-shrink: 0;
+  backface-visibility: hidden;
+}

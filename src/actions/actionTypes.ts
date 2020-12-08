@@ -23,11 +23,14 @@ export const SET_ROW_DATA2 = 'SET_ROW_DATA2'
 // User data
 export const ADD_AUTH_DATA = 'ADD_AUTH_DATA'
 export const CLEAR_USER_DATA = 'CLEAR_USER_DATA'
+export const SET_AUTH_PROVIDER = 'SET_AUTH_PROVIDER'
+export const SET_AUTH_ERROR = 'SET_AUTH_ERROR'
 
 // Modals
 export const SET_ADD_MEMBER_MODAL = 'SET_ADD_MEMBER_MODAL'
 export const SET_MEMBER_INFO_MODAL = 'SET_MEMBER_INFO_MODAL'
 export const SET_CREATE_PROJECT_MODAL = 'SET_CREATE_PROJECT_MODAL'
+export const DANGER_MODAL = 'DANGER_MODAL'
 
 // Processes
 export const SET_COMPARISON_READY = 'SET_COMPARISON_READY'
@@ -46,3 +49,4 @@ export const FETCH_CONTENT = 'FETCH_CONTENT'
 export const LOADING = 'LOADING'
 export const SET_ERROR = 'SET_ERROR'
 export const SET_TOAST = 'SET_TOAST'
+export const REDIRECT_URL = 'REDIRECT_URL'

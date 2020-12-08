@@ -6,7 +6,6 @@ const ForgotSuccess: React.FC = () => {
 
     const { t } = useTranslation()
 
-
     return (
         <div>
             <div className="auth-icon-success">
@@ -14,8 +13,7 @@ const ForgotSuccess: React.FC = () => {
             </div>
             <p>{t('common:auth.forgot_success')}</p>
         </div>
-    );
-
+    )
 }
 
 export default ForgotSuccess

@@ -4,106 +4,80 @@ import Button from "../buttons/button/Button"
 import { useForm } from 'react-hook-form'
 import { AiOutlineLoading } from 'react-icons/ai'
 import { useTranslation } from "react-i18next"
-import { ILogin } from "./Login"
+import { ISignin } from "./Login"
+import Password from "../Inputs/password/Password"
 
 export interface ISignUpForm {
-    name: string
     email: string
     password: string
     passwordConfirm: string
-    errors: any
+    form?: unknown
 }
 
-const Signup: React.FC<ILogin<ISignUpForm>> = ({ isLoading, errorApiMessage, submitHandle, clearApiError }) => {
+const Signup: React.FC<ISignin<ISignUpForm>> = ({ isLoading, errorApiMessage, submitHandle }) => {
 
     const { t } = useTranslation()
-    const { register, handleSubmit, reset, getValues, errors } = useForm<ISignUpForm>()
+    const { register, handleSubmit, setError, getValues, errors, clearErrors } = useForm<ISignUpForm>()
 
     return (
-        <form onSubmit={handleSubmit(submitHandle)}>
-
-            <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
-                <label>
-                    <span>{t('common:auth.name')}</span>
-                    <input
-                        className={style.input}
-                        type="text"
-                        name="name"
-                        onFocus={clearApiError}
-                        ref={register({
-                            required: `${t('common:errors.required')}`
-                        })}
-                    />
-                </label>
-                {errors.name && <div className={`item-explain`}>{errors.name.message}</div>}
-            </div>
-
-            <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
+        <form onSubmit={ handleSubmit(data => submitHandle(data, setError)) }>
+            <div className={ `form-group ${ errors.email ? 'has-error' : '' }` }>
                 <label>
                     <span>Email</span>
                     <input
-                        className={style.input}
+                        className={ style.input }
                         name="email"
-                        onFocus={clearApiError}
-                        ref={register({
-                            required: `${t('common:errors.required')}`,
+                        ref={ register({
+                            required: `${ t('common:errors.required') }`,
                             pattern: {
                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: `${t('common:errors.invalid_email')}`
+                                message: `${ t('common:errors.invalid_email') }`
                             }
-                        })}
+                        }) }
                     />
                 </label>
-                {errors.email && <div className={`item-explain`}>{errors.email.message}</div>}
+                { errors.email && <div className="item-explain">{ errors.email.message }</div> }
             </div>
 
-            <div className={`form-group ${errors.password ? 'has-error' : ''}`}>
-                <label>
-                    <span>{t('common:auth.pwd')}</span>
-                    <input
-                        className={style.input}
-                        type="password"
-                        name="password"
-                        onFocus={clearApiError}
-                        ref={register({
-                            required: `${t('common:errors.required')}`,
-                            minLength: { value: 3, message: `${t('common:errors.short_pwd')}` }
-                        })}
-                    />
-                </label>
-                {errors.password && <div className={`item-explain`}>{errors.password.message}</div>}
-            </div>
-
-            <div className={`form-group ${errors.passwordConfirm ? 'has-error' : ''}`}>
-                <label>
-                    <span>{t('common:auth.confirm_pwd')}</span>
-                    <input
-                        className={style.input}
-                        type="password"
-                        name="passwordConfirm"
-                        onFocus={clearApiError}
-                        ref={register({
-                            required: `${t('common:errors.confirm_pwd')}`,
-                            validate: {
-                                matchesPreviousPassword: value => {
-                                    const { password } = getValues();
-                                    return password === value || `${t('common:errors.pwd_mismatch')}`;
-                                }
-                            }
-                        })}
-                    />
-                </label>
-                {errors.passwordConfirm && <div className={`item-explain`}>{errors.passwordConfirm.message}</div>}
-            </div>
-
-            <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
-                <Button
-                    title={t('common:buttons.signup')}
-                    startIcon={isLoading && <AiOutlineLoading />}
-                    handle={() => void (0)}
-                    btnClass={'btn-outlined btn-loader'}
+            <div className={ `form-group ${ errors.password ? 'has-error' : '' }` }>
+                <Password
+                    label={ t('common:auth.pwd') }
+                    innerRef={ register({
+                        required: `${ t('common:errors.required') }`,
+                        minLength: { value: 7, message: `${ t('common:auth.short_pwd') }` }
+                    }) }
+                    name="password"
                 />
-                {errorApiMessage && <div className={`item-explain`}>{errorApiMessage}</div>}
+                { errors.password && <div className="item-explain">{ errors.password.message }</div> }
+            </div>
+
+            <div className={ `form-group ${ errors.passwordConfirm ? 'has-error' : '' }` }>
+                <Password
+                    label={ t('common:auth.confirm_pwd') }
+                    innerRef={ register({
+                        required: `${ t('common:auth.confirm_pwd') }`,
+                        validate: {
+                            matchesPreviousPassword: value => {
+                                const { password } = getValues()
+                                return password === value || `${ t('common:errors.pwd_mismatch') }`
+                            }
+                        }
+                    }) }
+                    name="passwordConfirm"
+                />
+                { errors.passwordConfirm && (
+                    <div className="item-explain">{ errors.passwordConfirm.message }</div>
+                ) }
+            </div>
+
+            <div className={ `form-group ${ errorApiMessage ? 'has-error' : '' }` }>
+                <Button
+                    title={ t('common:buttons.signup') }
+                    startIcon={ isLoading && <AiOutlineLoading /> }
+                    handle={ () => clearErrors() }
+                    btnClass="btn btn-accent btn-loader"
+                />
+                { errors.form && <div className="item-explain api-error">{ errors.form.message }</div> }
             </div>
         </form>
     )

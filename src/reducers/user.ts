@@ -1,89 +1,63 @@
-import {
-    ADD_AUTH_DATA,
-    CLEAR_USER_DATA,
-    SET_ACTIVE_PROJECT,
-    ADD_PROJECT,
-    SET_PROJECTS,
-} from '../actions/actionTypes'
+import { ADD_AUTH_DATA, CLEAR_USER_DATA, SET_AUTH_PROVIDER } from '../actions/actionTypes'
 import { loadState } from '../store/sessionStorage'
+import { AnyType, IUserData } from "../constants/types"
 
-let USER_DATA = loadState('userData')
+let STATE = loadState('userData')
 
-if (!USER_DATA) {
-    USER_DATA = {
+export type userStoreType = {
+    firstName: string | null
+    lastName: string | null
+    email: string | null
+    position: string | null
+    provider: string | null
+    isPublic: boolean | null
+    isLookingForJob: boolean | null
+    isOpenForWork: boolean | null
+}
+
+type UserReducerType = {
+    type: string
+    userData: IUserData
+    provider: string
+}
+
+if (!STATE) {
+    STATE = {
         firstName: null,
         lastName: null,
-        username: null,
-        provider: null,
         email: null,
-        testResult: null,
-        role: null,
-        projects: null,
-        activeProject: null,
+        position: null,
+        provider: null,
         isLoggedIn: false,
-        errorApiMessage: null
+        isPublicProfile: null,
+        isOpenForWork: null
     }
 }
 
-export type userStoreType = typeof USER_DATA
-
-export const user = (state = USER_DATA, {
-    type,
-    firstName,
-    lastName,
-    username,
-    provider,
-    email,
-    testResult,
-    role,
-    projects,
-    project,
-    activeProject,
-}: userStoreType) => {
+export const user = (state = STATE, {type, userData, provider}: UserReducerType): AnyType => {
     switch (type) {
         case ADD_AUTH_DATA :
             return {
                 ...state,
-                username,
-                firstName,
-                lastName,
-                email,
-                provider,
-                testResult,
-                role,
-                projects,
-                activeProject,
+                ...userData,
                 isLoggedIn: true
             }
-        case SET_ACTIVE_PROJECT :
+        case SET_AUTH_PROVIDER:
             return {
                 ...state,
-                activeProject
+                provider
             }
-        case ADD_PROJECT :
-            return {
-                ...state,
-                projects: [...state.projects, project]
-            }
-        case SET_PROJECTS :
-            return {
-                ...state,
-                projects: projects
-            }
-        case CLEAR_USER_DATA :
+        case CLEAR_USER_DATA:
             return {
                 ...state,
                 firstName: null,
                 lastName: null,
-                username: null,
-                provider: null,
                 email: null,
-                testResult: null,
-                role: null,
-                projects: null,
-                activeProject: null,
+                position: null,
+                provider: null,
                 isLoggedIn: false,
-                errorApiMessage: null
+                isPublicProfile: null,
+                isOpenForWork: null
             }
         default:
             return state

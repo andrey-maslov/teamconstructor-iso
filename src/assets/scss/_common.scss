@@ -822,6 +822,20 @@ input, textarea {
     padding-top: 0;
     line-height: 1.4;
     transition: color .3s cubic-bezier(.215, .61, .355, 1);
+
+    &.api {
+
+      &-error {
+        color: $danger;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+      }
+      &-success {
+        color: $success;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+      }
+    }
   }
 
   &.has-error {

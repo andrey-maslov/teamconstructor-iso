@@ -5,6 +5,8 @@ import { TermsStoreType } from '../reducers/terms'
 import { modalsStoreType } from '../reducers/modals'
 import { appStoreType } from '../reducers/app'
 
+export type AnyType = any
+
 export type DecodedDataType = [number[], number[][]]
 
 export interface IMember {
@@ -45,14 +47,22 @@ export interface IDescWithRange {
 }
 
 export interface ISignUpData {
-    username: string
     email: string
     password: string
+    firstName: string
+    lastName: string
+    city: {
+        id: number
+        name: string
+    }
+    service: number
 }
-export interface ILoginData {
-    identifier: string
+
+export interface ISignInData {
+    username: string
     password: string
 }
+
 export type TableRow = (string | number)[] | null
 
 export type globalStoreType = {
@@ -66,4 +76,35 @@ export type globalStoreType = {
 
 export interface IOneFieldForm<T> {
     [key: string]: T
+}
+
+export interface IGetTestsResponse {
+    id: number
+    userId: string
+    value: string
+    type: number
+}
+
+export interface IUserData {
+    firstName: string
+    lastName: string
+    email: string
+    position?: string
+    provider?: string
+    isPublicProfile?: boolean
+    isOpenForWork?: boolean
+}
+
+export interface INewPwdData {
+    code: string
+    newPassword: string
+    email: string
+}
+
+export interface IPairData {
+    type: string,
+    data1: [] | string,
+    data2: [] | string,
+    name1: string,
+    name2: string
 }
