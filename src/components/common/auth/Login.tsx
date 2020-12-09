@@ -45,7 +45,7 @@ const Login: React.FC<ISignin<ISigninForm>> = ({ isLoading, errorApiMessage, sub
             </div>
             <div className={`form-group ${errors.password ? 'has-error' : ''}`}>
                 <Password
-                    label={t('signin:pwd')}
+                    label={t('common:auth.pwd')}
                     innerRef={register({
                         required: `${t('common:errors.required')}`
                     })}

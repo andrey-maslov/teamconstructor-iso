@@ -3,16 +3,17 @@ import { useHistory } from "react-router-dom"
 import { useTranslation } from 'react-i18next'
 import { useSelector, useDispatch } from 'react-redux'
 import { globalStoreType } from '../../../../constants/types'
-import { deleteProject, fetchProject, setCreateProjectModal } from '../../../../actions/actionCreator'
+import { deleteProject, setCreateProjectModal } from '../../../../actions/actionCreator'
 import { VscProject } from "react-icons/vsc"
 import style from './projects.module.scss'
+import { SET_ACTIVE_PROJECT } from "../../../../actions/actionTypes";
 
 const ProjectList: React.FC = () => {
 
     const history = useHistory()
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const { projects, activeProject } = useSelector((state: globalStoreType) => state.user)
+    const { projects, activeProject } = useSelector((state: globalStoreType) => state.team)
 
     return (
         <>
@@ -33,15 +34,15 @@ const ProjectList: React.FC = () => {
                             >
                                 <button
                                     className={style.project}
-                                    onClick={() => changeProject(activeProject.id, project.id)}
+                                    onClick={() => changeProject(activeProject.id, project.id, project.title)}
                                 >
                                     <span>{project.title}</span>
                                 </button>
                                 <button className={style.delete} onClick={() => handlerDelete(project.id)} />
                             </li>
                         )) : (
-                            <li>
-                                <span>{t('team:project.no_projects')}</span>
+                            <li className={style.empty}>
+                                <p >{t('team:project.no_projects')}</p>
                             </li>
                         )
                     }
@@ -65,9 +66,9 @@ const ProjectList: React.FC = () => {
         }
     }
 
-    function changeProject(current: number, id: number) {
+    function changeProject(current: number, id: number, title: string) {
         if (current !== id) {
-            dispatch(fetchProject(id))
+            dispatch({ type: SET_ACTIVE_PROJECT, activeProject: { id, title } })
         } else {
             console.log('active project is current')
         }

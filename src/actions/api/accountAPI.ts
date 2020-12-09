@@ -1,21 +1,12 @@
 import { CHANGE_PWD, CLEAR_USER_DATA, DANGER_MODAL, SEND_EMAIL, SET_AUTH_PROVIDER, SET_TOAST } from "../actionTypes"
 import { AnyType, INewPwdData, ISignInData, ISignUpData, IUserData } from "../../constants/types"
 import { accountApiErrorHandling, apiErrorHandling, clearErrors } from "../errorHandling"
-import { API_VER, authModes, BASE_API } from "../../constants/constants"
+import { authModes } from "../../constants/constants"
 import { getCookieFromBrowser, setCookie } from "../../helper/cookie"
 import { logOut, setUserData } from "../actionCreator"
-import { fetchProjectsList } from "./projectsAPI"
+import { fetchProjectList } from "./projectsAPI"
 import axios from "axios"
-
-const accountApiUrl = `${ BASE_API }/api/v${ API_VER }/Account`
-
-const getAuthConfig = (jwt: string) => {
-    return {
-        headers: {
-            Authorization: `Bearer ${ jwt }`
-        }
-    }
-}
+import { accountApiUrl, getAuthConfig } from "./utils"
 
 export function checkAuth(jwt?: string): unknown {
     const token = jwt || getCookieFromBrowser('token')
@@ -30,7 +21,7 @@ export function authUser(
     authType: keyof typeof authModes,
     setError: AnyType
 ): AnyType {
-    const url = `${ accountApiUrl }/${ authType === authModes[1] ? 'register' : 'authenticate' }`
+    const url = `${accountApiUrl}/${authType === authModes[1] ? 'register' : 'authenticate'}`
 
     return (dispatch: AnyType) => {
         axios
@@ -40,7 +31,7 @@ export function authUser(
                 setCookie('token', token)
                 dispatch({ type: SET_AUTH_PROVIDER, provider: 'local' })
                 dispatch(fetchUserData(token))
-                // dispatch(fetchProjectsList(token))
+                dispatch(fetchProjectList(token))
             })
             .catch(error => accountApiErrorHandling(error, setError))
     }
@@ -67,7 +58,7 @@ export const updateUserData = (userData: IUserData) => {
         if (token) {
             clearErrors(dispatch)
             axios
-                .put(`${ accountApiUrl }/update`, userData, getAuthConfig(token))
+                .put(`${accountApiUrl}/update`, userData, getAuthConfig(token))
                 .then(res => {
                     dispatch(setUserData(res.data))
                     dispatch({ type: SET_TOAST, setToast: 1 })
@@ -85,7 +76,7 @@ export const updateUserData = (userData: IUserData) => {
 export const sendForgotEmail = (email: string, setError: unknown): unknown => {
     return (dispatch: AnyType) => {
         axios
-            .post(`${ accountApiUrl }/reset-password`, { email })
+            .post(`${accountApiUrl}/reset-password`, { email })
             .then(() => dispatch({ type: SEND_EMAIL, isEmailSent: true }))
             .catch(error => accountApiErrorHandling(error, setError))
     }
@@ -94,7 +85,7 @@ export const sendForgotEmail = (email: string, setError: unknown): unknown => {
 export const sendNewPassword = (data: INewPwdData, setError: unknown): unknown => {
     return (dispatch: AnyType) => {
         axios
-            .post(`${ accountApiUrl }/confirm-reset-password`, data)
+            .post(`${accountApiUrl}/confirm-reset-password`, data)
             .then(() => dispatch({ type: CHANGE_PWD, isPwdChanged: true }))
             .catch(error => accountApiErrorHandling(error, setError))
     }
@@ -105,7 +96,7 @@ export function deleteAccount(password: string): unknown {
     return (dispatch: AnyType) => {
         if (token) {
             axios
-                .post(`${ accountApiUrl }/delete`, { password }, getAuthConfig(token))
+                .post(`${accountApiUrl}/delete`, { password }, getAuthConfig(token))
                 .then(() => {
                     dispatch(logOut())
                     dispatch({ type: DANGER_MODAL, isDangerModal: false })

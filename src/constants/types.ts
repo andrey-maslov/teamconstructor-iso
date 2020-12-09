@@ -17,9 +17,16 @@ export interface IMember {
     baseID: number
 }
 
-export interface IProject {
-    id: number
+export interface IProjectShort {
+    id: string
     title: string
+}
+
+export interface IProject {
+    id: string
+    title: string
+    pool: ITeam
+    teams: ITeam[]
 }
 
 export interface ITeam {

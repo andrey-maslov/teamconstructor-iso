@@ -7,8 +7,8 @@ import Button from '../../buttons/button/Button'
 import { FaReact } from 'react-icons/fa'
 import { GoRocket } from 'react-icons/go'
 import ProfileGenerator from './profile-generator/ProfileGenerator'
-import style from './pair-coop-input.module.scss'
-import { globalStoreType } from '../../../../constants/types'
+import style from './pair-input.module.scss'
+import { AnyType, globalStoreType } from '../../../../constants/types'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { extractEncData } from '../../../../helper/helper'
@@ -77,6 +77,20 @@ const PairCoopInput: React.FC = () => {
                                 })}
                                 errors={errors}
                             />
+                            <div className={style.buttons}>
+                                <button
+                                    className={`${style.btn} btn btn-outlined`}
+                                    onClick={(e) => setOwnResult(e, item)}
+                                >
+                                    Свой результат
+                                </button>
+                                <button
+                                    className={`${style.btn} btn btn-outlined`}
+                                    onClick={(e) => openSearch(e, item)}
+                                >
+                                    Найти пользователя
+                                </button>
+                            </div>
                         </div>
                     ))}
 
@@ -111,6 +125,15 @@ const PairCoopInput: React.FC = () => {
 
         dispatch(setComparisonResult(true))
         dispatch(setPairData(decData1, decData2, name1, name2))
+    }
+
+    function setOwnResult(e: React.MouseEvent<HTMLButtonElement>, inputNum: number): void {
+        e.preventDefault()
+        console.log("Свой результат, окошко: ", inputNum)
+    }
+    function openSearch(e: React.MouseEvent<HTMLButtonElement>, inputNum: number): void {
+        e.preventDefault()
+        console.log("Найти пользователя, окошко: ", inputNum)
     }
 
 

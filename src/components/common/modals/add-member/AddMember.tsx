@@ -31,8 +31,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
         }
     }, [])
 
-    const { teams, editedMember } = useSelector((state: globalStoreType) => state.team)
-    const { activeProject } = useSelector((state: globalStoreType) => state.user)
+    const { teams, editedMember, activeProject } = useSelector((state: globalStoreType) => state.team)
     const { isLoading, errorApiMessage } = useSelector((state: globalStoreType) => state.app)
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
     let defaultProfile = { name: '', position: '', encData: '' }
@@ -153,7 +152,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
         if (editedMember === null) {
             newTeams[0].items.push(newMember)
-            dispatch(updateProject(activeProject.id, { pool: newTeams[0] }))
+            dispatch(updateProject({ pool: newTeams[0] }))
             console.log('add')
         } else {
             console.log('edit')
@@ -173,7 +172,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
                     })
                 }
             })
-            dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
+            dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
         }
     }
 

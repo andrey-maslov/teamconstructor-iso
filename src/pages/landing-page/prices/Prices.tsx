@@ -29,7 +29,7 @@ const Prices: React.FC = () => {
             tariff: "free",
         },
         {
-            amount: tariff === "teamconstructor-month" ? 29.99 : 299.99,
+            amount: tariff === "teamconstructor-month" ? 29.99 : 199.99,
             tariff: tariff,
             period: tariff === "teamconstructor-month" ? t('landing:prices.per_month') : t('landing:prices.per_year')
         }

@@ -139,6 +139,16 @@
   }
 }
 
+.empty {
+  padding-top: 1rem ;
+  text-align: center;
+  opacity: .6;
+
+  p {
+    margin: 0;
+  }
+}
+
 @media (max-width: $lg-breakpoint) {
 
   .listWrapper {

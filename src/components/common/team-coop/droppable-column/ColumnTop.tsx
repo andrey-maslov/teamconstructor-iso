@@ -23,11 +23,10 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
 
     const {t} = useTranslation()
     const [isEdit, setEdit] = useState(false)
-    const teams: ITeam[] = useSelector((state: globalStoreType) => state.team.teams)
-    const {activeProject} = useSelector((state: globalStoreType) => state.user)
+    const {activeProject, teams} = useSelector((state: globalStoreType) => state.team)
     const dispatch = useDispatch()
     const {register, handleSubmit, errors, reset} = useForm<IForm>()
-    const labels: string[] = teams.length > 1 ? teams.map(team => team.title.toLowerCase()) : []
+    const labels: string[] = teams.length > 1 ? teams.map((team: ITeam) => team.title.toLowerCase()) : []
 
     return (
         <div className={style.top}>
@@ -80,7 +79,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
 
         const newTeams = [...teams]
         newTeams[columnIndex].title = formData.label
-        dispatch(updateProject(activeProject.id, {pool: newTeams[0], teams: newTeams.slice(1)}))
+        dispatch(updateProject({pool: newTeams[0], teams: newTeams.slice(1)}))
 
         setEdit(!isEdit)
 

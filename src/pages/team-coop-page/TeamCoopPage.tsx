@@ -15,7 +15,8 @@ const TeamCoopPage: React.FC = () => {
     const { t } = useTranslation()
     const isMedium = useMediaPredicate('(max-width: 1400px)')
     const [isCompact, setCompact] = useState(isMedium)
-    const { isLoggedIn, projects, activeProject } = useSelector((state: globalStoreType) => state.user)
+    const { isLoggedIn } = useSelector((state: globalStoreType) => state.user)
+    const { activeProject, projects } = useSelector((state: globalStoreType) => state.team)
     const { isLoading } = useSelector((state: globalStoreType) => state.app)
 
 

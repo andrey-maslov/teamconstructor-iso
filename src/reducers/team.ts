@@ -10,7 +10,7 @@ import {
     CLEAR_USER_DATA,
     SET_POOL, SET_ACTIVE_PROJECT, ADD_PROJECT, SET_PROJECTS
 } from "../actions/actionTypes"
-import { AnyType, IProject, ITeam } from "../constants/types";
+import { AnyType, IProject, IProjectShort, ITeam } from "../constants/types";
 
 // let STATE = loadState('teams');
 
@@ -18,9 +18,9 @@ export type teamStoreType = {
     isComparisonResultReady: boolean,
     isComparisonInProcess: boolean,
     projects: IProject[],
-    activeProject: IProject[] | null,
+    activeProject: IProjectShort,
     teams: ITeam[],
-    pool: ITeam | null,
+    // pool: ITeam | null,
     activeTeam: number,
     teamSpec: number,
     editedMember: number | null,
@@ -31,9 +31,9 @@ const STATE: teamStoreType = {
     isComparisonResultReady: false,
     isComparisonInProcess: false,
     projects: [],
-    activeProject: null,
+    activeProject: {id: '', title: ''},
     teams: [],
-    pool: null,
+    // pool: null,
     activeTeam: 0,
     teamSpec: 0,
     editedMember: null,
@@ -95,10 +95,9 @@ export const team = (state = STATE, {
             }
         }
         case SET_POOL : {
-            const newTeams = [ ...state.teams.slice(1) ]
             return {
                 ...state,
-                teams: [ pool, ...newTeams ]
+                teams: [ pool, ...state.teams.slice(1) ]
             }
         }
         case SET_EDITED_MEMBER :
@@ -106,11 +105,14 @@ export const team = (state = STATE, {
                 ...state,
                 editedMember
             }
-        case SET_ACTIVE_PROJECT :
+        case SET_ACTIVE_PROJECT : {
+            const teams = state.projects.filter(item => item.id === activeProject.id)[0].teams
             return {
                 ...state,
+                teams,
                 activeProject
             }
+        }
         case ADD_PROJECT :
             return {
                 ...state,
@@ -119,17 +121,17 @@ export const team = (state = STATE, {
         case SET_PROJECTS :
             return {
                 ...state,
-                projects: projects
+                projects
             }
         case CLEAR_USER_DATA :
             return {
                 ...state,
                 isComparisonResultReady: false,
                 isComparisonInProcess: false,
-                projects: null,
-                activeProject: null,
+                projects: [],
+                activeProject: {id: '', title: ''},
                 teams: null,
-                pool: null,
+                // pool: null,
                 activeTeam: 0,
                 teamSpec: 0,
                 editedMember: null,

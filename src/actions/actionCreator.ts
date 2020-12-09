@@ -13,7 +13,7 @@ import { removeCookie } from "../helper/cookie";
 
 export { fetchTerms, fetchContent } from './api/termsAPI'
 export { checkAuth, authUser, sendForgotEmail, sendNewPassword } from './api/accountAPI'
-export { createProject, fetchProject, updateProject, deleteProject, fetchProjectsList } from './api/projectsAPI'
+export { createProject, updateProject, deleteProject, fetchProjectList } from './api/projectsAPI'
 
 /*===== AUTH =====*/
 

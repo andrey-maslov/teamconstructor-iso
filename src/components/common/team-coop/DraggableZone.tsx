@@ -7,7 +7,7 @@ import ColumnTop from "./droppable-column/ColumnTop"
 import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
 import { globalStoreType, IMember, ITeam } from "../../../constants/types"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchProject, setAddMemberModal, setTeamsData, updateProject } from '../../../actions/actionCreator'
+import { fetchProjectList, setAddMemberModal, setTeamsData, updateProject } from '../../../actions/actionCreator'
 import { useToasts } from 'react-toast-notifications'
 import { FiPlus, FiSearch } from 'react-icons/fi'
 import SearchPanel from "./search-panel/SearchPanel"
@@ -62,7 +62,7 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 const DraggableZone: React.FC = () => {
 
     const teams: ITeam[] = useSelector((state: globalStoreType) => state.team.teams)
-    const { activeProject } = useSelector((state: globalStoreType) => state.user)
+    // const { activeProject } = useSelector((state: globalStoreType) => state.team)
     const staff: ITeam | Record<string, unknown> = teams ? teams[0] : {}
     const dispatch = useDispatch()
     const { addToast } = useToasts()
@@ -78,11 +78,11 @@ const DraggableZone: React.FC = () => {
         }
     }, [staff])
 
-    useEffect(() => {
-        if (activeProject) {
-            dispatch(fetchProject(activeProject.id))
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (activeProject) {
+    //         dispatch(fetchProjectList())
+    //     }
+    // }, [])
 
 
     function onDragEnd(result: DropResult) {
@@ -100,7 +100,7 @@ const DraggableZone: React.FC = () => {
             const items = reorder(teams[sInd].items, source.index, destination.index)
             const newTeams: ITeam[] = [...teams]
             newTeams[sInd].items = items
-            dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
+            dispatch(updateProject({pool: newTeams[0], teams: newTeams.slice(1) }))
 
         } else if (sInd === 0) {
 
@@ -116,7 +116,7 @@ const DraggableZone: React.FC = () => {
             } else {
                 const newTeams: ITeam[] = [...teams];
                 newTeams[dInd].items = result;
-                dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
+                dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
             }
 
         } else if (dInd === 0) {
@@ -135,7 +135,7 @@ const DraggableZone: React.FC = () => {
                 const newTeams = [...teams];
                 newTeams[sInd].items = result[sInd];
                 newTeams[dInd].items = result[dInd];
-                dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
+                dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
             }
         }
     }
@@ -256,7 +256,7 @@ const DraggableZone: React.FC = () => {
     function deleteMemberFromTeam(colIndex: number, itemIndex: number) {
         const newTeams = [...teams];
         newTeams[colIndex].items.splice(itemIndex, 1);
-        dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
+        dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
         addToast(t('team:member_deleted_from_team'), { appearance: 'success', autoDismiss: true })
     }
 
@@ -267,7 +267,7 @@ const DraggableZone: React.FC = () => {
             ...team,
             items: team.items.filter((item: IMember) => item.baseID !== baseId)
         }))
-        dispatch(updateProject(activeProject.id, { pool: newTeams[0], teams: newTeams.slice(1) }))
+        dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
         addToast(t('team:member_deleted_from_pool'), { appearance: 'success', autoDismiss: true })
     }
 
@@ -280,7 +280,7 @@ const DraggableZone: React.FC = () => {
 
     function deleteTeam(colIndex: number): void {
         const filteredTeams = [...teams].filter((group, i) => i !== colIndex)
-        dispatch(updateProject(activeProject.id, { pool: filteredTeams[0], teams: filteredTeams.slice(1) }))
+        dispatch(updateProject({ pool: filteredTeams[0], teams: filteredTeams.slice(1) }))
         addToast(t('team:team_removed'), { appearance: 'success', autoDismiss: true })
     }
 
