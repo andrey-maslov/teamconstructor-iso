@@ -4,6 +4,7 @@ import { AnyType, IProject, ITeam } from "../../constants/types";
 export const accountApiUrl = `${BASE_API}/api/v${API_VER}/Account`
 export const projectsApiUrl = `${BASE_API}/api/v${API_VER}/Projects`
 export const usersApiUrl = `${BASE_API}/api/v${API_VER}/Users`
+export const testApiUrl = `${BASE_API}/api/v${API_VER}/PsychologicalTests`
 
 export interface IProjectFromBase {
     id: string

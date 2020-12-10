@@ -25,12 +25,14 @@ export const ADD_AUTH_DATA = 'ADD_AUTH_DATA'
 export const CLEAR_USER_DATA = 'CLEAR_USER_DATA'
 export const SET_AUTH_PROVIDER = 'SET_AUTH_PROVIDER'
 export const SET_AUTH_ERROR = 'SET_AUTH_ERROR'
+export const SET_PSY_DATA = 'SET_PSY_DATA'
 
 // Modals
 export const SET_ADD_MEMBER_MODAL = 'SET_ADD_MEMBER_MODAL'
 export const SET_MEMBER_INFO_MODAL = 'SET_MEMBER_INFO_MODAL'
 export const SET_CREATE_PROJECT_MODAL = 'SET_CREATE_PROJECT_MODAL'
 export const DANGER_MODAL = 'DANGER_MODAL'
+export const SEARCH_MODAL = 'SEARCH_MODAL'
 
 // Processes
 export const SET_COMPARISON_READY = 'SET_COMPARISON_READY'
@@ -44,6 +46,10 @@ export const CHANGE_PWD = 'CHANGE_PWD'
 // Fetching content data
 export const FETCH_TERMS = 'FETCH_TERMS'
 export const FETCH_CONTENT = 'FETCH_CONTENT'
+
+// Search another user data
+export const SET_FOUND_USER_DATA = 'SET_FOUND_USER_DATA'
+export const CLEAR_FOUND_USER_DATA = 'CLEAR_FOUND_USER_DATA'
 
 // APPLICATION
 export const LOADING = 'LOADING'

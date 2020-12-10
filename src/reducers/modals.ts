@@ -3,6 +3,7 @@ import {
     SET_CREATE_PROJECT_MODAL,
     SET_MEMBER_INFO_MODAL,
     DANGER_MODAL,
+    SEARCH_MODAL
 } from "../actions/actionTypes"
 import { AnyType } from "../constants/types"
 
@@ -11,6 +12,7 @@ const APP_STATE = {
     isCreateProjectModal: false,
     isMemberInfoModal: false,
     isDangerModal: false,
+    isSearchModal: false
 }
 
 export type modalsStoreType = typeof APP_STATE
@@ -20,7 +22,8 @@ export const modals = (state = APP_STATE, {
     isAddMemberModal,
     isCreateProjectModal,
     isMemberInfoModal,
-    isDangerModal
+    isDangerModal,
+    isSearchModal
 }: AnyType): AnyType => {
     switch (type) {
         case SET_ADD_MEMBER_MODAL :
@@ -42,6 +45,11 @@ export const modals = (state = APP_STATE, {
             return {
                 ...state,
                 isDangerModal
+            }
+        case SEARCH_MODAL:
+            return {
+                ...state,
+                isSearchModal
             }
         default:
             return state

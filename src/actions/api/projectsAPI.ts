@@ -29,7 +29,7 @@ export function fetchProjectList(token: string): AnyType {
             // dispatch(logOut())
             alert('not authorized')
         }
-    };
+    }
 }
 
 export function createProject(project: Omit<IProject, 'id'>): AnyType {

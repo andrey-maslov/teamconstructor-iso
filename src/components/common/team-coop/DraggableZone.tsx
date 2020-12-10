@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { fetchProjectList, setAddMemberModal, setTeamsData, updateProject } from '../../../actions/actionCreator'
 import { useToasts } from 'react-toast-notifications'
 import { FiPlus, FiSearch } from 'react-icons/fi'
-import SearchPanel from "./search-panel/SearchPanel"
 import { useTranslation } from "react-i18next"
+import FilterPanel from "./filter-panel/FilterPanel";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -69,7 +69,7 @@ const DraggableZone: React.FC = () => {
     const { t } = useTranslation()
 
     const [isReady, setReady] = useState(false)
-    const [isSearch, setSearch] = useState(false)
+    const [isFilter, setFilter] = useState(false)
     const [filteredMembers, setFilteredMembers] = useState<IMember[] | null>(null)
 
     useEffect(() => {
@@ -155,12 +155,12 @@ const DraggableZone: React.FC = () => {
             </button>
             <button
                 onClick={openSearch}
-                className={`btn btn-widget btn-icon ${isSearch ? 'active' : ''}`}
+                className={`btn btn-widget btn-icon ${isFilter ? 'active' : ''}`}
                 aria-label={t('common.buttons.search')}
             >
                 <FiSearch />
             </button>
-            {isSearch && <SearchPanel changeHandler={filterStaff} />}
+            {isFilter && <FilterPanel changeHandler={filterStaff} />}
         </div>
     )
 
@@ -179,7 +179,7 @@ const DraggableZone: React.FC = () => {
 
                 <Box title={t('team:pool')} addClass={'store-area'} widget={storeWidget}>
                     {isReady && <DroppableColumnStore
-                        items={(filteredMembers && isSearch) ? filteredMembers : staff.items}
+                        items={(filteredMembers && isFilter) ? filteredMembers : staff.items}
                         deleteItem={deleteMemberHandler}
                         id={`${0}`}
                         // isDropDisabled={true}
@@ -221,8 +221,8 @@ const DraggableZone: React.FC = () => {
     }
 
     function openSearch(): void {
-        setSearch(!isSearch)
-        if (!isSearch) {
+        setFilter(!isFilter)
+        if (!isFilter) {
             setFilteredMembers(staff.items)
         }
     }

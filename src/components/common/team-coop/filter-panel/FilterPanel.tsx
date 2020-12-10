@@ -1,11 +1,11 @@
 import React from 'react'
-import style from './search.module.scss'
+import style from './filter.module.scss'
 
-interface SearchPanelProps {
+interface FilterPanelProps {
     changeHandler: (e: any) => void
 }
 
-const SearchPanel: React.FC<SearchPanelProps> = ({ changeHandler }) => {
+const FilterPanel: React.FC<FilterPanelProps> = ({ changeHandler }) => {
 
     return (
         <div className={style.panel}>
@@ -14,4 +14,4 @@ const SearchPanel: React.FC<SearchPanelProps> = ({ changeHandler }) => {
     )
 }
 
-export default SearchPanel
+export default FilterPanel

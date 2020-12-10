@@ -1,4 +1,4 @@
-import { ADD_AUTH_DATA, CLEAR_USER_DATA, SET_AUTH_PROVIDER } from '../actions/actionTypes'
+import { ADD_AUTH_DATA, CLEAR_USER_DATA, SET_AUTH_PROVIDER, SET_PSY_DATA } from '../actions/actionTypes'
 import { loadState } from '../store/sessionStorage'
 import { AnyType, IUserData } from "../constants/types"
 
@@ -9,6 +9,7 @@ export type userStoreType = {
     lastName: string | null
     email: string | null
     position: string | null
+    psyData: string | null
     provider: string | null
     isPublic: boolean | null
     isLookingForJob: boolean | null
@@ -19,6 +20,7 @@ type UserReducerType = {
     type: string
     userData: IUserData
     provider: string
+    psyData: string
 }
 
 if (!STATE) {
@@ -27,6 +29,7 @@ if (!STATE) {
         lastName: null,
         email: null,
         position: null,
+        psyData: null,
         provider: null,
         isLoggedIn: false,
         isPublicProfile: null,
@@ -34,7 +37,7 @@ if (!STATE) {
     }
 }
 
-export const user = (state = STATE, {type, userData, provider}: UserReducerType): AnyType => {
+export const user = (state = STATE, {type, userData, provider, psyData}: UserReducerType): AnyType => {
     switch (type) {
         case ADD_AUTH_DATA :
             return {
@@ -47,6 +50,11 @@ export const user = (state = STATE, {type, userData, provider}: UserReducerType)
                 ...state,
                 provider
             }
+        case SET_PSY_DATA:
+            return {
+                ...state,
+                psyData
+            }
         case CLEAR_USER_DATA:
             return {
                 ...state,
@@ -54,6 +62,7 @@ export const user = (state = STATE, {type, userData, provider}: UserReducerType)
                 lastName: null,
                 email: null,
                 position: null,
+                psyData: null,
                 provider: null,
                 isLoggedIn: false,
                 isPublicProfile: null,

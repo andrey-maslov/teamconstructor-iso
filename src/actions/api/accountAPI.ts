@@ -7,6 +7,7 @@ import { logOut, setUserData } from "../actionCreator"
 import { fetchProjectList } from "./projectsAPI"
 import axios from "axios"
 import { accountApiUrl, getAuthConfig } from "./utils"
+import { fetchPsyData } from "./psychologicalTestsAPI";
 
 export function checkAuth(jwt?: string): unknown {
     const token = jwt || getCookieFromBrowser('token')
@@ -32,6 +33,7 @@ export function authUser(
                 dispatch({ type: SET_AUTH_PROVIDER, provider: 'local' })
                 dispatch(fetchUserData(token))
                 dispatch(fetchProjectList(token))
+                dispatch(fetchPsyData(token))
             })
             .catch(error => accountApiErrorHandling(error, setError))
     }
