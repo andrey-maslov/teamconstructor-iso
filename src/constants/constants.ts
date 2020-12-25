@@ -14,7 +14,8 @@ export const CONTACT_EMAIL = 'contact@teamconstructor.com'
 export const LANGS = [
     ['ru', 'Русский'],
     ['en', 'English'],
-];
+]
+
 export const LANG_DEFAULT = LANGS[0][0]
 
 export const ROUTES = {
@@ -31,7 +32,7 @@ export const ROUTES = {
     '/signin/reset-password': 'page-auth',
     '/registration': 'page-auth',
     '/save-email': 'save-email',
-};
+}
 
 export const BASE_API = 'https://apibase.pashtaljon.by'
 export const CONTENT_API = 'https://api.salary2.me'

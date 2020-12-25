@@ -8,7 +8,7 @@ import {
     SET_ROW_DATA1,
     SET_ROW_DATA2, SET_COMPARISON_READY, COMPARISON_IN_PROCESS, SET_PAIR_DATA, CLEAR_USER_DATA,
 } from './actionTypes';
-import { AnyType, IPairData, ITeam, IUserData } from "../constants/types"
+import { anyType, IPairData, ITeam, IUserData } from "../constants/types"
 import { removeCookie } from "../helper/cookie";
 
 export { fetchTerms, fetchContent } from './api/termsAPI'
@@ -41,7 +41,7 @@ export function logOut(): { type: string } {
 
 
 /*===== PAIR COOPERATION =====*/
-export function setPairData(data1: AnyType, data2: AnyType, name1: string, name2: string): IPairData {
+export function setPairData(data1: anyType, data2: anyType, name1: string, name2: string): IPairData {
     return {
         type: SET_PAIR_DATA,
         data1,
@@ -51,7 +51,7 @@ export function setPairData(data1: AnyType, data2: AnyType, name1: string, name2
     }
 }
 
-export function setRowData(encData1: string, encData2: string): AnyType {
+export function setRowData(encData1: string, encData2: string): anyType {
 
     if (encData1.length !== 0) {
         return {
@@ -69,8 +69,8 @@ export function setRowData(encData1: string, encData2: string): AnyType {
     }
 }
 
-export function setComparisonResult(isComparisonResultReady: boolean): AnyType {
-    return (dispatch: AnyType) => {
+export function setComparisonResult(isComparisonResultReady: boolean): anyType {
+    return (dispatch: anyType) => {
         dispatch({
             type: SET_COMPARISON_READY,
             isComparisonResultReady

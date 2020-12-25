@@ -1,12 +1,12 @@
 import { PROCESS_FAILED, SET_ERROR } from "./actionTypes";
-import { AnyType } from "../constants/types";
+import { anyType } from "../constants/types";
 
-export function clearErrors(dispatch: AnyType): AnyType {
+export function clearErrors(dispatch: anyType): anyType {
     dispatch({ type: SET_ERROR, apiErrorMsg: null })
     dispatch({ type: PROCESS_FAILED, processFailed: false })
 }
 
-export function apiErrorHandling(error: AnyType, dispatch: AnyType): AnyType {
+export function apiErrorHandling(error: anyType, dispatch: anyType): anyType {
     if (error.response) {
         const msg: string = error.response.data?.title || 'Something wrong with resources'
         dispatch({ type: SET_ERROR, apiErrorMsg: msg })
@@ -18,7 +18,7 @@ export function apiErrorHandling(error: AnyType, dispatch: AnyType): AnyType {
     dispatch({ type: PROCESS_FAILED, processFailed: true })
 }
 
-export function accountApiErrorHandling(error: AnyType, setError: AnyType): AnyType {
+export function accountApiErrorHandling(error: anyType, setError: anyType): anyType {
     if (error.response) {
         const { status, errors, title } = error.response.data
         if (status === 400) {
@@ -45,7 +45,7 @@ export function accountApiErrorHandling(error: AnyType, setError: AnyType): AnyT
     }
 }
 
-function setSpecificError(errorList: string[], setError: AnyType): void {
+function setSpecificError(errorList: string[], setError: anyType): void {
     if (!Array.isArray(errorList)) {
         setError()
         setError('form', { message: 'something wrong' })

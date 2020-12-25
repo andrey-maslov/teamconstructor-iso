@@ -3,7 +3,7 @@
 
 import cookie from 'js-cookie';
 import { isBrowser } from "./helper";
-import { AnyType } from "../constants/types";
+import { anyType } from "../constants/types";
 
 export const setCookie = (key: string, value: string): void => {
     if (isBrowser) {
@@ -22,17 +22,17 @@ export const removeCookie = (key: string): void => {
     }
 }
 
-export const getCookie = (key: string, req: AnyType): AnyType => {
+export const getCookie = (key: string, req: anyType): anyType => {
     return isBrowser
         ? getCookieFromBrowser(key)
         : getCookieFromServer(key, req);
 }
 
-export const getCookieFromBrowser = (key: string): AnyType => {
+export const getCookieFromBrowser = (key: string): anyType => {
     return cookie.get(key)
 }
 
-const getCookieFromServer = (key: string, req: AnyType): AnyType => {
+const getCookieFromServer = (key: string, req: anyType): anyType => {
     if (!req.headers.cookie) {
         return undefined
     }

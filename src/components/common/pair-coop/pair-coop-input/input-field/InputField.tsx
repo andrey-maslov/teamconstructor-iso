@@ -1,16 +1,16 @@
 import React from 'react'
 import style from './input-field.module.scss'
 import { useTranslation } from "react-i18next"
-import { AnyType } from "../../../../../constants/types";
+import { anyType } from "../../../../../constants/types";
 
 interface IInputField {
     name: string
     encData: string
     index: number
     placeholder?: string
-    nameRef: AnyType
-    dataRef: AnyType
-    errors: AnyType
+    nameRef: anyType
+    dataRef: anyType
+    errors: anyType
 }
 
 const InputField: React.FC<IInputField> = ({ name, encData, index, placeholder, nameRef, dataRef, errors }) => {

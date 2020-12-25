@@ -4,7 +4,7 @@ import Login, { ISigninForm } from './Login'
 import Signup, { ISignUpForm } from './Signup'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { AnyType, globalStoreType } from '../../../constants/types'
+import { anyType, globalStoreType } from '../../../constants/types'
 import { authUser, sendForgotEmail, sendNewPassword } from '../../../actions/actionCreator'
 import Forgot, { IForgotForm } from './Forgot'
 import Reset, { IResetForm } from './Reset'
@@ -120,11 +120,11 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
         </div>
     )
 
-    function signIn(data: ISigninForm, setError: AnyType): void {
+    function signIn(data: ISigninForm, setError: anyType): void {
         dispatch(authUser(data, 'signin', setError))
     }
 
-    function signUp(data: ISignUpForm, setError: AnyType): void {
+    function signUp(data: ISignUpForm, setError: anyType): void {
         const userData = {
             firstName: '',
             lastName: '',
@@ -138,11 +138,11 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
         dispatch(authUser(userData, 'registration', setError))
     }
 
-    function forgotHandle(data: IForgotForm, setError: AnyType): void {
+    function forgotHandle(data: IForgotForm, setError: anyType): void {
         dispatch(sendForgotEmail(data.email, setError))
     }
 
-    function resetHandle(data: IResetForm, setError: AnyType): void {
+    function resetHandle(data: IResetForm, setError: anyType): void {
         const code = getQueryFromURL(window.location.search, 'code')
         const newData = {
             code,

@@ -24,6 +24,12 @@ export const CreateProjectModal: React.FC<IModalProps> = ({ visible, closeModal,
     const dispatch = useDispatch()
     const { reset } = useForm<IForm>()
 
+    const customStyles = {
+        height: 'auto',
+        bottom: 'auto',
+        top: '30%'
+    }
+
     return (
         <Rodal
             className='add-member-modal create-project-modal'
@@ -31,8 +37,8 @@ export const CreateProjectModal: React.FC<IModalProps> = ({ visible, closeModal,
             onClose={() => {
                 closeModal()
             }}
-            height={220}
             width={isLarge ? 400 : 320}
+            customStyles={customStyles}
         >
             <CreateProject />
         </Rodal>

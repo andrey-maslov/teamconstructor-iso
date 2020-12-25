@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { AnyType } from "../../constants/types"
+import { anyType } from "../../constants/types"
 import { getAuthConfig, testApiUrl } from "./utils"
 import { SET_PSY_DATA } from "../actionTypes";
 
-export function fetchPsyData(token: string): AnyType {
-    return (dispatch: AnyType) => {
+export function fetchPsyData(token: string): anyType {
+    return (dispatch: anyType) => {
         axios(`${testApiUrl}/list`, getAuthConfig(token))
             .then(res => {
                 if (res.data.length > 0) {

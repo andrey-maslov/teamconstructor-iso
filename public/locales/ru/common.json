@@ -42,7 +42,7 @@
     "duplicate_team_name": "Команда с таким названием уже есть",
     "duplicate_member_name": "Работник с таким именем уже есть",
     "duplicate_member": "Работник {{name}} уже есть в команде",
-    "duplicate_member_result": "Работник с таким именем уже есть"
+    "duplicate_member_result": "Работник с таким результатом уже есть"
   },
   "confirm": {
     "do_logout": "Вы действительно хотите выйти?",

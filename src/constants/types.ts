@@ -4,8 +4,9 @@ import { pairStoreType } from '../reducers/pair'
 import { TermsStoreType } from '../reducers/terms'
 import { modalsStoreType } from '../reducers/modals'
 import { appStoreType } from '../reducers/app'
+import { authModes } from "./constants";
 
-export type AnyType = any
+export type anyType = any
 
 export type DecodedDataType = [number[], number[][]]
 
@@ -15,6 +16,12 @@ export interface IMember {
     position: string,
     decData: DecodedDataType
     baseID: number
+}
+
+export interface IMemberForm {
+    name: string
+    position: string
+    encData: string
 }
 
 export interface IProjectShort {
@@ -114,4 +121,34 @@ export interface IPairData {
     data2: [] | string,
     name1: string,
     name2: string
+}
+
+export type AuthData = ISignUpData | ISignInData
+
+export type AuthType = keyof typeof authModes
+
+// TODO need to typing
+export interface IResumeUpload {
+    [key: string]: anyType
+}
+
+export interface IEmailConfirmation {
+    userId: string
+    code: string
+    email?: string
+}
+
+export interface IChangeEmail {
+    newEmail: string
+    service: number
+}
+
+export interface ITariff {
+    id: number
+    title: string
+    description: string
+    service: number
+    price: number
+    monthCount: number
+    autoSearchCount: number
 }

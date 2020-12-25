@@ -1,8 +1,8 @@
 import { ADD_AUTH_DATA, CLEAR_USER_DATA, SET_AUTH_PROVIDER, SET_PSY_DATA } from '../actions/actionTypes'
 import { loadState } from '../store/sessionStorage'
-import { AnyType, IUserData } from "../constants/types"
+import { anyType, IUserData } from "../constants/types"
 
-let STATE = loadState('userData')
+// let STATE = loadState('userData')
 
 export type userStoreType = {
     firstName: string | null
@@ -23,21 +23,19 @@ type UserReducerType = {
     psyData: string
 }
 
-if (!STATE) {
-    STATE = {
-        firstName: null,
-        lastName: null,
-        email: null,
-        position: null,
-        psyData: null,
-        provider: null,
-        isLoggedIn: false,
-        isPublicProfile: null,
-        isOpenForWork: null
-    }
+const STATE = {
+    firstName: null,
+    lastName: null,
+    email: null,
+    position: null,
+    psyData: null,
+    provider: null,
+    isLoggedIn: false,
+    isPublicProfile: null,
+    isOpenForWork: null
 }
 
-export const user = (state = STATE, {type, userData, provider, psyData}: UserReducerType): AnyType => {
+export const user = (state = STATE, { type, userData, provider, psyData }: UserReducerType): anyType => {
     switch (type) {
         case ADD_AUTH_DATA :
             return {

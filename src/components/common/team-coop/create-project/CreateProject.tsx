@@ -20,7 +20,6 @@ const CreateProject: React.FC = () => {
     const dispatch = useDispatch()
     const { t } = useTranslation()
 
-
     return (
         <form onSubmit={handleSubmit(submitForm)} className={style.form}>
             <div className={`form-group ${errors.title ? 'has-error' : ''}`}>

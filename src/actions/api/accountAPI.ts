@@ -1,5 +1,5 @@
 import { CHANGE_PWD, CLEAR_USER_DATA, DANGER_MODAL, SEND_EMAIL, SET_AUTH_PROVIDER, SET_TOAST } from "../actionTypes"
-import { AnyType, INewPwdData, ISignInData, ISignUpData, IUserData } from "../../constants/types"
+import { anyType, AuthData, AuthType, INewPwdData, ISignInData, ISignUpData, IUserData } from "../../constants/types"
 import { accountApiErrorHandling, apiErrorHandling, clearErrors } from "../errorHandling"
 import { authModes } from "../../constants/constants"
 import { getCookieFromBrowser, setCookie } from "../../helper/cookie"
@@ -11,42 +11,38 @@ import { fetchPsyData } from "./psychologicalTestsAPI";
 
 export function checkAuth(jwt?: string): unknown {
     const token = jwt || getCookieFromBrowser('token')
-    return (dispatch: AnyType) => {
+    return (dispatch: anyType) => {
         dispatch(fetchUserData(token))
-        // dispatch(fetchProjectsList(token))
     }
 }
 
-export function authUser(
-    userData: ISignUpData | ISignInData,
-    authType: keyof typeof authModes,
-    setError: AnyType
-): AnyType {
+export function authUser(userData: AuthData, authType: AuthType, setError: anyType): anyType {
     const url = `${accountApiUrl}/${authType === authModes[1] ? 'register' : 'authenticate'}`
 
-    return (dispatch: AnyType) => {
+    return (dispatch: anyType) => {
         axios
             .post(url, userData)
             .then(res => {
                 const token = res.data.jwtToken
                 setCookie('token', token)
                 dispatch({ type: SET_AUTH_PROVIDER, provider: 'local' })
-                dispatch(fetchUserData(token))
-                dispatch(fetchProjectList(token))
-                dispatch(fetchPsyData(token))
+                return token
             })
+            .then(token => dispatch(fetchUserData(token)))
+            .then(token => dispatch(fetchProjectList(token)))
+            .then(token => dispatch(fetchPsyData(token)))
             .catch(error => accountApiErrorHandling(error, setError))
     }
 }
 
 export function fetchUserData(token: string): unknown {
-    return (dispatch: AnyType) => {
+    return (dispatch: anyType) => {
         if (token) {
             axios
                 .get(accountApiUrl, getAuthConfig(token))
-                .then(res => {
-                    dispatch(setUserData(res.data))
-                })
+                .then(res => dispatch(setUserData(res.data)))
+                .then(() => dispatch(fetchProjectList(token)))
+                .then(() => dispatch(fetchPsyData(token)))
                 .catch(error => console.error(error))
         } else {
             dispatch({ type: CLEAR_USER_DATA })
@@ -56,7 +52,7 @@ export function fetchUserData(token: string): unknown {
 
 export const updateUserData = (userData: IUserData) => {
     const token = getCookieFromBrowser('token')
-    return (dispatch: AnyType) => {
+    return (dispatch: anyType) => {
         if (token) {
             clearErrors(dispatch)
             axios
@@ -76,7 +72,7 @@ export const updateUserData = (userData: IUserData) => {
 }
 
 export const sendForgotEmail = (email: string, setError: unknown): unknown => {
-    return (dispatch: AnyType) => {
+    return (dispatch: anyType) => {
         axios
             .post(`${accountApiUrl}/reset-password`, { email })
             .then(() => dispatch({ type: SEND_EMAIL, isEmailSent: true }))
@@ -85,7 +81,7 @@ export const sendForgotEmail = (email: string, setError: unknown): unknown => {
 }
 
 export const sendNewPassword = (data: INewPwdData, setError: unknown): unknown => {
-    return (dispatch: AnyType) => {
+    return (dispatch: anyType) => {
         axios
             .post(`${accountApiUrl}/confirm-reset-password`, data)
             .then(() => dispatch({ type: CHANGE_PWD, isPwdChanged: true }))
@@ -95,7 +91,7 @@ export const sendNewPassword = (data: INewPwdData, setError: unknown): unknown =
 
 export function deleteAccount(password: string): unknown {
     const token = getCookieFromBrowser('token')
-    return (dispatch: AnyType) => {
+    return (dispatch: anyType) => {
         if (token) {
             axios
                 .post(`${accountApiUrl}/delete`, { password }, getAuthConfig(token))

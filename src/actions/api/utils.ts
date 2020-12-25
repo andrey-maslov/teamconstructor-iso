@@ -1,5 +1,5 @@
 import { API_VER, BASE_API } from "../../constants/constants";
-import { AnyType, IProject, ITeam } from "../../constants/types";
+import { anyType, IProject, ITeam } from "../../constants/types";
 
 export const accountApiUrl = `${BASE_API}/api/v${API_VER}/Account`
 export const projectsApiUrl = `${BASE_API}/api/v${API_VER}/Projects`
@@ -13,7 +13,13 @@ export interface IProjectFromBase {
     teams: string
 }
 
-export const getAuthConfig = (jwt: string) => {
+interface IHeader {
+    headers: {
+        Authorization: string
+    }
+}
+
+export const getAuthConfig = (jwt: string): IHeader => {
     return {
         headers: {
             Authorization: `Bearer ${jwt}`
@@ -21,24 +27,14 @@ export const getAuthConfig = (jwt: string) => {
     }
 }
 
-export const parseProjectData = (project: IProjectFromBase): IProject => {
+export const parseProjectData = (project: IProjectFromBase): IProject | null => {
     const parsedPool = JSON.parse(project.pool)
     const parsedTeams = JSON.parse(project.teams)
-    if (!parsedPool.title || !parsedPool.id || !Array.isArray(parsedPool.items)) {
-        return {
-            id: 'fail',
-            title: 'failed project - pool',
-            pool: { id: 999, title: 'failed pool', items: [] },
-            teams: parsedTeams
-        }
+    if (!parsedPool.title || typeof parsedPool.id === 'undefined' || !Array.isArray(parsedPool.items)) {
+        return null
     }
     if (!Array.isArray(parsedTeams)) {
-        return {
-            id: 'fail',
-            title: 'failed project - teams',
-            pool: parsedPool,
-            teams: []
-        }
+        return null
     }
     return {
         id: project.id,
@@ -48,7 +44,7 @@ export const parseProjectData = (project: IProjectFromBase): IProject => {
     }
 }
 
-export const stringifyProjectData = (project: { pool: ITeam, teams?: ITeam[], title?: string }): AnyType => {
+export const stringifyProjectData = (project: { pool: ITeam, teams?: ITeam[], title?: string }): anyType => {
     const stringifiedPool = project.pool ? JSON.stringify(project.pool) : null
     const stringifiedTeams = project.teams ? JSON.stringify(project.teams) : null
 

@@ -7,7 +7,7 @@ import { FaReact } from 'react-icons/fa'
 import { GoRocket } from 'react-icons/go'
 import ProfileGenerator from './profile-generator/ProfileGenerator'
 import style from './pair-input.module.scss'
-import { AnyType, globalStoreType, IOneFieldForm } from '../../../../constants/types'
+import { anyType, globalStoreType, IOneFieldForm } from '../../../../constants/types'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { extractEncData } from '../../../../helper/helper'
@@ -142,7 +142,7 @@ const PairCoopInput: React.FC = () => {
         // setUserIndex(inputNum)
     }
 
-    function setFoundUserData(data: AnyType, i: number) {
+    function setFoundUserData(data: anyType, i: number) {
         setDataGroup(data.firstName, data.tests[0].value, i)
     }
 

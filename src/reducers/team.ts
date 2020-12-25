@@ -10,7 +10,7 @@ import {
     CLEAR_USER_DATA,
     SET_POOL, SET_ACTIVE_PROJECT, ADD_PROJECT, SET_PROJECTS
 } from "../actions/actionTypes"
-import { AnyType, IProject, IProjectShort, ITeam } from "../constants/types";
+import { anyType, IProject, IProjectShort, ITeam } from "../constants/types";
 
 // let STATE = loadState('teams');
 
@@ -54,7 +54,7 @@ export const team = (state = STATE, {
     projects,
     project,
     activeProject,
-}: AnyType): AnyType => {
+}: anyType): anyType => {
     switch (type) {
         case T_SET_COMPARISON_READY :
             return {

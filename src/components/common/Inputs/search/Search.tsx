@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import OutsideClickHandler from 'react-outside-click-handler'
 import style from './search.module.scss'
-import { AnyType, IOneFieldForm } from '../../../../constants/types'
+import { anyType, IOneFieldForm } from '../../../../constants/types'
 import { useTranslation } from 'react-i18next'
 
 interface ISearch {
     handler: (value: IOneFieldForm<string>) => void
-    onClickOutside: AnyType
+    onClickOutside: anyType
 }
 
 const Search: React.FC<ISearch> = ({ handler, onClickOutside }) => {

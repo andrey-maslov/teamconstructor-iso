@@ -5,7 +5,7 @@ import Button from '../buttons/button/Button'
 import { useForm } from 'react-hook-form'
 import { AiOutlineLoading } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
-import { AnyType, globalStoreType } from "../../../constants/types"
+import { anyType, globalStoreType } from "../../../constants/types"
 import ResetSuccess from "./ResetSuccess";
 import ForgotSuccess from "./ForgotSuccess";
 
@@ -17,7 +17,7 @@ export interface IForgotForm {
 export interface ILogin<T> {
     isLoading: boolean
     errorApiMessage: string
-    submitHandle: (data: T, setError: AnyType) => void
+    submitHandle: (data: T, setError: anyType) => void
 }
 
 const Forgot: React.FC<ILogin<IForgotForm>> = ({ isLoading, errorApiMessage, submitHandle }) => {

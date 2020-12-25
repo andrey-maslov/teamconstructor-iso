@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { AiOutlineLoading } from 'react-icons/ai'
 import { useTranslation } from "react-i18next"
 import Password from "../Inputs/password/Password"
-import { AnyType } from "../../../constants/types"
+import { anyType } from "../../../constants/types"
 
 export interface ISigninForm {
     username: string
@@ -16,7 +16,7 @@ export interface ISigninForm {
 export interface ISignin<T> {
     isLoading: boolean
     errorApiMessage: string
-    submitHandle: (data: T, setError: AnyType) => void
+    submitHandle: (data: T, setError: anyType) => void
 }
 
 const Login: React.FC<ISignin<ISigninForm>> = ({ isLoading, errorApiMessage, submitHandle }) => {

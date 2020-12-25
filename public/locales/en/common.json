@@ -42,7 +42,7 @@
     "duplicate_team_name": "Team with the same name already exists",
     "duplicate_member_name": "Employee with the same name already exists",
     "duplicate_member": "Team mate {{name}} is already in the team",
-    "duplicate_member_result": "Team mate with the same name already exists"
+    "duplicate_member_result": "Team mate with the same result already exists"
   },
   "confirm": {
     "do_logout": "Are you sure you want to log out?",

@@ -1,5 +1,5 @@
 import {SET_FOUND_USER_DATA, CLEAR_FOUND_USER_DATA} from '../actions/actionTypes'
-import { AnyType } from "../constants/types"
+import { anyType } from "../constants/types"
 
 
 export type UserDataType = {
@@ -28,7 +28,7 @@ const STATE = {
     foundUserData: null,
 }
 
-export const search = (state = STATE, { type, foundUserData }: SearchReducerType): AnyType => {
+export const search = (state = STATE, { type, foundUserData }: SearchReducerType): anyType => {
     switch (type) {
         case SET_FOUND_USER_DATA:
             return {

@@ -802,6 +802,10 @@ input, textarea {
 .form-group {
   margin-bottom: 1.5rem;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   label {
 
     span {

@@ -5,7 +5,7 @@ import {
     DANGER_MODAL,
     SEARCH_MODAL
 } from "../actions/actionTypes"
-import { AnyType } from "../constants/types"
+import { anyType } from "../constants/types"
 
 const APP_STATE = {
     isAddMemberModal: false,
@@ -24,7 +24,7 @@ export const modals = (state = APP_STATE, {
     isMemberInfoModal,
     isDangerModal,
     isSearchModal
-}: AnyType): AnyType => {
+}: anyType): anyType => {
     switch (type) {
         case SET_ADD_MEMBER_MODAL :
             return {
