@@ -11,6 +11,7 @@ body {
   font-family: $font-default;
   font-size: 1rem;
   overflow-x: hidden;
+  //background-color: $overlay-dark;
   //min-width: 1100px;
 
   * {
@@ -406,6 +407,25 @@ mark {
     color: $danger;
   }
 }
+
+.success {
+  color: $success;
+}
+
+.danger {
+  color: $danger;
+}
+
+.warning {
+  color: $warning;
+}
+
+.auth-icon-success {
+  color: $success;
+  font-size: 3rem;
+}
+
+
 
 .bg {
 

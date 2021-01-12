@@ -1,5 +1,6 @@
 export const SITE_TITLE = 'Teamconstructor'
 export const CONTACT_EMAIL = 'contact@teamconstructor.com'
+export const SERVICE = 2
 
 // export const LANGS = [
 //     ['ru', 'Русский'],
@@ -32,6 +33,7 @@ export const ROUTES = {
     '/signin/reset-password': 'page-auth',
     '/registration': 'page-auth',
     '/save-email': 'save-email',
+    '/confirm-email': 'confirm-email',
 }
 
 export const BASE_API = 'https://apibase.pashtaljon.by'

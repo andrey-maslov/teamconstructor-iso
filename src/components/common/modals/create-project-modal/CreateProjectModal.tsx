@@ -39,6 +39,7 @@ export const CreateProjectModal: React.FC<IModalProps> = ({ visible, closeModal,
             }}
             width={isLarge ? 400 : 320}
             customStyles={customStyles}
+            closeOnEsc={true}
         >
             <CreateProject />
         </Rodal>

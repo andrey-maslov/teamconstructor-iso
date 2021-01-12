@@ -246,7 +246,7 @@ const DraggableZone: React.FC = () => {
 
     //TODO what about pool
     function deleteMemberHandler(colIndex: number, itemIndex: number): void {
-        if (colIndex === 0 && confirm(t('team:do_you_want_to_delete_member'))) {
+        if (colIndex === 0 && confirm(t('team:do_you_want_to_delete_member?'))) {
             deleteMemberFromPool(colIndex, itemIndex)
         } else if (colIndex !== 0) {
             deleteMemberFromTeam(colIndex, itemIndex)

@@ -9,20 +9,22 @@ import Loader from '../../../components/common/loaders/loader/Loader'
 import { useForm } from 'react-hook-form'
 import InputTransformer from '../../../components/common/Inputs/input-transformer/InputTransformer'
 import CodeBox from '../../../components/common/Inputs/code-box/CodeBox'
-import { SET_TOAST } from '../../../actions/actionTypes'
+import { DANGER_MODAL, SET_TOAST } from '../../../actions/actionTypes'
+import { changeEmail, updateUserData } from "../../../actions/api/accountAPI";
 
 const UserProfile = () => {
     const {
         firstName,
         lastName,
         email,
+        emailConfirmed,
         position,
         isLoggedIn,
         testResult
     } = useSelector((state: globalStoreType) => state.user)
 
     const { t } = useTranslation()
-    // const { setToast } = useSelector((state: globalStoreType) => state.app)
+    const { isEmailSent } = useSelector((state: globalStoreType) => state.app)
     const [isReady, setReady] = useState(false)
     const { addToast } = useToasts()
     const dispatch = useDispatch()
@@ -108,6 +110,12 @@ const UserProfile = () => {
             defaultValue: t('common:profile.position')
         }
     ]
+    const emailField = {
+        label: 'Email',
+        key: 'email',
+        value: localUser.email,
+        defaultValue: 'email'
+    }
 
     const testLink = `https://salary.nobugs.today/test/result${encData ? `?encdata=${encData}` : ''}`
 
@@ -129,7 +137,9 @@ const UserProfile = () => {
             </div>
 
             <div className={`${style.box} ${style.account}`}>
-                <h5 className={style.box_title}>Account</h5>
+                <h5 className={style.box_title}>Account
+                    {!emailConfirmed && <span className="color-red"> Email needs confirmation</span>}
+                </h5>
                 <div className={`${style.box_content}`}>
                     <div className={style.list}>
                         {textFields.map(item => (
@@ -153,9 +163,28 @@ const UserProfile = () => {
                                 />
                             </div>
                         ))}
-                        <div className={style.item} key="email">
-                            <span className={style.label}>Email:</span>
-                            <div className={style.field}>{email}</div>
+                        <div
+                            className={`${style.item} ${
+                                !emailField.value ? style.default : ''
+                            } ${isEmailSent ? 'has-success' : ''}`}>
+                            <span className={style.label}>{emailField.label}</span>
+                            <InputTransformer
+                                initValue={emailField.value || emailField.defaultValue}
+                                rules={{
+                                    pattern: {
+                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                        message: `${t('common:errors.invalid_email')}`
+                                    }
+                                }}
+                                objectKey={emailField.key}
+                                handler={changeUserEmail}
+                                {...{ type: 'text', autoComplete: 'off' }}
+                            />
+                            {isEmailSent && (
+                                <small className="success">
+                                    {t('common:profile.email_send_success')}
+                                </small>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -192,15 +221,7 @@ const UserProfile = () => {
                         </div>
                         <button
                             className="btn"
-                            onClick={() => {
-                                if (
-                                    // eslint-disable-next-line no-alert
-                                    window.confirm('Вы действительно хотите удалить аккаунт????')
-                                ) {
-                                    // eslint-disable-next-line no-alert
-                                    alert('Зря!')
-                                }
-                            }}>
+                            onClick={() => deleteAccountBtnHandler()}>
                             Delete account
                         </button>
                     </div>
@@ -210,25 +231,23 @@ const UserProfile = () => {
     )
 
     function updateProfile(formData: { [key: string]: string }) {
-        // dispatch(
-        //     updateUserData({
-        //         firstName,
-        //         lastName,
-        //         email,
-        //         position,
-        //         provider,
-        //         isLoggedIn,
-        //         isPublic,
-        //         isLookingForJob,
-        //         ...formData
-        //     })
-        // )
+        dispatch(
+            updateUserData(formData)
+        )
+    }
+
+    function changeUserEmail(formData: IOneFieldForm<string>) {
+        dispatch(changeEmail(formData))
     }
 
     function toast() {
         addToast('Изменения приняты', {
             appearance: 'success'
         })
+    }
+
+    function deleteAccountBtnHandler() {
+        dispatch({ type: DANGER_MODAL, isDangerModal: true })
     }
 }
 

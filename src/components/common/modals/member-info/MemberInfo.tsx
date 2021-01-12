@@ -126,6 +126,7 @@ export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge
             onClose={closeModal}
             width={isLarge ? 1000 : (!isMobi ? 600 : 320)}
             height={600}
+            closeOnEsc={true}
         >
             <div className={style.body}>
                 <div className={style.content}>

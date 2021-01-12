@@ -24,6 +24,7 @@ export function setUserData(data: IUserData): { type: string; userData: IUserDat
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
+            emailConfirmed: data.emailConfirmed,
             position: data.position,
             provider: data.provider,
             isPublicProfile: data.isPublicProfile,

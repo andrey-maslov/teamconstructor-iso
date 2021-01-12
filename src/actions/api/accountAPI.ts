@@ -1,9 +1,26 @@
-import { CHANGE_PWD, CLEAR_USER_DATA, DANGER_MODAL, SEND_EMAIL, SET_AUTH_PROVIDER, SET_TOAST } from "../actionTypes"
-import { anyType, AuthData, AuthType, INewPwdData, ISignInData, ISignUpData, IUserData } from "../../constants/types"
+import {
+    CHANGE_PWD,
+    CLEAR_USER_DATA,
+    DANGER_MODAL,
+    EMAIL_CONFIRMATION,
+    SEND_EMAIL,
+    SET_AUTH_PROVIDER,
+    SET_TOAST
+} from "../actionTypes"
+import {
+    anyType,
+    AuthData,
+    AuthType,
+    globalStoreType, IEmailConfirmation,
+    INewPwdData, IOneFieldForm,
+    ISignInData,
+    ISignUpData,
+    IUserData
+} from "../../constants/types"
 import { accountApiErrorHandling, apiErrorHandling, clearErrors } from "../errorHandling"
-import { authModes } from "../../constants/constants"
+import { authModes, SERVICE } from "../../constants/constants"
 import { getCookieFromBrowser, setCookie } from "../../helper/cookie"
-import { logOut, setUserData } from "../actionCreator"
+import { logOut, setLoading, setUserData } from "../actionCreator"
 import { fetchProjectList } from "./projectsAPI"
 import axios from "axios"
 import { accountApiUrl, getAuthConfig } from "./utils"
@@ -28,8 +45,14 @@ export function authUser(userData: AuthData, authType: AuthType, setError: anyTy
                 dispatch({ type: SET_AUTH_PROVIDER, provider: 'local' })
                 return token
             })
-            .then(token => dispatch(fetchUserData(token)))
-            .then(token => dispatch(fetchProjectList(token)))
+            .then(token => {
+                dispatch(fetchUserData(token))
+                return token
+            })
+            .then(token => {
+                dispatch(fetchProjectList(token))
+                return token
+            })
             .then(token => dispatch(fetchPsyData(token)))
             .catch(error => accountApiErrorHandling(error, setError))
     }
@@ -52,11 +75,12 @@ export function fetchUserData(token: string): unknown {
 
 export const updateUserData = (userData: IUserData) => {
     const token = getCookieFromBrowser('token')
-    return (dispatch: anyType) => {
+    return (dispatch: anyType, getState: () => globalStoreType) => {
         if (token) {
             clearErrors(dispatch)
+            const newUserData = { ...getState().user, ...userData }
             axios
-                .put(`${accountApiUrl}/update`, userData, getAuthConfig(token))
+                .put(`${accountApiUrl}/update`, newUserData, getAuthConfig(token))
                 .then(res => {
                     dispatch(setUserData(res.data))
                     dispatch({ type: SET_TOAST, setToast: 1 })
@@ -74,7 +98,7 @@ export const updateUserData = (userData: IUserData) => {
 export const sendForgotEmail = (email: string, setError: unknown): unknown => {
     return (dispatch: anyType) => {
         axios
-            .post(`${accountApiUrl}/reset-password`, { email })
+            .post(`${accountApiUrl}/reset-password`, { email, service: SERVICE })
             .then(() => dispatch({ type: SEND_EMAIL, isEmailSent: true }))
             .catch(error => accountApiErrorHandling(error, setError))
     }
@@ -86,6 +110,59 @@ export const sendNewPassword = (data: INewPwdData, setError: unknown): unknown =
             .post(`${accountApiUrl}/confirm-reset-password`, data)
             .then(() => dispatch({ type: CHANGE_PWD, isPwdChanged: true }))
             .catch(error => accountApiErrorHandling(error, setError))
+    }
+}
+
+export const changeEmail = ({ email }: IOneFieldForm<string>) => {
+    const token = getCookieFromBrowser('token')
+    return (dispatch: anyType, getState: () => anyType) => {
+        if (token) {
+            clearErrors(dispatch)
+            axios
+                .post(
+                    `${accountApiUrl}/change-email`,
+                    { newEmail: email, service: SERVICE },
+                    getAuthConfig(token)
+                )
+                .then(res => {
+                    dispatch({ type: SEND_EMAIL, isEmailSent: true })
+                    // TODO не нужно менять имейл сразу в стейте. Надо дождаться подтверждения и тогда поменять его
+                    dispatch(setUserData({ ...getState().user, email }))
+                })
+                .catch(error => {
+                    apiErrorHandling(error, dispatch)
+                    dispatch({ type: SET_TOAST, setToast: 2 })
+                })
+        } else {
+            dispatch({ type: CLEAR_USER_DATA })
+        }
+    }
+}
+
+export const sendEmailConfirmation = (data: IEmailConfirmation) => {
+    const token = getCookieFromBrowser('token')
+    return (dispatch: anyType) => {
+        if (token) {
+            dispatch(setLoading(true))
+            axios
+                .post(
+                    `${accountApiUrl}/confirm-email`,
+                    data,
+                    getAuthConfig(token)
+                )
+                .then(res => {
+                    dispatch(setUserData(res.data))
+                    dispatch({ type: SET_TOAST, setToast: 1 })
+                    dispatch({ type: EMAIL_CONFIRMATION, isEmailConfirmed: true })
+                })
+                .catch(error => {
+                    apiErrorHandling(error, dispatch)
+                    dispatch({ type: SET_TOAST, setToast: 2 })
+                })
+                .finally(() => dispatch(setLoading(false)))
+        } else {
+            dispatch({ type: CLEAR_USER_DATA })
+        }
     }
 }
 

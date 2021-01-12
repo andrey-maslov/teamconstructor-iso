@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { extractEncData } from '../../../../helper/helper'
 import Search from "../../Inputs/search/Search";
-import { fetchUser } from "../../../../actions/api/usersAPI";
+import { searchUser } from "../../../../actions/api/usersAPI";
 
 interface IPairLocalState {
     data1: string

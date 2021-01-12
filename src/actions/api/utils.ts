@@ -28,19 +28,25 @@ export const getAuthConfig = (jwt: string): IHeader => {
 }
 
 export const parseProjectData = (project: IProjectFromBase): IProject | null => {
-    const parsedPool = JSON.parse(project.pool)
-    const parsedTeams = JSON.parse(project.teams)
-    if (!parsedPool.title || typeof parsedPool.id === 'undefined' || !Array.isArray(parsedPool.items)) {
+    try {
+        const parsedPool = JSON.parse(project.pool)
+        const parsedTeams = JSON.parse(project.teams)
+
+        if (!parsedPool.title || typeof parsedPool.id === 'undefined' || !Array.isArray(parsedPool.items)) {
+            return null
+        }
+        if (!Array.isArray(parsedTeams)) {
+            return null
+        }
+        return {
+            id: project.id,
+            title: project.title,
+            pool: parsedPool,
+            teams: parsedTeams
+        }
+    } catch (err) {
+        console.error(err)
         return null
-    }
-    if (!Array.isArray(parsedTeams)) {
-        return null
-    }
-    return {
-        id: project.id,
-        title: project.title,
-        pool: parsedPool,
-        teams: parsedTeams
     }
 }
 

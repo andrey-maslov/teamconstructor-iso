@@ -81,6 +81,9 @@
     "name": "Name",
     "salary_est": "Salary_est",
     "show": "Show me!",
+    "email_send_success": "Email будет изменен после подтверждения",
+    "email_confirm_success": "Спасибо, ваш email подтвержден",
+    "confirm_email": "Подтверждение email",
     "meta": {
       "title": "title for profile page",
       "description": "Description for profile page"
@@ -88,6 +91,11 @@
     "onboarding": "Welcome to Salary2.me !"
   },
   "title": "Title",
+  "billing": {
+    "free": "Бесплатный",
+    "basic": "Базовый",
+    "manage_subscr": "Управлять подписками"
+  },
   "cookie_consent": {
     "text": "We care about you, so you have to agree to our cookie policy",
     "title": "Cookie policy"

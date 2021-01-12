@@ -102,7 +102,7 @@ i18n
                                                   window.encData = '${ req.query.encdata }';
                                                 </script>
                                             </head>
-                                            <body>
+                                            <body style="background-color: #1C1E23">
                                                 <div id="root">${ markup }</div>
                                             </body>
                                         </html>`;

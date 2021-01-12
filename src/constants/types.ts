@@ -100,9 +100,10 @@ export interface IGetTestsResponse {
 }
 
 export interface IUserData {
-    firstName: string
-    lastName: string
-    email: string
+    firstName?: string
+    lastName?: string
+    email?: string
+    emailConfirmed?: boolean
     position?: string
     provider?: string
     isPublicProfile?: boolean

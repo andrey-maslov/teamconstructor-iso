@@ -49,7 +49,7 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
                     />
                 </label>
                 {errors.name && errors.name.type === 'duplicateName' && (
-                    <div className={`item-explain`}>`${t('common:errors.duplicate_member_name')}`</div>
+                    <div className={`item-explain`}>{t('common:errors.duplicate_member_name')}</div>
                 )}
                 {errors.name && <div className={`item-explain`}>{errors.name.message}</div>}
             </div>
@@ -83,17 +83,17 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
                     />
                 </label>
                 {errors.encData && errors.encData.type === 'decode' && (
-                    <div className={`item-explain`}>${t('common:errors.invalid')}</div>
+                    <div className={`item-explain`}>{t('common:errors.invalid')}</div>
                 )}
                 {errors.encData && errors.encData.type === 'duplicate' && (
-                    <div className={`item-explain`}>${t('common:errors.duplicate_member_result')}</div>
+                    <div className={`item-explain`}>{t('common:errors.duplicate_member_result')}</div>
                 )}
                 {errors.encData && errors.encData.type !== 'decode' && errors.encData.type !== 'duplicate' &&
                 <div className={`item-explain`}>{errors.encData.message}</div>}
             </div>
             <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                 <Button
-                    title={editedMember ? t('common:buttons.save') : t('common:buttons.add')}
+                    title={editedMember !== null ? t('common:buttons.save') : t('common:buttons.add')}
                     startIcon={isLoading ? <AiOutlineLoading /> : <GrUserAdd />}
                     handle={() => void (0)}
                     btnClass={'btn-outlined'}

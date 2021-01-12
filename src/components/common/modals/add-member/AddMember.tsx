@@ -23,7 +23,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
     // const { t } = useTranslation()
     const dispatch = useDispatch()
-    const [isSearchMode, setSearchMode] = useState(true)
+    const [isSearchMode, setSearchMode] = useState(false)
     const [searchedEmail, setSearchedEmail] = useState('')
     const [defaultProfile, setDefaultProfile] = useState<IMemberForm>({
         name: '',
@@ -62,6 +62,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
             onClose={closeModal}
             customStyles={customStyles}
             width={350}
+            closeOnEsc={true}
         >
             <div className={style.content}>
                 {isSearchMode ? (
@@ -72,12 +73,12 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
                         submitForm={submitMemberForm}
                     />
                 )}
-                <Button
+                {editedMember === null && <Button
                     title={isSearchMode ? 'Вручную' : 'Искать'}
                     // startIcon={isLoading && <AiOutlineLoading />}
                     handle={() => setSearchMode(!isSearchMode)}
                     btnClass="btn btn-outlined"
-                />
+                />}
             </div>
         </Rodal>
     )
@@ -141,7 +142,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
         const position = data.position || ''
         const testList = data.tests.length > 0 ? data.tests.filter((item: anyType) => item.type === 0) : null
         const encData = testList ? testList[0].value : ''
-        console.log(testList)
+        // console.log(testList)
         // TODO провалидировать на ошибки, отсутствие результата теста и куда-то разместить инфу об этом
         setDefaultProfile({
             name,

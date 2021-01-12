@@ -106,10 +106,12 @@ export const team = (state = STATE, {
                 editedMember
             }
         case SET_ACTIVE_PROJECT : {
+            console.log()
             const teams = state.projects.filter(item => item.id === activeProject.id)[0].teams
+            const pool = state.projects.filter(item => item.id === activeProject.id)[0].pool
             return {
                 ...state,
-                teams,
+                teams: [pool, ...teams],
                 activeProject
             }
         }

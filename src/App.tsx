@@ -18,6 +18,7 @@ import TeamCoopPage from './pages/team-coop-page/TeamCoopPage'
 import ProfilePage from './pages/profile-page/ProfilePage'
 import LandingPage from './pages/landing-page/LandingPage'
 import ComingSoon from "./pages/coming-soon-page/ComingSoon";
+import ConfirmEmail from "./pages/confirm-email-page/ConfirmEmail";
 
 const App: React.FC = () => {
 
@@ -52,6 +53,7 @@ const App: React.FC = () => {
                            render={() => <AuthPage page="forgot_pwd_success" />} />
                     <Route exact path="/signin/reset-password" render={() => <AuthPage page="reset_pwd" />} />
                     <Route exact path="/registration" render={() => <AuthPage page="registration" />} />
+                    <Route path="/confirm-email" render={() => <ConfirmEmail />} />
                     <Route path="*" render={() => <ErrorPage />} />
                 </Switch>
                 <Footer />

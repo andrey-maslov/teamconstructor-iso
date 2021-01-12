@@ -13,6 +13,9 @@ export function fetchProjectList(token: string): anyType {
             axios(`${projectsApiUrl}/list?PageNumber=0&PageSize=100`, getAuthConfig(token))
                 .then(res => res.data)
                 .then(data => {
+                    if (data.items && data.items.length === 0) {
+                        return false
+                    }
                     const projects = data.items.map(parseProjectData)
                     const activeProject = projects.length !== 0 ? {
                         id: projects[0].id,
@@ -20,6 +23,7 @@ export function fetchProjectList(token: string): anyType {
                     } : null
                     dispatch({ type: SET_PROJECTS, projects })
                     dispatch({ type: SET_ACTIVE_PROJECT, activeProject })
+                    return false
                     // dispatch(clearErrors())
                 })
                 .catch(error => apiErrorHandling(error, dispatch))
@@ -49,7 +53,6 @@ export function createProject(project: Omit<IProject, 'id'>): anyType {
                             activeProject: { id: parsedProject.id, title: parsedProject.title }
                         })
                     }
-                    // dispatch(setTeamsData([ data.pool, ...data.teams ]))
                     dispatch(setCreateProjectModal(false))
                     // dispatch(clearErrors())
                 })
@@ -67,7 +70,6 @@ export function createProject(project: Omit<IProject, 'id'>): anyType {
 
 export function updateProject(project: { pool: ITeam, teams?: ITeam[], title?: string }): anyType {
     const token = getCookieFromBrowser('token')
-
     return (dispatch: anyType, getState: () => globalStoreType) => {
         if (token) {
             const { id, title } = getState().team.activeProject
@@ -76,7 +78,7 @@ export function updateProject(project: { pool: ITeam, teams?: ITeam[], title?: s
             dispatch(setLoading(true))
             axios.put(
                 `${projectsApiUrl}/update/${id}`,
-                { id, title, teams: JSON.stringify(teams), ...stringifiedProject },
+                { id, title, teams: JSON.stringify(teams.slice(1)), ...stringifiedProject },
                 getAuthConfig(token)
             )
                 .then(res => res.data)

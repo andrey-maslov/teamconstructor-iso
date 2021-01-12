@@ -26,6 +26,15 @@
   &_title {
     text-transform: uppercase;
     margin: 0 0 .5rem;
+
+    span {
+      display: inline-block;
+      margin-left: 1rem;
+      font-family: $font-default;
+      font-size: 1rem;
+      text-transform: none;
+      font-weight: normal;
+    }
   }
 
   &_content {

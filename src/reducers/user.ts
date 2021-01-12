@@ -8,6 +8,7 @@ export type userStoreType = {
     firstName: string | null
     lastName: string | null
     email: string | null
+    emailConfirmed: boolean
     position: string | null
     psyData: string | null
     provider: string | null
@@ -27,6 +28,7 @@ const STATE = {
     firstName: null,
     lastName: null,
     email: null,
+    emailConfirmed: false,
     position: null,
     psyData: null,
     provider: null,
@@ -59,6 +61,7 @@ export const user = (state = STATE, { type, userData, provider, psyData }: UserR
                 firstName: null,
                 lastName: null,
                 email: null,
+                emailConfirmed: false,
                 position: null,
                 psyData: null,
                 provider: null,
