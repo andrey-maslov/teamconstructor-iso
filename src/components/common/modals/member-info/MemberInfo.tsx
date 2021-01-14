@@ -13,6 +13,7 @@ import { COLORS } from '../../../../constants/constants'
 import axios from 'axios'
 import Table from '../../tables/table/Table'
 import { stripCountry } from "../../../../helper/helper"
+import Loader from "../../loaders/loader/Loader";
 
 const mockMember: IMember = {
     decData: [[1, 1, 0], [[-2, -3, -1, 2, -1], [-2, -2, -2, -4, -1], [-2, -1, -2, 1, -6], [-1, 1, 1, -2, -3], [1, -3, 2, 1, -2]]],
@@ -22,7 +23,7 @@ const mockMember: IMember = {
     baseID: 666
 }
 
-const url = `${process.env.RAZZLE_TEST_API_URL}/v1/test/result`
+const url = `${process.env.RAZZLE_TEST_API_URL}/v1/test/employee`
 
 interface ILargeModal extends IModalProps {
     isMobi?: boolean
@@ -34,27 +35,20 @@ export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge
     const currLang = stripCountry(i18n.language);
     const dispatch = useDispatch()
     const [state, setState] = useState({ portraitDesc: [[]], fullProfileData: [[]], psychoTypeDesc: '' })
-    const { terms } = useSelector((state: globalStoreType) => state.terms)
-    const { editedMember, teams } = useSelector((state: globalStoreType) => state.team)
+    const { terms } = useSelector((store: globalStoreType) => store.terms)
+    const { editedMember, teams } = useSelector((store: globalStoreType) => store.team)
 
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
     const member: IMember = members.filter((item: IMember) => item.baseID === editedMember)[0]
-
-    console.log(isLarge)
 
     useEffect(() => {
 
         function fetchMemberData(encdata: string, lang: string) {
 
-            axios.post(url, {
-                data: {
-                    encdata,
-                    lang
-                }
-            })
+            axios.post(url, { encdata, lang })
                 .then(res => res.data)
                 .then(data => {
-                    setState(data)
+                    setState(data.description)
                 })
                 .catch(err => {
                     console.error(err)
@@ -133,48 +127,60 @@ export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge
                     <div className={style.header}>
                         <strong>{member.name}</strong>, <span>{member.position}</span>
                     </div>
-                    <div className={style.scrollable}>
-                        <div className={style.block}>
-                            <div className="row around-md middle-xs">
-                                <div className="col-xl-5">
-                                    <div className={style.radar}>
-                                        <Radar
-                                            data={data}
-                                            options={options}
-                                            width={isLarge ? 400 : 300}
-                                            height={isLarge ? 300 : 250}
-                                        />
+                    {state.psychoTypeDesc.length === 0 ? (
+                            <div><Loader /></div>
+                        )
+                        : (
+                            <div className={style.scrollable}>
+                                <div className={style.block}>
+                                    <div className="row around-md middle-xs">
+                                        <div className="col-xl-5">
+                                            <div className={style.radar}>
+                                                <Radar
+                                                    data={data}
+                                                    options={options}
+                                                    width={isLarge ? 400 : 300}
+                                                    height={isLarge ? 300 : 250}
+                                                />
+                                            </div>
+                                        </div>
+                                        {state.psychoTypeDesc && (
+                                            <div className="col-xl-5">
+                                                <div>{state.psychoTypeDesc}</div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
-                                <div className="col-xl-5">
-                                    <div>{state.psychoTypeDesc}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={`${style.block} ${style.tableWrapper}`}>
-                            <div className={style.title}>Психологический портрет работника</div>
-                            <Table
-                                tableData={state.portraitDesc.map(item => [
-                                    item[0],
-                                    item[1]
-                                ])}
-                                tableHeader={fpTableTile}
-                                addClasses={['striped']}
-                            />
-                        </div>
+                                {state.portraitDesc && (
+                                    <div className={`${style.block} ${style.tableWrapper}`}>
+                                        <div className={style.title}>Психологический портрет работника</div>
+                                        <Table
+                                            tableData={state.portraitDesc.map(item => [
+                                                item[0],
+                                                item[1]
+                                            ])}
+                                            tableHeader={fpTableTile}
+                                            addClasses={['striped']}
+                                        />
+                                    </div>
+                                )}
 
-                        <div className={`${style.block} ${style.tableWrapper}`}>
-                            <div className={style.title}>Профиль работника</div>
-                            <Table
-                                tableData={state.fullProfileData.map(item => [
-                                    item[0],
-                                    item[1]
-                                ])}
-                                tableHeader={fpTableTile}
-                                addClasses={['striped']}
-                            />
-                        </div>
-                    </div>
+                                {state.fullProfileData && (
+                                    <div className={`${style.block} ${style.tableWrapper}`}>
+                                        <div className={style.title}>Профиль работника</div>
+                                        <Table
+                                            tableData={state.fullProfileData.map(item => [
+                                                item[0],
+                                                item[1]
+                                            ])}
+                                            tableHeader={fpTableTile}
+                                            addClasses={['striped']}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </Rodal>
