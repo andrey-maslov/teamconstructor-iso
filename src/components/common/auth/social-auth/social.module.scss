@@ -1,0 +1,32 @@
+@import '../../../../assets/scss/_vars.scss';
+
+.wrapper {
+  margin-top: 2rem;
+  border-top: 1px solid $overlay-light;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.desc {
+  padding-top: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.item {
+  width: 30%;
+
+  button {
+    border: 0;
+    min-width: unset;
+
+    span {
+      margin: 0;
+      color: #fff;
+    }
+  }
+}
+

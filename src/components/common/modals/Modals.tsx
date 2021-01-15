@@ -7,8 +7,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { globalStoreType } from '../../../constants/types'
 import { CreateProjectModal } from './create-project-modal/CreateProjectModal'
 import { CookiesConsent } from '../popovers/cookies-consent/CookiesConsent'
-import { SET_MEMBER_INFO_MODAL } from '../../../actions/actionTypes'
+import { DANGER_MODAL, SET_MEMBER_INFO_MODAL } from '../../../actions/actionTypes'
 import { MemberInfo } from './member-info/MemberInfo'
+import DangerModal from "./danger-modal/DangerModal";
 
 const Modals: React.FC = () => {
 
@@ -18,7 +19,8 @@ const Modals: React.FC = () => {
     const {
         isAddMemberModal,
         isCreateProjectModal,
-        isMemberInfoModal
+        isMemberInfoModal,
+        isDangerModal
     } = useSelector((state: globalStoreType) => state.modals)
 
     return (
@@ -39,7 +41,6 @@ const Modals: React.FC = () => {
                     dispatch({ type: SET_MEMBER_INFO_MODAL, isMemberInfoModal: false })
                 }}
             />}
-
             {isCreateProjectModal && <CreateProjectModal
                 visible={isCreateProjectModal}
                 isLarge={!isMobi}
@@ -47,6 +48,16 @@ const Modals: React.FC = () => {
                     dispatch(setCreateProjectModal(false))
                 }}
             />}
+
+            {isDangerModal && (
+                <DangerModal
+                    visible={isDangerModal}
+                    closeModal={() => {
+                        dispatch({ type: DANGER_MODAL, isDangerModal: false })
+                    }}
+                />
+            )}
+
             <CookiesConsent />
         </>
     )

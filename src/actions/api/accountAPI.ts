@@ -63,7 +63,10 @@ export function fetchUserData(token: string): unknown {
         if (token) {
             axios
                 .get(accountApiUrl, getAuthConfig(token))
-                .then(res => dispatch(setUserData(res.data)))
+                .then(res => {
+                    dispatch(setUserData(res.data))
+                    dispatch({ type: EMAIL_CONFIRMATION, isEmailConfirmed: res.data.emailConfirmed })
+                })
                 .then(() => dispatch(fetchProjectList(token)))
                 .then(() => dispatch(fetchPsyData(token)))
                 .catch(error => console.error(error))
@@ -83,6 +86,7 @@ export const updateUserData = (userData: IUserData) => {
                 .put(`${accountApiUrl}/update`, newUserData, getAuthConfig(token))
                 .then(res => {
                     dispatch(setUserData(res.data))
+                    dispatch({ type: EMAIL_CONFIRMATION, isEmailConfirmed: res.data.emailConfirmed })
                     dispatch({ type: SET_TOAST, setToast: 1 })
                 })
                 .catch(error => {
@@ -141,12 +145,14 @@ export const changeEmail = ({ email }: IOneFieldForm<string>) => {
 
 export const sendEmailConfirmation = (data: IEmailConfirmation) => {
     const token = getCookieFromBrowser('token')
+    const url = `${accountApiUrl}/confirm-email${data.email ? '-change' : ''}`
+
     return (dispatch: anyType) => {
         if (token) {
             dispatch(setLoading(true))
             axios
                 .post(
-                    `${accountApiUrl}/confirm-email`,
+                    url,
                     data,
                     getAuthConfig(token)
                 )

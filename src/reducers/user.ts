@@ -1,4 +1,10 @@
-import { ADD_AUTH_DATA, CLEAR_USER_DATA, SET_AUTH_PROVIDER, SET_PSY_DATA } from '../actions/actionTypes'
+import {
+    ADD_AUTH_DATA,
+    CLEAR_USER_DATA,
+    EMAIL_CONFIRMATION,
+    SET_AUTH_PROVIDER,
+    SET_PSY_DATA
+} from '../actions/actionTypes'
 import { loadState } from '../store/sessionStorage'
 import { anyType, IUserData } from "../constants/types"
 
@@ -8,7 +14,6 @@ export type userStoreType = {
     firstName: string | null
     lastName: string | null
     email: string | null
-    emailConfirmed: boolean
     position: string | null
     psyData: string | null
     provider: string | null
@@ -28,7 +33,6 @@ const STATE = {
     firstName: null,
     lastName: null,
     email: null,
-    emailConfirmed: false,
     position: null,
     psyData: null,
     provider: null,

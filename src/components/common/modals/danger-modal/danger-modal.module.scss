@@ -1,0 +1,41 @@
+@import '../../../../assets/scss/vars';
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.top {
+  padding-right: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  padding-top: .5rem;
+  border-bottom: 1px solid $overlay-light;
+}
+
+.desc {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $overlay-light;
+  flex: 1 0 auto;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.form {
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+@media(max-width: 576px) {
+
+}

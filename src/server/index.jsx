@@ -14,6 +14,7 @@ import App from '../App'
 import { stripCountry } from '../helper/helper'
 import { maintainRedirect } from "./maintainRedirect";
 import { saveEmails } from "./saveEmails";
+import { getCookie } from "../helper/cookie";
 
 const cookieParser = require('cookie-parser')
 
@@ -35,9 +36,9 @@ i18n
     .init(
         {
             debug: false,
-            preload: ['en', 'ru'],
+            preload: [ 'en', 'ru' ],
             whitelist: languages,
-            ns: ['common', 'team', 'pair', '404', 'landing'],
+            ns: [ 'common', 'team', 'pair', '404', 'landing' ],
             defaultNS: 'common',
             backend: {
                 loadPath: `${ publicDir }/locales/{{lng}}/{{ns}}.json`,
@@ -53,6 +54,16 @@ i18n
                 .use(express.static(publicDir))
                 .use('/save-email', saveEmails)
                 .use(maintainRedirect)
+                .get([ '/team', '/profile' ], (req, res) => {
+                    if (!req.cookies.token) {
+                        res.redirect('/')
+                    }
+                })
+                .get([ '/signin', '/registration' ], (req, res) => {
+                    if (req.cookies.token) {
+                        res.redirect('/')
+                    }
+                })
                 .get('/*', (req, res) => {
                     const context = {}
 
@@ -69,16 +80,12 @@ i18n
                     const { url } = context
                     if (url) {
                         res.redirect(url)
-                    } else if ((req.path === '/signin' || req.path === '/registration') && req.cookies.token) {
-                        res.redirect('/')
-                    } else if (req.path === '/profile' && !req.cookies.token) {
-                        res.redirect('/')
                     } else {
                         const initialI18nStore = {}
                         req.i18n.languages.forEach(l => {
                             initialI18nStore[l] = req.i18n.services.resourceStore.data[l];
                         });
-
+                        const cookieConsent = getCookie('cookie-consent', req)
                         const initialLanguage = req.i18n.language
                         const initLang = stripCountry(initialLanguage) || LANG_DEFAULT;
 
@@ -102,7 +109,7 @@ i18n
                                                   window.encData = '${ req.query.encdata }';
                                                 </script>
                                             </head>
-                                            <body style="background-color: #1C1E23">
+                                            <body style="background-color: #1C1E23" class=${ cookieConsent ? 'cookie-consented' : '' }>
                                                 <div id="root">${ markup }</div>
                                             </body>
                                         </html>`;

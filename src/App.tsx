@@ -49,8 +49,7 @@ const App: React.FC = () => {
                     <Route exact path="/terms" render={() => <ContentPage page="terms" />} />
                     <Route exact path="/signin" render={() => <AuthPage page="signin" />} />
                     <Route exact path="/signin/forgot-password" render={() => <AuthPage page="forgot_pwd" />} />
-                    <Route exact path="/signin/forgot-password-success"
-                           render={() => <AuthPage page="forgot_pwd_success" />} />
+                    <Route exact path="/signin/forgot-password-success" render={() => <AuthPage page="forgot_pwd_success" />} />
                     <Route exact path="/signin/reset-password" render={() => <AuthPage page="reset_pwd" />} />
                     <Route exact path="/registration" render={() => <AuthPage page="registration" />} />
                     <Route path="/confirm-email" render={() => <ConfirmEmail />} />

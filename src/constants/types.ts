@@ -134,8 +134,8 @@ export interface IResumeUpload {
 }
 
 export interface IEmailConfirmation {
-    userId: string
     code: string
+    userId: string
     email?: string
 }
 

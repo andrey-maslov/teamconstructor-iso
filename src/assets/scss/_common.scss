@@ -575,6 +575,12 @@ th, td {
   }
 }
 
+.danger-modal {
+
+  .rodal-dialog {
+    background-color: $overlay-dark;
+  }
+}
 
 /*===== POPOVERS =====*/
 .user-popover {
@@ -606,6 +612,15 @@ th, td {
         line-height: inherit;
         cursor: not-allowed;
       }
+    }
+  }
+}
+
+body {
+  &.cookie-consented {
+
+    .cookie-consent-popup {
+      display: none;
     }
   }
 }

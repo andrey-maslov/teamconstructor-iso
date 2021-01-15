@@ -11,6 +11,7 @@ import Reset, { IResetForm } from './Reset'
 import { authModes } from '../../../constants/constants'
 import style from './auth.module.scss'
 import { getQueryFromURL } from '../../../helper/helper'
+import SocialAuth from "./social-auth/SocialAuth";
 
 
 export interface IAuthMode {
@@ -50,13 +51,13 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
             termsLink && termsLink.removeEventListener('click', toTerms)
             privacyLink && privacyLink.removeEventListener('click', toPrivacy)
         }
-    }, [ agreement, isLoggedIn ])
+    }, [agreement, isLoggedIn])
 
     useEffect(() => {
         if (isLoggedIn) {
             history.push(redirectUrl || '/')
         }
-    }, [ isLoggedIn ])
+    }, [isLoggedIn])
 
     const Form = () => {
         switch (page) {
@@ -68,16 +69,27 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
                             errorApiMessage={accountApiErrorMsg}
                             submitHandle={signIn}
                         />
-                        <NavLink to="/signin/forgot-password">{t('common:auth.forgot_pwd_question')}</NavLink>
+
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <NavLink to="/signin/forgot-password">{t('common:auth.forgot_pwd_question')}</NavLink>
+                            <NavLink to="/registration">{t('common:auth.signup')}</NavLink>
+                        </div>
+                        <SocialAuth />
                     </>
                 )
             case authModes[1] :
                 return (
-                    <Signup
-                        isLoading={false}
-                        errorApiMessage={accountApiErrorMsg}
-                        submitHandle={signUp}
-                    />
+                    <>
+                        <Signup
+                            isLoading={false}
+                            errorApiMessage={accountApiErrorMsg}
+                            submitHandle={signUp}
+                        />
+                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <NavLink to="/signin">{t('common:auth.signin')}</NavLink>
+                        </div>
+                        <SocialAuth />
+                    </>
                 )
             case authModes[2] :
                 return (

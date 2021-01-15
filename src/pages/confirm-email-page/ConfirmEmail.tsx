@@ -7,13 +7,17 @@ import { getQueryFromURL, isBrowser } from "../../helper/helper";
 import { globalStoreType } from "../../constants/types";
 import { sendEmailConfirmation } from "../../actions/api/accountAPI";
 
+type ConfMode = 'confirm-email' | 'confirm-email-change' | null
+
 const ConfirmEmail: React.FC = () => {
 
     const { t } = useTranslation()
     const dispatch = useDispatch()
-    const { isEmailConfirmed, isLoading, accountApiErrorMsg, apiErrorMsg } = useSelector(
+    const { isEmailConfirmed, isLoading, apiErrorMsg } = useSelector(
         (state: globalStoreType) => state.app
     )
+    const [confirmationMode, setConformationMode] = useState<ConfMode>(null)
+
     useEffect(() => {
         if (isBrowser) {
             const query = window.location.search
@@ -21,12 +25,14 @@ const ConfirmEmail: React.FC = () => {
             const code = getQueryFromURL(query, 'code')
             const email = getQueryFromURL(query, 'email')
             if (userId && code && email) {
+                setConformationMode('confirm-email-change')
                 dispatch(sendEmailConfirmation({ userId, code, email }))
-            } else if (userId && code && !email) {
-                dispatch(sendEmailConfirmation({ userId, code }))
+                return
             }
+            setConformationMode('confirm-email')
+            dispatch(sendEmailConfirmation({ code, userId }))
         }
-    }, [dispatch])
+    }, [])
 
     // useEffect(() => {
     //     if (isEmailConfirmed) {
@@ -43,7 +49,12 @@ const ConfirmEmail: React.FC = () => {
                         <div className={style.icon}>
                             <FiCheckCircle />
                         </div>
-                        <div className={style.desc}>{t('profile:email_confirm_success')}</div>
+                        <div className={style.desc}>
+                            {confirmationMode === 'confirm-email'
+                                ? t('common:profile.email_confirm_success')
+                                : t('common:profile.change_email_confirm_success')
+                            }
+                        </div>
                     </div>
                 )}
                 {apiErrorMsg && (

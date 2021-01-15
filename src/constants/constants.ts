@@ -59,3 +59,5 @@ export enum authModes {
     'reset_pwd',
     'forgot_pwd_success'
 }
+
+export const LINKEDIN_REDIRECT_URI = `${BASE_API}/callbacklinkedin`

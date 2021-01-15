@@ -2,16 +2,16 @@ import { PROCESS_FAILED, SET_ERROR } from "./actionTypes";
 import { anyType } from "../constants/types";
 
 export function clearErrors(dispatch: anyType): anyType {
-    dispatch({ type: SET_ERROR, apiErrorMsg: null })
+    dispatch({ type: SET_ERROR, errorApiMessage: null })
     dispatch({ type: PROCESS_FAILED, processFailed: false })
 }
 
 export function apiErrorHandling(error: anyType, dispatch: anyType): anyType {
     if (error.response) {
         const msg: string = error.response.data?.title || 'Something wrong with resources'
-        dispatch({ type: SET_ERROR, apiErrorMsg: msg })
+        dispatch({ type: SET_ERROR, errorApiMessage: msg })
     } else if (error.request) {
-        dispatch({ type: SET_ERROR, apiErrorMsg: 'Some troubles with network' })
+        dispatch({ type: SET_ERROR, errorApiMessage: 'Some troubles with network' })
     } else {
         console.error('ERROR', error.message)
     }

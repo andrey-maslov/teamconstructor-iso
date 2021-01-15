@@ -67,7 +67,8 @@
     "forgot_explanation": "Enter the email address that you provided during registration. You will receive an email with a link to change your password to this mailbox",
     "forgot_success": "Check your inbox for the link to reset your password",
     "new_pwd": "New password",
-    "reset_success": "Password changed. You can now log in using the new password through the standard form"
+    "reset_success": "Password changed. You can now log in using the new password through the standard form",
+    "or_continue_with": "Or continue with"
   },
   "profile": {
     "title": "Additional information",
@@ -83,7 +84,15 @@
     "show": "Show me!",
     "email_send_success": "Email будет изменен после подтверждения",
     "email_confirm_success": "Спасибо, ваш email подтвержден",
+    "change_email_confirm_success": "Спасибо, ваш email изменен",
     "confirm_email": "Подтверждение email",
+    "delete": {
+      "are_you_sure": "Are you sure?",
+      "delete_account": "Delete account",
+      "enter_pwd": "Enter your password for confirmation",
+      "warning_msg_1": "Once you delete your account, you will not be able to restore it",
+      "warning_msg_2": "This action cannot be undone. This will permanently delete your account, projects, test results etc."
+    },
     "meta": {
       "title": "title for profile page",
       "description": "Description for profile page"

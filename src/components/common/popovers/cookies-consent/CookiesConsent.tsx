@@ -20,7 +20,7 @@ export const CookiesConsent: React.FC = () => {
     }
 
     return (
-        <div className={style.popup}>
+        <div className={`${style.popup} cookie-consent-popup`}>
             <div className={style.content}>
                 <p>{t('common:cookie_consent.text')}</p>
                 <NavLink className={style.policyLink} to={'/cookie-policy'}>{t('common:nav.cookie')}</NavLink>

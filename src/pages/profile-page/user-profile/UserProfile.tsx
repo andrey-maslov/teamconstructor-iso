@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 import InputTransformer from '../../../components/common/Inputs/input-transformer/InputTransformer'
 import CodeBox from '../../../components/common/Inputs/code-box/CodeBox'
 import { DANGER_MODAL, SET_TOAST } from '../../../actions/actionTypes'
-import { changeEmail, updateUserData } from "../../../actions/api/accountAPI";
+import { changeEmail, updateUserData } from "../../../actions/api/accountAPI"
 
 const UserProfile = () => {
     const {
@@ -79,6 +79,7 @@ const UserProfile = () => {
     ])
 
     if (!isReady) {
+        console.log('not ready')
         return <Loader />
     }
 
