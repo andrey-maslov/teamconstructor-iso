@@ -5,6 +5,8 @@ import { TermsStoreType } from '../reducers/terms'
 import { modalsStoreType } from '../reducers/modals'
 import { appStoreType } from '../reducers/app'
 import { authModes } from "./constants";
+import { RiTeamLine } from "react-icons/ri";
+import React from "react";
 
 export type anyType = any
 
@@ -45,7 +47,7 @@ export interface ITeam {
 export interface INavRoute {
     title: string
     path: string
-    access: string
+    access: 'all' | 'auth' | 'premium'
     icon: React.ReactNode
 }
 

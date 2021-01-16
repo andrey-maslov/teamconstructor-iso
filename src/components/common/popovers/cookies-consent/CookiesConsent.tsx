@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { NavLink } from "react-router-dom"
 import style from './cookies-consent.module.scss'
 import Button from "../../buttons/button/Button"
-import Cookie from "js-cookie"
 import { useTranslation } from "react-i18next"
+import { getCookieFromBrowser, setCookie } from "../../../../helper/cookie";
+import { isBrowser } from "../../../../helper/helper";
 
 export const CookiesConsent: React.FC = () => {
 
@@ -11,8 +12,10 @@ export const CookiesConsent: React.FC = () => {
     const { t } = useTranslation()
 
     useEffect(() => {
-        const consent = Cookie.get('cookie-consent')
-        consent && setConsented(true)
+        if(isBrowser) {
+            const consent = getCookieFromBrowser('cookie-consent')
+            consent && setConsented(true)
+        }
     }, [])
 
     if (isConsented) {
@@ -35,6 +38,6 @@ export const CookiesConsent: React.FC = () => {
 
     function handleCookiesConsent() {
         setConsented(true)
-        Cookie.set('cookie-consent', 'OK')
+        setCookie('cookie-consent', 'OK', 30)
     }
 }

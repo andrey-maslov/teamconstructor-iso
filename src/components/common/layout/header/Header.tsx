@@ -6,7 +6,7 @@ import MobiHeader from '../../../mobi/header/MobiHeader'
 import WebHeader from '../../../web/header/WebHeader'
 import { FiUsers, FiSettings } from 'react-icons/fi'
 import { RiTeamLine } from 'react-icons/ri'
-import { globalStoreType } from '../../../../constants/types'
+import { globalStoreType, INavRoute } from '../../../../constants/types'
 import { useTranslation } from 'react-i18next'
 
 const Header: React.FC = () => {
@@ -15,11 +15,14 @@ const Header: React.FC = () => {
     const { t } = useTranslation()
     const { isLoggedIn, email } = useSelector((state: globalStoreType) => state.user)
 
-    const routes = [
+    const userAccess = isLoggedIn ? 'auth' : 'all'
+
+    const routes: INavRoute[] = [
         { title: t('common:nav.pair'), path: '/pair', access: 'all', icon: <FiUsers /> },
-        { title: t('common:nav.team'), path: '/team', access: 'auth', icon: <RiTeamLine /> },
+        { title: t('common:nav.team'), path: '/team', access: 'premium', icon: <RiTeamLine /> },
         { title: t('common:nav.profile'), path: '/profile', access: 'auth', icon: <FiSettings /> },
     ]
+    const routesToDisplay: INavRoute[] = routes.filter(route => route.access === userAccess)
 
     const isTablet = useMediaPredicate('(max-width: 992px)')
 

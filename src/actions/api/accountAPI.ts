@@ -41,7 +41,7 @@ export function authUser(userData: AuthData, authType: AuthType, setError: anyTy
             .post(url, userData)
             .then(res => {
                 const token = res.data.jwtToken
-                setCookie('token', token)
+                setCookie('token', token, 10)
                 dispatch({ type: SET_AUTH_PROVIDER, provider: 'local' })
                 return token
             })

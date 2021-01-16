@@ -46,7 +46,7 @@ const Forgot: React.FC<ILogin<IForgotForm>> = ({ isLoading, errorApiMessage, sub
                             ref={register({
                                 required: `${t('common:errors.required')}`,
                                 pattern: {
-                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    value: /^(?!['`])\s*[-+.'\w]+@[-.\w]+\.[-.\w]+\s*$/i,
                                     message: `${t('common:errors.invalid_email')}`
                                 }
                             })}

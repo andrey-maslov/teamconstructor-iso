@@ -5,10 +5,10 @@ import cookie from 'js-cookie';
 import { isBrowser } from "./helper";
 import { anyType } from "../constants/types";
 
-export const setCookie = (key: string, value: string): void => {
+export const setCookie = (key: string, value: string, expires?: number): void => {
     if (isBrowser) {
         cookie.set(key, value, {
-            expires: 1,
+            expires: expires || 1,
             path: '/'
         })
     }
