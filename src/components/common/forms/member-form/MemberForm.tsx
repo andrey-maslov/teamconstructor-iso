@@ -51,7 +51,6 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
                 {errors.name && errors.name.type === 'duplicateName' && (
                     <div className={`item-explain`}>{t('common:errors.duplicate_member_name')}</div>
                 )}
-                {errors.name && <div className={`item-explain`}>{errors.name.message}</div>}
             </div>
             <div className={`form-group ${errors.position ? 'has-error' : ''}`}>
                 <label>

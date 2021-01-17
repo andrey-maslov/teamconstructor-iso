@@ -24,7 +24,7 @@ export const checkAnswers = (answers: any, callback: any) => {
     for (let i = 0; i < answers.length; i++) {
 
         if (!answers[i].value) {
-            let targetElem: any = document.querySelector(`.visible [data-item-index="${i + 1}"]`);
+            const targetElem: any = document.querySelector(`.visible [data-item-index="${i + 1}"]`);
             targetElem.scrollIntoView({ block: 'center', behavior: 'smooth' });
             console.log('not validated');
             return false;
@@ -185,4 +185,17 @@ export function isElementInViewport(el: any) {
         rect.bottom <= (window.innerHeight || document. documentElement.clientHeight) &&
         rect.right <= (window.innerWidth || document. documentElement.clientWidth)
     )
+}
+
+export function trimEmailInObj(object: any) {
+    if (typeof object !== 'object') {
+        return object
+    }
+    const regex = /^(?!['`])\s*[-+.'\w]+@[-.\w]+\.[-.\w]+\s*$/i
+    for(const key in object) {
+        if (typeof object[key] === 'string' && object[key].match(regex)) {
+            object[key] = object[key].trim();
+        }
+    }
+    return object
 }

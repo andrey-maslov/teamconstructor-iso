@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { anyType, globalStoreType } from "../../../constants/types"
 import ResetSuccess from "./ResetSuccess";
 import ForgotSuccess from "./ForgotSuccess";
+import { EMAIL_PATTERN } from "../../../constants/constants";
 
 export interface IForgotForm {
     email: string
@@ -46,7 +47,7 @@ const Forgot: React.FC<ILogin<IForgotForm>> = ({ isLoading, errorApiMessage, sub
                             ref={register({
                                 required: `${t('common:errors.required')}`,
                                 pattern: {
-                                    value: /^(?!['`])\s*[-+.'\w]+@[-.\w]+\.[-.\w]+\s*$/i,
+                                    value: EMAIL_PATTERN,
                                     message: `${t('common:errors.invalid_email')}`
                                 }
                             })}

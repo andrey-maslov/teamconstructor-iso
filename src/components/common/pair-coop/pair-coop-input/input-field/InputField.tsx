@@ -11,11 +11,23 @@ interface IInputField {
     nameRef: anyType
     dataRef: anyType
     errors: anyType
+    onBlur: anyType
 }
 
-const InputField: React.FC<IInputField> = ({ name, encData, index, placeholder, nameRef, dataRef, errors }) => {
+const InputField: React.FC<IInputField> = ({
+                                               name,
+                                               encData,
+                                               index,
+                                               placeholder,
+                                               nameRef,
+                                               dataRef,
+                                               errors,
+                                               onBlur
+                                           }) => {
 
     const { t } = useTranslation()
+
+    console.log(name)
 
     return (
         <div className={style.wrapper}>
@@ -23,11 +35,12 @@ const InputField: React.FC<IInputField> = ({ name, encData, index, placeholder, 
                 <input
                     type="text"
                     name={`name${index}`}
-                    defaultValue={name}
+                    // defaultValue={name}
                     ref={nameRef}
                     onFocus={(e: React.ChangeEvent<HTMLInputElement>) => e.target.select()}
-                    placeholder={name}
+                    // placeholder={name}
                     autoComplete="off"
+                    onBlur={onBlur}
                 />
                 {errors[`name${index}`] && <div className={`item-explain`}>{errors[`name${index}`].message}</div>}
             </div>

@@ -8,9 +8,9 @@ import { anyType, globalStoreType } from '../../../constants/types'
 import { authUser, sendForgotEmail, sendNewPassword } from '../../../actions/actionCreator'
 import Forgot, { IForgotForm } from './Forgot'
 import Reset, { IResetForm } from './Reset'
-import { authModes } from '../../../constants/constants'
+import { authModes, SERVICE } from '../../../constants/constants'
 import style from './auth.module.scss'
-import { getQueryFromURL } from '../../../helper/helper'
+import { getQueryFromURL, isBrowser } from '../../../helper/helper'
 import SocialAuth from "./social-auth/SocialAuth";
 
 
@@ -133,10 +133,19 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
     )
 
     function signIn(data: ISigninForm, setError: anyType): void {
-        dispatch(authUser(data, 'signin', setError))
+        const userData = {
+            username: data.username.trim(),
+            password: data.password
+        }
+        dispatch(authUser(userData, 'signin', setError))
     }
 
     function signUp(data: ISignUpForm, setError: anyType): void {
+        const trimmedData = {
+            email: data.email.trim(),
+            password: data.password,
+            passwordConfirm: data.passwordConfirm
+        }
         const userData = {
             firstName: '',
             lastName: '',
@@ -144,22 +153,27 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
                 id: 0,
                 name: 'city'
             },
-            service: 2,
-            ...data
+            service: SERVICE,
+            ...trimmedData
         }
         dispatch(authUser(userData, 'registration', setError))
     }
 
     function forgotHandle(data: IForgotForm, setError: anyType): void {
-        dispatch(sendForgotEmail(data.email, setError))
+        dispatch(sendForgotEmail((data.email).trim(), setError))
     }
 
     function resetHandle(data: IResetForm, setError: anyType): void {
-        const code = getQueryFromURL(window.location.search, 'code')
+        let code: string
+        if (isBrowser) {
+            code = getQueryFromURL(window.location.search, 'code')
+        } else {
+            code = ''
+        }
         const newData = {
             code,
             newPassword: data.password,
-            email: data.email
+            email: (data.email).trim()
         }
         dispatch(sendNewPassword(newData, setError))
     }

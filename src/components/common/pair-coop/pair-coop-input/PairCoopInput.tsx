@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import InputField from './input-field/InputField'
+import React, { EventHandler, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setComparisonResult, setPairData, } from '../../../../actions/actionCreator'
 import { getAndDecodeData } from 'psychology'
@@ -7,12 +6,14 @@ import { FaReact } from 'react-icons/fa'
 import { GoRocket } from 'react-icons/go'
 import ProfileGenerator from './profile-generator/ProfileGenerator'
 import style from './pair-input.module.scss'
-import { anyType, globalStoreType, IOneFieldForm } from '../../../../constants/types'
+import { anyType, globalStoreType, IMemberForm, IOneFieldForm } from '../../../../constants/types'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { extractEncData } from '../../../../helper/helper'
-import Search from "../../Inputs/search/Search";
-import { searchUser } from "../../../../actions/api/usersAPI";
+import { useToasts } from 'react-toast-notifications'
+import { SEARCH_MODAL } from "../../../../actions/actionTypes";
+import { SearchUserModal } from "../../modals/search-user-modal/SearchUserModal";
+import { useMediaPredicate } from "react-media-hook";
 
 interface IPairLocalState {
     data1: string
@@ -32,22 +33,28 @@ interface IForm {
 
 const PairCoopInput: React.FC = () => {
     const dispatch = useDispatch()
-    const encData1 = useSelector((state: globalStoreType) => state.pair.partner1.encData)
-    const encData2 = useSelector((state: globalStoreType) => state.pair.partner2.encData)
-    const { firstName, psyData } = useSelector((state: globalStoreType) => state.user)
-    const { register, handleSubmit, errors, getValues } = useForm()
+    const isMobi = useMediaPredicate('(max-width: 600px)')
+    const { partner1, partner2 } = useSelector((state: globalStoreType) => state.pair)
+    const { firstName, psyData, isLoggedIn } = useSelector((state: globalStoreType) => state.user)
+    const { isSearchModal } = useSelector((state: globalStoreType) => state.modals)
     const { t } = useTranslation()
 
     const encDataFromURL = getAndDecodeData().encoded;
 
-    const [ localState, setLocalState ] = useState<IPairLocalState>({
-        data1: encDataFromURL ? encDataFromURL : encData1,
-        data2: encData2,
+    const [localState, setLocalState] = useState<IPairLocalState>({
+        data1: encDataFromURL ? encDataFromURL : partner1.encData,
+        data2: partner2.encData,
         name1: `${t('pair:profile')} 1`,
         name2: `${t('pair:profile')} 2`,
         isGenerator: false
     })
-    // const [ userIndex, setUserIndex ] = useState<null | number>(null)
+
+    useEffect(() => {
+        console.log(localState.name1)
+    }, [localState.name1])
+
+    const { register, handleSubmit, errors, getValues } = useForm()
+    const [inputIndex, setInputIndex] = useState<number>(1)
 
     return (
         <>
@@ -66,40 +73,120 @@ const PairCoopInput: React.FC = () => {
 
             <form onSubmit={handleSubmit(submitCompare)} id="pairForm">
                 <div className={`row between-xs ${style.fields}`}>
-
-                    {[ localState.name1, localState.name2 ].map((item, i) => (
-                        <div className="col-lg-6 mb-md" key={`${localState.name1}-${Math.random()}`}>
-                            <InputField
-                                name={item}
-                                encData={localState[`data${i + 1}`]}
-                                index={i + 1}
-                                placeholder={`${t('pair:textarea_placeholder')} ${i + 1}`}
-                                nameRef={register({
+                    <div className={style.inputGroup}>
+                        <div
+                            className={`${style.title} form-group ${errors.name1 ? 'has-error' : ''}`}>
+                            <input
+                                type="text"
+                                name="name1"
+                                value={localState.name1}
+                                onChange={onInputChange}
+                                ref={register({
                                     required: `${t('common:errors.required')}`,
                                 })}
-                                dataRef={register({
+                                onFocus={(e: React.ChangeEvent<HTMLInputElement>) => e.target.select()}
+                                placeholder={localState.name1}
+                                autoComplete="off"
+                            />
+                            {errors.name1 &&
+                            <div className={`item-explain`}>{errors.name1.message}</div>}
+                        </div>
+                        <div className={`form-group ${errors.data1 ? 'has-error' : ''}`}>
+                            <textarea
+                                name="data1"
+                                value={localState.data1}
+                                placeholder={`${t('pair:textarea_placeholder')} 1`}
+                                onChange={onInputChange}
+                                ref={register({
                                     required: `${t('common:errors.required')}`,
                                     validate: {
                                         decode: value => extractEncData(value).data !== null
                                     }
                                 })}
-                                errors={errors}
                             />
-                            <div className={style.buttons}>
-                                {psyData && <button
-                                    className={`${style.btn} btn btn-outlined`}
-                                    onClick={(e) => setOwnResult(e, i + 1)}>
-                                    Свой результат
-                                </button>}
-                                <button
-                                    className={`${style.btn} btn btn-outlined`}
-                                    onClick={(e) => openSearch(e, i + 1)}>
-                                    Найти пользователя
-                                </button>
-                            </div>
+                            {errors.data1 &&
+                            <div className={`item-explain`}>{errors.data1.message}</div>}
+                            {errors.data1 && errors.data1.type === 'decode' && (
+                                <div className={`item-explain`}>{t('common:errors.invalid')}</div>
+                            )}
                         </div>
-                    ))}
-
+                        {isLoggedIn && (
+                            <div className={style.buttons}>
+                                {psyData && <div
+                                    className={`${style.btn} btn btn-outlined`}
+                                    onClick={(e) => setOwnResult(e, 1)}>
+                                    Свой результат
+                                </div>}
+                                <div
+                                    className={`${style.btn} btn btn-outlined`}
+                                    onClick={(e) => openSearch(e, 1)}>
+                                    Найти пользователя
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    <div className={style.inputGroup}>
+                        <div
+                            className={`${style.title} form-group ${errors.name2 ? 'has-error' : ''}`}>
+                            <input
+                                type="text"
+                                name="name2"
+                                value={localState.name2}
+                                onChange={onInputChange}
+                                ref={register({
+                                    required: `${t('common:errors.required')}`,
+                                    validate: {
+                                        matchesPreviousName: value => {
+                                            const { name1 } = getValues()
+                                            return name1 !== value || `${t('common:errors.same_partner_names')}`
+                                        }
+                                    }
+                                })}
+                                onFocus={(e: React.ChangeEvent<HTMLInputElement>) => e.target.select()}
+                                placeholder={localState.name2}
+                                autoComplete="off"
+                            />
+                            {errors.name2 &&
+                            <div className={`item-explain`}>{errors.name2.message}</div>}
+                        </div>
+                        <div className={`form-group ${errors.data2 ? 'has-error' : ''}`}>
+                            <textarea
+                                name="data2"
+                                value={localState.data2}
+                                onChange={onInputChange}
+                                placeholder={`${t('pair:textarea_placeholder')} 2`}
+                                ref={register({
+                                    required: `${t('common:errors.required')}`,
+                                    validate: {
+                                        decode: value => extractEncData(value).data !== null,
+                                        matchesPreviousData: value => {
+                                            const { data1 } = getValues()
+                                            return data1 !== value || `${t('common:errors.same_partner_results')}`
+                                        }
+                                    }
+                                })}
+                            />
+                            {errors.data2 &&
+                            <div className={`item-explain`}>{errors.data2.message}</div>}
+                            {errors.data2 && errors.data2.type === 'decode' && (
+                                <div className={`item-explain`}>{t('common:errors.invalid')}</div>
+                            )}
+                        </div>
+                        {isLoggedIn && (
+                            <div className={style.buttons}>
+                                {psyData && <div
+                                    className={`${style.btn} btn btn-outlined`}
+                                    onClick={(e) => setOwnResult(e, 2)}>
+                                    Свой результат
+                                </div>}
+                                <div
+                                    className={`${style.btn} btn btn-outlined`}
+                                    onClick={(e) => openSearch(e, 2)}>
+                                    Найти пользователя
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </form>
 
@@ -109,7 +196,6 @@ const PairCoopInput: React.FC = () => {
                     {t('common:buttons.compare')}
                 </button>
             </div>
-
             <button
                 className={style.floatBtn}
                 onClick={() => {
@@ -118,32 +204,35 @@ const PairCoopInput: React.FC = () => {
             >
                 <FaReact />
             </button>
+            {isSearchModal && <SearchUserModal
+                visible={Boolean(isSearchModal)}
+                isLarge={!isMobi}
+                closeModal={() => {
+                    dispatch({ type: SEARCH_MODAL, isSearchModal: false })
+                }}
+                handler={setFoundUserData}
+            />}
         </>
     )
 
-    function submitCompare(data: IForm) {
 
+    function submitCompare(data: IForm) {
         const { data1, data2, name1, name2 } = data
 
         const decData1 = extractEncData(data1).data
         const decData2 = extractEncData(data2).data
-
         dispatch(setComparisonResult(true))
         dispatch(setPairData(decData1, decData2, name1, name2))
+
     }
 
     function setOwnResult(e: React.MouseEvent<HTMLButtonElement>, inputNum: number): void {
-        e.preventDefault()
         setDataGroup(firstName, psyData, inputNum)
     }
 
     function openSearch(e: React.MouseEvent<HTMLButtonElement>, inputNum: number): void {
-        e.preventDefault()
-        // setUserIndex(inputNum)
-    }
-
-    function setFoundUserData(data: anyType, i: number) {
-        setDataGroup(data.firstName, data.tests[0].value, i)
+        setInputIndex(inputNum)
+        dispatch({ type: SEARCH_MODAL, isSearchModal: inputNum })
     }
 
     function setDataGroup(name: string, encData: string, index: number): void {
@@ -166,6 +255,18 @@ const PairCoopInput: React.FC = () => {
         setLocalState({
             ...localState,
             data1: data
+        })
+    }
+
+    function setFoundUserData(data: IMemberForm) {
+        setDataGroup(data.name, data.encData, inputIndex)
+    }
+
+    function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const inputName = e.target.name
+        setLocalState({
+            ...localState,
+            [inputName]: e.target.value
         })
     }
 

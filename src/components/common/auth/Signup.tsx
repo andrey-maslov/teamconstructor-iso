@@ -6,6 +6,7 @@ import { AiOutlineLoading } from 'react-icons/ai'
 import { useTranslation } from "react-i18next"
 import { ISignin } from "./Login"
 import Password from "../Inputs/password/Password"
+import { EMAIL_PATTERN } from "../../../constants/constants";
 
 export interface ISignUpForm {
     email: string
@@ -30,7 +31,7 @@ const Signup: React.FC<ISignin<ISignUpForm>> = ({ isLoading, errorApiMessage, su
                         ref={ register({
                             required: `${ t('common:errors.required') }`,
                             pattern: {
-                                value: /^(?!['`])\s*[-+.'\w]+@[-.\w]+\.[-.\w]+\s*$/i,
+                                value: EMAIL_PATTERN,
                                 message: `${ t('common:errors.invalid_email') }`
                             }
                         }) }

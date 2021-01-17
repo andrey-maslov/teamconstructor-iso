@@ -20,7 +20,7 @@ const Modals: React.FC = () => {
         isAddMemberModal,
         isCreateProjectModal,
         isMemberInfoModal,
-        isDangerModal
+        isDangerModal,
     } = useSelector((state: globalStoreType) => state.modals)
 
     return (

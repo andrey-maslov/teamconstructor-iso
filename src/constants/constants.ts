@@ -19,6 +19,8 @@ export const LANGS = [
 
 export const LANG_DEFAULT = LANGS[0][0]
 
+export const EMAIL_PATTERN = /^(?!['`])\s*[-+.'\w]+@[-.\w]+\.[-.\w]+\s*$/i
+
 export const ROUTES = {
     '/': 'page-main',
     '/pair': 'page-pair',

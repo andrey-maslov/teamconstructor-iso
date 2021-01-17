@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Rodal from 'rodal'
 import { useSelector, useDispatch } from 'react-redux'
 import style from './add-member.module.scss'
-import { anyType, globalStoreType, IMemberForm, IModalProps, IOneFieldForm } from '../../../../constants/types'
+import { anyType, globalStoreType, IMemberForm, IModalProps } from '../../../../constants/types'
 import { IMember } from 'psychology/build/main/types/types'
 import { getAndDecodeData } from 'psychology'
-import { setEditedMember, updateProject } from '../../../../actions/actionCreator'
+import { updateProject } from '../../../../actions/actionCreator'
 import { useTranslation } from 'react-i18next'
 import MemberForm from "../../forms/member-form/MemberForm";
 import SearchMember from "../../forms/search-member/SearchMember";
 import Button from "../../buttons/button/Button";
-import { AiOutlineLoading } from "react-icons/ai";
-import { searchUser } from "../../../../actions/api/usersAPI";
 
 export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
@@ -24,25 +22,21 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
     // const { t } = useTranslation()
     const dispatch = useDispatch()
     const [isSearchMode, setSearchMode] = useState(false)
-    const [searchedEmail, setSearchedEmail] = useState('')
     const [defaultProfile, setDefaultProfile] = useState<IMemberForm>({
         name: '',
         position: '',
         encData: ''
     })
 
+    useEffect(() => {
+        if (defaultProfile.name || defaultProfile.encData) {
+            setSearchMode(false)
+        }
+    }, [defaultProfile.name, defaultProfile.encData])
+
     const { teams, editedMember } = useSelector((state: globalStoreType) => state.team)
     // const { isLoading, errorApiMessage } = useSelector((state: globalStoreType) => state.app)
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
-
-    useEffect(() => {
-        if (searchedEmail) {
-            searchUser(searchedEmail)
-                .then(res => res.data)
-                .then(data => validateAndSetMember(data))
-                .then(() => setSearchMode(false))
-        }
-    }, [searchedEmail])
 
     useEffect(() => {
         if (editedMember !== null) {
@@ -55,6 +49,8 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
         }
     }, [])
 
+    console.log(defaultProfile)
+
     return (
         <Rodal
             className='add-member-modal'
@@ -66,7 +62,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
         >
             <div className={style.content}>
                 {isSearchMode ? (
-                    <SearchMember submitForm={submitSearchForm} />
+                    <SearchMember searchHandler={searchMemberHandler} />
                 ) : (
                     <MemberForm
                         memberData={defaultProfile}
@@ -82,6 +78,15 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
             </div>
         </Rodal>
     )
+
+    function searchMemberHandler({name, position, encData}: any) {
+        // TODO провалидировать на ошибки, отсутствие результата теста и куда-то разместить инфу об этом
+        setDefaultProfile({
+            name,
+            position,
+            encData
+        })
+    }
 
     function submitMemberForm(formData: IMemberForm): void {
 
@@ -131,23 +136,5 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
             })
             dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
         }
-    }
-
-    function submitSearchForm({ email }: IOneFieldForm<string>): void {
-        setSearchedEmail(email)
-    }
-
-    function validateAndSetMember(data: anyType): void {
-        const name = (`${data.firstName && data.firstName} ${data.lastName && data.lastName}`).trim()
-        const position = data.position || ''
-        const testList = data.tests.length > 0 ? data.tests.filter((item: anyType) => item.type === 0) : null
-        const encData = testList ? testList[0].value : ''
-        // console.log(testList)
-        // TODO провалидировать на ошибки, отсутствие результата теста и куда-то разместить инфу об этом
-        setDefaultProfile({
-            name,
-            position,
-            encData
-        })
     }
 }
