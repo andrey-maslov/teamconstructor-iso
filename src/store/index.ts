@@ -36,7 +36,7 @@ const configureStore = (preloadedState: any) => {
 const index = configureStore({});
 
 index.subscribe(() => {
-    saveState('terms', index.getState().terms)
+    // saveState('terms', index.getState().terms)
     // saveState('userData', index.getState().user)
     saveState('pair', index.getState().pair)
     // saveState('teams', index.getState().team)

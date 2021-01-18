@@ -54,14 +54,18 @@ i18n
                 .use(express.static(publicDir))
                 .use('/save-email', saveEmails)
                 .use(maintainRedirect)
-                .get([ '/team', '/profile' ], (req, res) => {
+                .get([ '/team', '/profile' ], (req, res, next) => {
                     if (!req.cookies.token) {
                         res.redirect('/')
+                    } else {
+                        next()
                     }
                 })
-                .get([ '/signin', '/registration' ], (req, res) => {
+                .get([ '/signin', '/registration' ], (req, res, next) => {
                     if (req.cookies.token) {
                         res.redirect('/')
+                    } else {
+                        next()
                     }
                 })
                 .get('/*', (req, res) => {
@@ -106,7 +110,7 @@ i18n
                                                 <script>
                                                   window.initialI18nStore = JSON.parse('${ JSON.stringify(initialI18nStore) }');
                                                   window.initialLanguage = '${ initLang }';
-                                                  window.encData = '${ req.query.encdata }';
+                                                  // window.encData = '${ req.query.encdata }';
                                                 </script>
                                             </head>
                                             <body style="background-color: #1C1E23" class=${ cookieConsent ? 'cookie-consented' : '' }>

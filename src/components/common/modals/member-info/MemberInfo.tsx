@@ -14,6 +14,7 @@ import axios from 'axios'
 import Table from '../../tables/table/Table'
 import { stripCountry } from "../../../../helper/helper"
 import Loader from "../../loaders/loader/Loader";
+import { useDisableBodyScroll } from "../../hooks/use-disable-body-scroll";
 
 const mockMember: IMember = {
     decData: [[1, 1, 0], [[-2, -3, -1, 2, -1], [-2, -2, -2, -4, -1], [-2, -1, -2, 1, -6], [-1, 1, 1, -2, -3], [1, -3, 2, 1, -2]]],
@@ -30,7 +31,7 @@ interface ILargeModal extends IModalProps {
 }
 
 export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge, isMobi }) => {
-
+    useDisableBodyScroll(visible)
     const { t, i18n } = useTranslation()
     const currLang = stripCountry(i18n.language);
     const dispatch = useDispatch()

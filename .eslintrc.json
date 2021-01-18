@@ -31,7 +31,7 @@
         "jsx-a11y/no-onchange": 0,
         "@typescript-eslint/no-var-requires": 0,
         "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
-        "no-static-element-interactions": 0,
+        "jsx-a11y/no-static-element-interactions": 0,
         "react/button-has-type": 0,
         "jsx-a11y/label-has-associated-control": 0,
         "react/no-danger": 0,

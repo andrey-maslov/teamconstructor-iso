@@ -32,8 +32,9 @@ export async function searchUser(email: string): Promise<anyType> {
             const response = await axios(`${usersApiUrl}/search?email=${email}`, getAuthConfig(token))
             return response
         } catch (error) {
-            // throw new Error(error)
-            return null
+            if (error.response && error.response.status) {
+                return error.response.status
+            }
         }
     } else {
         return null

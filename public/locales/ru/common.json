@@ -44,7 +44,10 @@
     "duplicate_member": "Работник {{name}} уже есть в команде",
     "duplicate_member_result": "Работник с таким результатом уже есть",
     "same_partner_names": "Одинаковые имена партнеров",
-    "same_partner_results": "Одинаковые результаты партнеров"
+    "same_partner_results": "Одинаковые результаты партнеров",
+    "user_have_no_test_result": "Этот пользователь еще не прошел тест",
+    "user_absent_or_hides_profile": "Пользователь отсутствует в базе данных или предпочел скрыть свой профиль от поиска",
+    "something_wrong": "Что-то пошло не так"
   },
   "confirm": {
     "do_logout": "Вы действительно хотите выйти?",

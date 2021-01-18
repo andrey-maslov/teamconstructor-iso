@@ -1,4 +1,4 @@
-import React, { EventHandler, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setComparisonResult, setPairData, } from '../../../../actions/actionCreator'
 import { getAndDecodeData } from 'psychology'
@@ -6,11 +6,10 @@ import { FaReact } from 'react-icons/fa'
 import { GoRocket } from 'react-icons/go'
 import ProfileGenerator from './profile-generator/ProfileGenerator'
 import style from './pair-input.module.scss'
-import { anyType, globalStoreType, IMemberForm, IOneFieldForm } from '../../../../constants/types'
+import { globalStoreType, IMemberForm } from '../../../../constants/types'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { extractEncData } from '../../../../helper/helper'
-import { useToasts } from 'react-toast-notifications'
 import { SEARCH_MODAL } from "../../../../actions/actionTypes";
 import { SearchUserModal } from "../../modals/search-user-modal/SearchUserModal";
 import { useMediaPredicate } from "react-media-hook";
@@ -49,12 +48,40 @@ const PairCoopInput: React.FC = () => {
         isGenerator: false
     })
 
-    useEffect(() => {
-        console.log(localState.name1)
-    }, [localState.name1])
-
     const { register, handleSubmit, errors, getValues } = useForm()
     const [inputIndex, setInputIndex] = useState<number>(1)
+
+    const renderResultButtons = (index: number, resultData: string) => {
+        return (
+            <div className={style.buttons}>
+                {resultData && <button
+                    type="button"
+                    className={`${style.btn} btn btn-outlined`}
+                    onClick={(e) => setOwnResult(e, index)}>
+                    Свой результат
+                </button>}
+                <button
+                    type="button"
+                    className={`${style.btn} btn btn-outlined`}
+                    onClick={(e) => openSearch(e, index)}>
+                    Найти пользователя
+                </button>
+            </div>
+        )
+    }
+
+    const renderSearchModal = () => {
+        return (
+            <SearchUserModal
+                visible={Boolean(isSearchModal)}
+                isLarge={!isMobi}
+                closeModal={() => {
+                    dispatch({ type: SEARCH_MODAL, isSearchModal: false })
+                }}
+                handler={setFoundUserData}
+            />
+        )
+    }
 
     return (
         <>
@@ -94,13 +121,16 @@ const PairCoopInput: React.FC = () => {
                         <div className={`form-group ${errors.data1 ? 'has-error' : ''}`}>
                             <textarea
                                 name="data1"
-                                value={localState.data1}
+                                value={localState.data1 || ''}
                                 placeholder={`${t('pair:textarea_placeholder')} 1`}
                                 onChange={onInputChange}
                                 ref={register({
                                     required: `${t('common:errors.required')}`,
                                     validate: {
-                                        decode: value => extractEncData(value).data !== null
+                                        decode: value => {
+                                            console.log(extractEncData(value).data)
+                                            return extractEncData(value).data !== null
+                                        }
                                     }
                                 })}
                             />
@@ -110,20 +140,7 @@ const PairCoopInput: React.FC = () => {
                                 <div className={`item-explain`}>{t('common:errors.invalid')}</div>
                             )}
                         </div>
-                        {isLoggedIn && (
-                            <div className={style.buttons}>
-                                {psyData && <div
-                                    className={`${style.btn} btn btn-outlined`}
-                                    onClick={(e) => setOwnResult(e, 1)}>
-                                    Свой результат
-                                </div>}
-                                <div
-                                    className={`${style.btn} btn btn-outlined`}
-                                    onClick={(e) => openSearch(e, 1)}>
-                                    Найти пользователя
-                                </div>
-                            </div>
-                        )}
+                        {isLoggedIn && renderResultButtons(1, psyData)}
                     </div>
                     <div className={style.inputGroup}>
                         <div
@@ -152,7 +169,7 @@ const PairCoopInput: React.FC = () => {
                         <div className={`form-group ${errors.data2 ? 'has-error' : ''}`}>
                             <textarea
                                 name="data2"
-                                value={localState.data2}
+                                value={localState.data2 || ''}
                                 onChange={onInputChange}
                                 placeholder={`${t('pair:textarea_placeholder')} 2`}
                                 ref={register({
@@ -172,20 +189,7 @@ const PairCoopInput: React.FC = () => {
                                 <div className={`item-explain`}>{t('common:errors.invalid')}</div>
                             )}
                         </div>
-                        {isLoggedIn && (
-                            <div className={style.buttons}>
-                                {psyData && <div
-                                    className={`${style.btn} btn btn-outlined`}
-                                    onClick={(e) => setOwnResult(e, 2)}>
-                                    Свой результат
-                                </div>}
-                                <div
-                                    className={`${style.btn} btn btn-outlined`}
-                                    onClick={(e) => openSearch(e, 2)}>
-                                    Найти пользователя
-                                </div>
-                            </div>
-                        )}
+                        {isLoggedIn && renderResultButtons(2, psyData)}
                     </div>
                 </div>
             </form>
@@ -204,14 +208,7 @@ const PairCoopInput: React.FC = () => {
             >
                 <FaReact />
             </button>
-            {isSearchModal && <SearchUserModal
-                visible={Boolean(isSearchModal)}
-                isLarge={!isMobi}
-                closeModal={() => {
-                    dispatch({ type: SEARCH_MODAL, isSearchModal: false })
-                }}
-                handler={setFoundUserData}
-            />}
+            {isSearchModal && renderSearchModal()}
         </>
     )
 
@@ -250,19 +247,11 @@ const PairCoopInput: React.FC = () => {
         }
     }
 
-    // Profiles generator handlers
-    function generateAndSet1(data: string) {
-        setLocalState({
-            ...localState,
-            data1: data
-        })
-    }
-
     function setFoundUserData(data: IMemberForm) {
         setDataGroup(data.name, data.encData, inputIndex)
     }
 
-    function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function onInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const inputName = e.target.name
         setLocalState({
             ...localState,
@@ -270,6 +259,13 @@ const PairCoopInput: React.FC = () => {
         })
     }
 
+    // Profiles generator handlers
+    function generateAndSet1(data: string) {
+        setLocalState({
+            ...localState,
+            data1: data
+        })
+    }
     function generateAndSet2(data: string) {
         setLocalState({
             ...localState,

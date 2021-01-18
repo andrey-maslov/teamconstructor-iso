@@ -4,12 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import style from './add-member.module.scss'
 import { anyType, globalStoreType, IMemberForm, IModalProps } from '../../../../constants/types'
 import { IMember } from 'psychology/build/main/types/types'
-import { getAndDecodeData } from 'psychology'
 import { updateProject } from '../../../../actions/actionCreator'
 import { useTranslation } from 'react-i18next'
 import MemberForm from "../../forms/member-form/MemberForm";
 import SearchMember from "../../forms/search-member/SearchMember";
 import Button from "../../buttons/button/Button";
+import { extractEncData } from "../../../../helper/helper";
 
 export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
@@ -49,8 +49,6 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
         }
     }, [])
 
-    console.log(defaultProfile)
-
     return (
         <Rodal
             className='add-member-modal'
@@ -61,14 +59,14 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
             closeOnEsc={true}
         >
             <div className={style.content}>
-                {isSearchMode ? (
+
                     <SearchMember searchHandler={searchMemberHandler} />
-                ) : (
+
                     <MemberForm
                         memberData={defaultProfile}
                         submitForm={submitMemberForm}
                     />
-                )}
+
                 {editedMember === null && <Button
                     title={isSearchMode ? 'Вручную' : 'Искать'}
                     // startIcon={isLoading && <AiOutlineLoading />}
@@ -90,7 +88,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
     function submitMemberForm(formData: IMemberForm): void {
 
-        const data = getAndDecodeData('', formData.encData)
+        const data = extractEncData(formData.encData)
 
         if (data.data === null) {
             return

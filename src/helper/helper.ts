@@ -158,25 +158,6 @@ export function getQueryFromURL(searchStr: string, key: string): string {
     return needList.replace(`${key}=`, '')
 }
 
-export function extractEncData(data: string): {
-    encoded: string | null, decoded: string | null, data: any | null
-} {
-    if (!data) {
-        return {
-            encoded: null,
-            decoded: null,
-            data: null
-        }
-    }
-
-    if (getAndDecodeData('', data).data) {
-        return getAndDecodeData('', data)
-    }
-    const query = data.split('?'). slice(1).join()
-    const params = parseQueryString(query)
-    return getAndDecodeData('', decodeURIComponent(params.encdata))
-}
-
 export function isElementInViewport(el: any) {
     const rect = el.getBoundingClientRect();
     return (
@@ -198,4 +179,28 @@ export function trimEmailInObj(object: any) {
         }
     }
     return object
+}
+
+/**
+ * Extract and validate encdata from exact encdata string or from url with query param
+ * with key encdata, even if data is URIEncoded
+ * @param data : string included encData
+ */
+export function extractEncData(data: string): {
+    encoded: string | null, decoded: string | null, data: any | null
+} {
+    if (!data) {
+        return {
+            encoded: null,
+            decoded: null,
+            data: null
+        }
+    }
+    const uriEncoded = decodeURIComponent(data)
+    if (getAndDecodeData('', uriEncoded).data) {
+        return getAndDecodeData('', uriEncoded)
+    }
+    const query = data.split('?'). slice(1).join()
+    const params = parseQueryString(query)
+    return getAndDecodeData('', decodeURIComponent(params.encdata))
 }

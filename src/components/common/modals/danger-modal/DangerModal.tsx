@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next"
 import Password from "../../Inputs/password/Password";
 import { deleteAccount } from "../../../../actions/api/accountAPI";
 import { useForm } from "react-hook-form";
+import { useDisableBodyScroll } from "../../hooks/use-disable-body-scroll";
 
 const DangerModal: React.FC<IModalProps> = ({ visible, closeModal }) => {
     const dispatch = useDispatch()
@@ -16,6 +17,8 @@ const DangerModal: React.FC<IModalProps> = ({ visible, closeModal }) => {
     const { t } = useTranslation()
 
     const { register, handleSubmit, clearErrors } = useForm<{password: string}>()
+
+    useDisableBodyScroll(visible)
 
     // useEffect(() => {
     //     dispatch({ type: PROCESS_FAILED, processFailed: false })

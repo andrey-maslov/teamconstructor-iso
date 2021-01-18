@@ -44,7 +44,10 @@
     "duplicate_member": "Team mate {{name}} is already in the team",
     "duplicate_member_result": "Team mate with the same result already exists",
     "same_partner_names": "The same partner names",
-    "same_partner_results": "The same partner results"
+    "same_partner_results": "The same partner results",
+    "something_wrong": "Something wrong",
+    "user_absent_or_hides_profile": "User is absent in data base or prefers to hide his profile",
+    "user_have_no_test_result": "User have no test result yet"
   },
   "confirm": {
     "do_logout": "Are you sure you want to log out?",
@@ -110,5 +113,9 @@
   "cookie_consent": {
     "text": "We care about you, so you have to agree to our cookie policy",
     "title": "Cookie policy"
+  },
+  "meta": {
+    "description": "description of profile page",
+    "title": "main title"
   }
 }

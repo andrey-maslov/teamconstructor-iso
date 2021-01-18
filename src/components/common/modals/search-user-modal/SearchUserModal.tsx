@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react'
 import Rodal from 'rodal'
 import { useDispatch, useSelector } from 'react-redux'
-import { globalStoreType, IMemberForm, IModalProps, IOneFieldForm } from '../../../../constants/types'
+import { globalStoreType, IMemberForm, IModalProps } from '../../../../constants/types'
 import { useForm } from 'react-hook-form'
 import { SEARCH_MODAL, SET_ERROR } from '../../../../actions/actionTypes'
-import CreateProject from '../../team-coop/create-project/CreateProject';
 import SearchMember from "../../forms/search-member/SearchMember";
-import { setPairData } from "../../../../actions/actionCreator";
-import { extractEncData } from "../../../../helper/helper";
+import { useDisableBodyScroll } from "../../hooks/use-disable-body-scroll";
 
 interface ISearchUserModal extends IModalProps {
     handler: (data: IMemberForm) => void
@@ -20,7 +18,7 @@ export const SearchUserModal: React.FC<ISearchUserModal> = ({
                                                                 handler
                                                             }) => {
 
-    const searchUserIndex: number = useSelector((state: globalStoreType) => state.modals.isAddMemberModal) || 0
+    useDisableBodyScroll(visible)
 
     useEffect(() => {
         if (!visible) {

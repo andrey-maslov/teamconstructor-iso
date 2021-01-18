@@ -7,7 +7,7 @@ import ColumnTop from "./droppable-column/ColumnTop"
 import DroppableColumnStore from "./droppable-column/DroppableColumnStore"
 import { globalStoreType, IMember, ITeam } from "../../../constants/types"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchProjectList, setAddMemberModal, setTeamsData, updateProject } from '../../../actions/actionCreator'
+import { setAddMemberModal, setTeamsData, updateProject } from '../../../actions/actionCreator'
 import { useToasts } from 'react-toast-notifications'
 import { FiPlus, FiSearch } from 'react-icons/fi'
 import { useTranslation } from "react-i18next"
@@ -144,25 +144,27 @@ const DraggableZone: React.FC = () => {
         if (!result.destination) return
     }
 
-    const storeWidget = (
-        <div>
-            <button
-                onClick={addMemberModal}
-                className={'btn btn-widget btn-icon'}
-                aria-label={t('common.buttons.add_member_to_pool')}
-            >
-                <FiPlus />
-            </button>
-            <button
-                onClick={openSearch}
-                className={`btn btn-widget btn-icon ${isFilter ? 'active' : ''}`}
-                aria-label={t('common.buttons.search')}
-            >
-                <FiSearch />
-            </button>
-            {isFilter && <FilterPanel changeHandler={filterStaff} />}
-        </div>
-    )
+    const StoreWidget = () => {
+        return (
+            <div>
+                <button
+                    onClick={addMemberModal}
+                    className={'btn btn-widget btn-icon'}
+                    aria-label={t('common:buttons.add_member_to_pool')}
+                >
+                    <FiPlus />
+                </button>
+                <button
+                    onClick={openSearch}
+                    className={`btn btn-widget btn-icon ${isFilter ? 'active' : ''}`}
+                    aria-label={t('common:buttons.search')}
+                >
+                    <FiSearch />
+                </button>
+                {isFilter && <FilterPanel changeHandler={filterStaff} />}
+            </div>
+        )
+    }
 
 
     const teamsWidget = (
@@ -177,7 +179,11 @@ const DraggableZone: React.FC = () => {
         <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
             <div className="flex-row mb-sm">
 
-                <Box title={t('team:pool')} addClass={'store-area'} widget={storeWidget}>
+                <Box
+                    title={t('team:pool')}
+                    addClass={'store-area'}
+                    widget={<StoreWidget/>}
+                >
                     {isReady && <DroppableColumnStore
                         items={(filteredMembers && isFilter) ? filteredMembers : staff.items}
                         deleteItem={deleteMemberHandler}

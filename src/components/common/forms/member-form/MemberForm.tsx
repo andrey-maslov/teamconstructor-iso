@@ -1,4 +1,3 @@
-import { getAndDecodeData } from "psychology";
 import Button from "../../buttons/button/Button";
 import { AiOutlineLoading } from "react-icons/ai";
 import { GrUserAdd } from "react-icons/gr";
@@ -9,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { DecodedDataType, IMember } from "psychology/build/main/types/types";
 import { setEditedMember } from "../../../../actions/actionCreator";
+import { extractEncData } from "../../../../helper/helper";
 
 interface IMemberFormProps {
     memberData: IMemberForm
@@ -48,6 +48,7 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
                         })}
                     />
                 </label>
+                {errors.name && errors.name.message && <div className={`item-explain`}>{errors.name.message}</div>}
                 {errors.name && errors.name.type === 'duplicateName' && (
                     <div className={`item-explain`}>{t('common:errors.duplicate_member_name')}</div>
                 )}
@@ -75,8 +76,8 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
                         ref={register({
                             required: `${t('common:errors.required')}`,
                             validate: {
-                                decode: value => getAndDecodeData('', value).data !== null,
-                                duplicate: value => !isDuplicateData(getAndDecodeData('', value).data, members, editedMember)
+                                decode: value => extractEncData(value).data !== null,
+                                duplicate: value => !isDuplicateData(extractEncData(value).data, members, editedMember)
                             }
                         })}
                     />
@@ -87,8 +88,7 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
                 {errors.encData && errors.encData.type === 'duplicate' && (
                     <div className={`item-explain`}>{t('common:errors.duplicate_member_result')}</div>
                 )}
-                {errors.encData && errors.encData.type !== 'decode' && errors.encData.type !== 'duplicate' &&
-                <div className={`item-explain`}>{errors.encData.message}</div>}
+                {errors.encData && errors.encData.message && <div className={`item-explain`}>{errors.encData.message}</div>}
             </div>
             <div className={`form-group ${errorApiMessage ? 'has-error' : ''}`}>
                 <Button

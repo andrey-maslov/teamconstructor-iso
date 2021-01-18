@@ -5,6 +5,7 @@ import { IModalProps } from '../../../../constants/types'
 import { useForm } from 'react-hook-form'
 import { SET_ERROR } from '../../../../actions/actionTypes'
 import CreateProject from '../../team-coop/create-project/CreateProject';
+import { useDisableBodyScroll } from "../../hooks/use-disable-body-scroll";
 
 interface IForm {
     name: string
@@ -13,6 +14,8 @@ interface IForm {
 }
 
 export const CreateProjectModal: React.FC<IModalProps> = ({ visible, closeModal, isLarge }) => {
+
+    useDisableBodyScroll(visible)
 
     useEffect(() => {
         if (!visible) {
