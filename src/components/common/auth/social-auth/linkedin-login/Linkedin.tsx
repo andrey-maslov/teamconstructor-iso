@@ -5,7 +5,6 @@ import { isBrowser, parseQueryString } from "../../../../../helper/helper"
 import { globalStoreType } from "../../../../../constants/types";
 import Loader from "../../../loaders/loader/Loader";
 import { socialAuth } from "../../../../../actions/api/socialAuthAPI";
-import { LINKEDIN_REDIRECT_URI } from "../../../../../constants/constants";
 
 const Linkedin: React.FC = () => {
 
@@ -18,7 +17,7 @@ const Linkedin: React.FC = () => {
             const queryString = (window.location.search).replace('?', '');
             const { code, state }: { code: string, state: string } = parseQueryString(queryString);
             if (code && state) {
-                dispatch(socialAuth({ authCode: code, redirectUri: LINKEDIN_REDIRECT_URI }, 'linkedin'))
+                dispatch(socialAuth({ authCode: code, redirectUri: process.env.RAZZLE_LINKEDIN_REDIRECT }, 'linkedin'))
             }
         }
     }, [])

@@ -3,14 +3,17 @@ import { useTranslation } from 'react-i18next'
 import { useSelector, useDispatch } from 'react-redux'
 import { useToasts } from 'react-toast-notifications'
 import style from './profile.module.scss'
-import { globalStoreType, IOneFieldForm } from '../../../constants/types'
-import { NavLink, useHistory } from 'react-router-dom'
+import { globalStoreType, IOneFieldForm, ITariff } from '../../../constants/types'
+import { NavLink } from 'react-router-dom'
 import Loader from '../../../components/common/loaders/loader/Loader'
 import { useForm } from 'react-hook-form'
 import InputTransformer from '../../../components/common/Inputs/input-transformer/InputTransformer'
 import CodeBox from '../../../components/common/Inputs/code-box/CodeBox'
 import { DANGER_MODAL, SET_TOAST } from '../../../actions/actionTypes'
 import { changeEmail, updateUserData } from "../../../actions/api/accountAPI"
+import { SERVICE, TEST_URL } from "../../../constants/constants";
+import { fetchUsersBillingData } from "../../../actions/api/subscriptionsAPI";
+import { fetchTariffsData } from "../../../actions/api/tariffsAPI";
 
 const UserProfile = () => {
     const {
@@ -20,17 +23,16 @@ const UserProfile = () => {
         emailConfirmed,
         position,
         isLoggedIn,
-        testResult
+        psyData: encData
     } = useSelector((state: globalStoreType) => state.user)
 
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
     const { isEmailSent } = useSelector((state: globalStoreType) => state.app)
     const [isReady, setReady] = useState(false)
     const { addToast } = useToasts()
     const dispatch = useDispatch()
-    const history = useHistory()
-    const encData = testResult
     const { register, handleSubmit, errors, reset } = useForm<IOneFieldForm<string>>()
+    const [tariffList, setTariffList] = useState([])
 
     const [localUser, setLocalUser] = useState({
         firstName,
@@ -39,12 +41,12 @@ const UserProfile = () => {
         position,
     })
 
-    useEffect(() => {
+    const lng = i18n.language.toUpperCase()
 
+    useEffect(() => {
         if (email) {
             setReady(true)
         }
-
         // if (setToast === 1) {
         //     addToast('Изменения приняты', {
         //         appearance: 'success'
@@ -54,7 +56,6 @@ const UserProfile = () => {
         //         appearance: 'error'
         //     })
         // }
-
         function updateLocalData() {
             setLocalUser({
                 firstName,
@@ -73,13 +74,35 @@ const UserProfile = () => {
         email,
         position,
         isLoggedIn,
-        // setToast,
         addToast,
         dispatch
     ])
 
+    // Get current user subscriptions
+    useEffect(() => {
+        fetchUsersBillingData().then((data) => {
+            if (Array.isArray(data)) {
+                const list = data.filter((item: any) => item?.membershipPlan?.service === SERVICE)
+                console.log('billing', list)
+            } else {
+                console.log('Error: ', data)
+            }
+        })
+    }, [])
+
+    // Get all services tariffs and filter teamconstructor tariffs
+    useEffect(() => {
+        fetchTariffsData().then((data: ITariff[] | number) => {
+            if (Array.isArray(data)) {
+                const list = data.filter((item: any) => item?.service === SERVICE)
+                console.log('billing', list)
+            } else {
+                console.log('Error: ', data)
+            }
+        })
+    }, [])
+
     if (!isReady) {
-        console.log('not ready')
         return <Loader />
     }
 
@@ -118,7 +141,7 @@ const UserProfile = () => {
         defaultValue: 'email'
     }
 
-    const testLink = `https://salary.nobugs.today/test/result${encData ? `?encdata=${encData}` : ''}`
+    const testResultLink = `${TEST_URL}/result?lng=${lng}${encData ? `&encdata=${encData}` : ''}`
 
     return (
         <div className={style.wrapper}>
@@ -193,22 +216,33 @@ const UserProfile = () => {
 
             <div className={`${style.box} ${style.services}`}>
                 <h5 className={style.box_title}>Psychological Profile</h5>
-
                 <div className={`${style.box_content}`}>
                     <div className={`${style.item} flex between-xs`}>
                         {encData ? (
                             <CodeBox content={encData} />
                         ) : (
-                            <NavLink to="/test">need to pass the test</NavLink>
+                            <a href={`${TEST_URL}?lng=${lng}`} target="_blank" rel="noopener noreferrer">need to pass
+                                the test</a>
                         )}
                     </div>
 
                     <div className={`${style.item} flex between-xs`}>
                         {encData ? (
-                            <NavLink to="/test/result">Перейти к психологическому профилю</NavLink>
+                            <a href={testResultLink} target="_blank" rel="noopener noreferrer">Перейти к
+                                психологическому профилю</a>
                         ) : (
-                            <NavLink to="/test">need to pass the test</NavLink>
+                            <a href={`${TEST_URL}?lng=${lng}`} target="_blank" rel="noopener noreferrer">need to pass
+                                the test</a>
                         )}
+                    </div>
+                </div>
+            </div>
+
+            <div className={`${style.box} ${style.danger}`}>
+                <h5 className={style.box_title}>Subscription</h5>
+                <div className={`${style.box_content}`}>
+                    <div className={`${style.item}`}>
+                        subscriptions
                     </div>
                 </div>
             </div>
@@ -228,6 +262,7 @@ const UserProfile = () => {
                     </div>
                 </div>
             </div>
+
         </div>
     )
 

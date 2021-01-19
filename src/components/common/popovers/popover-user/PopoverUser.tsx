@@ -41,7 +41,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({ logoutHandle }) => {
                 <Popover isVisible={isOpen} className={`user-popover ${style.body}`}>
                     <div className={`${style.top} ${style.item}`}>
                         <FiUserCheck />
-                        <span>{email}</span>
+                        <span>{email || ''}</span>
                     </div>
 
                     <div className={style.projects}>

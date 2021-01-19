@@ -1,12 +1,11 @@
 import React from 'react'
 import { FaLinkedinIn } from 'react-icons/fa'
 import Button from '../../../buttons/button/Button'
-import { LINKEDIN_REDIRECT_URI } from '../../../../../constants/constants'
 
 export const LinkedinLogin: React.FC<{ isEnabled: boolean }> = ({ isEnabled }) => {
 
     const url = 'https://www.linkedin.com/oauth/v2/authorization'
-    const redirect = LINKEDIN_REDIRECT_URI
+    const redirect = process.env.RAZZLE_LINKEDIN_REDIRECT || ''
     const scope = process.env.RAZZLE_LINKEDIN_SCOPE
     const cId = process.env.RAZZLE_LINKEDIN_CLIENT_ID
 

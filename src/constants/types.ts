@@ -155,3 +155,22 @@ export interface ITariff {
     monthCount: number
     autoSearchCount: number
 }
+
+export interface IMembershipPlan {
+    autoSearchCount?: number
+    description: string | null
+    id: number
+    monthCount: number
+    price: number
+    service: number
+    title: string
+}
+
+export interface ISubscription {
+    autoPayment: boolean
+    endedDate: string | null
+    id: string
+    membershipPlan: IMembershipPlan
+    startedDate: string | null
+    status: number
+}

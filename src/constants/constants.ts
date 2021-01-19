@@ -2,16 +2,6 @@ export const SITE_TITLE = 'Teamconstructor'
 export const CONTACT_EMAIL = 'contact@teamconstructor.com'
 export const SERVICE = 2
 
-// export const LANGS = [
-//     ['ru', 'Русский'],
-//     ['en', 'English'],
-//     ['pl', 'Polski'],
-//     ['es', 'El español'],
-//     ['de', 'Deutsch '],
-//     ['fr', 'Le français'],
-//     ['it', 'Italiano'],
-// ];
-
 export const LANGS = [
     ['ru', 'Русский'],
     ['en', 'English'],
@@ -41,7 +31,7 @@ export const ROUTES = {
 
 export const BASE_API = 'https://apibase.pashtaljon.by'
 export const CONTENT_API = 'https://api.salary2.me'
-export const TEST_URL = 'https://salary.nobugs.today/test'
+export const TEST_URL = 'http://salary.nobugs.today/test'
 export const API_VER = 1
 
 export const COLORS = {
@@ -62,5 +52,3 @@ export enum authModes {
     'reset_pwd',
     'forgot_pwd_success'
 }
-
-export const LINKEDIN_REDIRECT_URI = `http://localhost:3002/auth/linkedin/callback`

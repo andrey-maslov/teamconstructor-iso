@@ -36,14 +36,14 @@ const Header: React.FC = () => {
         return <MobiHeader
             isLoggedIn={isLoggedIn}
             handleLogoutBtn={logOutHandle}
-            userEmail={email}
+            userEmail={email || ''}
             routes={routes}
         />
     }
     return <WebHeader
         isLoggedIn={isLoggedIn}
         handleLogoutBtn={logOutHandle}
-        userEmail={email}
+        userEmail={email || ''}
         routes={routes}
     />
 

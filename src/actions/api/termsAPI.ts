@@ -1,13 +1,11 @@
-/*===== FETCHING DATA =====*/
-import { CONTENT_API } from "../../constants/constants"
+import { termsApiUrl } from './utils'
 import { FETCH_CONTENT, FETCH_TERMS } from "../actionTypes"
+import { anyType } from "../../constants/types";
 
 export const fetchTerms = (lang: string) => {
 
-    const url = `${ CONTENT_API }/psychologies/1`;
-
-    return (dispatch: any) => {
-        fetch(url)
+    return (dispatch: anyType) => {
+        fetch(`${termsApiUrl}/1`)
             .then(response => response.json())
             .then(data => {
                 dispatch({
@@ -20,10 +18,8 @@ export const fetchTerms = (lang: string) => {
 
 export const fetchContent = (lang: string) => {
 
-    const url = `${ CONTENT_API }/psychologies/3`;
-
-    return (dispatch: any) => {
-        fetch(url)
+    return (dispatch: anyType) => {
+        fetch(`${termsApiUrl}/3`)
             .then(response => response.json())
             .then(data => {
                 dispatch({
