@@ -36,6 +36,7 @@ export const ROUTES = {
     '/registration': 'page-auth',
     '/save-email': 'save-email',
     '/confirm-email': 'confirm-email',
+    '/auth/linkedin/callback': 'linkedin',
 }
 
 export const BASE_API = 'https://apibase.pashtaljon.by'
@@ -62,4 +63,4 @@ export enum authModes {
     'forgot_pwd_success'
 }
 
-export const LINKEDIN_REDIRECT_URI = `${BASE_API}/callbacklinkedin`
+export const LINKEDIN_REDIRECT_URI = `http://localhost:3002/auth/linkedin/callback`

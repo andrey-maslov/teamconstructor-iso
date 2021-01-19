@@ -13,6 +13,33 @@
   }
 }
 
+.divider {
+  position: relative;
+  text-align: center;
+  padding-top: .8rem;
+  padding-bottom: .8rem;
+  color: $orange;
+
+  &:after {
+    content: '';
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 50%;
+    border-bottom: 1px solid rgba($orange, .5);
+    z-index: 0;
+  }
+
+  span {
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+    background-color: $overlay-dark;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
 
 
 

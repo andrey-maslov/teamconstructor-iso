@@ -14,7 +14,7 @@
 
 .title {
   font-family: $font-mono;
-  margin: 0;
+  margin: .5rem 0;
   height: 2.25rem;
   color: $text-light;
   line-height: 2rem;
@@ -27,6 +27,7 @@
   min-width: 200px;
   //max-width: 210px;
   text-align: inherit;
+  border: 1px solid $overlay-light;
 
   &:hover {
     cursor: pointer;

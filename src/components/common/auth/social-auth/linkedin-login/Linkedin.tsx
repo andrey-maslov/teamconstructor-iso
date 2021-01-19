@@ -1,33 +1,41 @@
-import React from 'react'
-import {connect} from "react-redux"
-import {useHistory} from 'react-router-dom'
-import {setUserData} from "../../../../../actions/actionCreator"
-import {parseQueryString} from "../../../../../helper/helper"
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { useHistory } from 'react-router-dom'
+import { isBrowser, parseQueryString } from "../../../../../helper/helper"
+import { globalStoreType } from "../../../../../constants/types";
+import Loader from "../../../loaders/loader/Loader";
+import { socialAuth } from "../../../../../actions/api/socialAuthAPI";
+import { LINKEDIN_REDIRECT_URI } from "../../../../../constants/constants";
 
-interface LinkedinProps {
-    addAuthData: (name: string, email: string) => {}
-    redirectUrl: string
-}
+const Linkedin: React.FC = () => {
 
-const Linkedin: React.FC<LinkedinProps> = ({addAuthData, redirectUrl}) => {
+    const history = useHistory()
+    const dispatch = useDispatch()
+    const { isLoggedIn } = useSelector((state: globalStoreType) => state.user)
 
-    const history = useHistory();
-    const queryString = (window.location.search).replace('?', '');
-    const userParams: any = parseQueryString(queryString);
-    const name = decodeURI(userParams.name).replace('+', ' ')
+    useEffect(() => {
+        if (isBrowser) {
+            const queryString = (window.location.search).replace('?', '');
+            const { code, state }: { code: string, state: string } = parseQueryString(queryString);
+            if (code && state) {
+                dispatch(socialAuth({ authCode: code, redirectUri: LINKEDIN_REDIRECT_URI }, 'linkedin'))
+            }
+        }
+    }, [])
 
-    // isUserInBase(userParams.email)
-    addAuthData(name, userParams.email);
-    history.push(redirectUrl);
+    useEffect(() => {
+        if (isLoggedIn) {
+            history.push('/');
+        }
+    }, [isLoggedIn])
+
 
     return (
-        <div>
-            linkedin login
-        </div>
+        <section className='section main flex-centered'>
+            <Loader />
+        </section>
 
     )
 }
 
-export default connect((state: any) => ({
-    redirectUrl: state.applicationMode.redirectUrl,
-}), {addAuthData: setUserData})(Linkedin);
+export default Linkedin

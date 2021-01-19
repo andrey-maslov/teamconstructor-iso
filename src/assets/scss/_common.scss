@@ -564,7 +564,7 @@ th, td {
 .root {
 
   .rodal-dialog {
-    padding: 30px;
+    padding: 1.5rem;
   }
 }
 
@@ -799,10 +799,14 @@ body {
 .member-info-modal {
 
   .rodal-dialog {
-    padding: 2rem;
+    padding: 1.5rem;
     background-color: $overlay-dark;
     box-shadow: 1px 3px 32px rgba(#fff, .4);
     border-radius: $border-radius;
+
+    button {
+      margin: 0;
+    }
   }
 }
 

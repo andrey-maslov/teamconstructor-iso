@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Rodal from 'rodal'
 import { useSelector, useDispatch } from 'react-redux'
 import style from './add-member.module.scss'
-import { anyType, globalStoreType, IMemberForm, IModalProps } from '../../../../constants/types'
+import { globalStoreType, IMemberForm, IModalProps } from '../../../../constants/types'
 import { IMember } from 'psychology/build/main/types/types'
 import { updateProject } from '../../../../actions/actionCreator'
 import { useTranslation } from 'react-i18next'
 import MemberForm from "../../forms/member-form/MemberForm";
 import SearchMember from "../../forms/search-member/SearchMember";
-import Button from "../../buttons/button/Button";
 import { extractEncData } from "../../../../helper/helper";
 
 export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
@@ -21,21 +20,13 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
     // const { t } = useTranslation()
     const dispatch = useDispatch()
-    const [isSearchMode, setSearchMode] = useState(false)
     const [defaultProfile, setDefaultProfile] = useState<IMemberForm>({
         name: '',
         position: '',
         encData: ''
     })
 
-    useEffect(() => {
-        if (defaultProfile.name || defaultProfile.encData) {
-            setSearchMode(false)
-        }
-    }, [defaultProfile.name, defaultProfile.encData])
-
     const { teams, editedMember } = useSelector((state: globalStoreType) => state.team)
-    // const { isLoading, errorApiMessage } = useSelector((state: globalStoreType) => state.app)
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
 
     useEffect(() => {
@@ -61,18 +52,13 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
             <div className={style.content}>
 
                     <SearchMember searchHandler={searchMemberHandler} />
-
+                    <div className={style.divider}>
+                        <span>или</span>
+                    </div>
                     <MemberForm
                         memberData={defaultProfile}
                         submitForm={submitMemberForm}
                     />
-
-                {editedMember === null && <Button
-                    title={isSearchMode ? 'Вручную' : 'Искать'}
-                    // startIcon={isLoading && <AiOutlineLoading />}
-                    handle={() => setSearchMode(!isSearchMode)}
-                    btnClass="btn btn-outlined"
-                />}
             </div>
         </Rodal>
     )

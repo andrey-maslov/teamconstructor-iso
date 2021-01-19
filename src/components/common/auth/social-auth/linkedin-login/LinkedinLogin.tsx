@@ -4,17 +4,18 @@ import Button from '../../../buttons/button/Button'
 import { LINKEDIN_REDIRECT_URI } from '../../../../../constants/constants'
 
 export const LinkedinLogin: React.FC<{ isEnabled: boolean }> = ({ isEnabled }) => {
-    const redirectMode = process.env.NODE_ENV === 'development' ? 1 : 3
 
-    const linkedinRedirect = `https://www.linkedin.com/oauth/v2/authorization?client_id=${
-        process.env.LINKEDIN_CLIENT_ID
-    }&response_type=code&scope=r_liteprofile%20r_emailaddress&redirect_uri=${LINKEDIN_REDIRECT_URI}/${redirectMode}`
+    const url = 'https://www.linkedin.com/oauth/v2/authorization'
+    const redirect = LINKEDIN_REDIRECT_URI
+    const scope = process.env.RAZZLE_LINKEDIN_SCOPE
+    const cId = process.env.RAZZLE_LINKEDIN_CLIENT_ID
+
+    const linkedinRedirect = `${url}?response_type=code&client_id=${cId}&redirect_uri=${encodeURIComponent(redirect)}&state=fooobar&scope=${scope}`
 
     const onClick = () => {
         window.location.href = linkedinRedirect
     }
-
-    // TODO fix redirect uri with actual host
+    
     return (
         <Button
             handle={onClick}

@@ -8,7 +8,7 @@ import { anyType, IMemberForm, IOneFieldForm } from "../../../../constants/types
 import { EMAIL_PATTERN } from "../../../../constants/constants"
 import { searchUser } from "../../../../actions/api/usersAPI"
 import { FiSearch } from 'react-icons/fi'
-import style from './search-member.scss'
+import style from './search-member.module.scss'
 
 interface ISearchMember {
     searchHandler: (formData: IMemberForm) => void
@@ -48,24 +48,27 @@ const SearchMember: React.FC<ISearchMember> = ({ searchHandler }) => {
     return (
         <form onSubmit={handleSubmit(submitSearchForm)}>
             <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
-                <label>
-                    <span>Email</span>
-                    <input style={{ marginBottom: 5 }}
-                           name="email"
-                           placeholder="Введите email сотрудника"
-                           ref={register({
-                               required: `${t('common:errors.required')}`,
-                               pattern: {
-                                   value: EMAIL_PATTERN,
-                                   message: `${t('common:errors.invalid_email')}`
-                               }
-                           })}
-                    />
-                    <button
-                        className={`btn btn-accent ${style.submit} ${loading ? 'btn-loader' : ''}`}
-                    >
-                        {loading ? <AiOutlineLoading /> : <FiSearch />}
-                    </button>
+                <label className={style.label}>
+                    <span><strong>Найдите пользователя в нашей базе</strong></span>
+                    <div className={style.emailGroup}>
+                        <input
+                            name="email"
+                            className={style.email}
+                            placeholder="Email"
+                            ref={register({
+                                required: `${t('common:errors.required')}`,
+                                pattern: {
+                                    value: EMAIL_PATTERN,
+                                    message: `${t('common:errors.invalid_email')}`
+                                }
+                            })}
+                        />
+                        <button
+                            className={`btn btn-accent ${style.submit} ${loading ? 'btn-loader' : ''}`}
+                        >
+                            {loading ? <AiOutlineLoading /> : <FiSearch />}
+                        </button>
+                    </div>
                 </label>
                 {errors.email && <div className="item-explain">{errors.email.message}</div>}
                 {responseError && <div style={{ marginTop: '1rem' }}>{responseError}</div>}

@@ -34,11 +34,13 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
     return (
         <form onSubmit={handleSubmit(submitForm)}>
             <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
+                <div><strong>Внесите данные в форму:</strong></div>
                 <label>
                     <span>{t('team:member_name')}</span>
                     <input
                         type="text"
                         name="name"
+                        placeholder="Имя"
                         defaultValue={memberData.name}
                         ref={register({
                             required: `${t('common:errors.required')}`,
@@ -59,6 +61,7 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
                     <input
                         type="text"
                         name="position"
+                        placeholder="Должность"
                         defaultValue={memberData.position}
                         ref={register({
                             required: `${t('common:errors.required')}`
@@ -72,6 +75,7 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
                     <span>Результат теста</span>
                     <textarea
                         name="encData"
+                        placeholder="Результат тестирования"
                         defaultValue={memberData.encData}
                         ref={register({
                             required: `${t('common:errors.required')}`,

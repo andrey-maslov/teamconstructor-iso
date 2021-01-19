@@ -1,0 +1,24 @@
+@import '../../../../assets/scss/vars';
+
+.emailGroup {
+  display: flex;
+}
+
+.email {
+  margin-bottom: .5rem;
+  border-radius: 3px 0 0 3px;
+}
+
+.submit {
+  width: 3rem;
+  height: 37px;
+  min-width: unset;
+  border-radius: 0 3px 3px 0;
+
+  svg {
+    position: relative;
+    bottom: -2px;
+  }
+}
+
+

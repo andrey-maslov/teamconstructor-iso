@@ -70,6 +70,7 @@ const DraggableZone: React.FC = () => {
 
     const [isReady, setReady] = useState(false)
     const [isFilter, setFilter] = useState(false)
+    const [filterValue, setFilterValue] = useState('')
     const [filteredMembers, setFilteredMembers] = useState<IMember[] | null>(null)
 
     useEffect(() => {
@@ -161,7 +162,7 @@ const DraggableZone: React.FC = () => {
                 >
                     <FiSearch />
                 </button>
-                {isFilter && <FilterPanel changeHandler={filterStaff} />}
+                {isFilter && <FilterPanel changeHandler={filterStaff} value={filterValue} />}
             </div>
         )
     }
@@ -233,20 +234,14 @@ const DraggableZone: React.FC = () => {
         }
     }
 
-    function filterStaff(e: any) {
+    function filterStaff(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
-        const val = e.target.value
-        const reg = new RegExp(val, 'i')
+        setFilterValue(e.target.value)
+        const reg = new RegExp(e.target.value, 'i')
         const filtered = staff.items.filter((item: IMember) => (
             item.name.match(reg) ||
             item.position.match(reg)
         ))
-        //     .map((item: IMember) => ({
-        //     ...item,
-        //     name: item.name.replace(reg, `<mark>${val}</mark>`),
-        //     position: item.position.replace(reg, `<mark>${val}</mark>`)
-        // }))
-
         setFilteredMembers(filtered)
     }
 
