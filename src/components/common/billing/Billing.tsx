@@ -50,27 +50,36 @@ const Billing: React.FC<IBillingProps> = ({ service }) => {
 
     return (
         <ul>
-            {subscriptions.map((item: ISubscription) => (
-                <li key={item.membershipPlan.title}>
+            {subscriptions.map(({membershipPlan, startedDate, endedDate, autoPayment}: ISubscription) => (
+                <li key={membershipPlan.title}>
                     <div className={style.head}>
                         <div>
-                            {item.membershipPlan.price > 0
-                                ? `$${item.membershipPlan.price} / ${item.membershipPlan.title.toLowerCase()}`
-                                : `$${item.membershipPlan.price}`}
+                            {membershipPlan.price > 0
+                                ? `$${membershipPlan.price} / ${membershipPlan.title.toLowerCase()}`
+                                : `$${membershipPlan.price}`}
                         </div>
                         <div>
-                            {item.membershipPlan.price > 0
-                                ? <span>{item.membershipPlan.title}</span>
-                                : item.membershipPlan.title}
+                            {membershipPlan.price > 0
+                                ? <span>{membershipPlan.title}</span>
+                                : membershipPlan.title}
                         </div>
                     </div>
                     <div className={style.foot}>
-                        <div>{item.membershipPlan.description}</div>
-                        {item.membershipPlan.price > 0 && (
+                        <div>{descriptions[membershipPlan.id]}</div>
+                        {membershipPlan.price > 0 && (
                             <ul>
-                                <li>Started: {item.startedDate && new Date(item.startedDate).getUTCDate()}</li>
-                                {/*<li>End: {item.endedDate && new Date(item.endedDate)}</li>*/}
-                                {/*<li>Left: 5 days</li>*/}
+                                {startedDate && (
+                                    <li><span>Начало: </span><span>{formatDate(startedDate)}</span></li>
+                                )}
+                                {endedDate && (
+                                    <li>Окончание: <span>{formatDate(endedDate)}</span></li>
+                                )}
+                                {startedDate && endedDate && (
+                                    <li>
+                                        <span>Осталось дней: </span>
+                                        <span>{getDurationInDays(startedDate, endedDate)}</span>
+                                    </li>
+                                )}
                             </ul>
                         )}
                     </div>
@@ -78,6 +87,31 @@ const Billing: React.FC<IBillingProps> = ({ service }) => {
             ))}
         </ul>
     )
+
+    function formatDate(dateString: string): string {
+        const date = new Date(dateString)
+        return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
+    }
+
+    function getDurationInDays(startDate: string, endDate: string): string {
+        const start = new Date(startDate).getTime()
+        const end = new Date(endDate).getTime()
+        const diff = end - start
+        return `${Math.floor(diff / (86400 * 1000))}`
+    }
+
+    function convertToDays(milliSeconds: number): { days: number, hours: number, minutes: number } {
+        const days = Math.floor(milliSeconds / (86400 * 1000));
+        milliSeconds -= days * (86400 * 1000);
+        const hours = Math.floor(milliSeconds / (60 * 60 * 1000));
+        milliSeconds -= hours * (60 * 60 * 1000);
+        const minutes = Math.floor(milliSeconds / (60 * 1000));
+        return {
+            days,
+            hours,
+            minutes
+        }
+    }
 }
 
 export default Billing

@@ -157,10 +157,10 @@ export interface IMembershipPlan {
 }
 
 export interface ISubscription {
-    autoPayment: boolean
-    endedDate: string | null
     id: string
     membershipPlan: IMembershipPlan
     startedDate: string | null
+    endedDate: string | null
     status: number
+    autoPayment: boolean
 }
