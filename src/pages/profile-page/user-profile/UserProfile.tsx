@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useSelector, useDispatch } from 'react-redux'
 import { useToasts } from 'react-toast-notifications'
 import style from './profile.module.scss'
-import { globalStoreType, IOneFieldForm, ITariff } from '../../../constants/types'
+import { globalStoreType, IOneFieldForm, IMembershipPlan } from '../../../constants/types'
 import { NavLink } from 'react-router-dom'
 import Loader from '../../../components/common/loaders/loader/Loader'
 import { useForm } from 'react-hook-form'
@@ -14,6 +14,7 @@ import { changeEmail, updateUserData } from "../../../actions/api/accountAPI"
 import { SERVICE, TEST_URL } from "../../../constants/constants";
 import { fetchUsersBillingData } from "../../../actions/api/subscriptionsAPI";
 import { fetchTariffsData } from "../../../actions/api/tariffsAPI";
+import Billing from "../../../components/common/billing/Billing";
 
 const UserProfile = () => {
     const {
@@ -78,21 +79,9 @@ const UserProfile = () => {
         dispatch
     ])
 
-    // Get current user subscriptions
-    useEffect(() => {
-        fetchUsersBillingData().then((data) => {
-            if (Array.isArray(data)) {
-                const list = data.filter((item: any) => item?.membershipPlan?.service === SERVICE)
-                console.log('billing', list)
-            } else {
-                console.log('Error: ', data)
-            }
-        })
-    }, [])
-
     // Get all services tariffs and filter teamconstructor tariffs
     useEffect(() => {
-        fetchTariffsData().then((data: ITariff[] | number) => {
+        fetchTariffsData().then((data: IMembershipPlan[] | number) => {
             if (Array.isArray(data)) {
                 const list = data.filter((item: any) => item?.service === SERVICE)
                 console.log('billing', list)
@@ -242,7 +231,7 @@ const UserProfile = () => {
                 <h5 className={style.box_title}>Subscription</h5>
                 <div className={`${style.box_content}`}>
                     <div className={`${style.item}`}>
-                        subscriptions
+                        <Billing service={SERVICE} />
                     </div>
                 </div>
             </div>

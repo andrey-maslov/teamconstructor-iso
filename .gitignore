@@ -16,3 +16,6 @@ public/static
 .env.production.local
 
 preorder.csv
+
+#SEO
+/public/robots.txt

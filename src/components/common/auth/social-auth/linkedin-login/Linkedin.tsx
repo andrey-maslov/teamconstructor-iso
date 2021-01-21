@@ -24,7 +24,7 @@ const Linkedin: React.FC = () => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            history.push('/');
+            history.push('/profile');
         }
     }, [isLoggedIn])
 

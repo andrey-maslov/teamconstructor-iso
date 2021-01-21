@@ -146,18 +146,8 @@ export interface IChangeEmail {
     service: number
 }
 
-export interface ITariff {
-    id: number
-    title: string
-    description: string
-    service: number
-    price: number
-    monthCount: number
-    autoSearchCount: number
-}
-
 export interface IMembershipPlan {
-    autoSearchCount?: number
+    autoSearchCount: number | null
     description: string | null
     id: number
     monthCount: number

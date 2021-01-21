@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { tariffsApiUrl } from './utils'
-import { ITariff } from "../../constants/types";
+import { IMembershipPlan } from "../../constants/types";
 
 // All tariff plans of all services
-export async function fetchTariffsData(): Promise<ITariff[] | number> {
+export async function fetchTariffsData(): Promise<IMembershipPlan[] | number> {
     try {
         const response = await axios(`${tariffsApiUrl}/list`)
         return response.data

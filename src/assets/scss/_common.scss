@@ -688,6 +688,8 @@ body {
 
 .work-board {
   display: flex;
+  flex: 1 0 auto;
+  min-height: auto;
 }
 
 .page-team {

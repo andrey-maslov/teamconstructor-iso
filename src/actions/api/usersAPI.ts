@@ -18,10 +18,9 @@ export function fetchSearchedUser(email: string): anyType {
                 })
                 .catch(error => apiErrorHandling(error, dispatch))
         } else {
-            // dispatch(logOut())
-            alert('not authorized')
+            console.log('Error 401. Not authorized')
         }
-    };
+    }
 }
 
 export async function searchUser(email: string): Promise<anyType> {
@@ -37,7 +36,7 @@ export async function searchUser(email: string): Promise<anyType> {
             }
         }
     } else {
+        console.log('Error 401. Not authorized')
         return null
-        // throw new Error('Error 401. Not authorized')
     }
 }
