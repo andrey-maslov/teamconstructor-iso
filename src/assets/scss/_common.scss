@@ -180,6 +180,17 @@ body {
   }
 }
 
+/*===== PRICES =====*/
+.page-prices {
+
+  h2.section-title {
+    margin-bottom: 4rem;
+
+    &:before {
+      content: none;
+    }
+  }
+}
 
 /*===== COMING SOON PAGE =====*/
 .coming-soon {

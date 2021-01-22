@@ -14,7 +14,7 @@ const options = {
     whitelist: languages,
     load: 'languageOnly', // we only provide en, de -> no region specific locals like en-US, de-DE
     // have a common namespace used around the full app
-    ns: ['common', 'team', 'pair', '404', 'landing'],
+    ns: ['common', 'team', 'pair', '404', 'landing', 'prices'],
     defaultNS: 'common',
 
     saveMissing: true,

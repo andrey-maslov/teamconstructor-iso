@@ -83,34 +83,6 @@
       }
     ]
   },
-  "prices": {
-    "title": "Cost",
-    "monthly": "monthly",
-    "per_month": "per month",
-    "annually": "annually",
-    "per_year": "per year",
-    "free": {
-      "title": "Free",
-      "desc": "For every user who wants to know his psychological profile and check his interaction with one partner",
-      "features": [
-        "Personal Area",
-        "Pairwise comparison",
-        "Individual profile"
-      ],
-      "link_title": "Register"
-    },
-    "paid": {
-      "title": "Manager",
-      "desc": "For every user who wants to form a team and evaluate the effectiveness of team interaction",
-      "features": [
-        "Personal Area",
-        "Pairwise comparison",
-        "Individual profile",
-        "Forming teams and projects"
-      ],
-      "link_title": "Pay"
-    }
-  },
   "faq": {
     "title": "Frequently asked questions",
     "faq_list": [

@@ -79,18 +79,6 @@ const UserProfile = () => {
         dispatch
     ])
 
-    // Get all services tariffs and filter teamconstructor tariffs
-    useEffect(() => {
-        fetchTariffsData().then((data: IMembershipPlan[] | number) => {
-            if (Array.isArray(data)) {
-                const list = data.filter((item: any) => item?.service === SERVICE)
-                console.log('billing', list)
-            } else {
-                console.log('Error: ', data)
-            }
-        })
-    }, [])
-
     if (!isReady) {
         return <Loader />
     }
@@ -227,8 +215,13 @@ const UserProfile = () => {
                 </div>
             </div>
 
-            <div className={`${style.box} ${style.danger}`}>
-                <h5 className={style.box_title}>Subscription</h5>
+            <div className={`${style.box} ${style.tariff}`}>
+                <div className={style.head}>
+                    <h5 className={style.box_title}>Подписка</h5>
+                    <NavLink to="/prices" className={style.btn}>
+                        Управлять подпиской
+                    </NavLink>
+                </div>
                 <div className={`${style.box_content}`}>
                     <div className={`${style.item}`}>
                         <Billing service={SERVICE} />

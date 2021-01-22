@@ -16,3 +16,4 @@ export async function fetchUsersBillingData(): Promise<ISubscription[] | number>
         return 0
     }
 }
+

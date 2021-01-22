@@ -37,6 +37,22 @@
     }
   }
 
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .btn {
+      background-color: $accent;
+      color: $text-light2;
+      margin-left: 2rem;
+      padding: .3rem .5rem;
+      border-radius: $border-radius-sm;
+      text-decoration: none;
+      margin-bottom: .5rem;
+    }
+  }
+
   &_content {
     border-radius: $border-radius-sm;
     padding: 2rem 2rem 1rem;

@@ -1,0 +1,70 @@
+@import '../../../assets/scss/vars';
+
+.wrapper {
+
+}
+
+.plan {
+
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+  border-bottom: 1px solid $overlay-light;
+}
+
+.price {
+  font-size: 1.5rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  line-height: 2rem;
+
+  svg {
+    position: relative;
+    bottom: -7px;
+    font-size: 2rem;
+    color: $orange;
+    margin-right: .5rem;
+  }
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 0;
+}
+
+.list {
+  list-style: none;
+  min-width: 20rem;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    width: 50%;
+
+    &:last-child {
+      font-family: $font-mono;
+      font-weight: 700;
+    }
+  }
+}
+
+.cancel {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  color: $blue;
+  text-decoration: underline;
+  border: 0;
+  cursor: pointer;
+}

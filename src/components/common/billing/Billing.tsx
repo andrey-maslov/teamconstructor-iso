@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import style from './billing.module.scss'
 import { fetchUsersBillingData } from "../../../actions/api/subscriptionsAPI";
 import { IMembershipPlan, ISubscription } from "../../../constants/types";
+import { RiMoneyDollarBoxFill } from 'react-icons/ri'
 import { SERVICE } from "../../../constants/constants";
 
 interface IBillingProps {
@@ -10,14 +11,26 @@ interface IBillingProps {
 
 const Billing: React.FC<IBillingProps> = ({ service }) => {
 
-    const descriptions = {
-        0: "Для каждого пользователя, который хочет узнать свой психологический профиль и проверить свое взаимодействие с одним партнером",
-        3: "Для каждого пользователя, который хочет формировать команду и оценивать эффективность командного взаимодействия",
-        4: "Для каждого пользователя, который хочет узнать свой психологический профиль и проверить свое взаимодействие с одним партнером",
-        5: "Промо-тариф"
+    const tariffs = {
+        0: {
+            title: 'Бесплатный',
+            desc: 'Для каждого пользователя, который хочет узнать свой психологический профиль и проверить свое взаимодействие с одним партнером'
+        },
+        3: {
+            title: 'Менеджер',
+            desc: 'Для каждого пользователя, который хочет формировать команду и оценивать эффективность командного взаимодействия'
+        },
+        4: {
+            title: 'Менеджер',
+            desc: 'Для каждого пользователя, который хочет формировать команду и оценивать эффективность командного взаимодействия'
+        },
+        5: {
+            title: 'Промо',
+            desc: 'Промо-тариф'
+        }
     }
 
-    const basicSubscription: ISubscription = {
+    const basicTariff: ISubscription = {
         id: "333",
         membershipPlan: {
             id: 4,
@@ -34,14 +47,15 @@ const Billing: React.FC<IBillingProps> = ({ service }) => {
         autoPayment: true
     }
 
-    const [subscriptions, setSubscription] = useState<ISubscription[]>([basicSubscription])
+    const [tariff, setTariff] = useState<ISubscription>(basicTariff)
+    const { membershipPlan: mp, startedDate, endedDate, autoPayment } = tariff
 
     // Get current user subscriptions
     useEffect(() => {
         fetchUsersBillingData().then((data) => {
             if (Array.isArray(data)) {
                 const list = data.filter((item: any) => item?.membershipPlan?.service === service)
-                list.length > 0 && setSubscription(list)
+                list.length > 0 && setTariff(list[0])
             } else {
                 console.log('Error: ', data)
             }
@@ -49,43 +63,55 @@ const Billing: React.FC<IBillingProps> = ({ service }) => {
     }, [])
 
     return (
-        <ul>
-            {subscriptions.map(({membershipPlan, startedDate, endedDate, autoPayment}: ISubscription) => (
-                <li key={membershipPlan.title}>
+        <div className={style.wrapper}>
+            {mp && (
+                <div className={style.plan}>
                     <div className={style.head}>
-                        <div>
-                            {membershipPlan.price > 0
-                                ? `$${membershipPlan.price} / ${membershipPlan.title.toLowerCase()}`
-                                : `$${membershipPlan.price}`}
+                        <div className={style.price}>
+                            {mp.price > 0
+                                ? `$${mp.price} / ${mp.title.toLowerCase()}`
+                                : `$${mp.price}`}
                         </div>
-                        <div>
-                            {membershipPlan.price > 0
-                                ? <span>{membershipPlan.title}</span>
-                                : membershipPlan.title}
+                        <div className={style.title}>
+                            <div>{mp.price && <RiMoneyDollarBoxFill />}<span>{tariffs[mp.id].title}</span></div>
                         </div>
                     </div>
                     <div className={style.foot}>
-                        <div>{descriptions[membershipPlan.id]}</div>
-                        {membershipPlan.price > 0 && (
-                            <ul>
+                        {mp.price && (
+                            <ul className={style.list}>
                                 {startedDate && (
-                                    <li><span>Начало: </span><span>{formatDate(startedDate)}</span></li>
+                                    <li className={style.item}>
+                                        <span>Начало: </span>
+                                        <span>{formatDate(startedDate)}</span>
+                                    </li>
                                 )}
                                 {endedDate && (
-                                    <li>Окончание: <span>{formatDate(endedDate)}</span></li>
+                                    <li className={style.item}>
+                                        <span>Окончание:</span>
+                                        <span>{formatDate(endedDate)}</span>
+                                    </li>
                                 )}
                                 {startedDate && endedDate && (
-                                    <li>
+                                    <li className={style.item}>
                                         <span>Осталось дней: </span>
                                         <span>{getDurationInDays(startedDate, endedDate)}</span>
                                     </li>
                                 )}
                             </ul>
                         )}
+                        <div className={style.desc}>{tariffs[mp.id].desc}</div>
                     </div>
-                </li>
-            ))}
-        </ul>
+                    {mp.id !== 0 && (
+                        <div className={style.refund}>
+                            {`The refunds don't work once you have the subscription, but you can always `}
+                            <button className={style.cancel} onClick={() => alert('вы хотите отписаться?')}>Cancel your
+                                subscription
+                            </button>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
     )
 
     function formatDate(dateString: string): string {
@@ -98,19 +124,6 @@ const Billing: React.FC<IBillingProps> = ({ service }) => {
         const end = new Date(endDate).getTime()
         const diff = end - start
         return `${Math.floor(diff / (86400 * 1000))}`
-    }
-
-    function convertToDays(milliSeconds: number): { days: number, hours: number, minutes: number } {
-        const days = Math.floor(milliSeconds / (86400 * 1000));
-        milliSeconds -= days * (86400 * 1000);
-        const hours = Math.floor(milliSeconds / (60 * 60 * 1000));
-        milliSeconds -= hours * (60 * 60 * 1000);
-        const minutes = Math.floor(milliSeconds / (60 * 1000));
-        return {
-            days,
-            hours,
-            minutes
-        }
     }
 }
 

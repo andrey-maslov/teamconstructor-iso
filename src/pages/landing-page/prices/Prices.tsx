@@ -1,99 +1,97 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import style from './prices.module.scss'
-import {NavLink} from 'react-router-dom'
-import {FiExternalLink} from 'react-icons/fi'
-import {useTranslation} from 'react-i18next'
-
-interface ITariffText {
-    title: string,
-    period?: string,
-    desc: string,
-    features: string[],
-    link_title: string
-}
-
-interface ITariff {
-    amount: number,
-    tariff: string
-    period?: string
-}
+import { useSelector } from 'react-redux'
+import { NavLink, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useTariffs } from "../../../components/common/hooks/use-tariffs";
+import { globalStoreType, IMembershipPlan } from "../../../constants/types";
+import Button from "../../../components/common/buttons/button/Button";
 
 const Prices: React.FC = () => {
 
-    const {t} = useTranslation()
-    const [tariff, setTariff] = useState("teamconstructor-month")
+    const tariffs = useTariffs()
+    const { t, i18n } = useTranslation()
+    const location = useLocation()
+    const { isLoggedIn } = useSelector((state: globalStoreType) => state.user)
+    const free = tariffs.filter(item => item.id === 0)[0]
+    const paidList = tariffs.filter(item => (item.id === 3 || item.id === 4))
+    const [paidTariffToShow, setPaidTariffToShow] = useState<IMembershipPlan | null>(null)
 
-    const tariffs: ITariff[] = [
-        {
-            amount: 0,
-            tariff: "free",
-        },
-        {
-            amount: tariff === "teamconstructor-month" ? 29.99 : 199.99,
-            tariff: tariff,
-            period: tariff === "teamconstructor-month" ? t('landing:prices.per_month') : t('landing:prices.per_year')
-        }
-    ]
+    useEffect(() => {
+        setPaidTariffToShow(paidList[0])
+    }, [tariffs.length])
 
-    const free_texts: ITariffText = t('landing:prices.free', {returnObjects: true})
-    const paid_texts: ITariffText = t('landing:prices.paid', {returnObjects: true})
-
+    ///<Link to={{ pathname: "https://example.zendesk.com/hc/en-us/articles/123456789-Privacy-Policies" }} target="_blank" />
 
     return (
         <section className={`${style.section} section`}>
             <div className="container">
-                <h2 className={`section-title ${style.title}`}>{t('landing:prices.title')}</h2>
+                <h2 className={`section-title ${style.title}`}>{t('prices:title')}</h2>
                 {tariffs && (
                     <div className="row">
-                        <div className={`col-lg-4 ${style.col}`} key={`${tariffs[0].amount}`}>
-                            <div className={style.card}>
-                                <div className={style.cardTitle}>{free_texts.title}</div>
-                                <div className={style.amount}>{tariffs[0].amount}</div>
-                                <p className={style.desc}>{free_texts.desc}</p>
-                                <ul className={style.features}>
-                                    {free_texts.features && free_texts.features.map((item: string, index) => (
-                                        <li className={style.item} key={index}>{item}</li>
-                                    ))}
-                                </ul>
-                                <NavLink to={'/registration'} className={`btn btn-outlined`}>
-                                    {free_texts.link_title}
-                                </NavLink>
-                            </div>
-                        </div>
-                        <div className={`col-lg-4 ${style.col}`} key={`${tariffs[1].amount}`}>
-                            <div className={style.card}>
-                                <div className={style.top}>
-                                    <div className={style.cardTitle}>{paid_texts.title}</div>
-                                    <select
-                                        name="period"
-                                        className={style.select}
-                                        id="period"
-                                        onChange={(e) => setTariff(e.target.value)}
-                                    >
-                                        <option value="teamconstructor-month">{t('landing:prices.monthly')}</option>
-                                        <option value="teamconstructor-year">{t('landing:prices.annually')}</option>
-                                    </select>
+                        {free && location.pathname === '/' && (
+                            <div className={`col-lg-4 ${style.col}`} key={`${free.price}`}>
+                                <div className={style.card}>
+                                    <div className={style.cardTitle}>{free.title}</div>
+                                    <div className={style.amount}>{free.price}</div>
+                                    <p className={style.desc}>{free.description}</p>
+                                    <ul className={style.features}>
+                                        {Array.isArray(free.features) &&
+                                        free.features.map((item: string, index) => (
+                                            <li className={style.item} key={index}>{item}</li>
+                                        ))}
+                                    </ul>
+                                    <NavLink to={'/registration'} className={`btn btn-outlined`}>
+                                        {t('prices:free.link_title')}
+                                    </NavLink>
                                 </div>
-                                <div className={style.amount}>
-                                    {tariffs[1].amount}
-                                    <span> / {tariffs[1].period}</span>
-                                </div>
-                                <p className={style.desc}>{paid_texts.desc}</p>
-                                <ul className={style.features}>
-                                    {paid_texts.features && paid_texts.features.map((item: string, index) => (
-                                        <li className={style.item} key={index}>{item}</li>
-                                    ))}
-                                </ul>
-                                <NavLink to={`/registration?tariff=${tariff}`} className={`btn btn-outlined-yellow`}>
-                                    {paid_texts.link_title}
-                                </NavLink>
                             </div>
-                        </div>
+                        )}
+                        {paidTariffToShow && (
+                            <div className={`col-lg-4 ${style.col}`} key={`${paidTariffToShow.price}`}>
+                                <div className={style.card}>
+                                    <div className={style.top}>
+                                        <div className={style.cardTitle}>{paidTariffToShow.title}</div>
+                                        <select
+                                            name="period"
+                                            className={style.select}
+                                            id="period"
+                                            onChange={changeTariff}
+                                        >
+                                            <option value={3}>{t('prices:monthly')}</option>
+                                            <option value={4}>{t('prices:annually')}</option>
+                                        </select>
+                                    </div>
+                                    <div className={style.amount}>
+                                        {paidTariffToShow.price}
+                                        <span> / {t('prices:monthly')}</span>
+                                    </div>
+                                    <p className={style.desc}>{paidTariffToShow.description}</p>
+                                    <ul className={style.features}>
+                                        {Array.isArray(paidTariffToShow.features) &&
+                                        paidTariffToShow.features.map((item: string, index) => (
+                                            <li className={style.item} key={index}>{item}</li>
+                                        ))}
+                                    </ul>
+                                    {!isLoggedIn
+                                        ? (<NavLink to={`/registration`} className={`btn btn-outlined-yellow`}>
+                                            {t('prices:paid.link_title')}
+                                        </NavLink>)
+                                        : (<button>Pay</button>)
+                                    }
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
         </section>
     )
+
+    function changeTariff(e: React.ChangeEvent<HTMLSelectElement>) {
+        const needed = paidList.filter(item => item.id.toString() === e.target.value)
+        setPaidTariffToShow(needed[0])
+    }
 }
 
 export default Prices

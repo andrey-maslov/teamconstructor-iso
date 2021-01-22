@@ -147,13 +147,14 @@ export interface IChangeEmail {
 }
 
 export interface IMembershipPlan {
-    autoSearchCount: number | null
-    description: string | null
     id: number
-    monthCount: number
+    title: string
+    description: string | null
     price: number
     service: number
-    title: string
+    monthCount: number
+    autoSearchCount?: number | null
+    features?: string[]
 }
 
 export interface ISubscription {
