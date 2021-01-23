@@ -7,6 +7,7 @@ import { deleteProject, setCreateProjectModal } from '../../../../actions/action
 import { VscProject } from "react-icons/vsc"
 import style from './projects.module.scss'
 import { SET_ACTIVE_PROJECT } from "../../../../actions/actionTypes";
+import { confirmAlert } from "react-confirm-alert";
 
 const ProjectList: React.FC = () => {
 
@@ -56,14 +57,22 @@ const ProjectList: React.FC = () => {
     }
 
     function handlerDelete(projectId: number) {
-        if (typeof window !== 'undefined' && window.confirm(t('common:confirm:do_delete_project'))) {
 
-            // const newProjects = projects.length > 1 ? projects.filter((item: {id: number, title: string}) => item.id !== projectId) : []
-            // const newActiveProject = newProjects.length > 0 ? {id: newProjects[0].id, title: newProjects[0].title} : null
-            // console.log(newProjects, newActiveProject)
-            dispatch(deleteProject(projectId))
-            // setIsOpen(false)
-        }
+        confirmAlert({
+            title: 'Удаление проекта',
+            message: t('common:confirm:do_delete_project'),
+            buttons: [
+                {
+                    label: 'Нет',
+                    onClick: () => null
+                },
+                {
+                    label: 'Удалить',
+                    onClick: () => dispatch(deleteProject(projectId))
+                }
+            ],
+            overlayClassName: "alert-overlay confirm-danger",
+        });
     }
 
     function changeProject(current: number, id: number, title: string) {

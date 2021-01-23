@@ -180,8 +180,8 @@ body {
   }
 }
 
-/*===== PRICES =====*/
-.page-prices {
+/*===== SUBSCRIPTIONS =====*/
+.page-subscriptions {
 
   h2.section-title {
     margin-bottom: 4rem;
@@ -592,6 +592,63 @@ th, td {
     background-color: $overlay-dark;
   }
 }
+
+/*===== ALERT =====*/
+
+.react-confirm-alert-overlay {
+
+  &.alert-overlay {
+    background: rgba(0,0,0,.1);
+
+    .react-confirm-alert {
+
+      &-body {
+        font-family: inherit;
+        width: 400px;
+        padding: 2rem;
+        background: $overlay-dark;
+        border-radius: $border-radius;
+        box-shadow: 1px 3px 32px rgba(#fff, .4);
+        color: $text-light;
+      }
+
+      &-button-group {
+
+        button {
+          position: relative;
+          font-size: 1.1rem;
+          border-radius: 3px;
+          height: 2.5rem;
+          min-width: 7rem;
+        }
+      }
+    }
+
+    &.confirm-danger {
+
+      .react-confirm-alert {
+
+        &-button-group {
+
+          button {
+            // OK
+            &:last-child {
+              background-color: $accent;
+            }
+            // Cancel
+            &:first-child {
+              background-color: transparent;
+              border: 2px solid $danger;
+              color: $danger;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
 
 /*===== POPOVERS =====*/
 .user-popover {

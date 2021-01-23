@@ -54,7 +54,7 @@ i18n
                 .use(express.static(publicDir))
                 .use('/save-email', saveEmails)
                 .use(maintainRedirect)
-                .get([ '/team', '/profile' ], (req, res, next) => {
+                .get([ '/team', '/profile', '/subscriptions' ], (req, res, next) => {
                     if (!req.cookies.token) {
                         res.redirect('/')
                     } else {

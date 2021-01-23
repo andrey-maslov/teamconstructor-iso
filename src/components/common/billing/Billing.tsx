@@ -1,48 +1,54 @@
 import React, { useEffect, useState } from 'react'
 import style from './billing.module.scss'
-import { fetchUsersBillingData } from "../../../actions/api/subscriptionsAPI";
-import { IMembershipPlan, ISubscription } from "../../../constants/types";
+import { fetchUsersBillingData, unsubscribe } from "../../../actions/api/subscriptionsAPI";
+import { ISubscription, ITariffText } from "../../../constants/types";
 import { RiMoneyDollarBoxFill } from 'react-icons/ri'
 import { SERVICE } from "../../../constants/constants";
+import { useTranslation } from "react-i18next";
+import { useToasts } from 'react-toast-notifications'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
-interface IBillingProps {
-    service: number
-}
+const Billing: React.FC = () => {
+    const { t } = useTranslation()
+    const { addToast } = useToasts()
 
-const Billing: React.FC<IBillingProps> = ({ service }) => {
+    const freeTexts: ITariffText = t('prices:free', { returnObjects: true })
+    const paidTexts: ITariffText = t('prices:paid', { returnObjects: true })
+    const promoTexts: ITariffText = t('prices:promo', { returnObjects: true })
 
     const tariffs = {
         0: {
-            title: 'Бесплатный',
-            desc: 'Для каждого пользователя, который хочет узнать свой психологический профиль и проверить свое взаимодействие с одним партнером'
+            title: freeTexts.title,
+            desc: freeTexts.desc
         },
         3: {
-            title: 'Менеджер',
-            desc: 'Для каждого пользователя, который хочет формировать команду и оценивать эффективность командного взаимодействия'
+            title: paidTexts.title,
+            desc: paidTexts.desc
         },
         4: {
-            title: 'Менеджер',
-            desc: 'Для каждого пользователя, который хочет формировать команду и оценивать эффективность командного взаимодействия'
+            title: paidTexts.title,
+            desc: paidTexts.desc
         },
         5: {
-            title: 'Промо',
-            desc: 'Промо-тариф'
+            title: promoTexts.title,
+            desc: promoTexts.desc
         }
     }
 
     const basicTariff: ISubscription = {
-        id: "333",
+        id: '',
         membershipPlan: {
-            id: 4,
-            title: "Year",
-            service,
-            price: 199.99,
-            monthCount: 12,
+            id: 0,
+            title: '',
+            service: SERVICE,
+            price: 0,
+            monthCount: 0,
             description: null,
             autoSearchCount: null
         },
-        startedDate: "2021-01-20T17:05:28.970Z",
-        endedDate: "2022-01-19T17:05:28.970Z",
+        startedDate: '',
+        endedDate: '',
         status: 1,
         autoPayment: true
     }
@@ -54,7 +60,7 @@ const Billing: React.FC<IBillingProps> = ({ service }) => {
     useEffect(() => {
         fetchUsersBillingData().then((data) => {
             if (Array.isArray(data)) {
-                const list = data.filter((item: any) => item?.membershipPlan?.service === service)
+                const list = data.filter((item: any) => item?.membershipPlan?.service === SERVICE)
                 list.length > 0 && setTariff(list[0])
             } else {
                 console.log('Error: ', data)
@@ -73,11 +79,14 @@ const Billing: React.FC<IBillingProps> = ({ service }) => {
                                 : `$${mp.price}`}
                         </div>
                         <div className={style.title}>
-                            <div>{mp.price && <RiMoneyDollarBoxFill />}<span>{tariffs[mp.id].title}</span></div>
+                            <div>
+                                {mp.price > 0 && <RiMoneyDollarBoxFill />}
+                                <span>{tariffs[mp.id].title}</span>
+                            </div>
                         </div>
                     </div>
                     <div className={style.foot}>
-                        {mp.price && (
+                        {mp.price > 0 && (
                             <ul className={style.list}>
                                 {startedDate && (
                                     <li className={style.item}>
@@ -104,8 +113,10 @@ const Billing: React.FC<IBillingProps> = ({ service }) => {
                     {mp.id !== 0 && (
                         <div className={style.refund}>
                             {`The refunds don't work once you have the subscription, but you can always `}
-                            <button className={style.cancel} onClick={() => alert('вы хотите отписаться?')}>Cancel your
-                                subscription
+                            <button
+                                className={style.cancel}
+                                onClick={() => unsubscribeUserHandler(tariff.membershipPlan.id)}>
+                                Cancel your subscription
                             </button>
                         </div>
                     )}
@@ -124,6 +135,41 @@ const Billing: React.FC<IBillingProps> = ({ service }) => {
         const end = new Date(endDate).getTime()
         const diff = end - start
         return `${Math.floor(diff / (86400 * 1000))}`
+    }
+
+    function unsubscribeUserHandler(planId: number): void {
+        confirmAlert({
+            title: 'Удаление подписки',
+            message: 'Вы уверены, что хотите закрыть свою подписку?',
+            buttons: [
+                {
+                    label: 'Нет',
+                    onClick: () => null
+                },
+                {
+                    label: 'Удалить',
+                    onClick: () => unsubscribeUser(planId)
+                }
+            ],
+            overlayClassName: "alert-overlay confirm-danger",
+        });
+    }
+
+    function unsubscribeUser(id: number) {
+        unsubscribe(id)
+            .then(res => {
+                if (res === 200) {
+                    addToast('Подписка закрыта успешно', {
+                        appearance: 'success',
+                        autoDismiss: true
+                    })
+                } else {
+                    addToast('Что-то пошло не так', {
+                        appearance: 'error',
+                        autoDismiss: true
+                    })
+                }
+            })
     }
 }
 

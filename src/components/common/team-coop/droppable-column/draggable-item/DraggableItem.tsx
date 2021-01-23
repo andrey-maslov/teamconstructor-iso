@@ -48,11 +48,7 @@ const DraggableItem: React.FC<IDraggableItem> = ({ index, member, colIndex, dele
                             </button>
                             <button
                                 className={style.btn}
-                                onClick={() => {
-                                    if (confirm('Are you sure?')) {
-                                        deleteItem(colIndex, index)
-                                    }
-                                }}
+                                onClick={() => deleteItem(colIndex, index)}
                             >
                                 <FaTimes />
                             </button>

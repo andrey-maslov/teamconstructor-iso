@@ -3,7 +3,7 @@ import Hero from './Hero/Hero'
 import Background from './background/Background'
 import Consist from './consist/Consist'
 import Use from './use/Use'
-import Prices from './prices/Prices'
+import Prices from '../../components/common/billing/prices/Prices'
 import Faq from './faq/Faq'
 import Auditory from './auditory/Auditory'
 

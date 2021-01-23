@@ -8,6 +8,7 @@ import { FiUsers, FiSettings } from 'react-icons/fi'
 import { RiTeamLine } from 'react-icons/ri'
 import { globalStoreType, INavRoute } from '../../../../constants/types'
 import { useTranslation } from 'react-i18next'
+import { confirmAlert } from "react-confirm-alert";
 
 const Header: React.FC = () => {
 
@@ -49,9 +50,16 @@ const Header: React.FC = () => {
 
     function logOutHandle() {
         if (isLoggedIn) {
-            if (confirm(t('common:confirm.do_logout'))) {
-                dispatch(logOut())
-            }
+            dispatch(logOut())
+
+            // confirmAlert({
+            //     message: t('common:confirm.do_logout'),
+            //     buttons: [
+            //         { label: 'Остаться', onClick: () => null },
+            //         { label: 'Выйти', onClick: () => dispatch(logOut()) }
+            //     ],
+            //     overlayClassName: "alert-overlay confirm-danger",
+            // });
         }
     }
 }

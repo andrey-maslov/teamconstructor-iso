@@ -218,13 +218,13 @@ const UserProfile = () => {
             <div className={`${style.box} ${style.tariff}`}>
                 <div className={style.head}>
                     <h5 className={style.box_title}>Подписка</h5>
-                    <NavLink to="/prices" className={style.btn}>
-                        Управлять подпиской
+                    <NavLink to="/subscriptions" className={style.btn}>
+                        Изменить
                     </NavLink>
                 </div>
                 <div className={`${style.box_content}`}>
                     <div className={`${style.item}`}>
-                        <Billing service={SERVICE} />
+                        <Billing />
                     </div>
                 </div>
             </div>

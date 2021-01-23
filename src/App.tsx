@@ -20,7 +20,7 @@ import LandingPage from './pages/landing-page/LandingPage'
 import ComingSoon from "./pages/coming-soon-page/ComingSoon";
 import ConfirmEmail from "./pages/confirm-email-page/ConfirmEmail";
 import Linkedin from "./components/common/auth/social-auth/linkedin-login/Linkedin";
-import PricesPage from "./pages/prices-page/PricesPage";
+import SubscriptionsPage from "./pages/subscriptions-page/SubscriptionsPage";
 
 const App: React.FC = () => {
 
@@ -46,7 +46,7 @@ const App: React.FC = () => {
                     <Route exact path="/pair" render={() => <PairCoopPage />} />
                     <Route exact path="/team" render={() => <TeamCoopPage />} />
                     <Route exact path="/profile" render={() => <ProfilePage />} />
-                    <Route exact path="/prices" render={() => <PricesPage />} />
+                    <Route path="/subscriptions" render={() => <SubscriptionsPage />} />
                     <Route exact path="/cookie-policy" render={() => <ContentPage page="cookie-policy" />} />
                     <Route exact path="/privacy-policy" render={() => <ContentPage page="privacy-policy" />} />
                     <Route exact path="/terms" render={() => <ContentPage page="terms" />} />

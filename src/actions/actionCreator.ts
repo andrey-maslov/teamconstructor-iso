@@ -10,6 +10,7 @@ import {
 } from './actionTypes';
 import { anyType, IPairData, ITeam, IUserData } from "../constants/types"
 import { removeCookie } from "../helper/cookie";
+import { isBrowser } from "../helper/helper";
 
 export { fetchTerms, fetchContent } from './api/termsAPI'
 export { checkAuth, authUser, sendForgotEmail, sendNewPassword } from './api/accountAPI'
@@ -35,6 +36,9 @@ export function setUserData(data: IUserData): { type: string; userData: IUserDat
 
 export function logOut(): { type: string } {
     removeCookie('token')
+    if (isBrowser) {
+        window.location.href = '/signin'
+    }
     return {
         type: CLEAR_USER_DATA,
     }

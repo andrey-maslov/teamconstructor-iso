@@ -28,6 +28,11 @@ export const useTariffs = (): IMembershipPlan[] => {
             title: 'Promo',
             desc: 'Promo tariff',
             features: ['All free access']
+        },
+        6: {
+            title: 'Career premium',
+            desc: 'for salary2me',
+            features: ['All free access']
         }
     }
 
@@ -44,25 +49,25 @@ export const useTariffs = (): IMembershipPlan[] => {
     const [tariffs, setTariffs] = useState<IMembershipPlan[]>([basicPlan])
 
     // Get all services tariffs and filter teamconstructor tariffs
-    useEffect(() => {
-        fetchTariffsData().then((data: IMembershipPlan[] | number) => {
-            if (Array.isArray(data)) {
-                const list = data.filter((item: any) => item?.service === SERVICE)
-                const mappedList = [basicPlan, ...list].map(item => {
-                    return {
-                        ...item,
-                        title: tariffDescList[item.id].title,
-                        description: tariffDescList[item.id].desc,
-                        features: tariffDescList[item.id].features,
-                    }
-                })
-                setTariffs(mappedList)
-            } else {
-                console.log('Error: ', data)
-                setTariffs( [basicPlan])
-            }
-        })
-    }, [i18n.language])
+    // useEffect(() => {
+    //     fetchTariffsData().then((data: IMembershipPlan[] | number) => {
+    //         if (Array.isArray(data)) {
+    //             const list = data.filter((item: any) => item?.service === SERVICE)
+    //             const mappedList = [basicPlan, ...list].map(item => {
+    //                 return {
+    //                     ...item,
+    //                     title: tariffDescList[item.id].title,
+    //                     description: tariffDescList[item.id].desc,
+    //                     features: tariffDescList[item.id].features,
+    //                 }
+    //             })
+    //             setTariffs(mappedList)
+    //         } else {
+    //             console.log('Error: ', data)
+    //             setTariffs( [basicPlan])
+    //         }
+    //     })
+    // }, [i18n.language])
 
     return tariffs
 }

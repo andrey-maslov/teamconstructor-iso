@@ -18,7 +18,7 @@ export const ROUTES = {
     '/pair': 'page-pair',
     '/team': 'page-team',
     '/profile': 'page-profile',
-    '/prices': 'page-prices',
+    '/subscriptions': 'page-subscriptions',
     '/cookie-policy': 'page-content',
     '/privacy-policy': 'page-content',
     '/terms': 'page-content',

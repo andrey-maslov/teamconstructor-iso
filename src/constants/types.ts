@@ -146,8 +146,9 @@ export interface IChangeEmail {
     service: number
 }
 
+// TODO delete 6 from id
 export interface IMembershipPlan {
-    id: number
+    id: 0 | 3 | 4 | 5 | 6
     title: string
     description: string | null
     price: number
@@ -164,4 +165,12 @@ export interface ISubscription {
     endedDate: string | null
     status: number
     autoPayment: boolean
+}
+
+export interface ITariffText {
+    title: string,
+    period?: string,
+    desc: string,
+    features: string[],
+    link_title: string
 }

@@ -12,6 +12,7 @@ import { useToasts } from 'react-toast-notifications'
 import { FiPlus, FiSearch } from 'react-icons/fi'
 import { useTranslation } from "react-i18next"
 import FilterPanel from "./filter-panel/FilterPanel";
+import { confirmAlert } from "react-confirm-alert";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -247,8 +248,21 @@ const DraggableZone: React.FC = () => {
 
     //TODO what about pool
     function deleteMemberHandler(colIndex: number, itemIndex: number): void {
-        if (colIndex === 0 && confirm(t('team:do_you_want_to_delete_member?'))) {
-            deleteMemberFromPool(colIndex, itemIndex)
+        if (colIndex === 0 ) {
+            confirmAlert({
+                message: t('team:do_you_want_to_delete_member?'),
+                buttons: [
+                    {
+                        label: 'Нет',
+                        onClick: () => null
+                    },
+                    {
+                        label: 'Удалить',
+                        onClick: () => deleteMemberFromPool(colIndex, itemIndex)
+                    }
+                ],
+                overlayClassName: "alert-overlay confirm-danger",
+            });
         } else if (colIndex !== 0) {
             deleteMemberFromTeam(colIndex, itemIndex)
         }

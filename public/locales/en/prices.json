@@ -24,5 +24,16 @@
       "Forming teams and projects"
     ],
     "link_title": "Pay"
+  },
+  "promo": {
+    "title": "Promo",
+    "desc": "Promo-tariff",
+    "features": [
+      "Personal Area",
+      "Pairwise comparison",
+      "Individual profile",
+      "Forming teams and projects"
+    ],
+    "link_title": "Try"
   }
 }
