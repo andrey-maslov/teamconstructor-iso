@@ -8,6 +8,16 @@ import { authModes } from "./constants";
 import { RiTeamLine } from "react-icons/ri";
 import React from "react";
 
+/**
+ * all tariffs ids are real tariffs if from data base
+ * 0 - free basic tariff
+ * 3 - paid Month tariff with all access
+ * 4 - paid Year tariff with all access
+ * 5 - free Promo tariff with all access
+ */
+export type TariffId = 0 | 3 | 4 | 5
+export type UserRole = 'base' | 'user' | 'premium'
+
 export type anyType = any
 
 export type DecodedDataType = [number[], number[][]]
@@ -146,9 +156,9 @@ export interface IChangeEmail {
     service: number
 }
 
-// TODO delete 6 from id
+
 export interface IMembershipPlan {
-    id: 0 | 3 | 4 | 5 | 6
+    id: TariffId
     title: string
     description: string | null
     price: number

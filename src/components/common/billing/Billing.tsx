@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import style from './billing.module.scss'
+import { useDispatch } from 'react-redux'
 import { fetchUsersBillingData, unsubscribe } from "../../../actions/api/subscriptionsAPI";
 import { ISubscription, ITariffText } from "../../../constants/types";
 import { RiMoneyDollarBoxFill } from 'react-icons/ri'
@@ -8,10 +9,12 @@ import { useTranslation } from "react-i18next";
 import { useToasts } from 'react-toast-notifications'
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { SET_TARIFF } from "../../../actions/actionTypes";
 
 const Billing: React.FC = () => {
     const { t } = useTranslation()
     const { addToast } = useToasts()
+    const dispatch = useDispatch()
 
     const freeTexts: ITariffText = t('prices:free', { returnObjects: true })
     const paidTexts: ITariffText = t('prices:paid', { returnObjects: true })
@@ -60,8 +63,11 @@ const Billing: React.FC = () => {
     useEffect(() => {
         fetchUsersBillingData().then((data) => {
             if (Array.isArray(data)) {
-                const list = data.filter((item: any) => item?.membershipPlan?.service === SERVICE)
-                list.length > 0 && setTariff(list[0])
+                const list: ISubscription[] = data.filter((item: any) => item?.membershipPlan?.service === SERVICE && item.status === 1)
+                if (list.length > 0) {
+                    const currentTariff = list[0]
+                    setTariff(currentTariff)
+                }
             } else {
                 console.log('Error: ', data)
             }
@@ -103,7 +109,7 @@ const Billing: React.FC = () => {
                                 {startedDate && endedDate && (
                                     <li className={style.item}>
                                         <span>Осталось дней: </span>
-                                        <span>{getDurationInDays(startedDate, endedDate)}</span>
+                                        <span>{getRemainingTime(endedDate)}</span>
                                     </li>
                                 )}
                             </ul>
@@ -130,10 +136,10 @@ const Billing: React.FC = () => {
         return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
     }
 
-    function getDurationInDays(startDate: string, endDate: string): string {
-        const start = new Date(startDate).getTime()
+    function getRemainingTime(endDate: string): string {
+        const now = new Date().getTime()
         const end = new Date(endDate).getTime()
-        const diff = end - start
+        const diff = end - now
         return `${Math.floor(diff / (86400 * 1000))}`
     }
 

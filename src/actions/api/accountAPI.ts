@@ -4,7 +4,7 @@ import {
     DANGER_MODAL,
     EMAIL_CONFIRMATION,
     SEND_EMAIL,
-    SET_AUTH_PROVIDER,
+    SET_AUTH_PROVIDER, SET_TARIFF,
     SET_TOAST
 } from "../actionTypes"
 import {
@@ -14,7 +14,7 @@ import {
     globalStoreType, IEmailConfirmation,
     INewPwdData, IOneFieldForm,
     ISignInData,
-    ISignUpData,
+    ISignUpData, ISubscription,
     IUserData
 } from "../../constants/types"
 import { accountApiErrorHandling, apiErrorHandling, clearErrors } from "../errorHandling"
@@ -26,6 +26,7 @@ import axios from "axios"
 import { accountApiUrl, getAuthConfig } from "./utils"
 import { fetchPsyData } from "./psychologicalTestsAPI";
 import { isBrowser } from "../../helper/helper";
+import { fetchUsersBillingData } from "./subscriptionsAPI";
 
 export function checkAuth(jwt?: string): unknown {
     const token = jwt || getCookieFromBrowser('token')
@@ -75,6 +76,19 @@ export function fetchUserData(token: string): unknown {
                 })
                 .then(() => dispatch(fetchProjectList(token)))
                 .then(() => dispatch(fetchPsyData(token)))
+                .then(() => {
+                    fetchUsersBillingData().then((data) => {
+                        if (Array.isArray(data)) {
+                            const list: ISubscription[] = data.filter((item: any) => item?.membershipPlan?.service === SERVICE && item.status === 1)
+                            if (list.length > 0) {
+                                const currentTariff = list[0]
+                                dispatch({ type: SET_TARIFF, tariffId: currentTariff.membershipPlan.id })
+                            }
+                        } else {
+                            console.log('Error: ', data)
+                        }
+                    })
+                })
                 .catch(error => console.error(error))
         } else {
             dispatch({ type: CLEAR_USER_DATA })

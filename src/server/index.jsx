@@ -103,22 +103,21 @@ i18n
                                                 <title>${ initialI18nStore[initLang].landing && initialI18nStore[initLang].landing.meta.title }</title>
                                                 ${ assets.client.css ? `<link rel="stylesheet" href="${ assets.client.css }">` : '' }
                                                 
-<!--                                                <link rel="preload" href="static/media/*.woff2" as="font" type="font/woff2" crossorigin="anonymous">-->
-<!--                                                <link rel="preload" href="static/media/*.woff2" as="font" type="font/woff2" crossorigin="anonymous">-->
+                                                <link rel="manifest" href="/manifest.json">
                                                 
                                                 <meta property="og:site_name" content="${ SITE_TITLE }" />
                                                 <meta property="og:type" content="website" />
                                                 <meta property="og:url" content="${ HOST }" />
                                                 <meta property="og:title" content="${ initialI18nStore[initLang].landing && initialI18nStore[initLang].landing.meta.title }" />
                                                 <meta property="og:description" content="${ initialI18nStore[initLang].landing && initialI18nStore[initLang].landing.meta.description }" />
-                                                <meta property="og:image" content="${ HOST }/img/default.jpg}" />
+                                                <meta property="og:image" content="${ HOST }/img/default.jpg" />
                                                 <meta property="og:locale" content="${ initLang }" />
                                                 <meta name="twitter:card" content="summary_large_image" />
                                                 <meta name="twitter:title" content="${ initialI18nStore[initLang].landing && initialI18nStore[initLang].landing.meta.title }" />
                                                 <meta name="twitter:description" content="${ initialI18nStore[initLang].landing && initialI18nStore[initLang].landing.meta.description }" />
                                                 <meta name="twitter:site" content="${ SITE_TITLE }" />
                                                 <meta name="twitter:url" content="${ HOST }" />
-                                                <meta name="twitter:image" content="${ HOST }/img/default.jpg}" />
+                                                <meta name="twitter:image" content="${ HOST }/img/default.jpg" />
                                                 <meta name="theme-color" content="#1C1E23" />
                                                 
                                                 <script src="${ assets.client.js }" defer></script>

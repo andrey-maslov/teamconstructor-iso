@@ -9,21 +9,24 @@ import CreateProject from '../../components/common/team-coop/create-project/Crea
 import BoardInfo from '../../components/common/team-coop/board-info/BoardInfo'
 import { useTranslation } from 'react-i18next'
 import { useMediaPredicate } from "react-media-hook"
+import { isPremiumUser } from "../../helper/helper";
 
 const TeamCoopPage: React.FC = () => {
 
     const { t } = useTranslation()
     const isMedium = useMediaPredicate('(max-width: 1400px)')
     const [isCompact, setCompact] = useState(isMedium)
-    const { isLoggedIn } = useSelector((state: globalStoreType) => state.user)
+    const { isLoggedIn, tariffId } = useSelector((state: globalStoreType) => state.user)
     const { activeProject, projects } = useSelector((state: globalStoreType) => state.team)
     const { isLoading } = useSelector((state: globalStoreType) => state.app)
 
 
-    if (!isLoggedIn) {
-        return <main className="flex-centered text-center main">
-            <NavLink to="/signin">{t('common:errors.need_to_authorize')}</NavLink>
-        </main>
+    if (!isLoggedIn || !isPremiumUser<number>([3, 4, 5], tariffId)) {
+        return (
+            <main className="flex-centered text-center main">
+                <NavLink to="/signin">{t('common:errors.need_to_authorize')}</NavLink>
+            </main>
+        )
     }
 
     if (!isLoading && projects.length === 0) {

@@ -1,12 +1,12 @@
 import {
     ADD_AUTH_DATA,
     CLEAR_USER_DATA,
-    EMAIL_CONFIRMATION,
+    SET_TARIFF,
     SET_AUTH_PROVIDER,
     SET_PSY_DATA
 } from '../actions/actionTypes'
 import { loadState } from '../store/sessionStorage'
-import { anyType, IUserData } from "../constants/types"
+import { anyType, IUserData, TariffId } from "../constants/types"
 
 // let STATE = loadState('userData')
 
@@ -25,6 +25,7 @@ export type userStoreType = {
 type UserReducerType = {
     type: string
     userData: IUserData
+    tariffId: TariffId
     provider: string
     psyData: string
 }
@@ -34,6 +35,7 @@ const STATE = {
     lastName: null,
     email: null,
     position: null,
+    tariffId: 0,
     psyData: null,
     provider: null,
     isLoggedIn: false,
@@ -41,7 +43,7 @@ const STATE = {
     isOpenForWork: null
 }
 
-export const user = (state = STATE, { type, userData, provider, psyData }: UserReducerType): anyType => {
+export const user = (state = STATE, { type, userData, provider, psyData, tariffId }: UserReducerType): anyType => {
     switch (type) {
         case ADD_AUTH_DATA :
             return {
@@ -58,6 +60,11 @@ export const user = (state = STATE, { type, userData, provider, psyData }: UserR
             return {
                 ...state,
                 psyData
+            }
+        case SET_TARIFF:
+            return {
+                ...state,
+                tariffId
             }
         case CLEAR_USER_DATA:
             return {

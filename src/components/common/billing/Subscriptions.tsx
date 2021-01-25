@@ -22,13 +22,10 @@ const Subscriptions: React.FC = () => {
         if (invoiceId && invoiceId !== 'subscriptions' && invoiceId !== 'refreshInvoice') {
             setMode('refresh_invoice')
             refreshInvoice(invoiceId)
-                .then((data) => {
-                    console.log(data)
-                })
                 .then(() => {
                     if (isBrowser) {
                         sessionStorage.removeItem('tariffIdToPay')
-                        // window.location.href = '/profile'
+                        window.location.href = '/profile'
                     }
                 })
                 .catch(err => console.error(err))

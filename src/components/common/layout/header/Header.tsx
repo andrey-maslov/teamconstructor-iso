@@ -9,21 +9,29 @@ import { RiTeamLine } from 'react-icons/ri'
 import { globalStoreType, INavRoute } from '../../../../constants/types'
 import { useTranslation } from 'react-i18next'
 import { confirmAlert } from "react-confirm-alert";
+import { isPremiumUser } from "../../../../helper/helper";
 
 const Header: React.FC = () => {
 
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const { isLoggedIn, email } = useSelector((state: globalStoreType) => state.user)
+    const { isLoggedIn, email, tariffId } = useSelector((state: globalStoreType) => state.user)
 
-    const userAccess = isLoggedIn ? 'auth' : 'all'
+    // const userAccess = isLoggedIn ? 'auth' : 'all'
 
     const routes: INavRoute[] = [
         { title: t('common:nav.pair'), path: '/pair', access: 'all', icon: <FiUsers /> },
         { title: t('common:nav.team'), path: '/team', access: 'premium', icon: <RiTeamLine /> },
         { title: t('common:nav.profile'), path: '/profile', access: 'auth', icon: <FiSettings /> },
     ]
-    const routesToDisplay: INavRoute[] = routes.filter(route => route.access === userAccess)
+    const routesToDisplay: INavRoute[] = routes.filter(route => {
+        if (isLoggedIn && isPremiumUser([3, 4, 5], tariffId)) {
+            return route
+        } else if (isLoggedIn) {
+            return route.access === 'all' || route.access === 'auth'
+        }
+        return route.access === 'all'
+    })
 
     const isTablet = useMediaPredicate('(max-width: 992px)')
 
@@ -38,14 +46,14 @@ const Header: React.FC = () => {
             isLoggedIn={isLoggedIn}
             handleLogoutBtn={logOutHandle}
             userEmail={email || ''}
-            routes={routes}
+            routes={routesToDisplay}
         />
     }
     return <WebHeader
         isLoggedIn={isLoggedIn}
         handleLogoutBtn={logOutHandle}
         userEmail={email || ''}
-        routes={routes}
+        routes={routesToDisplay}
     />
 
     function logOutHandle() {

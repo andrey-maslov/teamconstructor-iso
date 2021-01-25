@@ -204,3 +204,10 @@ export function extractEncData(data: string): {
     const params = parseQueryString(query)
     return getAndDecodeData('', decodeURIComponent(params.encdata))
 }
+
+export function isPremiumUser<T>(checkList: T[], value: T): boolean {
+    if (!Array.isArray(checkList)) {
+        return false
+    }
+    return checkList.includes(value)
+}
