@@ -32,13 +32,12 @@ const DangerModal: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
     return (
         <Rodal
-            className={`modal danger-modal`}
+            className="modal danger-modal"
             visible={visible}
             onClose={closeModal}
             closeMaskOnCLick
             customStyles={customStyles}
-            height={350}
-            width={400}
+            width={350}
             closeOnEsc={true}>
             <div className={`${style.content}`}>
                 <div className={style.top}><strong>{t('common:profile.delete.are_you_sure')}</strong></div>

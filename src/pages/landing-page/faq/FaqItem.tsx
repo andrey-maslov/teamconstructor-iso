@@ -17,7 +17,7 @@ const FaqItem: React.FC<IFaqItem> = ({ question, answer }) => {
                 className={style.q}
                 aria-expanded={!isOpen}
             >
-                <p>{question}</p>
+                <span>{question}</span>
             </button>
             <div className={style.a}>
                 <p>{answer}</p>

@@ -28,9 +28,7 @@ const CircleDiagram: React.FC<CircleDiagramProps> = ({ value }) => {
 
         spidometer()
 
-        return function cleanup() {
-            spidometer()
-        }
+        return spidometer()
     }, [val, roundValue])
 
     function increment() {

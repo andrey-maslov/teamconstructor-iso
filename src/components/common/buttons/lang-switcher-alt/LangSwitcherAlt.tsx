@@ -31,7 +31,7 @@ const LangSwitcherAlt: React.FC = () => {
                 Cookie.set("i18next", lng)
                 dispatch(fetchTerms(lng))
                 dispatch(fetchContent(lng))
-                localizeMeta(lng)
+                // localizeMeta(lng)
                 if (isOpen) {
                     setIsOpen(false)
                 }

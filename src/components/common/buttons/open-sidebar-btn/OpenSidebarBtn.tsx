@@ -5,7 +5,7 @@ import style from './open-sidebar.module.scss'
 export const OpenSidebarBtn: React.FC<{ handler: () => void, isCompact: boolean }> = ({ handler, isCompact }) => {
 
     return (
-        <button className={style.btn} onClick={handler}>
+        <button className={style.btn} onClick={handler} aria-label="open sidebar">
             {!isCompact ? <AiOutlineMenuFold /> : <AiOutlineMenuUnfold />}
         </button>
     )

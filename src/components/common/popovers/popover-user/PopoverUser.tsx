@@ -33,6 +33,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({ logoutHandle }) => {
                 <button
                     className={style.openBtn}
                     onClick={() => {setIsOpen(!isOpen)}}
+                    aria-label="open user info"
                 >
                     <FiUser />
                     <FiChevronDown />

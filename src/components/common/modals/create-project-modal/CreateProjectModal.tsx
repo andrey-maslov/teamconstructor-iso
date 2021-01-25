@@ -35,12 +35,12 @@ export const CreateProjectModal: React.FC<IModalProps> = ({ visible, closeModal,
 
     return (
         <Rodal
-            className='add-member-modal create-project-modal'
+            className='modal create-project-modal'
             visible={visible}
             onClose={() => {
                 closeModal()
             }}
-            width={isLarge ? 400 : 320}
+            width={350}
             customStyles={customStyles}
             closeOnEsc={true}
         >

@@ -9,13 +9,14 @@ import { useTranslation } from 'react-i18next'
 import MemberForm from "../../forms/member-form/MemberForm";
 import SearchMember from "../../forms/search-member/SearchMember";
 import { extractEncData } from "../../../../helper/helper";
+import { useDisableBodyScroll } from "../../hooks/use-disable-body-scroll";
 
 export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
     const customStyles = {
         height: 'auto',
         bottom: 'auto',
-        top: '30%'
+        top: '10%'
     }
 
     // const { t } = useTranslation()
@@ -28,6 +29,8 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
     const { teams, editedMember } = useSelector((state: globalStoreType) => state.team)
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
+
+    useDisableBodyScroll(visible)
 
     useEffect(() => {
         if (editedMember !== null) {
@@ -42,7 +45,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
     return (
         <Rodal
-            className='add-member-modal'
+            className='add-member-modal modal'
             visible={visible}
             onClose={closeModal}
             customStyles={customStyles}

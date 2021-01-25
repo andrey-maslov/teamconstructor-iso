@@ -28,7 +28,7 @@ const Subscriptions: React.FC = () => {
                 .then(() => {
                     if (isBrowser) {
                         sessionStorage.removeItem('tariffIdToPay')
-                        window.location.href = '/profile'
+                        // window.location.href = '/profile'
                     }
                 })
                 .catch(err => console.error(err))

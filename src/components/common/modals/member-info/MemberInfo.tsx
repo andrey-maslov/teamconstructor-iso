@@ -116,10 +116,10 @@ export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge
 
     return (
         <Rodal
-            className="member-info-modal"
+            className="member-info-modal modal"
             visible={visible}
             onClose={closeModal}
-            width={isLarge ? 1000 : (!isMobi ? 600 : 320)}
+            width={isLarge ? 1000 : (!isMobi ? 600 : 350)}
             height={600}
             closeOnEsc={true}
         >

@@ -37,18 +37,21 @@ const DraggableItem: React.FC<IDraggableItem> = ({ index, member, colIndex, dele
                             <button
                                 className={style.btn}
                                 onClick={() => editMember(member.baseID)}
+                                aria-label="edit member"
                             >
                                 <FiEdit3 />
                             </button>
                             <button
                                 className={style.btn}
                                 onClick={() => openInfo(member.baseID)}
+                                aria-label="member info"
                             >
                                 <FaInfo />
                             </button>
                             <button
                                 className={style.btn}
                                 onClick={() => deleteItem(colIndex, index)}
+                                aria-label="delete member"
                             >
                                 <FaTimes />
                             </button>
