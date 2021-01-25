@@ -25,6 +25,7 @@ import { fetchProjectList } from "./projectsAPI"
 import axios from "axios"
 import { accountApiUrl, getAuthConfig } from "./utils"
 import { fetchPsyData } from "./psychologicalTestsAPI";
+import { isBrowser } from "../../helper/helper";
 
 export function checkAuth(jwt?: string): unknown {
     const token = jwt || getCookieFromBrowser('token')
@@ -53,7 +54,12 @@ export function authUser(userData: AuthData, authType: AuthType, setError: anyTy
                 dispatch(fetchProjectList(token))
                 return token
             })
-            .then(token => dispatch(fetchPsyData(token)))
+            .then(token => {
+                dispatch(fetchPsyData(token))
+                if(isBrowser && sessionStorage.getItem('tariffIdToPay')) {
+                    location.href = '/subscriptions'
+                }
+            })
             .catch(error => accountApiErrorHandling(error, setError))
     }
 }

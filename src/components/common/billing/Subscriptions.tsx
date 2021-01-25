@@ -6,6 +6,7 @@ import { refreshInvoice } from "../../../actions/api/subscriptionsAPI";
 import Prices from "./prices/Prices";
 import RefreshInvoice from "./RefreshInvoice";
 import { globalStoreType } from "../../../constants/types";
+import { isBrowser } from "../../../helper/helper";
 
 const Subscriptions: React.FC = () => {
     const { t } = useTranslation()
@@ -23,6 +24,12 @@ const Subscriptions: React.FC = () => {
             refreshInvoice(invoiceId)
                 .then((data) => {
                     console.log(data)
+                })
+                .then(() => {
+                    if (isBrowser) {
+                        sessionStorage.removeItem('tariffIdToPay')
+                        window.location.href = '/profile'
+                    }
                 })
                 .catch(err => console.error(err))
         }

@@ -14,12 +14,15 @@ const Prices: React.FC = () => {
     const location = useLocation()
     const { isLoggedIn } = useSelector((state: globalStoreType) => state.user)
 
-    const [tariffId, setTariffId] = useState<number>(3)
+    const tariffFromStorage = isBrowser && sessionStorage.getItem('tariffIdToPay')
+    const initialTariff = (isBrowser && tariffFromStorage) ? +tariffFromStorage : 3
+
+    const [tariffId, setTariffId] = useState<number>(initialTariff)
     const [tariffToBuy, setTariffToBuy] = useState<number>(0)
 
     useEffect(() => {
         if (tariffToBuy) {
-            subscribe(6)
+            subscribe(tariffToBuy)
                 .then((data) => {
                     if (typeof data !== 'number' && data.formUrl && isBrowser) {
                         console.log(data.formUrl)
@@ -75,6 +78,7 @@ const Prices: React.FC = () => {
                                         name="period"
                                         className={style.select}
                                         id="period"
+                                        defaultValue={tariffId}
                                         onChange={(e) => setTariffId(+e.target.value)}
                                     >
                                         <option value={3}>{t('prices:monthly')}</option>
@@ -94,7 +98,11 @@ const Prices: React.FC = () => {
                                 </ul>
                                 {!isLoggedIn
                                     ? (
-                                        <NavLink to={`/registration`} className={`btn btn-outlined-yellow`}>
+                                        <NavLink
+                                            to={`/registration`}
+                                            className={`btn btn-outlined-yellow`}
+                                            onClick={() => rememberTariffToPay(tariffId)}
+                                        >
                                             {t('prices:paid.link_title')}
                                         </NavLink>
                                     )
@@ -112,6 +120,12 @@ const Prices: React.FC = () => {
             </div>
         </section>
     )
+
+    function rememberTariffToPay(id: number): void {
+        if (isBrowser) {
+            sessionStorage.setItem('tariffIdToPay', `${id}`)
+        }
+    }
 }
 
 export default Prices
