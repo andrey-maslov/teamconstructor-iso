@@ -10,6 +10,7 @@ import { useToasts } from 'react-toast-notifications'
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { SET_TARIFF } from "../../../actions/actionTypes";
+import { isBrowser } from "../../../helper/helper";
 
 const Billing: React.FC = () => {
     const { t } = useTranslation()
@@ -169,6 +170,9 @@ const Billing: React.FC = () => {
                         appearance: 'success',
                         autoDismiss: true
                     })
+                    if(isBrowser) {
+                        location.reload()
+                    }
                 } else {
                     addToast('Что-то пошло не так', {
                         appearance: 'error',

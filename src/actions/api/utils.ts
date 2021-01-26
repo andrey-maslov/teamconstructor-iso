@@ -1,5 +1,5 @@
 import { API_VER, BASE_API, CONTENT_API } from "../../constants/constants";
-import { anyType, IProject, ITeam } from "../../constants/types";
+import { anyType, IProject, IProjectFromBase, ITeam } from "../../constants/types";
 
 export const accountApiUrl = `${BASE_API}/api/v${API_VER}/Account`
 export const projectsApiUrl = `${BASE_API}/api/v${API_VER}/Projects`
@@ -8,13 +8,6 @@ export const termsApiUrl = `${CONTENT_API}/psychologies`
 export const testApiUrl = `${BASE_API}/api/v${API_VER}/PsychologicalTests`
 export const billingApiUrl = `${BASE_API}/api/v${API_VER}/Subscriptions`
 export const tariffsApiUrl = `${BASE_API}/api/v${API_VER}/MembershipPlans`
-
-export interface IProjectFromBase {
-    id: string
-    title: string
-    pool: string
-    teams: string
-}
 
 interface IHeader {
     headers: {

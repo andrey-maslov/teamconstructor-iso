@@ -21,11 +21,13 @@ import ComingSoon from "./pages/coming-soon-page/ComingSoon";
 import ConfirmEmail from "./pages/confirm-email-page/ConfirmEmail";
 import Linkedin from "./components/common/auth/social-auth/linkedin-login/Linkedin";
 import SubscriptionsPage from "./pages/subscriptions-page/SubscriptionsPage";
+import { globalStoreType } from "./constants/types";
 
 const App: React.FC = () => {
 
     const { pathname } = useLocation()
-    const { isLoggedIn } = useSelector((state: any) => state.user)
+    const { isLoggedIn } = useSelector((state: globalStoreType) => state.user)
+    const { projects } = useSelector((state: globalStoreType) => state.team)
     const isApp = pathname !== '/'
 
     if (process.env.RAZZLE_IS_UNDER_CONSTRUCTION == '1') {
@@ -36,9 +38,14 @@ const App: React.FC = () => {
         )
     }
 
+    const bodyClassList = `${isApp ? 'app' : 'site'} 
+                            ${getPageClass(pathname)} 
+                            ${isLoggedIn ? 'authorized' : 'unauthorized'}
+                            ${projects.length ? 'with-sidebar' : ''}`
+
     return (
         <ToastProvider>
-            <div className={`${isApp ? 'app' : 'site'} ${getPageClass(pathname)} ${isLoggedIn ? 'authorized' : 'unauthorized'}`}>
+            <div className={bodyClassList}>
                 <Header />
                 {/*<ScrollToTop />*/}
                 <Switch>
@@ -52,7 +59,8 @@ const App: React.FC = () => {
                     <Route exact path="/terms" render={() => <ContentPage page="terms" />} />
                     <Route exact path="/signin" render={() => <AuthPage page="signin" />} />
                     <Route exact path="/signin/forgot-password" render={() => <AuthPage page="forgot_pwd" />} />
-                    <Route exact path="/signin/forgot-password-success" render={() => <AuthPage page="forgot_pwd_success" />} />
+                    <Route exact path="/signin/forgot-password-success"
+                           render={() => <AuthPage page="forgot_pwd_success" />} />
                     <Route exact path="/signin/reset-password" render={() => <AuthPage page="reset_pwd" />} />
                     <Route exact path="/registration" render={() => <AuthPage page="registration" />} />
                     <Route path="/auth/linkedin/callback" render={() => <Linkedin />} />

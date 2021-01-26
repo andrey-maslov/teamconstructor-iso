@@ -2,19 +2,20 @@ import React from 'react'
 import { useHistory } from "react-router-dom"
 import { useTranslation } from 'react-i18next'
 import { useSelector, useDispatch } from 'react-redux'
-import { globalStoreType } from '../../../../constants/types'
-import { deleteProject, setCreateProjectModal } from '../../../../actions/actionCreator'
+import { anyType, globalStoreType, IProjectShort } from '../../../../constants/types'
+import { deleteProject, fetchProjectList, setCreateProjectModal } from '../../../../actions/actionCreator'
 import { VscProject } from "react-icons/vsc"
 import style from './projects.module.scss'
 import { SET_ACTIVE_PROJECT } from "../../../../actions/actionTypes";
 import { confirmAlert } from "react-confirm-alert";
+import { getCookieFromBrowser } from "../../../../helper/cookie";
 
 const ProjectList: React.FC = () => {
 
     const history = useHistory()
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const { projects, activeProject } = useSelector((state: globalStoreType) => state.team)
+    const { projects, activeProject: { id } } = useSelector((state: globalStoreType) => state.team)
 
     return (
         <>
@@ -27,15 +28,15 @@ const ProjectList: React.FC = () => {
             </div>
             <div className={style.listWrapper}>
                 <ul className={style.list}>
-                    {projects.length > 0 && activeProject ?
-                        projects.map((project: { id: number, title: string }) => (
+                    {projects.length > 0 && id ?
+                        projects.map((project: IProjectShort) => (
                             <li
-                                className={`${style.item} ${activeProject.id === project.id ? style.active : ''}`}
+                                className={`${style.item} ${id === project.id ? style.active : ''}`}
                                 key={project.id}
                             >
                                 <button
                                     className={style.project}
-                                    onClick={() => changeProject(activeProject.id, project.id, project.title)}
+                                    onClick={() => changeProject(id, project.id)}
                                 >
                                     <span>{project.title}</span>
                                 </button>
@@ -43,7 +44,7 @@ const ProjectList: React.FC = () => {
                             </li>
                         )) : (
                             <li className={style.empty}>
-                                <p >{t('team:project.no_projects')}</p>
+                                <p>{t('team:project.no_projects')}</p>
                             </li>
                         )
                     }
@@ -56,7 +57,7 @@ const ProjectList: React.FC = () => {
         dispatch(setCreateProjectModal(true))
     }
 
-    function handlerDelete(projectId: number) {
+    function handlerDelete(projectId: string) {
 
         confirmAlert({
             title: 'Удаление проекта',
@@ -75,9 +76,10 @@ const ProjectList: React.FC = () => {
         });
     }
 
-    function changeProject(current: number, id: number, title: string) {
+    function changeProject(current: string, id: string) {
         if (current !== id) {
-            dispatch({ type: SET_ACTIVE_PROJECT, activeProject: { id, title } })
+            const token = getCookieFromBrowser('token')
+            dispatch(fetchProjectList(token, id))
         } else {
             console.log('active project is current')
         }

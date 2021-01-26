@@ -18,7 +18,7 @@ const TeamCoopPage: React.FC = () => {
     const isMedium = useMediaPredicate('(max-width: 1400px)')
     const [isCompact, setCompact] = useState(isMedium)
     const { isLoggedIn, tariffId } = useSelector((state: globalStoreType) => state.user)
-    const { activeProject, projects } = useSelector((state: globalStoreType) => state.team)
+    const { activeProject: { title }, projects } = useSelector((state: globalStoreType) => state.team)
     const { isLoading } = useSelector((state: globalStoreType) => state.app)
 
 
@@ -50,8 +50,8 @@ const TeamCoopPage: React.FC = () => {
                 />
             </div>
             <main className="main">
-                {activeProject &&
-                <BoardInfo label={t('team:project.project_board', { title: activeProject.title })} />}
+                {title &&
+                <BoardInfo label={t('team:project.project_board', { title })} />}
                 <DraggableZone />
                 <TeamCoopResult />
             </main>

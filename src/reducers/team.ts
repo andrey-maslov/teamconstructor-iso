@@ -8,18 +8,17 @@ import {
     SET_EDITED_MEMBER,
     SET_TEAM_SPEC,
     CLEAR_USER_DATA,
-    SET_POOL, SET_ACTIVE_PROJECT, ADD_PROJECT, SET_PROJECTS
+    SET_ACTIVE_PROJECT, ADD_PROJECT, SET_PROJECTS
 } from "../actions/actionTypes"
-import { anyType, IProject, IProjectShort, ITeam } from "../constants/types";
+import { anyType, IProject, IProjectLocal, IProjectShort, ITeam } from "../constants/types";
 
 // let STATE = loadState('teams');
 
 export type teamStoreType = {
     isComparisonResultReady: boolean,
     isComparisonInProcess: boolean,
-    projects: IProject[],
-    activeProject: IProjectShort,
-    teams: ITeam[],
+    projects: IProjectShort[],
+    activeProject: IProjectLocal,
     activeTeam: number,
     teamSpec: number,
     editedMember: number | null,
@@ -30,8 +29,7 @@ const STATE: teamStoreType = {
     isComparisonResultReady: false,
     isComparisonInProcess: false,
     projects: [],
-    activeProject: {id: '', title: ''},
-    teams: [],
+    activeProject: { id: '', title: '', teams: [] },
     activeTeam: 0,
     teamSpec: 0,
     editedMember: null,
@@ -43,7 +41,6 @@ export const team = (state = STATE, {
     isComparisonResultReady,
     isComparisonInProcess,
     teams,
-    pool,
     activeTeam,
     teamSpec,
     randomNum,
@@ -67,7 +64,7 @@ export const team = (state = STATE, {
         case SET_TEAMS_DATA :
             return {
                 ...state,
-                teams
+                activeProject: { ...state.activeProject, teams }
             }
         case SET_ACTIVE_TEAM :
             return {
@@ -85,17 +82,11 @@ export const team = (state = STATE, {
                 randomNum
             }
         case ADD_MEMBER : {
-            const newTeams = [ ...state.teams ]
+            const newTeams = [...state.activeProject.teams]
             newTeams[0].items.push(member)
             return {
                 ...state,
-                teams: newTeams
-            }
-        }
-        case SET_POOL : {
-            return {
-                ...state,
-                teams: [ pool, ...state.teams.slice(1) ]
+                activeProject: { ...state.activeProject, newTeams }
             }
         }
         case SET_EDITED_MEMBER :
@@ -104,19 +95,15 @@ export const team = (state = STATE, {
                 editedMember
             }
         case SET_ACTIVE_PROJECT : {
-            console.log()
-            const teams = state.projects.filter(item => item.id === activeProject.id)[0].teams
-            const pool = state.projects.filter(item => item.id === activeProject.id)[0].pool
             return {
                 ...state,
-                teams: [pool, ...teams],
                 activeProject
             }
         }
         case ADD_PROJECT :
             return {
                 ...state,
-                projects: [ ...state.projects, project ]
+                projects: [...state.projects, project]
             }
         case SET_PROJECTS :
             return {
@@ -129,13 +116,10 @@ export const team = (state = STATE, {
                 isComparisonResultReady: false,
                 isComparisonInProcess: false,
                 projects: [],
-                activeProject: {id: '', title: ''},
-                teams: null,
-                // pool: null,
+                activeProject: { id: '', title: '', teams: [] },
                 activeTeam: 0,
                 teamSpec: 0,
                 editedMember: null,
-                member: null,
                 randomNum: 0
             }
         default:

@@ -21,7 +21,7 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
     const dispatch = useDispatch()
     const { register, handleSubmit, errors, reset } = useForm<IMemberForm>({ criteriaMode: 'all' })
     const { isLoading, errorApiMessage } = useSelector((state: globalStoreType) => state.app)
-    const { editedMember, teams } = useSelector((state: globalStoreType) => state.team)
+    const { editedMember, activeProject: { teams } } = useSelector((state: globalStoreType) => state.team)
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
 
     useEffect(() => {

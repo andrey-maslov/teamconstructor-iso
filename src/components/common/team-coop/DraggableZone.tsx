@@ -62,8 +62,7 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 
 const DraggableZone: React.FC = () => {
 
-    const teams: ITeam[] = useSelector((state: globalStoreType) => state.team.teams)
-    // const { activeProject } = useSelector((state: globalStoreType) => state.team)
+    const { teams }: {teams: ITeam[]} = useSelector((state: globalStoreType) => state.team.activeProject)
     const staff: ITeam | Record<string, unknown> = teams ? teams[0] : {}
     const dispatch = useDispatch()
     const { addToast } = useToasts()
@@ -102,7 +101,7 @@ const DraggableZone: React.FC = () => {
             const items = reorder(teams[sInd].items, source.index, destination.index)
             const newTeams: ITeam[] = [...teams]
             newTeams[sInd].items = items
-            dispatch(updateProject({pool: newTeams[0], teams: newTeams.slice(1) }))
+            dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
 
         } else if (sInd === 0) {
 
@@ -185,7 +184,7 @@ const DraggableZone: React.FC = () => {
                 <Box
                     title={t('team:pool')}
                     addClass={'store-area'}
-                    widget={<StoreWidget/>}
+                    widget={<StoreWidget />}
                 >
                     {isReady && <DroppableColumnStore
                         items={(filteredMembers && isFilter) ? filteredMembers : staff.items}
@@ -249,7 +248,7 @@ const DraggableZone: React.FC = () => {
 
     //TODO what about pool
     function deleteMemberHandler(colIndex: number, itemIndex: number): void {
-        if (colIndex === 0 ) {
+        if (colIndex === 0) {
             confirmAlert({
                 message: t('team:do_you_want_to_delete_member?'),
                 buttons: [

@@ -48,6 +48,19 @@ export interface IProject {
     teams: ITeam[]
 }
 
+export interface IProjectFromBase {
+    id: string
+    title: string
+    pool: string
+    teams: string
+}
+
+export interface IProjectLocal {
+    id: string
+    title: string
+    teams: ITeam[]
+}
+
 export interface ITeam {
     id: number,
     title: string,

@@ -1,36 +1,56 @@
 import { logOut, setAddMemberModal, setCreateProjectModal, setLoading, setTeamsData } from "../actionCreator"
-import { ADD_PROJECT, SET_ACTIVE_PROJECT, SET_POOL, SET_PROJECTS } from "../actionTypes"
+import { ADD_PROJECT, SET_ACTIVE_PROJECT, SET_PROJECTS } from "../actionTypes"
 import { getCookieFromBrowser } from "../../helper/cookie"
-import { anyType, globalStoreType, IProject, ITeam } from "../../constants/types"
+import { anyType, globalStoreType, IProject, IProjectFromBase, IProjectLocal, ITeam } from "../../constants/types"
 import { apiErrorHandling, clearErrors } from "../errorHandling"
 import { projectsApiUrl, getAuthConfig, parseProjectData, stringifyProjectData } from "./utils"
 import axios from "axios"
+import { isBrowser } from "../../helper/helper";
 
-export function fetchProjectList(token: string): anyType {
+export function fetchProjectList(token: string, projectId?: string): anyType {
     return (dispatch: anyType) => {
         if (token) {
             dispatch(setLoading(true))
-            axios(`${projectsApiUrl}/list?PageNumber=0&PageSize=100`, getAuthConfig(token))
+            axios.get<{ items: IProjectFromBase[] | anyType }>(
+                `${projectsApiUrl}/list?PageNumber=0&PageSize=100`,
+                getAuthConfig(token)
+            )
                 .then(res => res.data)
                 .then(data => {
                     if (data.items && data.items.length === 0) {
-                        return false
+                        return {}
                     }
-                    const projects = data.items.map(parseProjectData)
-                    const activeProject = projects.length !== 0 ? {
-                        id: projects[0].id,
-                        title: projects[0].title
-                    } : null
-                    dispatch({ type: SET_PROJECTS, projects })
-                    dispatch({ type: SET_ACTIVE_PROJECT, activeProject })
+                    const projects: IProject[] = data.items.map(parseProjectData) || []
+                    const projectsToShow = projects.map(({ id, title }) => ({ id, title }))
+                    let activeProject: IProjectLocal
+
+                    if (projectId && projects.length !== 0) {
+                        const tempProject = projects.filter(item => item.id === projectId)[0]
+                        activeProject = {
+                            id: tempProject.id,
+                            title: tempProject.title,
+                            teams: [tempProject.pool, ...tempProject.teams]
+                        }
+                    } else {
+                        activeProject = {
+                            id: projects[0].id,
+                            title: projects[0].title,
+                            teams: [projects[0].pool, ...projects[0].teams]
+                        }
+                    }
+                    return { activeProject, projectsToShow }
+                })
+                .then(({projectsToShow, activeProject}) => {
+                    if (projectsToShow && activeProject) {
+                        dispatch({ type: SET_PROJECTS, projects: projectsToShow })
+                        dispatch({ type: SET_ACTIVE_PROJECT, activeProject: activeProject })
+                    }
                     return false
-                    // dispatch(clearErrors())
                 })
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
         } else {
-            // dispatch(logOut())
-            alert('not authorized')
+            dispatch(logOut())
         }
     }
 }
@@ -42,15 +62,15 @@ export function createProject(project: Omit<IProject, 'id'>): anyType {
 
         if (token) {
             dispatch(setLoading(true))
-            axios.post(`${projectsApiUrl}/add`, stringifyProjectData(project), getAuthConfig(token))
+            axios.post<IProjectFromBase>(`${projectsApiUrl}/add`, stringifyProjectData(project), getAuthConfig(token))
                 .then(res => res.data)
                 .then(data => {
-                    const parsedProject = parseProjectData(data)
+                    const parsedProject: IProject | null = parseProjectData(data)
                     if (parsedProject) {
-                        dispatch({ type: ADD_PROJECT, project: parsedProject })
+                        dispatch({ type: ADD_PROJECT, project: { id: parsedProject.id, title: parsedProject.title } })
                         dispatch({
                             type: SET_ACTIVE_PROJECT,
-                            activeProject: { id: parsedProject.id, title: parsedProject.title }
+                            activeProject: parsedProject
                         })
                     }
                     dispatch(setCreateProjectModal(false))
@@ -73,7 +93,7 @@ export function updateProject(project: { pool: ITeam, teams?: ITeam[], title?: s
     return (dispatch: anyType, getState: () => globalStoreType) => {
         if (token) {
             const { id, title } = getState().team.activeProject
-            const { teams } = getState().team
+            const { teams } = getState().team.activeProject
             const stringifiedProject = stringifyProjectData(project)
             dispatch(setLoading(true))
             axios.put(
@@ -84,13 +104,10 @@ export function updateProject(project: { pool: ITeam, teams?: ITeam[], title?: s
                 .then(res => res.data)
                 .then(data => {
                     const parsedProject = parseProjectData(data)
-                    if (parsedProject) {
-                        if (project.pool && !project.teams) {
-                            dispatch({ type: SET_POOL, pool: parsedProject.pool })
-                        } else {
-                            console.log('set teams data', parsedProject.teams)
-                            dispatch(setTeamsData([parsedProject.pool, ...parsedProject.teams]))
-                        }
+                    if (parsedProject && Array.isArray(parsedProject.teams)) {
+                        dispatch(setTeamsData([parsedProject.pool, ...parsedProject.teams]))
+                    } else if (parsedProject) {
+                        dispatch(setTeamsData([parsedProject.pool]))
                     }
                     // dispatch(clearErrors())
                 })
@@ -98,25 +115,28 @@ export function updateProject(project: { pool: ITeam, teams?: ITeam[], title?: s
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
         } else {
-            // dispatch(logOut())
-            alert('not authorized')
+            dispatch(logOut())
             dispatch(setCreateProjectModal(false))
         }
     }
 }
 
-export function deleteProject(id: number): anyType {
+export function deleteProject(id: string): anyType {
     const token = getCookieFromBrowser('token')
     return (dispatch: anyType) => {
         if (token) {
             dispatch(setLoading(true))
             axios.delete(`${projectsApiUrl}/delete/${id}`, getAuthConfig(token))
-                .then(() => dispatch(fetchProjectList(token)))
+                .then(() => {
+                    if (isBrowser) {
+                        location.reload()
+                    }
+                    dispatch(fetchProjectList(token))
+                })
                 .catch(error => apiErrorHandling(error, dispatch))
                 .finally(() => dispatch(setLoading(false)))
         } else {
-            // dispatch(logOut())
-            alert('not authorized')
+            dispatch(logOut())
             dispatch(setCreateProjectModal(false))
         }
     }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Button from "../../buttons/button/Button"
 import { globalStoreType, ITeam } from "../../../../constants/types"
 import { useDispatch, useSelector } from "react-redux"
@@ -15,15 +15,14 @@ interface TeamCoopSidebar {
     isCompact: boolean
 }
 
-const TeamCoopSidebar: React.FC<TeamCoopSidebar> = ({minifySidebar, isCompact}) => {
+const TeamCoopSidebar: React.FC<TeamCoopSidebar> = ({ minifySidebar, isCompact }) => {
 
-    const teamsState = useSelector((state: globalStoreType) => state.team)
-    const teams: ITeam[] = teamsState.teams ? teamsState.teams.slice(1) : []
-    const activeTeam: number = teamsState.activeTeam
-    const teamSpec: number = teamsState.teamSpec
     const dispatch = useDispatch()
-
     const { t } = useTranslation()
+
+    const { teamSpec, activeTeam, activeProject: { teams } } = useSelector((state: globalStoreType) => state.team)
+
+    const teamList: ITeam[] = teams ? teams.slice(1) : []
 
     return (
         <aside className={`${style.aside} ${style[isCompact ? 'compact' : 'full']}`}>
@@ -37,7 +36,7 @@ const TeamCoopSidebar: React.FC<TeamCoopSidebar> = ({minifySidebar, isCompact}) 
                     changeSpec={changeSpec}
                     isCompact={isCompact}
                 />
-                {teams.map((team, i) => {
+                {teamList.map((team, i) => {
                     const isActive = i === activeTeam;
                     return (
                         <TeamModule
@@ -76,4 +75,4 @@ const TeamCoopSidebar: React.FC<TeamCoopSidebar> = ({minifySidebar, isCompact}) 
     }
 }
 
-export default TeamCoopSidebar;
+export default TeamCoopSidebar

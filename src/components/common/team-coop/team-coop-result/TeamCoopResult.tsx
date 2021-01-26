@@ -13,32 +13,37 @@ import PolarChart from "../../charts/polar-chart/PolarChart"
 const TeamCoopResult: React.FC = () => {
 
     const { terms: scheme, descriptions } = useSelector((state: globalStoreType) => state.terms)
-    const teamCoop = useSelector((state: globalStoreType) => state.team)
-    const activeTeamInd: number = teamCoop.activeTeam
-    const randomNum: number = teamCoop.randomNum
-    const activeTeam: ITeam = teamCoop.teams ? teamCoop.teams[activeTeamInd + 1] : 1
-    const teamsCount = teamCoop.teams ? teamCoop.teams.length : 1
+
+    const {
+        activeTeam: activeTeamInd,
+        randomNum,
+        activeProject: { teams },
+        teamSpec
+    } = useSelector((state: globalStoreType) => state.team)
+
+    const activeTeam: ITeam = teams[activeTeamInd + 1]
+    const teamsCount = teams.length - 1
 
     //if all resources are fetched, calculated and ready to display
     const [isReady, setReady] = useState(false)
     const { t } = useTranslation()
 
     useEffect(() => {
-        if (typeof activeTeam !== 'undefined' && scheme && descriptions) {
+        if (activeTeam && scheme && descriptions) {
             setReady(true)
-        }
-        if (teamsCount === 1 || !scheme || !descriptions) {
+        } else if (!teams || !scheme) {
             setReady(false)
         }
-    }, [randomNum, scheme, activeTeamInd, teamsCount])
+    }, [randomNum, scheme, activeTeamInd, teamsCount, activeTeam])
 
-    if (!isReady || teamsCount === 1) {
+
+    if (!isReady || teamsCount === 0) {
         return null
     }
 
-    const teamSpec: number = teamCoop.teamSpec
-    const poolMembers: IMember[] = teamCoop.teams ? teamCoop.teams[0].items : []
-    const teamMembers: IMember[] = activeTeam.items
+    if (!activeTeam) {
+        return null
+    }
 
     if (activeTeam.items.length < 3 || activeTeam.items.length > 9) {
         return <div className="" style={{ textAlign: 'center' }}>{t('team:members_limit')}</div>
@@ -47,6 +52,8 @@ const TeamCoopResult: React.FC = () => {
     const testResultList: baseTestResultType[] =  activeTeam.items.map((item: IMember) => {
         return item.decData[1]
     })
+    const poolMembers: IMember[] = teams[0].items || []
+    const teamMembers: IMember[] = activeTeam.items || []
 
     const team = Team(testResultList)
 

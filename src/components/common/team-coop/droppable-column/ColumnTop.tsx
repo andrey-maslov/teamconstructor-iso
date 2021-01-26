@@ -1,13 +1,13 @@
-import React, {useState} from "react"
-import {useSelector, useDispatch} from 'react-redux'
-import {FiMinusCircle} from "react-icons/fi"
-import {useForm} from 'react-hook-form'
+import React, { useState } from "react"
+import { useSelector, useDispatch } from 'react-redux'
+import { FiMinusCircle } from "react-icons/fi"
+import { useForm } from 'react-hook-form'
 
 import style from './droppable-column.module.scss'
 import OutsideClickHandler from 'react-outside-click-handler'
-import {globalStoreType, ITeam} from "../../../../constants/types";
-import {updateProject} from "../../../../actions/actionCreator";
-import {useTranslation} from "react-i18next";
+import { globalStoreType, ITeam } from "../../../../constants/types";
+import { updateProject } from "../../../../actions/actionCreator";
+import { useTranslation } from "react-i18next";
 
 interface IForm {
     label: string
@@ -19,13 +19,13 @@ interface ColumnTop {
     columnIndex: number
 }
 
-const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => {
+const ColumnTop: React.FC<ColumnTop> = ({ deleteHandler, label, columnIndex }) => {
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const [isEdit, setEdit] = useState(false)
-    const {activeProject, teams} = useSelector((state: globalStoreType) => state.team)
+    const { teams } = useSelector((state: globalStoreType) => state.team.activeProject)
     const dispatch = useDispatch()
-    const {register, handleSubmit, errors, reset} = useForm<IForm>()
+    const { register, handleSubmit, errors, reset } = useForm<IForm>()
     const labels: string[] = teams.length > 1 ? teams.map((team: ITeam) => team.title.toLowerCase()) : []
 
     return (
@@ -37,20 +37,20 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
                     <form onSubmit={handleSubmit(submit)}>
                         <div className={`form-group ${errors.label ? 'has-error' : ''} ${style.group}`}>
                             <input
-                            type="text"
-                            name="label"
-                            defaultValue={label}
-                            className={style.titleInput}
-                            onFocus={(e: any) => e.target.select()}
-                            autoFocus={true}
-                            ref={register({
-                                required: `${t('common:errors.required')}`,
-                                validate: {
-                                    duplicateLabel: value => !labels.includes(value.toLowerCase())
-                                }
-                            })}
-                            autoComplete="off"
-                        />
+                                type="text"
+                                name="label"
+                                defaultValue={label}
+                                className={style.titleInput}
+                                onFocus={(e: any) => e.target.select()}
+                                autoFocus={true}
+                                ref={register({
+                                    required: `${t('common:errors.required')}`,
+                                    validate: {
+                                        duplicateLabel: value => !labels.includes(value.toLowerCase())
+                                    }
+                                })}
+                                autoComplete="off"
+                            />
                             {errors.label && errors.label.type === 'duplicateLabel' && (
                                 <div className={`item-explain floating`}>{t('common:errors.duplicate_team_name')}</div>
                             )}
@@ -70,7 +70,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
                     deleteHandler(columnIndex)
                 }}
             >
-                <FiMinusCircle/>
+                <FiMinusCircle />
             </button>
         </div>
     )
@@ -79,7 +79,7 @@ const ColumnTop: React.FC<ColumnTop> = ({deleteHandler, label, columnIndex}) => 
 
         const newTeams = [...teams]
         newTeams[columnIndex].title = formData.label
-        dispatch(updateProject({pool: newTeams[0], teams: newTeams.slice(1)}))
+        dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
 
         setEdit(!isEdit)
 

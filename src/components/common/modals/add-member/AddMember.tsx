@@ -27,7 +27,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
         encData: ''
     })
 
-    const { teams, editedMember } = useSelector((state: globalStoreType) => state.team)
+    const { activeProject: { teams }, editedMember } = useSelector((state: globalStoreType) => state.team)
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
 
     useDisableBodyScroll(visible)
