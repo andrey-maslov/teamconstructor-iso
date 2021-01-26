@@ -11,7 +11,7 @@ const APP = {
     errorApiMessage: null,
     accountApiErrorMsg: null,
     redirectUrl: null,
-    setToast: null,
+    toastStatus: null,
     processFailed: false,
     isEmailSent: false,
     isEmailConfirmed: false,
@@ -21,7 +21,7 @@ const APP = {
 export type appStoreType = {
     type: string
     isLoading: boolean
-    setToast: number | null
+    toastStatus: number | null
     errorApiMessage: '' | null
     accountApiErrorMsg: string | null
     redirectUrl: string | null

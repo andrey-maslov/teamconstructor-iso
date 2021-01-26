@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
                     <div className={style.buttons}>
                         <NavLink
                             to={isLoggedIn ? '/team' : '/registration'}
-                                 className="btn btn-outlined-yellow">
+                                 className="btn btn-outlined-yellow btn-lg">
                             {t('landing:hero.button_title')}
                         </NavLink>
                     </div>

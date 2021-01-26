@@ -22,7 +22,9 @@ const Use: React.FC = () => {
                         <h3 className={style.itemTitle}><span>a.</span>{content[0].title}</h3>
                         <p dangerouslySetInnerHTML={{ __html: content[0].text }} />
                         <NavLink to="/registration"
-                                 className={`btn btn-outlined ${style.accentBtn}`}>Регистрация</NavLink>
+                                 className={`btn btn-outlined ${style.accentBtn}`}>
+                            {t('landing:cta.register')}
+                        </NavLink>
                     </div>
                     <div className={style.item}>
                         <h3 className={style.itemTitle}><span>b.</span>{content[1].title}</h3>
@@ -34,7 +36,7 @@ const Use: React.FC = () => {
                             rel="noopener noreferrer"
                         >
                             <FiExternalLink />
-                            Пройти тест
+                            {t('landing:cta.take_test')}
                         </a>
                     </div>
                     <div className={style.item}>
@@ -47,7 +49,9 @@ const Use: React.FC = () => {
                     <div className={style.item}>
                         <h3 className={style.itemTitle}><span>d.</span>{content[3].title}</h3>
                         <p dangerouslySetInnerHTML={{ __html: content[3].text }} />
-                        <NavLink to="/team" className="btn btn-outlined">Перейти</NavLink>
+                        <NavLink to="/team" className="btn btn-outlined">
+                            {t('landing:cta.go_to')}
+                        </NavLink>
                     </div>
                     <div className={style.item}>
                         <h3 className={style.itemTitle}><span>e.</span>{content[4].title}</h3>

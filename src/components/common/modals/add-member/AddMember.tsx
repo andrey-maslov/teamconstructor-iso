@@ -19,7 +19,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
         top: '10%'
     }
 
-    // const { t } = useTranslation()
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     const [defaultProfile, setDefaultProfile] = useState<IMemberForm>({
         name: '',
@@ -56,7 +56,7 @@ export const AddMember: React.FC<IModalProps> = ({ visible, closeModal }) => {
 
                     <SearchMember searchHandler={searchMemberHandler} />
                     <div className={style.divider}>
-                        <span>или</span>
+                        <span>{t('team:or')}</span>
                     </div>
                     <MemberForm
                         memberData={defaultProfile}

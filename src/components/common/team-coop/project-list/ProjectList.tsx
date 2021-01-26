@@ -60,15 +60,15 @@ const ProjectList: React.FC = () => {
     function handlerDelete(projectId: string) {
 
         confirmAlert({
-            title: 'Удаление проекта',
-            message: t('common:confirm:do_delete_project'),
+            title: t('team:project.removal'),
+            message: t('common:confirm.do_delete_project'),
             buttons: [
                 {
-                    label: 'Нет',
+                    label: t('common:confirm.no'),
                     onClick: () => null
                 },
                 {
-                    label: 'Удалить',
+                    label: t('common:confirm.delete'),
                     onClick: () => dispatch(deleteProject(projectId))
                 }
             ],

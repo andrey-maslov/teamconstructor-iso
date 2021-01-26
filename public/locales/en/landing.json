@@ -107,5 +107,12 @@
   "meta": {
     "title": "Teamconstructor - building an effective team",
     "description": "Analysis of the team and candidates based on the compatibility of psychological profiles | metrics | recommendations"
+  },
+  "cta": {
+    "go_to": "Go to",
+    "register": "Registration",
+    "start_team_coop": "Start team cooperation",
+    "take_test": "Take the test",
+    "take_the_test_for_free": "Take the test for free"
   }
 }

@@ -6,5 +6,7 @@
   "characteristics": "Main characteristics",
   "revealed": "Revealed",
   "one_brings_in_pair": "{{name}} brings {{description}} to the pair",
-  "both_bring_in_pair": "Both {{name1}} and {{name2}} bring {{description}} into the pair"
+  "both_bring_in_pair": "Both {{name1}} and {{name2}} bring {{description}} into the pair",
+  "own_result_btn": "Own result",
+  "search_user_btn": "Search user"
 }

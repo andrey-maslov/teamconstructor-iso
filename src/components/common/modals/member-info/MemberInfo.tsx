@@ -37,7 +37,7 @@ export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge
     const dispatch = useDispatch()
     const [state, setState] = useState({ portraitDesc: [[]], fullProfileData: [[]], psychoTypeDesc: '' })
     const { terms } = useSelector((store: globalStoreType) => store.terms)
-    const { editedMember, teams } = useSelector((store: globalStoreType) => store.team)
+    const { editedMember, activeProject: { teams } } = useSelector((store: globalStoreType) => store.team)
 
     const members = (teams.length > 0 && teams[0].items.length > 0) ? teams[0].items : []
     const member: IMember = members.filter((item: IMember) => item.baseID === editedMember)[0]
@@ -112,7 +112,7 @@ export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge
         },
     }
 
-    const fpTableTile = ['характеристика', 'выявлено']
+    const fpTableTile = [t('team:characteristic'), t('team:identified')]
 
     return (
         <Rodal
@@ -154,7 +154,7 @@ export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge
                                 </div>
                                 {state.portraitDesc && (
                                     <div className={`${style.block} ${style.tableWrapper}`}>
-                                        <div className={style.title}>Психологический портрет работника</div>
+                                        <div className={style.title}>{t('team:member_psy_portrait')}</div>
                                         <Table
                                             tableData={state.portraitDesc.map(item => [
                                                 item[0],
@@ -168,7 +168,7 @@ export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge
 
                                 {state.fullProfileData && (
                                     <div className={`${style.block} ${style.tableWrapper}`}>
-                                        <div className={style.title}>Профиль работника</div>
+                                        <div className={style.title}>{t('team:member_psy_profile')}</div>
                                         <Table
                                             tableData={state.fullProfileData.map(item => [
                                                 item[0],

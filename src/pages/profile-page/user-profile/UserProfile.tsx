@@ -3,17 +3,14 @@ import { useTranslation } from 'react-i18next'
 import { useSelector, useDispatch } from 'react-redux'
 import { useToasts } from 'react-toast-notifications'
 import style from './profile.module.scss'
-import { globalStoreType, IOneFieldForm, IMembershipPlan } from '../../../constants/types'
+import { globalStoreType, IOneFieldForm } from '../../../constants/types'
 import { NavLink } from 'react-router-dom'
 import Loader from '../../../components/common/loaders/loader/Loader'
-import { useForm } from 'react-hook-form'
 import InputTransformer from '../../../components/common/Inputs/input-transformer/InputTransformer'
 import CodeBox from '../../../components/common/Inputs/code-box/CodeBox'
 import { DANGER_MODAL, SET_TOAST } from '../../../actions/actionTypes'
 import { changeEmail, updateUserData } from "../../../actions/api/accountAPI"
-import { SERVICE, TEST_URL } from "../../../constants/constants";
-import { fetchUsersBillingData } from "../../../actions/api/subscriptionsAPI";
-import { fetchTariffsData } from "../../../actions/api/tariffsAPI";
+import { TEST_URL } from "../../../constants/constants";
 import Billing from "../../../components/common/billing/Billing";
 
 const UserProfile = () => {
@@ -28,12 +25,12 @@ const UserProfile = () => {
     } = useSelector((state: globalStoreType) => state.user)
 
     const { t, i18n } = useTranslation()
-    const { isEmailSent } = useSelector((state: globalStoreType) => state.app)
     const [isReady, setReady] = useState(false)
     const { addToast } = useToasts()
     const dispatch = useDispatch()
-    const { register, handleSubmit, errors, reset } = useForm<IOneFieldForm<string>>()
-    const [tariffList, setTariffList] = useState([])
+
+    const { isEmailSent, toastStatus } = useSelector((state: globalStoreType) => state.app)
+    const lng = i18n.language.toUpperCase()
 
     const [localUser, setLocalUser] = useState({
         firstName,
@@ -42,21 +39,20 @@ const UserProfile = () => {
         position,
     })
 
-    const lng = i18n.language.toUpperCase()
-
     useEffect(() => {
         if (email) {
             setReady(true)
         }
-        // if (setToast === 1) {
-        //     addToast('Изменения приняты', {
-        //         appearance: 'success'
-        //     })
-        // } else if (setToast === 2) {
-        //     addToast('Что-то пошло не так', {
-        //         appearance: 'error'
-        //     })
-        // }
+        if (toastStatus === 1) {
+            addToast(t('common:changes_approved'), {
+                appearance: 'success'
+            })
+        } else if (toastStatus === 2) {
+            addToast(t('common:something_wrong'), {
+                appearance: 'error'
+            })
+        }
+
         function updateLocalData() {
             setLocalUser({
                 firstName,
@@ -65,7 +61,7 @@ const UserProfile = () => {
                 position
             })
 
-            dispatch({ type: SET_TOAST, setToast: 0 })
+            dispatch({ type: SET_TOAST, toastStatus: 0 })
         }
 
         updateLocalData()
@@ -124,22 +120,25 @@ const UserProfile = () => {
         <div className={style.wrapper}>
 
             <div className={`${style.header} ${style.box}`}>
-                <h2 className={style.title}>Account Settings</h2>
-                <p>Here you can change your personal data and privacy settings.</p>
+                <h2 className={style.title}>{t('common:profile.title')}</h2>
+                <p>{t('common:profile.desc')}.</p>
                 <p>
                     <NavLink to="/terms">
-                        More about the terms of use
+                        {t('common:profile.more_terms')}
                     </NavLink>
-                    {` or `}
+                    {` ${t('common:or')} `}
                     <NavLink to="/policies/privacy-policy">
-                        read our privacy policy
+                        {t('common:profile.more_privacy')}
                     </NavLink>
                 </p>
             </div>
 
             <div className={`${style.box} ${style.account}`}>
-                <h5 className={style.box_title}>Account
-                    {!emailConfirmed && <span className="color-red"> Email needs confirmation</span>}
+                <h5 className={style.box_title}>
+                    {t('common:profile.account_title')}
+                    {!emailConfirmed && <span className="color-red">
+                        {t('common:profile.email_needs_confirm')}
+                    </span>}
                 </h5>
                 <div className={`${style.box_content}`}>
                     <div className={style.list}>
@@ -192,24 +191,27 @@ const UserProfile = () => {
             </div>
 
             <div className={`${style.box} ${style.services}`}>
-                <h5 className={style.box_title}>Psychological Profile</h5>
+                <h5 className={style.box_title}>{t('common:profile.psy_block_title')}</h5>
                 <div className={`${style.box_content}`}>
                     <div className={`${style.item} flex between-xs`}>
                         {encData ? (
                             <CodeBox content={encData} />
                         ) : (
-                            <a href={`${TEST_URL}?lng=${lng}`} target="_blank" rel="noopener noreferrer">need to pass
-                                the test</a>
+                            <a href={`${TEST_URL}?lng=${lng}`} target="_blank" rel="noopener noreferrer">
+                                {t('common:profile.no_test_result')}
+                            </a>
                         )}
                     </div>
 
                     <div className={`${style.item} flex between-xs`}>
                         {encData ? (
-                            <a href={testResultLink} target="_blank" rel="noopener noreferrer">Перейти к
-                                психологическому профилю</a>
+                            <a href={testResultLink} target="_blank" rel="noopener noreferrer">
+                                {t('common:profile.go_to_psy_profile')}
+                            </a>
                         ) : (
-                            <a href={`${TEST_URL}?lng=${lng}`} target="_blank" rel="noopener noreferrer">need to pass
-                                the test</a>
+                            <a href={`${TEST_URL}?lng=${lng}`} target="_blank" rel="noopener noreferrer">
+                                {t('common:profile.no_test_result')}
+                            </a>
                         )}
                     </div>
                 </div>
@@ -217,9 +219,9 @@ const UserProfile = () => {
 
             <div className={`${style.box} ${style.tariff}`}>
                 <div className={style.head}>
-                    <h5 className={style.box_title}>Подписка</h5>
+                    <h5 className={style.box_title}>{t('common:profile.subscr_block_title')}</h5>
                     <NavLink to="/subscriptions" className={style.btn}>
-                        Изменить
+                        {t('common:change')}
                     </NavLink>
                 </div>
                 <div className={`${style.box_content}`}>
@@ -230,16 +232,16 @@ const UserProfile = () => {
             </div>
 
             <div className={`${style.box} ${style.danger}`}>
-                <h5 className={style.box_title}>Danger zone</h5>
+                <h5 className={style.box_title}>{t('common:profile.danger_block_title')}</h5>
                 <div className={`${style.box_content}`}>
                     <div className={`${style.item} ${style.delete}`}>
                         <div>
-                            Once you delete your account, it cannot be undone. This is permanent.
+                            {t('common:profile.delete.warning_msg_1')}.
                         </div>
                         <button
                             className="btn"
                             onClick={() => deleteAccountBtnHandler()}>
-                            Delete account
+                            {t('common:profile.delete.btn')}
                         </button>
                     </div>
                 </div>
@@ -256,12 +258,6 @@ const UserProfile = () => {
 
     function changeUserEmail(formData: IOneFieldForm<string>) {
         dispatch(changeEmail(formData))
-    }
-
-    function toast() {
-        addToast('Изменения приняты', {
-            appearance: 'success'
-        })
     }
 
     function deleteAccountBtnHandler() {

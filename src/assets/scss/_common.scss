@@ -620,6 +620,7 @@ th, td {
           border-radius: 3px;
           height: 2.5rem;
           min-width: 7rem;
+          text-transform: uppercase;
         }
       }
     }
@@ -898,6 +899,10 @@ body {
 
   textarea {
     font-size: 14px;
+  }
+
+  .submit-btn {
+    width: 100%;
   }
 }
 

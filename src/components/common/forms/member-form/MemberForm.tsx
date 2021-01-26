@@ -34,13 +34,13 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
     return (
         <form onSubmit={handleSubmit(submitForm)}>
             <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
-                <div><strong>Внесите данные в форму:</strong></div>
+                <div><strong>{t('team:fill_the_form')}:</strong></div>
                 <label>
                     <span>{t('team:member_name')}</span>
                     <input
                         type="text"
                         name="name"
-                        placeholder="Имя"
+                        placeholder={t('team:name')}
                         defaultValue={memberData.name}
                         ref={register({
                             required: `${t('common:errors.required')}`,
@@ -57,11 +57,11 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
             </div>
             <div className={`form-group ${errors.position ? 'has-error' : ''}`}>
                 <label>
-                    <span>Должность работника</span>
+                    <span>{t('team:member_position')}</span>
                     <input
                         type="text"
                         name="position"
-                        placeholder="Должность"
+                        placeholder={t('team:position')}
                         defaultValue={memberData.position}
                         ref={register({
                             required: `${t('common:errors.required')}`
@@ -72,10 +72,10 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
             </div>
             <div className={`form-group ${errors.encData ? 'has-error' : ''}`}>
                 <label>
-                    <span>Результат теста</span>
+                    <span>{t('team:test_result')}</span>
                     <textarea
                         name="encData"
-                        placeholder="Результат тестирования"
+                        placeholder={t('team:enc_data_textarea')}
                         defaultValue={memberData.encData}
                         ref={register({
                             required: `${t('common:errors.required')}`,
@@ -99,7 +99,7 @@ const MemberForm: React.FC<IMemberFormProps> = ({ memberData, submitForm }) => {
                     title={editedMember !== null ? t('common:buttons.save') : t('common:buttons.add')}
                     startIcon={isLoading ? <AiOutlineLoading /> : <GrUserAdd />}
                     handle={() => void (0)}
-                    btnClass={'btn-outlined'}
+                    btnClass="submit-btn btn btn-accent"
                 />
                 {errorApiMessage && <div className={`item-explain`}>{errorApiMessage}</div>}
             </div>

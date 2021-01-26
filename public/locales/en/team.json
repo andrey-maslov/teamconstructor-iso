@@ -6,7 +6,8 @@
     "add_project": "Add project",
     "delete_project": "Delete project",
     "project_board": "<span>{{title}}</span> Project board",
-    "enter_title": "Enter project title"
+    "enter_title": "Enter project title",
+    "removal": "Project removal"
   },
   "page": {
     "spec_title": "Team Specialization",
@@ -49,5 +50,16 @@
   "member_deleted_from_team": "Team member was removed from team",
   "team_added": "The team was added",
   "team_removed": "The team was removed",
-  "not_enough_members_for_universal": "The number of team members for this specialization must be more than four"
+  "not_enough_members_for_universal": "The number of team members for this specialization must be more than four",
+  "or": "or",
+  "enc_data_textarea": "The encoded result",
+  "fill_the_form": "Fill the form",
+  "member_position": "Member position",
+  "name": "Name",
+  "position": "Position",
+  "test_result": "Test result",
+  "characteristic": "characteristic",
+  "identified": "identified",
+  "member_psy_portrait": "Psychological portrait of an employee",
+  "member_psy_profile": "Profile of an employee"
 }

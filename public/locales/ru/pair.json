@@ -6,5 +6,7 @@
   "characteristics": "Основные характеристики",
   "revealed": "Выявлено",
   "one_brings_in_pair": "{{name}} привносит в пару {{description}}",
-  "both_bring_in_pair": "И {{name1}}, и {{name2}} привносят в пару {{description}}"
+  "both_bring_in_pair": "И {{name1}}, и {{name2}} привносят в пару {{description}}",
+  "own_result_btn": "Свой результат",
+  "search_user_btn": "Найти пользователя"
 }

@@ -58,13 +58,13 @@ const PairCoopInput: React.FC = () => {
                     type="button"
                     className={`${style.btn} btn btn-outlined`}
                     onClick={(e) => setOwnResult(e, index)}>
-                    Свой результат
+                    {t('pair:own_result_btn')}
                 </button>}
                 <button
                     type="button"
                     className={`${style.btn} btn btn-outlined`}
                     onClick={(e) => openSearch(e, index)}>
-                    Найти пользователя
+                    {t('pair:search_user_btn')}
                 </button>
             </div>
         )

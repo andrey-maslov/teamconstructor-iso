@@ -13,8 +13,7 @@ import {
     AuthType,
     globalStoreType, IEmailConfirmation,
     INewPwdData, IOneFieldForm,
-    ISignInData,
-    ISignUpData, ISubscription,
+    ISubscription,
     IUserData
 } from "../../constants/types"
 import { accountApiErrorHandling, apiErrorHandling, clearErrors } from "../errorHandling"
@@ -107,11 +106,11 @@ export const updateUserData = (userData: IUserData) => {
                 .then(res => {
                     dispatch(setUserData(res.data))
                     dispatch({ type: EMAIL_CONFIRMATION, isEmailConfirmed: res.data.emailConfirmed })
-                    dispatch({ type: SET_TOAST, setToast: 1 })
+                    dispatch({ type: SET_TOAST, toastStatus: 1 })
                 })
                 .catch(error => {
                     apiErrorHandling(error, dispatch)
-                    dispatch({ type: SET_TOAST, setToast: 2 })
+                    dispatch({ type: SET_TOAST, toastStatus: 2 })
                 })
         } else {
             dispatch({ type: CLEAR_USER_DATA })
@@ -155,7 +154,7 @@ export const changeEmail = ({ email }: IOneFieldForm<string>) => {
                 })
                 .catch(error => {
                     apiErrorHandling(error, dispatch)
-                    dispatch({ type: SET_TOAST, setToast: 2 })
+                    dispatch({ type: SET_TOAST, toastStatus: 2 })
                 })
         } else {
             dispatch({ type: CLEAR_USER_DATA })
@@ -178,12 +177,12 @@ export const sendEmailConfirmation = (data: IEmailConfirmation) => {
                 )
                 .then(res => {
                     dispatch(setUserData(res.data))
-                    dispatch({ type: SET_TOAST, setToast: 1 })
+                    dispatch({ type: SET_TOAST, toastStatus: 1 })
                     dispatch({ type: EMAIL_CONFIRMATION, isEmailConfirmed: true })
                 })
                 .catch(error => {
                     apiErrorHandling(error, dispatch)
-                    dispatch({ type: SET_TOAST, setToast: 2 })
+                    dispatch({ type: SET_TOAST, toastStatus: 2 })
                 })
                 .finally(() => dispatch(setLoading(false)))
         } else {

@@ -51,7 +51,10 @@
   },
   "confirm": {
     "do_logout": "Are you sure you want to log out?",
-    "do_delete_project": "Are you sure you want to delete this project?"
+    "do_delete_project": "Are you sure you want to delete this project?",
+    "delete": "delete",
+    "no": "no",
+    "cancel": "cancel"
   },
   "auth": {
     "identifier": "Name or email",
@@ -76,8 +79,8 @@
     "or_continue_with": "Or continue with"
   },
   "profile": {
-    "title": "Additional information",
-    "desc": "Additional information that will help us to better represent you",
+    "title": "Account Settings",
+    "desc": "Here you can change your personal data and privacy settings",
     "first_name": "First name",
     "last_name": "Last name",
     "want_to_open": "I want to open my profile data for searching within the service",
@@ -85,30 +88,47 @@
     "position": "Position",
     "hello": "Hello ${name}. This is your profile",
     "name": "Name",
-    "salary_est": "Salary_est",
     "show": "Show me!",
-    "email_send_success": "Email будет изменен после подтверждения",
-    "email_confirm_success": "Спасибо, ваш email подтвержден",
-    "change_email_confirm_success": "Спасибо, ваш email изменен",
-    "confirm_email": "Подтверждение email",
+    "email_send_success": "Email will be changed after confirmation",
+    "email_confirm_success": "Thank you, your email has been verified",
+    "change_email_confirm_success": "Thank you, your email has been changed",
+    "confirm_email": "Email confirmation",
+    "account_title": "Account",
+    "danger_block_title": "Danger zone",
+    "email_needs_confirm": "Email needs confirmation",
+    "go_to_psy_profile": "Go to the psychological profile",
+    "more_privacy": "read our privacy policy",
+    "more_terms": "More about the terms of use",
+    "no_test_result": "need to pass the test",
+    "psy_block_title": "Psychological profile",
+    "subscr_block_title": "Subscription",
+    "welcome": "Welcome to Teamconstructor!",
     "delete": {
       "are_you_sure": "Are you sure?",
       "delete_account": "Delete account",
       "enter_pwd": "Enter your password for confirmation",
       "warning_msg_1": "Once you delete your account, you will not be able to restore it",
-      "warning_msg_2": "This action cannot be undone. This will permanently delete your account, projects, test results etc."
+      "warning_msg_2": "This action cannot be undone. This will permanently delete your account, projects, test results etc.",
+      "btn": "Delete account"
     },
     "meta": {
       "title": "title for profile page",
       "description": "Description for profile page"
-    },
-    "onboarding": "Welcome to Salary2.me !"
+    }
   },
   "title": "Title",
   "billing": {
-    "free": "Бесплатный",
-    "basic": "Базовый",
-    "manage_subscr": "Управлять подписками"
+    "free": "Free",
+    "basic": "Basic",
+    "manage_subscr": "Manage subscription",
+    "cancel_btn": "cancel your subscription",
+    "cancel_modal_confirm": "Are you sure you want to close your subscription?",
+    "cancel_modal_title": "Cancel subscription",
+    "cancel_success": "Subscription closed successfully",
+    "end": "End",
+    "refund_msg": "The refunds don't work once you have the subscription, but you can always",
+    "remains": "Remains, days",
+    "start": "Start"
   },
   "cookie_consent": {
     "text": "We care about you, so you have to agree to our cookie policy",
@@ -117,5 +137,10 @@
   "meta": {
     "description": "description of profile page",
     "title": "main title"
-  }
+  },
+  "change": "change",
+  "changes_approved": "Changes accepted",
+  "or": "or",
+  "something_wrong": "Something wrong",
+  "search_user_btn": "Find a user in our database"
 }

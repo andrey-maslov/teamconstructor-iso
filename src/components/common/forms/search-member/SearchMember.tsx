@@ -49,7 +49,7 @@ const SearchMember: React.FC<ISearchMember> = ({ searchHandler }) => {
         <form onSubmit={handleSubmit(submitSearchForm)}>
             <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
                 <label className={style.label}>
-                    <span><strong>Найдите пользователя в нашей базе</strong></span>
+                    <span><strong>{t('common:search_user_btn')}</strong></span>
                     <div className={style.emailGroup}>
                         <input
                             name="email"

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import style from './billing.module.scss'
-import { useDispatch } from 'react-redux'
 import { fetchUsersBillingData, unsubscribe } from "../../../actions/api/subscriptionsAPI";
 import { ISubscription, ITariffText } from "../../../constants/types";
 import { RiMoneyDollarBoxFill } from 'react-icons/ri'
@@ -9,13 +8,11 @@ import { useTranslation } from "react-i18next";
 import { useToasts } from 'react-toast-notifications'
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import { SET_TARIFF } from "../../../actions/actionTypes";
 import { isBrowser } from "../../../helper/helper";
 
 const Billing: React.FC = () => {
     const { t } = useTranslation()
     const { addToast } = useToasts()
-    const dispatch = useDispatch()
 
     const freeTexts: ITariffText = t('prices:free', { returnObjects: true })
     const paidTexts: ITariffText = t('prices:paid', { returnObjects: true })
@@ -64,7 +61,9 @@ const Billing: React.FC = () => {
     useEffect(() => {
         fetchUsersBillingData().then((data) => {
             if (Array.isArray(data)) {
-                const list: ISubscription[] = data.filter((item: any) => item?.membershipPlan?.service === SERVICE && item.status === 1)
+                const list: ISubscription[] = data.filter((item: ISubscription) => (
+                    item?.membershipPlan?.service === SERVICE && item.status === 1
+                ))
                 if (list.length > 0) {
                     const currentTariff = list[0]
                     setTariff(currentTariff)
@@ -97,19 +96,19 @@ const Billing: React.FC = () => {
                             <ul className={style.list}>
                                 {startedDate && (
                                     <li className={style.item}>
-                                        <span>Начало: </span>
+                                        <span>{t('common:billing.start')}: </span>
                                         <span>{formatDate(startedDate)}</span>
                                     </li>
                                 )}
                                 {endedDate && (
                                     <li className={style.item}>
-                                        <span>Окончание:</span>
+                                        <span>{t('common:billing.end')}:</span>
                                         <span>{formatDate(endedDate)}</span>
                                     </li>
                                 )}
                                 {startedDate && endedDate && (
                                     <li className={style.item}>
-                                        <span>Осталось дней: </span>
+                                        <span>{t('common:billing.remains')}: </span>
                                         <span>{getRemainingTime(endedDate)}</span>
                                     </li>
                                 )}
@@ -119,11 +118,11 @@ const Billing: React.FC = () => {
                     </div>
                     {mp.id !== 0 && (
                         <div className={style.refund}>
-                            {`The refunds don't work once you have the subscription, but you can always `}
+                            {`${t('common:billing.refund_msg')} `}
                             <button
                                 className={style.cancel}
                                 onClick={() => unsubscribeUserHandler(tariff.membershipPlan.id)}>
-                                Cancel your subscription
+                                {t('common:billing.cancel_btn')}
                             </button>
                         </div>
                     )}
@@ -146,15 +145,15 @@ const Billing: React.FC = () => {
 
     function unsubscribeUserHandler(planId: number): void {
         confirmAlert({
-            title: 'Удаление подписки',
-            message: 'Вы уверены, что хотите закрыть свою подписку?',
+            title: t('common:billing.cancel_modal_title'),
+            message: t('common:billing.cancel_modal_confirm'),
             buttons: [
                 {
-                    label: 'Нет',
+                    label: t('common:confirm.no'),
                     onClick: () => null
                 },
                 {
-                    label: 'Удалить',
+                    label: t('common:confirm.cancel'),
                     onClick: () => unsubscribeUser(planId)
                 }
             ],
@@ -166,7 +165,7 @@ const Billing: React.FC = () => {
         unsubscribe(id)
             .then(res => {
                 if (res === 200) {
-                    addToast('Подписка закрыта успешно', {
+                    addToast(t('common:errors.cancel_success'), {
                         appearance: 'success',
                         autoDismiss: true
                     })
@@ -174,7 +173,7 @@ const Billing: React.FC = () => {
                         location.reload()
                     }
                 } else {
-                    addToast('Что-то пошло не так', {
+                    addToast(t('common:errors.something_wrong'), {
                         appearance: 'error',
                         autoDismiss: true
                     })

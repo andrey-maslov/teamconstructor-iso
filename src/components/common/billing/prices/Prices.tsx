@@ -100,7 +100,7 @@ const Prices: React.FC = () => {
                                     ? (
                                         <NavLink
                                             to={`/registration`}
-                                            className={`btn btn-outlined-yellow`}
+                                            className={`btn btn-outlined-yellow ${style.btn}`}
                                             onClick={() => rememberTariffToPay(tariffId)}
                                         >
                                             {t('prices:paid.link_title')}
@@ -110,7 +110,7 @@ const Prices: React.FC = () => {
                                         title={t('prices:paid.link_title')}
                                         handle={() => setTariffToBuy(tariffId)}
                                         startIcon={null}
-                                        btnClass={'btn btn-accent-yellow'}
+                                        btnClass={`btn btn-outlined-yellow ${style.btn}`}
                                     />
                                 }
                             </div>

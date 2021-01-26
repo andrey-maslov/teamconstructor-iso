@@ -45,7 +45,7 @@ const Consist: React.FC = () => {
                             target="_blank"
                             rel="noreferrer">
                             <FiExternalLink/>
-                            Пройти тест бесплатно
+                            {t('landing:cta.take_the_test_for_free')}
                         </a>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ const Consist: React.FC = () => {
                             {teamList.map((item, i) => <li className={style.item} key={`${i}`}>{item}</li>)}
                         </ul>
                         <NavLink to="/registration" className="btn btn-outlined-yellow">
-                            Начать подбор команды
+                            {t('landing:cta.start_team_coop')}
                         </NavLink>
                     </div>
 
