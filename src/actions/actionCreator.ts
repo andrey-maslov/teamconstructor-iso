@@ -96,6 +96,7 @@ export function setComparisonResult(isComparisonResultReady: boolean): anyType {
 
 /*===== TEAM COOPERATION =====*/
 export function setTeamsData(teamsData: ITeam[]): { type: string, teams: ITeam[] } {
+    console.log(teamsData)
     return {
         type: SET_TEAMS_DATA,
         teams: teamsData

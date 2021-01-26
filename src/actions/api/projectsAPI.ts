@@ -88,6 +88,7 @@ export function updateProject(project: { pool: ITeam, teams?: ITeam[], title?: s
                         if (project.pool && !project.teams) {
                             dispatch({ type: SET_POOL, pool: parsedProject.pool })
                         } else {
+                            console.log('set teams data', parsedProject.teams)
                             dispatch(setTeamsData([parsedProject.pool, ...parsedProject.teams]))
                         }
                     }

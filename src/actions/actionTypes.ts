@@ -3,7 +3,7 @@ export const SET_PAIR_DATA = 'SET_PAIR_DATA'
 export const CLEAR_PAIR_DATA = 'CLEAR_PAIR_DATA'
 
 // Teams data
-export const SET_TEAMS_DATA = 'SET_TEAMS'
+export const SET_TEAMS_DATA = 'SET_TEAMS_DATA'
 export const SET_ACTIVE_TEAM = 'SET_ACTIVE_TEAM'
 export const SET_RANDOM = 'SET_RANDOM'
 export const ADD_MEMBER = 'ADD_MEMBER'

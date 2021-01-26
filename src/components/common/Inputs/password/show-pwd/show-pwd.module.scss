@@ -18,10 +18,10 @@
 }
 
 .icon {
-  width: 16px;
-  height: 16px;
+  position: relative;
+  font-size: 1.1rem;
   display: block;
-  fill: $base;
+  color: $base;
   flex-shrink: 0;
   backface-visibility: hidden;
 }

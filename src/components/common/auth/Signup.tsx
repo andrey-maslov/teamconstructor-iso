@@ -28,6 +28,7 @@ const Signup: React.FC<ISignin<ISignUpForm>> = ({ isLoading, errorApiMessage, su
                     <input
                         className={ style.input }
                         name="email"
+                        autoComplete="off"
                         ref={ register({
                             required: `${ t('common:errors.required') }`,
                             pattern: {
@@ -43,6 +44,7 @@ const Signup: React.FC<ISignin<ISignUpForm>> = ({ isLoading, errorApiMessage, su
             <div className={ `form-group ${ errors.password ? 'has-error' : '' }` }>
                 <Password
                     label={ t('common:auth.pwd') }
+                    autoComplete="off"
                     innerRef={ register({
                         required: `${ t('common:errors.required') }`,
                         minLength: { value: 7, message: `${ t('common:auth.short_pwd') }` }
@@ -55,6 +57,7 @@ const Signup: React.FC<ISignin<ISignUpForm>> = ({ isLoading, errorApiMessage, su
             <div className={ `form-group ${ errors.passwordConfirm ? 'has-error' : '' }` }>
                 <Password
                     label={ t('common:auth.confirm_pwd') }
+                    autoComplete="off"
                     innerRef={ register({
                         required: `${ t('common:auth.confirm_pwd') }`,
                         validate: {

@@ -38,6 +38,9 @@ export const CONTENT_API = 'https://api.salary2.me'
 export const TEST_URL = 'http://salary.nobugs.today/test'
 export const API_VER = 1
 
+// TODO before production - remove 0 from list of ids
+export const PREMIUM_ACCESS_LIST = [0, 3, 4, 5]
+
 export const COLORS = {
     accent: '#36a9e0',
     yellow: '#FFC734',

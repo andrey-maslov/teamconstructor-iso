@@ -118,6 +118,7 @@ const DraggableZone: React.FC = () => {
             } else {
                 const newTeams: ITeam[] = [...teams];
                 newTeams[dInd].items = result;
+                console.log('before update')
                 dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
             }
 
