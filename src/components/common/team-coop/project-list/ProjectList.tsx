@@ -10,7 +10,7 @@ import { SET_ACTIVE_PROJECT } from "../../../../actions/actionTypes";
 import { confirmAlert } from "react-confirm-alert";
 import { getCookieFromBrowser } from "../../../../helper/cookie";
 
-const ProjectList: React.FC = () => {
+const ProjectList: React.FC<{ closePopup: () => void }> = ({ closePopup }) => {
 
     const history = useHistory()
     const dispatch = useDispatch()
@@ -55,9 +55,11 @@ const ProjectList: React.FC = () => {
 
     function handlerCreate() {
         dispatch(setCreateProjectModal(true))
+        closePopup()
     }
 
     function handlerDelete(projectId: string) {
+        closePopup()
 
         confirmAlert({
             title: t('team:project.removal'),
@@ -77,6 +79,8 @@ const ProjectList: React.FC = () => {
     }
 
     function changeProject(current: string, id: string) {
+        closePopup()
+
         if (current !== id) {
             const token = getCookieFromBrowser('token')
             dispatch(fetchProjectList(token, id))

@@ -103,6 +103,7 @@
     "psy_block_title": "Psychological profile",
     "subscr_block_title": "Subscription",
     "welcome": "Welcome to Teamconstructor!",
+    "need_to_set_email": "You should set email",
     "delete": {
       "are_you_sure": "Are you sure?",
       "delete_account": "Delete account",

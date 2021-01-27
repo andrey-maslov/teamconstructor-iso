@@ -417,6 +417,14 @@ mark {
   &-red {
     color: $danger;
   }
+
+  &-yellow {
+    color: $yellow
+  }
+
+  &-orange {
+    color: $orange
+  }
 }
 
 .success {

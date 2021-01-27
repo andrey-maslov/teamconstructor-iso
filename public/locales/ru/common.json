@@ -108,6 +108,7 @@
     "change_email_confirm_success": "Спасибо, ваш email изменен",
     "confirm_email": "Подтверждение email",
     "email_send_success": "Email будет изменен после подтверждения",
+    "need_to_set_email": "Вам нужно заполнить email",
     "delete": {
       "delete_account": "Удалить аккаунт",
       "btn": "Удалить аккаунт",

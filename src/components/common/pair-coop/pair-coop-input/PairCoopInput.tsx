@@ -85,18 +85,18 @@ const PairCoopInput: React.FC = () => {
 
     return (
         <>
-            {localState.isGenerator && <div className="row between-xs">
-                <ProfileGenerator
-                    label="Сгенерировать первый профиль"
-                    id="profile_1"
-                    getRowData={generateAndSet1}
-                />
-                <ProfileGenerator
-                    label="Сгенерировать второй профиль"
-                    id="profile_2"
-                    getRowData={generateAndSet2}
-                />
-            </div>}
+            {/*{localState.isGenerator && <div className="row between-xs">*/}
+            {/*    <ProfileGenerator*/}
+            {/*        label="Сгенерировать первый профиль"*/}
+            {/*        id="profile_1"*/}
+            {/*        getRowData={generateAndSet1}*/}
+            {/*    />*/}
+            {/*    <ProfileGenerator*/}
+            {/*        label="Сгенерировать второй профиль"*/}
+            {/*        id="profile_2"*/}
+            {/*        getRowData={generateAndSet2}*/}
+            {/*    />*/}
+            {/*</div>}*/}
 
             <form onSubmit={handleSubmit(submitCompare)} id="pairForm">
                 <div className={`row between-xs ${style.fields}`}>
@@ -200,14 +200,14 @@ const PairCoopInput: React.FC = () => {
                     {t('common:buttons.compare')}
                 </button>
             </div>
-            <button
-                className={style.floatBtn}
-                onClick={() => {
-                    setLocalState({ ...localState, isGenerator: !localState.isGenerator })
-                }}
-            >
-                <FaReact />
-            </button>
+            {/*<button*/}
+            {/*    className={style.floatBtn}*/}
+            {/*    onClick={() => {*/}
+            {/*        setLocalState({ ...localState, isGenerator: !localState.isGenerator })*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    <FaReact />*/}
+            {/*</button>*/}
             {isSearchModal && renderSearchModal()}
         </>
     )

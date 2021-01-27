@@ -25,7 +25,7 @@ const UserProfile = () => {
     } = useSelector((state: globalStoreType) => state.user)
 
     const { t, i18n } = useTranslation()
-    const [isReady, setReady] = useState(false)
+    // const [isReady, setReady] = useState(false)
     const { addToast } = useToasts()
     const dispatch = useDispatch()
 
@@ -40,9 +40,9 @@ const UserProfile = () => {
     })
 
     useEffect(() => {
-        if (email) {
-            setReady(true)
-        }
+        // if (email) {
+        //     setReady(true)
+        // }
         if (toastStatus === 1) {
             addToast(t('common:changes_approved'), {
                 appearance: 'success'
@@ -75,9 +75,9 @@ const UserProfile = () => {
         dispatch
     ])
 
-    if (!isReady) {
-        return <Loader />
-    }
+    // if (!isReady) {
+    //     return <Loader />
+    // }
 
     if (!isLoggedIn) {
         return (
@@ -136,8 +136,11 @@ const UserProfile = () => {
             <div className={`${style.box} ${style.account}`}>
                 <h5 className={style.box_title}>
                     {t('common:profile.account_title')}
-                    {!emailConfirmed && <span className="color-red">
+                    {email && !emailConfirmed && <span className="color-red">
                         {t('common:profile.email_needs_confirm')}
+                    </span>}
+                    {!email && <span className="color-red">
+                        {t('common:profile.need_to_set_email')}
                     </span>}
                 </h5>
                 <div className={`${style.box_content}`}>

@@ -46,7 +46,7 @@ const TeamCoopResult: React.FC = () => {
     }
 
     if (activeTeam.items.length < 3 || activeTeam.items.length > 9) {
-        return <div className="" style={{ textAlign: 'center' }}>{t('team:members_limit')}</div>
+        return <div className="color-yellow" style={{ textAlign: 'center', padding: '2rem' }}>{t('team:members_limit')}</div>
     }
 
     const testResultList: baseTestResultType[] =  activeTeam.items.map((item: IMember) => {

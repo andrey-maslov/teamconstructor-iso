@@ -46,7 +46,7 @@ const PopoverUser: React.FC<PopoverUserProps> = ({ logoutHandle }) => {
                     </div>
 
                     <div className={style.projects}>
-                        <ProjectList />
+                        <ProjectList closePopup={() =>  setIsOpen(false)} />
                     </div>
 
                     <button className={style.item} onClick={logoutHandle}>
