@@ -30,7 +30,7 @@ $checkbox__checkmark__color--disabled: $grey-bg;
   height: $checkbox__size;
   border-radius: 3px;
   appearance: none;
-  outline: none; // TODO: manage :focus
+  outline: none;
   background: transparent;
   cursor: pointer;
   border: $checkbox__border__size solid rgba($accent, .5);
@@ -78,7 +78,7 @@ $checkbox__checkmark__color--disabled: $grey-bg;
       background-color: $checkbox__checkmark__color--disabled;
     }
 
-    + .label { //TODO fix
+    + .label {
       color: $grey;
       cursor: default;
     }

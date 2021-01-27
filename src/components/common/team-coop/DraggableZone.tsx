@@ -246,7 +246,6 @@ const DraggableZone: React.FC = () => {
         setFilteredMembers(filtered)
     }
 
-    //TODO what about pool
     function deleteMemberHandler(colIndex: number, itemIndex: number): void {
         if (colIndex === 0) {
             confirmAlert({

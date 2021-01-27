@@ -149,7 +149,7 @@ export const changeEmail = ({ email }: IOneFieldForm<string>) => {
                 )
                 .then(res => {
                     dispatch({ type: SEND_EMAIL, isEmailSent: true })
-                    // TODO не нужно менять имейл сразу в стейте. Надо дождаться подтверждения и тогда поменять его
+                    // TODO не нужно менять имейл сразу в стейте. Надо дождаться подтверждения и тогда поменять его. Или оставить так - как в Wordpress
                     dispatch(setUserData({ ...getState().user, email }))
                 })
                 .catch(error => {

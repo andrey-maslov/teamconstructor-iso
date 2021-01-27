@@ -7,7 +7,6 @@ import { apiErrorHandling } from '../errorHandling'
 import { fetchUserData } from './accountAPI'
 import { anyType } from "../../constants/types";
 
-// TODO change
 export const socialAuth = <T>(data: T, provider: Provider) => {
     return (dispatch: anyType) => {
         axios
