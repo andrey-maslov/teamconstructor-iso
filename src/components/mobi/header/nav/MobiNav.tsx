@@ -50,7 +50,7 @@ const MobiNav = ({ isLoggedIn, isOpened, handleLogoutBtn, routes, closeNav, user
                 </ul>
                 {isLoggedIn && (
                     <div className={style.projects}>
-                        <ProjectList />
+                        <ProjectList closePopup={closeNav} />
                     </div>
                 )}
                 <ul className={style.auth}>
