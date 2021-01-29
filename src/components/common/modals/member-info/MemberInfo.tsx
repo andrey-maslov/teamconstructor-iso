@@ -66,6 +66,10 @@ export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge
         }
     }, [terms, editedMember])
 
+    if (!terms) {
+        return null
+    }
+
     if (editedMember === null) {
         return <div>ERROR, edited member undefined</div>
     }
@@ -74,7 +78,7 @@ export const MemberInfo: React.FC<ILargeModal> = ({ visible, closeModal, isLarge
     const profile = fullProfile.profile
 
     const data = {
-        labels: terms.tendencies,
+        labels: terms ? terms.tendencies : ['1','2','3','4','5','6','7','8'],
         datasets: [
             {
                 backgroundColor: hexToRgba(COLORS.yellow, .5),

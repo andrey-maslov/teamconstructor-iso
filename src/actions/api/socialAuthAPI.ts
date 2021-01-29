@@ -16,8 +16,8 @@ export const socialAuth = <T>(data: T, provider: Provider) => {
                 setCookie('token', token, 10)
                 dispatch({ type: SET_AUTH_PROVIDER, provider })
                 // TODO facebook can return response without email, for example
-                if(!res.data.email) {
-                    alert('no email!')
+                if (!res.data.email) {
+                    console.log('no email!')
                 }
                 return token
             })

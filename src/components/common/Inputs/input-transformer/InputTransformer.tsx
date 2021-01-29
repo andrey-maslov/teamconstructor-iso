@@ -39,6 +39,7 @@ const InputTransformer: React.FC<IInputTransformer> = ({
                                 className={style.input}
                                 onFocus={(e: any) => e.target.select()}
                                 autoFocus
+                                onBlur={handleSubmit(submit)}
                                 ref={register(rules)}
                                 {...props}
                             />

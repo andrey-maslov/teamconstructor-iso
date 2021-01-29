@@ -71,7 +71,7 @@ const UserProfile = () => {
         email,
         position,
         isLoggedIn,
-        addToast,
+        toastStatus,
         dispatch
     ])
 
@@ -206,17 +206,13 @@ const UserProfile = () => {
                         )}
                     </div>
 
-                    <div className={`${style.item} flex between-xs`}>
-                        {encData ? (
+                    {encData && (
+                        <div className={`${style.item} flex between-xs`}>
                             <a href={testResultLink} target="_blank" rel="noopener noreferrer">
                                 {t('common:profile.go_to_psy_profile')}
                             </a>
-                        ) : (
-                            <a href={`${TEST_URL}?lng=${lng}`} target="_blank" rel="noopener noreferrer">
-                                {t('common:profile.no_test_result')}
-                            </a>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
             </div>
 
