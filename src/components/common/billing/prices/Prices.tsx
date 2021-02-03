@@ -21,12 +21,10 @@ const Prices: React.FC = () => {
     const [tariffToBuy, setTariffToBuy] = useState<number>(0)
 
     useEffect(() => {
-        console.log(tariffToBuy)
         if (tariffToBuy) {
             subscribe(tariffToBuy)
                 .then((data) => {
                     if (typeof data !== 'number' && data.formUrl && isBrowser) {
-                        console.log(data.formUrl)
                         window.open(data.formUrl, "_blank")
                     }
                 })
