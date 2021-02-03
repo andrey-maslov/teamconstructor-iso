@@ -68,3 +68,10 @@
   border: 0;
   cursor: pointer;
 }
+
+@media(max-width: $md-breakpoint) {
+
+  .foot {
+    flex-wrap: wrap;
+  }
+}

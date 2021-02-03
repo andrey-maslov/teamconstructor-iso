@@ -9,6 +9,8 @@ import style from './projects.module.scss'
 import { SET_ACTIVE_PROJECT } from "../../../../actions/actionTypes";
 import { confirmAlert } from "react-confirm-alert";
 import { getCookieFromBrowser } from "../../../../helper/cookie";
+import { isPremiumUser } from "../../../../helper/helper";
+import { PREMIUM_ACCESS_LIST } from "../../../../constants/constants";
 
 const ProjectList: React.FC<{ closePopup: () => void }> = ({ closePopup }) => {
 
@@ -16,6 +18,11 @@ const ProjectList: React.FC<{ closePopup: () => void }> = ({ closePopup }) => {
     const dispatch = useDispatch()
     const { t } = useTranslation()
     const { projects, activeProject: { id } } = useSelector((state: globalStoreType) => state.team)
+    const { tariffId } = useSelector((state: globalStoreType) => state.user)
+
+    if (!isPremiumUser(PREMIUM_ACCESS_LIST, tariffId)) {
+        return null
+    }
 
     return (
         <>
