@@ -1,15 +1,5 @@
 @import '../../../assets/scss/vars';
 
-.section {
-
-  .title {
-
-    &:before {
-      content: '03' !important;
-    }
-  }
-}
-
 .item {
   display: flex;
   padding: 2rem;

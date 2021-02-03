@@ -2,41 +2,38 @@ import React from 'react'
 import { useTranslation } from "react-i18next"
 import IEmailCollecor from "./email-collector/EmailCollector"
 import SocialLinks from "../../components/common/social/social-links/SocialLinks"
-import TopLogo from "../../components/common/layout/header/top-logo/TopLogo";
+import style from "./coming-soon.module.scss";
 
 
 const ComingSoon: React.FC = () => {
 
-    const { t: any } = useTranslation()
+    const { t } = useTranslation()
 
     return (
-        <main className='main coming-soon-page'>
+        <section className={`${style.section} section`}>
             <div className="container">
-                <div className="row center-xs">
-                    <div className="col-xl-8">
+                <h2 className={`section-title ${style.title}`}>
+                    {t('landing:comingSoon.title')}
+                </h2>
 
-                        <div className="logo">
-                            <TopLogo />
-                        </div>
-
-                        <div className="headline">
-                            <h1>Наш сервис скоро будет готов</h1>
-                            <p>Для записи на <strong>раннее тестирование сервиса Teamconstructor</strong> отправьте свой email с помощью формы ниже. Как только будет доступно использование функционала, мы вышлем вам приглашение</p>
-                        </div>
-
-                        <div className="email-collector">
-                            <IEmailCollecor />
-                        </div>
-
-                        <div className="social-links">
-                            <SocialLinks />
+                <div className="row">
+                    <div className="col-lg-6">
+                        <div className={style.headline}>
+                            <p dangerouslySetInnerHTML={{__html: `${t('landing:comingSoon.desc')}`}}/>
                         </div>
                     </div>
-
+                    <div className="col-lg-6">
+                        <div className={style.email}>
+                            <IEmailCollecor />
+                        </div>
+                    </div>
                 </div>
-
+                <div className={style.social}>
+                    <h3>{t('landing:comingSoon.join_in_social')}</h3>
+                    <SocialLinks />
+                </div>
             </div>
-        </main>
+        </section>
     )
 }
 

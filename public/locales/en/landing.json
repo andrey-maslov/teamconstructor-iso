@@ -104,6 +104,13 @@
       ]
     ]
   },
+  "comingSoon": {
+    "title": "Our service will be ready soon",
+    "desc": "If you want to become early adopter, please enter your email here. As soon as we are ready, we will send you invitation",
+    "join_in_social": "Until then, follow us on social media",
+    "email_collector_confirm": "Your data won't fall into the wrong hands",
+    "thank": "Thank you"
+  },
   "meta": {
     "title": "Teamconstructor - building an effective team",
     "description": "Analysis of the team and candidates based on the compatibility of psychological profiles | metrics | recommendations"

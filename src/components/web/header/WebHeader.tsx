@@ -3,6 +3,7 @@ import TopLogo from '../../common/layout/header/top-logo/TopLogo'
 import WebNav from './nav/WebNav'
 import style from './web-header.module.scss'
 import { INavRoute } from '../../../constants/types'
+import { IS_UNDER_CONSTR } from "../../../constants/constants";
 
 export interface IHeaderProps {
     isLoggedIn: boolean
@@ -18,7 +19,7 @@ const WebHeader: React.FC<IHeaderProps> = (props) => {
             <div className="container-wide">
                 <nav className={style.bar}>
                     <TopLogo />
-                    <WebNav {...props} />
+                    {!IS_UNDER_CONSTR && <WebNav {...props} />}
                 </nav>
             </div>
         </header>

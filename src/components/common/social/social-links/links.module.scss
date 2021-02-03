@@ -2,12 +2,11 @@
 
 .list {
   list-style: none;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 300px;
+  width: 300px;
   padding-left: 0;
-  margin-bottom: 0;
 }
 
 .item {
@@ -25,10 +24,16 @@
   height: 50px;
   border-radius: 50%;
 
+  &:focus {
+    border-radius: 50%;
+  }
+
   &:hover {
     transition: all .2s ease-in-out;
     background-color: $accent;
     text-decoration: none;
     color: #fff;
+    height: 50px;
+    border-radius: 50%;
   }
 }

@@ -6,6 +6,8 @@ import Use from './use/Use'
 import Prices from '../../components/common/billing/prices/Prices'
 import Faq from './faq/Faq'
 import Auditory from './auditory/Auditory'
+import ComingSoon from "../coming-soon-page/ComingSoon";
+import { IS_UNDER_CONSTR } from "../../constants/constants";
 
 const LandingPage: React.FC = () => {
 
@@ -15,9 +17,10 @@ const LandingPage: React.FC = () => {
             <Background />
             <Consist />
             <Auditory />
-            <Use />
-            <Prices />
+            {!IS_UNDER_CONSTR && <Use />}
+            {!IS_UNDER_CONSTR && <Prices />}
             <Faq />
+            {IS_UNDER_CONSTR && <ComingSoon />}
         </div>
     )
 }

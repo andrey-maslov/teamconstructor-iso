@@ -1,4 +1,4 @@
-import { ISubscription } from "./types";
+export const IS_UNDER_CONSTR = Boolean(process.env.RAZZLE_IS_UNDER_CONSTRUCTION === '1')
 
 export const SITE_TITLE = 'Teamconstructor'
 export const CONTACT_EMAIL = 'contact@teamconstructor.com'

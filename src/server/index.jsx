@@ -53,7 +53,7 @@ i18n
                 .use('/locales', express.static(`${ publicDir }/locales`))
                 .use(express.static(publicDir))
                 .use('/save-email', saveEmails)
-                .use(maintainRedirect)
+                // .use(maintainRedirect)
                 .get([ '/team', '/profile', '/subscriptions' ], (req, res, next) => {
                     if (!req.cookies.token) {
                         res.redirect('/')

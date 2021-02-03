@@ -21,7 +21,7 @@ const Auditory: React.FC = () => {
     return (
         <section className={`${style.section} section`}>
             <div className="container">
-                <h2 className={`section-title ${style.title}`}>{t('landing:use.title')}</h2>
+                <h2 className={`section-title ${style.title}`}>{t('landing:auditory.title')}</h2>
                 <div className="row around-sm">
                     {roles.map((item, i) => (
                         <div key={item.title} className="col-lg-6">

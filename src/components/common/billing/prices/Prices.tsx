@@ -21,6 +21,7 @@ const Prices: React.FC = () => {
     const [tariffToBuy, setTariffToBuy] = useState<number>(0)
 
     useEffect(() => {
+        console.log(tariffToBuy)
         if (tariffToBuy) {
             subscribe(tariffToBuy)
                 .then((data) => {
@@ -30,6 +31,7 @@ const Prices: React.FC = () => {
                     }
                 })
                 .catch(err => console.error(err))
+                .finally(() => setTariffToBuy(0))
         }
     }, [tariffToBuy])
 

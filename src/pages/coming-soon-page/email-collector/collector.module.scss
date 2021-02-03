@@ -18,12 +18,11 @@
 }
 
 .btn {
-  height: 37px;
+  height: 39px;
   background-color: $yellow;
   color: $base;
   margin-bottom: 1rem;
   border-radius: 0 $border-radius-sm $border-radius-sm 0;
-  //width: 100%;
 
   &:hover {
     background-color: darken($yellow, 20%);
@@ -38,4 +37,20 @@
 
 .success {
   color: $yellow
+}
+
+@media(max-width: $md-breakpoint) {
+
+  .form {
+    flex-wrap: wrap;
+
+  }
+
+  .btn {
+    border-radius: $border-radius-sm;
+  }
+
+  .label {
+    width: 100%;
+  }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ToastProvider } from 'react-toast-notifications'
-import { ROUTES } from './constants/constants'
+import { IS_UNDER_CONSTR, ROUTES } from './constants/constants'
 
 import './index.scss'
 
@@ -17,7 +17,6 @@ import AuthPage from './pages/auth-page/AuthPage'
 import TeamCoopPage from './pages/team-coop-page/TeamCoopPage'
 import ProfilePage from './pages/profile-page/ProfilePage'
 import LandingPage from './pages/landing-page/LandingPage'
-import ComingSoon from "./pages/coming-soon-page/ComingSoon";
 import ConfirmEmail from "./pages/confirm-email-page/ConfirmEmail";
 import Linkedin from "./components/common/auth/social-auth/linkedin-login/Linkedin";
 import SubscriptionsPage from "./pages/subscriptions-page/SubscriptionsPage";
@@ -30,18 +29,29 @@ const App: React.FC = () => {
     const { projects } = useSelector((state: globalStoreType) => state.team)
     const isApp = pathname !== '/'
 
-    if (process.env.RAZZLE_IS_UNDER_CONSTRUCTION == '1') {
-        return (
-            <div className="site">
-                <ComingSoon />
-            </div>
-        )
-    }
-
     const bodyClassList = `${isApp ? 'app' : 'site'} 
                             ${getPageClass(pathname)} 
                             ${isLoggedIn ? 'authorized' : 'unauthorized'}
                             ${projects.length ? 'with-sidebar' : ''}`
+
+    if (IS_UNDER_CONSTR) {
+        return (
+            <ToastProvider>
+                <div className={bodyClassList}>
+                    <Header />
+                    <Switch>
+                        <Route exact path="/" render={() => <LandingPage />} />
+                        <Route exact path="/cookie-policy" render={() => <ContentPage page="cookie-policy" />} />
+                        <Route exact path="/privacy-policy" render={() => <ContentPage page="privacy-policy" />} />
+                        <Route exact path="/terms" render={() => <ContentPage page="terms" />} />
+                        <Route path="*" render={() => <ErrorPage />} />
+                    </Switch>
+                    <Footer />
+                    <Modals />
+                </div>
+            </ToastProvider>
+        )
+    }
 
     return (
         <ToastProvider>

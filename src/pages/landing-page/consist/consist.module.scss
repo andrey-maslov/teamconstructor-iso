@@ -3,13 +3,6 @@
 .section {
   padding-bottom: 1rem;
 
-  .title {
-
-    &:before {
-      content: '02'
-    }
-  }
-
   &:after {
     content: '';
     position: absolute;

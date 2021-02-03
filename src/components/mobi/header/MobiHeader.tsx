@@ -6,6 +6,8 @@ import style from './mobi-header.module.scss'
 import TopLogo from '../../common/layout/header/top-logo/TopLogo'
 import { INavigation } from '../../web/header/nav/WebNav'
 import { isBrowser } from '../../../helper/helper'
+import LangSwitcherAlt from "../../common/buttons/lang-switcher-alt/LangSwitcherAlt";
+import { IS_UNDER_CONSTR } from "../../../constants/constants";
 
 
 const MobiHeader: React.FC<INavigation> = (props: IHeaderProps) => {
@@ -24,7 +26,10 @@ const MobiHeader: React.FC<INavigation> = (props: IHeaderProps) => {
         <header className={style.header}>
             <div className={style.bar}>
                 <TopLogo />
-                <MobileNavToggle handler={() => setVisible(!isVisible)} />
+                {!IS_UNDER_CONSTR
+                    ? <MobileNavToggle handler={() => setVisible(!isVisible)} />
+                    : <div><LangSwitcherAlt /></div>
+                }
             </div>
             <MobiNav
                 isOpened={isVisible}
