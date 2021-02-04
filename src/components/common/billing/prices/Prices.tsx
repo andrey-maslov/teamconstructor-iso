@@ -19,6 +19,7 @@ const Prices: React.FC = () => {
 
     const [tariffId, setTariffId] = useState<number>(initialTariff)
     const [tariffToBuy, setTariffToBuy] = useState<number>(0)
+    const [error, setError] = useState<string>('init error')
 
     useEffect(() => {
         if (tariffToBuy) {
@@ -26,6 +27,8 @@ const Prices: React.FC = () => {
                 .then((data) => {
                     if (typeof data !== 'number' && data.formUrl && isBrowser) {
                         window.open(data.formUrl, "_blank")
+                    } else if (data === 400) {
+                        setError('You already have the same active subscription')
                     }
                 })
                 .catch(err => console.error(err))
@@ -113,6 +116,7 @@ const Prices: React.FC = () => {
                                         btnClass={`btn btn-outlined-yellow ${style.btn}`}
                                     />
                                 }
+                                {error && <div className="danger">{error}</div>}
                             </div>
                         </div>}
                     </div>
