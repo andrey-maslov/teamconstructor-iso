@@ -390,6 +390,8 @@ textarea,
   }
 }
 
+
+
 //focus visible polyfill
 .js-focus-visible :focus:not(.focus-visible) {
   outline: none;
@@ -823,6 +825,7 @@ body {
 
   .store-area {
     width: 20rem;
+    position: relative;
 
     & > div:nth-of-type(2) {
       background-color: rgba($text-light, .5);
@@ -833,6 +836,28 @@ body {
       max-height: 48rem;
       overflow-y: auto;
       height: 95%;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      bottom: 0;
+      left: 0;
+      height: .5rem;
+      width: 100%;
+      background: linear-gradient(to bottom, transparent, $base-bg);
+    }
+
+    .box {
+
+      &-top {
+        box-shadow: 0 3px 7px #000;
+      }
+
+      &-content {
+        position: relative;
+
+      }
     }
   }
 
