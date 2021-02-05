@@ -15,7 +15,7 @@ export interface IDraggableItem {
     colIndex: number,
     deleteItem: (colIndex: number, itemIndex: number) => void
     isStore: boolean
-    isHidden: boolean
+    isHidden?: boolean
 }
 
 
