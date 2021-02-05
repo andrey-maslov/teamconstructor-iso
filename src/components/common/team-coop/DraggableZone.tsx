@@ -79,13 +79,6 @@ const DraggableZone: React.FC = () => {
         }
     }, [staff])
 
-    // useEffect(() => {
-    //     if (activeProject) {
-    //         dispatch(fetchProjectList())
-    //     }
-    // }, [])
-
-
     function onDragEnd(result: DropResult) {
         const { source, destination } = result
 

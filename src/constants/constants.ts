@@ -38,6 +38,9 @@ export const CONTENT_API = 'https://api.salary2.me'
 export const TEST_URL = 'http://salary.nobugs.today/test'
 export const API_VER = 1
 
+export const TEST_THRESHOLD = 6.75
+export const TEST_MAX_THRESHOLD = 218
+
 // TODO before production - remove 0 from list of ids
 export const PREMIUM_ACCESS_LIST = [3, 4, 5]
 

@@ -1,26 +1,37 @@
 import React, { useMemo } from 'react'
 import style from './draggable-item.module.scss'
 import { Radar } from "react-chartjs-2"
-import { COLORS } from '../../../../../constants/constants'
+import { COLORS, TEST_MAX_THRESHOLD, TEST_THRESHOLD } from '../../../../../constants/constants'
 import { IMember } from '../../../../../constants/types'
-import { getPersonProfile } from 'psychology'
+import { getPersonProfile, getPersonPortrait } from 'psychology'
 
 interface IItemContent {
     member: IMember
 }
 
+const colors = {
+    low: COLORS.accent,
+    normal: COLORS.orange,
+    high: 'red'
+}
+
+type ColorsType = typeof colors
+
 const ItemContent: React.FC<IItemContent> = ({ member }) => {
 
     const profile = useMemo(() => getPersonProfile(member.decData[1]), [member])
+    const portrait = useMemo(() => getPersonPortrait(profile), [member])
+    const maxOctantVal = Math.max.apply(null, portrait.map(item => item.value))
+    const color = getColor(maxOctantVal, colors)
 
     const data = {
         labels: ['', '', '', '', '', '', '', '',],
         datasets:
             [
                 {
-                    backgroundColor: COLORS.orange,
-                    pointBackgroundColor: COLORS.orange,
-                    borderColor: COLORS.orange,
+                    backgroundColor: color,
+                    pointBackgroundColor: color,
+                    borderColor: color,
                     pointRadius: 1,
                     data: profile.map(item => item.value)
                 }
@@ -76,6 +87,16 @@ const ItemContent: React.FC<IItemContent> = ({ member }) => {
             </div>
         </div>
     );
+
+    function getColor (value: number, colors: ColorsType): string {
+        if (value < TEST_THRESHOLD) {
+            return colors.low
+        }
+        if (value > TEST_MAX_THRESHOLD) {
+            return colors.high
+        }
+        return colors.normal
+    }
 }
 
 export default ItemContent;
