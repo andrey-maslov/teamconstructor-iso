@@ -40,6 +40,7 @@ export const API_VER = 1
 
 export const TEST_THRESHOLD = 6.75
 export const TEST_MAX_THRESHOLD = 218
+export const TEAM_LENGTH_NORMAL = [3,9]
 
 // TODO before production - remove 0 from list of ids
 export const PREMIUM_ACCESS_LIST = [3, 4, 5]

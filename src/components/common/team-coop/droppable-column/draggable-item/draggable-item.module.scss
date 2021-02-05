@@ -30,6 +30,10 @@
   &:hover .buttons {
     opacity: 1;
   }
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .inner {

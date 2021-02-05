@@ -15,21 +15,23 @@ export interface IDraggableItem {
     colIndex: number,
     deleteItem: (colIndex: number, itemIndex: number) => void
     isStore: boolean
+    isHidden: boolean
 }
 
 
-const DraggableItem: React.FC<IDraggableItem> = ({ index, member, colIndex, deleteItem, isStore }) => {
+const DraggableItem: React.FC<IDraggableItem> = ({ index, member, colIndex, deleteItem, isStore, isHidden }) => {
 
     const dispatch = useDispatch()
-    const itemClasses = `${style.wrapper} ${isStore ? style.store : ''}`
+    const itemClasses = `${style.wrapper} ${isStore ? style.store : ''} ${(isStore && isHidden) ? style.hidden : ''}`
 
     return (
         <Draggable draggableId={member.id} index={index}>
             {(provided, snapshot) => (
                 <>
                     <div
-                        className={`${itemClasses} ${snapshot.isDragging ? style.dragging : style.fixed}`}
+                        className={`${itemClasses} ${snapshot.isDragging ? style.dragging : style.fixed} `}
                         ref={provided.innerRef}
+                        style={{display: 'none'}}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                     >

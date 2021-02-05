@@ -13,6 +13,7 @@ import { FiPlus, FiSearch } from 'react-icons/fi'
 import { useTranslation } from "react-i18next"
 import FilterPanel from "./filter-panel/FilterPanel";
 import { confirmAlert } from "react-confirm-alert";
+import { TEAM_LENGTH_NORMAL } from "../../../constants/constants";
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -62,16 +63,17 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 
 const DraggableZone: React.FC = () => {
 
-    const { teams }: {teams: ITeam[]} = useSelector((state: globalStoreType) => state.team.activeProject)
+    const { teams, id }: {teams: ITeam[], id: string} = useSelector((state: globalStoreType) => state.team.activeProject)
     const staff: ITeam | Record<string, unknown> = teams ? teams[0] : {}
     const dispatch = useDispatch()
     const { addToast } = useToasts()
     const { t } = useTranslation()
 
-    const [isReady, setReady] = useState(false)
-    const [isFilter, setFilter] = useState(false)
-    const [filterValue, setFilterValue] = useState('')
-    const [filteredMembers, setFilteredMembers] = useState<IMember[] | null>(null)
+    const [isReady, setReady] = useState<boolean>(false)
+    const [isFilter, setFilter] = useState<boolean>(false)
+    const [filterValue, setFilterValue] = useState<string>('')
+    // list of members baseID to hide when use filter
+    const [membersToHide, setMembersToHide] = useState<number[]>([])
 
     useEffect(() => {
         if (staff && staff?.items) {
@@ -79,61 +81,18 @@ const DraggableZone: React.FC = () => {
         }
     }, [staff])
 
-    function onDragEnd(result: DropResult) {
-        const { source, destination } = result
+    useEffect(() => {
+        setFilter(false)
+        setMembersToHide([])
+        setFilterValue('')
+    },[id])
 
-        // dropped outside the list
-        if (!destination) {
-            return;
+    useEffect(() => {
+        if (!isFilter) {
+            setMembersToHide([])
+            setFilterValue('')
         }
-        const sInd = +source.droppableId
-        const dInd = +destination.droppableId
-
-        if (sInd === dInd) {
-
-            const items = reorder(teams[sInd].items, source.index, destination.index)
-            const newTeams: ITeam[] = [...teams]
-            newTeams[sInd].items = items
-            dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
-
-        } else if (sInd === 0) {
-
-            const result = copy(teams[0].items, teams[dInd].items, source, destination) //new destination team array
-
-            if (!checkDuplicate(0, source.index, dInd)) {
-                const currName = teams[0].items[source.index].name
-                addToast(t('common:errors.duplicate_member', { name: currName }), {
-                    appearance: 'error',
-                    autoDismiss: true
-                })
-                return
-            } else {
-                const newTeams: ITeam[] = [...teams];
-                newTeams[dInd].items = result;
-                console.log('before update')
-                dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
-            }
-
-        } else if (dInd === 0) {
-            console.log('store is destination')
-        } else {
-            const result = move(teams[sInd].items, teams[dInd].items, source, destination); //new destination teams array
-
-            if (!checkDuplicate(sInd, source.index, dInd)) {
-                const currName = teams[sInd].items[source.index].name
-                addToast(t('common:errors.duplicate_member', { name: currName }), {
-                    appearance: 'error',
-                    autoDismiss: true
-                })
-                return
-            } else {
-                const newTeams = [...teams];
-                newTeams[sInd].items = result[sInd];
-                newTeams[dInd].items = result[dInd];
-                dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
-            }
-        }
-    }
+    },[isFilter])
 
     const onDragUpdate = (result: DropResult) => {
         if (!result.destination) return
@@ -172,7 +131,7 @@ const DraggableZone: React.FC = () => {
 
     return (
         <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
-            <div className="flex-row mb-sm">
+            <div className="flex-row mb-sm top-xs">
 
                 <Box
                     title={t('team:pool')}
@@ -180,7 +139,8 @@ const DraggableZone: React.FC = () => {
                     widget={<StoreWidget />}
                 >
                     {isReady && <DroppableColumnStore
-                        items={(filteredMembers && isFilter) ? filteredMembers : staff.items}
+                        items={staff.items}
+                        itemsToHide={membersToHide}
                         deleteItem={deleteMemberHandler}
                         id={`${0}`}
                         // isDropDisabled={true}
@@ -217,6 +177,77 @@ const DraggableZone: React.FC = () => {
         </DragDropContext>
     );
 
+    function onDragEnd(result: DropResult) {
+        const { source, destination } = result
+
+        // dropped outside the list
+        if (!destination) {
+            return;
+        }
+        const sInd = +source.droppableId
+        const dInd = +destination.droppableId
+
+        if (sInd === dInd) {
+
+            const items = reorder(teams[sInd].items, source.index, destination.index)
+            const newTeams: ITeam[] = [...teams]
+            newTeams[sInd].items = items
+            dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
+
+        } else if (sInd === 0) {
+
+            const result = copy(teams[0].items, teams[dInd].items, source, destination) //new destination team array
+
+            if (teams[dInd].items.length >= TEAM_LENGTH_NORMAL[1]) {
+                failTeamLength()
+                return
+            }
+
+            if (!checkDuplicate(0, source.index, dInd)) {
+                failDuplicateMember(teams[0].items[source.index].name)
+                return
+            } else {
+                const newTeams: ITeam[] = [...teams];
+                newTeams[dInd].items = result;
+                dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
+            }
+
+        } else if (dInd === 0) {
+            console.log('store is destination')
+        } else {
+            const result = move(teams[sInd].items, teams[dInd].items, source, destination); //new destination teams array
+
+            if (teams[dInd].items.length >= TEAM_LENGTH_NORMAL[1]) {
+                failTeamLength()
+                return
+            }
+
+            if (!checkDuplicate(sInd, source.index, dInd)) {
+                failDuplicateMember(teams[sInd].items[source.index].name)
+                return
+            } else {
+                const newTeams = [...teams];
+                newTeams[sInd].items = result[sInd];
+                newTeams[dInd].items = result[dInd];
+                dispatch(updateProject({ pool: newTeams[0], teams: newTeams.slice(1) }))
+            }
+        }
+    }
+
+    function failTeamLength() {
+        addToast(`Too many members in team`, {
+            appearance: 'error',
+            autoDismiss: true
+        })
+    }
+
+    function failDuplicateMember(name: string) {
+        addToast(t('common:errors.duplicate_member', { name }), {
+            appearance: 'error',
+            autoDismiss: true
+        })
+    }
+
     function addMemberModal(): void {
         dispatch(setAddMemberModal(true))
     }
@@ -224,19 +255,20 @@ const DraggableZone: React.FC = () => {
     function openSearch(): void {
         setFilter(!isFilter)
         if (!isFilter) {
-            setFilteredMembers(staff.items)
+            setMembersToHide([])
         }
     }
 
+    // get members to hide
     function filterStaff(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         setFilterValue(e.target.value)
         const reg = new RegExp(e.target.value, 'i')
-        const filtered = staff.items.filter((item: IMember) => (
-            item.name.match(reg) ||
-            item.position.match(reg)
+        const filtered: IMember[] = staff.items.filter((item: IMember) => (
+            !item.name.match(reg) &&
+            !item.position.match(reg)
         ))
-        setFilteredMembers(filtered)
+        setMembersToHide(filtered.map(item => item.baseID))
     }
 
     function deleteMemberHandler(colIndex: number, itemIndex: number): void {

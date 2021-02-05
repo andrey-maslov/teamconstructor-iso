@@ -6,11 +6,15 @@ import DraggableItem from "./draggable-item/DraggableItem"
 import style from './droppable-column.module.scss'
 import { useTranslation } from "react-i18next";
 
+interface IDroppableColumnStore extends IDroppableColumn {
+    itemsToHide: number[]
+}
 
-const DroppableColumnStore: React.FC<IDroppableColumn> = (
+const DroppableColumnStore: React.FC<IDroppableColumnStore> = (
     {
         id,
         items,
+        itemsToHide,
         deleteItem,
         isDropDisabled = false,
     }
@@ -36,6 +40,7 @@ const DroppableColumnStore: React.FC<IDroppableColumn> = (
                             colIndex={+id}
                             deleteItem={deleteItem}
                             isStore={true}
+                            isHidden={itemsToHide.includes(item.baseID)}
                         />
                     ))}
                 </div>

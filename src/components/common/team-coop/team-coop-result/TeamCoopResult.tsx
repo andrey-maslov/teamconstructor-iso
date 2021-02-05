@@ -9,6 +9,7 @@ import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
 import Description from "../../result-common/description/Description"
 import { useTranslation } from "react-i18next"
 import PolarChart from "../../charts/polar-chart/PolarChart"
+import { TEAM_LENGTH_NORMAL } from "../../../../constants/constants";
 
 const TeamCoopResult: React.FC = () => {
 
@@ -45,7 +46,7 @@ const TeamCoopResult: React.FC = () => {
         return null
     }
 
-    if (activeTeam.items.length < 3 || activeTeam.items.length > 9) {
+    if (activeTeam.items.length < TEAM_LENGTH_NORMAL[0] || activeTeam.items.length > TEAM_LENGTH_NORMAL[1]) {
         return <div className="color-yellow" style={{ textAlign: 'center', padding: '2rem' }}>{t('team:members_limit')}</div>
     }
 
