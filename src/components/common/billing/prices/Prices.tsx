@@ -19,7 +19,7 @@ const Prices: React.FC = () => {
 
     const [tariffId, setTariffId] = useState<number>(initialTariff)
     const [tariffToBuy, setTariffToBuy] = useState<number>(0)
-    const [error, setError] = useState<string>('init error')
+    const [error, setError] = useState<string>('')
 
     useEffect(() => {
         if (tariffToBuy) {
