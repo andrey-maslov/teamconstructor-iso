@@ -1,6 +1,6 @@
 {
   "textarea_placeholder": "Enter the encrypted result for the user in this field",
-  "result_for_pair": "Results of the analysis of compatibility between the pair {{name1}} and {{name2}}",
+  "result_for_pair": "Results of the analysis of pair compatibility between the {{name1}} and {{name2}}",
   "profile": "Profile",
   "descriptions": "Description",
   "characteristics": "Main characteristics",
@@ -8,5 +8,5 @@
   "one_brings_in_pair": "{{name}} brings {{description}} to the pair",
   "both_bring_in_pair": "Both {{name1}} and {{name2}} bring {{description}} into the pair",
   "own_result_btn": "Own result",
-  "search_user_btn": "Search user"
+  "search_user_btn": "Search for user"
 }

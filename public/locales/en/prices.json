@@ -25,6 +25,16 @@
     ],
     "link_title": "Pay"
   },
+  "corporate": {
+    "title": "Corporate",
+    "desc": "For those, who wants to integrate the service into internal corporate systems, store all data according corporate policies and get the unlimited access to all products with the possibility of its' customization",
+    "features": [
+      "All basic features",
+      "API integration into corporate systems",
+      "Product customization for client's needs"
+    ],
+    "link_title": "Contact"
+  },
   "promo": {
     "title": "Promo",
     "desc": "Promo-tariff",

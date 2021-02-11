@@ -127,7 +127,7 @@
     "cancel_modal_title": "Cancel subscription",
     "cancel_success": "Subscription closed successfully",
     "end": "End",
-    "refund_msg": "The refunds don't work once you have the subscription, but you can always",
+    "refund_msg": "The refunds don't work once you have the subscription, but you can always ",
     "remains": "Remains, days",
     "start": "Start"
   },

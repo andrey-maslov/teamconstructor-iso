@@ -11,9 +11,9 @@
     "problems": "Problems",
     "solution": "Solution",
     "problems_list": [
-      "The manager forms the team without considering the psychological characteristics of the team members. This often leads to intra-team conflicts, reduced productivity, efficiency and the risk of employee leaving.",
-      "Lack of people with the necessary soft skills to effectively solve the necessary tasks, taking into account the specialization of the team, for example, sales, development (employees with different types of character, psychological portraits are required)",
-      "It is difficult to choose the right candidate for the team. It is necessary to consider not only the technical skills, but also the psychological characteristics of the candidate."
+      "The manager forms the team without considering the psychological characteristics of the team members. This often leads to intra-team conflicts, reduced productivity and increases the risk of employee leaving.",
+      "Lack of people with the necessary soft skills to effectively solve the necessary tasks, taking into account the specialization of the team, e.q., sales, development (employees with different types of character, psychological portraits are required)",
+      "Difficulty of choosing the right candidate for the team. It is necessary to consider not only the technical skills, but also the psychological characteristics of the candidate."
     ],
     "solutions_list": [
       "We give an understandable tool for solving these problems - <strong> TEAM CONSTRUCTOR </strong>",
@@ -42,7 +42,7 @@
     ]
   },
   "auditory": {
-    "title": "Who is this service for",
+    "title": "For whom is this service",
     "roles": [
       {
         "title": "Heads of departments",
@@ -92,7 +92,7 @@
       ],
       [
         "Where was the data taken to build the model?",
-        "Data for building the model was taken from numerous experiments carried out on real teams. The model is based on more than 10 years of experience in applying the model in neuromarketing and dozens of successful cases. Now we want to apply this model to HR services."
+        "Data for building the model was taken from numerous experiments carried out on real teams. The model is based on more than 10 years of experience in applying the model in neuromarketing and dozens of successful cases. Now we apply this model to talent management."
       ],
       [
         "Is that another horoscope?",
@@ -118,7 +118,7 @@
   "cta": {
     "go_to": "Go to",
     "register": "Registration",
-    "start_team_coop": "Start team cooperation",
+    "start_team_coop": "Start team forming",
     "take_test": "Take the test",
     "take_the_test_for_free": "Take the test for free"
   }

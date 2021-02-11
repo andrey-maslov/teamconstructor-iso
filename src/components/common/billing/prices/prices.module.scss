@@ -39,6 +39,11 @@
 .top {
   display: flex;
   justify-content: space-between;
+
+  svg {
+    font-size: 1.5rem;
+    color: $yellow;
+  }
 }
 
 .amount {

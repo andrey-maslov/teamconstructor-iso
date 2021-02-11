@@ -7,6 +7,7 @@ import { globalStoreType, ITariffText } from "../../../../constants/types";
 import Button from "../../buttons/button/Button";
 import { subscribe } from "../../../../actions/api/subscriptionsAPI";
 import { isBrowser } from "../../../../helper/helper";
+import { BsBuilding } from "react-icons/bs"
 
 const Prices: React.FC = () => {
 
@@ -48,6 +49,7 @@ const Prices: React.FC = () => {
 
     const freeTexts: ITariffText = t('prices:free', { returnObjects: true })
     const paidTexts: ITariffText = t('prices:paid', { returnObjects: true })
+    const corporateTexts: ITariffText = t('prices:corporate', { returnObjects: true })
 
     return (
         <section className={`${style.section} section`}>
@@ -119,6 +121,27 @@ const Prices: React.FC = () => {
                                 {error && <div className="danger">{error}</div>}
                             </div>
                         </div>}
+                        {corporateTexts && (
+                            <div className={`col-lg-4 ${style.col}`}>
+                                <div className={style.card}>
+                                    <div className={style.top}>
+                                        <div className={style.cardTitle}>{corporateTexts.title}</div>
+                                        <BsBuilding />
+                                    </div>
+                                    {/*<div className={style.amount}>{tariffs[0].price}</div>*/}
+                                    <p className={style.desc}>{corporateTexts.desc}</p>
+                                    <ul className={style.features}>
+                                        {Array.isArray(corporateTexts.features) &&
+                                        corporateTexts.features.map((item: string) => (
+                                            <li className={style.item} key={item}>{item}</li>
+                                        ))}
+                                    </ul>
+                                    <a href="mailto:contact@teamconstructor.com" className={`btn btn-outlined`}>
+                                        {corporateTexts.link_title}
+                                    </a>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
