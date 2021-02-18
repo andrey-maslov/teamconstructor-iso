@@ -2,7 +2,7 @@
   "project": {
     "my_projects": "My projects",
     "no_projects": "There are no projects",
-    "no_projects_msg": "You don't have any project yet. Create your first project",
+    "no_projects_msg": "You don`t have any project yet. Create your first project",
     "add_project": "Add project",
     "delete_project": "Delete project",
     "project_board": "<span>{{title}}</span> Project board",
