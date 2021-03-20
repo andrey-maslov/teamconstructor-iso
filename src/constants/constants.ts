@@ -32,10 +32,10 @@ export const ROUTES = {
     '/auth/linkedin/callback': 'linkedin',
 }
 
-export const HOST = 'https://teamconstructor.nobugs.today'
-export const BASE_API = 'https://apibase.pashtaljon.by'
+export const HOST = 'https://teamconstructor.com'
+export const BASE_API = 'https://api.thegreatbase.online'
 export const CONTENT_API = 'https://api.salary2.me'
-export const TEST_URL = 'http://salary.nobugs.today/test'
+export const TEST_URL = 'http://salary2.me/test'
 export const API_VER = 1
 
 export const TEST_THRESHOLD = 6.75

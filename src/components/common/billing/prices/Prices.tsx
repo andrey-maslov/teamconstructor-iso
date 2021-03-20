@@ -8,6 +8,7 @@ import Button from "../../buttons/button/Button";
 import { subscribe } from "../../../../actions/api/subscriptionsAPI";
 import { isBrowser } from "../../../../helper/helper";
 import { BsBuilding } from "react-icons/bs"
+import { VscReport } from "react-icons/vsc"
 
 const Prices: React.FC = () => {
 
@@ -50,6 +51,7 @@ const Prices: React.FC = () => {
     const freeTexts: ITariffText = t('prices:free', { returnObjects: true })
     const paidTexts: ITariffText = t('prices:paid', { returnObjects: true })
     const corporateTexts: ITariffText = t('prices:corporate', { returnObjects: true })
+    const reportTexts: ITariffText = t('prices:report_1', { returnObjects: true })
 
     return (
         <section className={`${style.section} section`}>
@@ -58,7 +60,7 @@ const Prices: React.FC = () => {
                 {tariffs && (
                     <div className="row">
                         {location.pathname === '/' && freeTexts && (
-                            <div className={`col-lg-4 ${style.col}`}>
+                            <div className={`col-lg-3 ${style.col}`}>
                                 <div className={style.card}>
                                     <div className={style.cardTitle}>{freeTexts.title}</div>
                                     <div className={style.amount}>{tariffs[0].price}</div>
@@ -75,7 +77,7 @@ const Prices: React.FC = () => {
                                 </div>
                             </div>
                         )}
-                        {paidTexts && <div className={`col-lg-4 ${style.col}`}>
+                        {paidTexts && <div className={`col-lg-3 ${style.col}`}>
                             <div className={style.card}>
                                 <div className={style.top}>
                                     <div className={style.cardTitle}>{paidTexts.title}</div>
@@ -121,27 +123,26 @@ const Prices: React.FC = () => {
                                 {error && <div className="danger">{error}</div>}
                             </div>
                         </div>}
-                        {corporateTexts && (
-                            <div className={`col-lg-4 ${style.col}`}>
+                        {corporateTexts && reportTexts && [corporateTexts, reportTexts].map((block, i) => (
+                            <div className={`col-lg-3 ${style.col}`} key={block.title}>
                                 <div className={style.card}>
                                     <div className={style.top}>
-                                        <div className={style.cardTitle}>{corporateTexts.title}</div>
-                                        <BsBuilding />
+                                        <div className={style.cardTitle}>{block.title}</div>
+                                        {i === 0 ? <BsBuilding /> : <VscReport />}
                                     </div>
-                                    {/*<div className={style.amount}>{tariffs[0].price}</div>*/}
-                                    <p className={style.desc}>{corporateTexts.desc}</p>
+                                    <p className={style.desc}>{block.desc}</p>
                                     <ul className={style.features}>
-                                        {Array.isArray(corporateTexts.features) &&
-                                        corporateTexts.features.map((item: string) => (
+                                        {Array.isArray(block.features) &&
+                                        block.features.map((item: string) => (
                                             <li className={style.item} key={item}>{item}</li>
                                         ))}
                                     </ul>
                                     <a href="mailto:contact@teamconstructor.com" className={`btn btn-outlined`}>
-                                        {corporateTexts.link_title}
+                                        {block.link_title}
                                     </a>
                                 </div>
                             </div>
-                        )}
+                        ))}
                     </div>
                 )}
             </div>

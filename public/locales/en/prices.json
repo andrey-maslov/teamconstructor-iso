@@ -35,6 +35,16 @@
     ],
     "link_title": "Contact"
   },
+  "report_1": {
+    "title": "Deep report",
+    "desc": "For those who want to receive an individual deep report on their team, find out the individual characteristics of employees within the smallest attributes, determine points and ways of development of talents and optimal communication models with them",
+    "features": [
+      "All basic features",
+      "Detailed in-depth report on employees",
+      "Recommendations for making optimal management decisions"
+    ],
+    "link_title": "Contact"
+  },
   "promo": {
     "title": "Promo",
     "desc": "Promo-tariff",

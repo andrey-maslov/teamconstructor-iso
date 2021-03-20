@@ -19,10 +19,11 @@ const colors = [
 
 type ChartsPropsType = {
     portrait: number[]
-    labels: string[]
+    labels: string[],
+    description?: string
 }
 
-const PolarChart: React.FC<ChartsPropsType> = ({ portrait, labels }) => {
+const PolarChart: React.FC<ChartsPropsType> = ({ portrait, labels, description }) => {
 
     const chartLabels = labels
     const chartColors = colors
@@ -88,6 +89,7 @@ const PolarChart: React.FC<ChartsPropsType> = ({ portrait, labels }) => {
                     width={currentOptions.width}
                     height={currentOptions.height}
                 />
+                {description && <div style={{marginTop: '1rem'}}>{description}</div>}
             </div>
         </div>
     )

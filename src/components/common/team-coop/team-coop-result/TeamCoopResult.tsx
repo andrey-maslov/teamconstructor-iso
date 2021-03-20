@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { globalStoreType, IMember, ITeam } from "../../../../constants/types"
 import Box from "../../layout/box/Box"
 import { Team, getDescByRange, getKeyResult } from "psychology"
-import { baseTestResultType, IDescWithStatus } from "psychology/build/main/types/types"
+import { baseTestResultType, IDescWithStatus, IOctant } from 'psychology/build/main/types/types'
 import RadarChart from "../../charts/radar-chart/RadarChart"
 import KeyIndicator from "../../result-common/key-indicator/KeyIndicator"
 import Description from "../../result-common/description/Description"
@@ -70,6 +70,11 @@ const TeamCoopResult: React.FC = () => {
     const descIndexes = team.getDescIndexes()
     const teamDesc = getTeamDesc(descIndexes, descriptions.complementarityDesc.options)
 
+    // team specialization description
+    const specDescItems = t('team:spec_desc_items', {returnObjects: true})
+    const teamSpecInd = getTeamSpec(team.portrait)
+    const specDescription = `${t('team:spec_desc_title')} ${specDescItems[1]}`
+
     const fullDescription = getResultTableData()
 
     const keyValues = [crossFunc, emotionalComp, interaction].map((value, i) => ({
@@ -115,6 +120,7 @@ const TeamCoopResult: React.FC = () => {
                         <PolarChart
                             portrait={convertPortraitForChart(team.portrait.map(item => item.value))}
                             labels={convertPortraitForChart(scheme.psychoTypes)}
+                            description={specDescription}
                         />}
                     </Box>
                 </div>
@@ -232,6 +238,32 @@ const TeamCoopResult: React.FC = () => {
         const description = descIndexes.map(index => descList[index]).join(', ')
         return { desc: t('team:team_is_characterized', { description }), status: 2 }
     }
+
+    /**
+     * get team specialization
+*/
+    function getTeamSpec(portrait: readonly IOctant[]): number {
+        const diff = .3
+        const segments = ['A', 'B', 'a', 'b']
+        const segmentsValues: IOctant[] = []
+
+        for (let i = 0; i < 7; i += 2) {
+            segmentsValues.push(portrait[i].value >= portrait[i + 1].value ? portrait[i] : portrait[i + 1])
+        }
+
+        const sortedSegments = [...segmentsValues].sort((a, b) => (b.value - a.value));
+        const leadSegment = sortedSegments[0]
+
+        // get second octant and check
+        segmentsValues.slice(1).forEach(octant => {
+            if (( octant.value > leadSegment.value * (1 - diff)) && (octant.code !== leadSegment.code)) {
+                console.log(octant)
+            }
+        })
+
+        return 1
+    }
+
 }
 
 export default TeamCoopResult

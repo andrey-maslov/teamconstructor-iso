@@ -46,7 +46,7 @@
   "indicators": "Team description",
   "pool": "Resource pool",
   "empty_pool": "You have no profiles in the pool yet",
-  "member_deleted_from_pool": "Team memver was removed from pool",
+  "member_deleted_from_pool": "Team member was removed from pool",
   "member_deleted_from_team": "Team member was removed from team",
   "team_added": "The team was added",
   "team_removed": "The team was removed",
@@ -61,5 +61,7 @@
   "characteristic": "characteristic",
   "identified": "identified",
   "member_psy_portrait": "Psychological portrait of an employee",
-  "member_psy_profile": "Profile of an employee"
+  "member_psy_profile": "Employee profile and stress report",
+  "spec_desc_title": "The team is well suited for",
+  "spec_desc_items": ["generating ideas", "sales", "routine work", "maintaining", "The team is universal for any task"]
 }

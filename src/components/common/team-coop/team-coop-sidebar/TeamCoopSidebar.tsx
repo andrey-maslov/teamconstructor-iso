@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux"
 import style from './team-coop-sidebar.module.scss'
 import { GoRocket } from "react-icons/go"
 import TeamModule from "./team-module/TeamModule"
-import TeamSpec from "./team-spec/TeamSpec"
 import { SET_ACTIVE_TEAM, SET_RANDOM, SET_TEAM_SPEC } from "../../../../actions/actionTypes"
 import { OpenSidebarBtn } from "../../buttons/open-sidebar-btn/OpenSidebarBtn"
 import { useTranslation } from "react-i18next"
@@ -20,7 +19,7 @@ const TeamCoopSidebar: React.FC<TeamCoopSidebar> = ({ minifySidebar, isCompact }
     const dispatch = useDispatch()
     const { t } = useTranslation()
 
-    const { teamSpec, activeTeam, activeProject: { teams } } = useSelector((state: globalStoreType) => state.team)
+    const { activeTeam, activeProject: { teams } } = useSelector((state: globalStoreType) => state.team)
 
     const teamList: ITeam[] = teams ? teams.slice(1) : []
 
@@ -31,11 +30,6 @@ const TeamCoopSidebar: React.FC<TeamCoopSidebar> = ({ minifySidebar, isCompact }
                 isCompact={isCompact}
             />
             <div className={`${style.body} sidebar-body`}>
-                <TeamSpec
-                    teamSpec={teamSpec}
-                    changeSpec={changeSpec}
-                    isCompact={isCompact}
-                />
                 {teamList.map((team, i) => {
                     const isActive = i === activeTeam;
                     return (
