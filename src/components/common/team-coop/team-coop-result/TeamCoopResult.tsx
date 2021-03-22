@@ -47,10 +47,11 @@ const TeamCoopResult: React.FC = () => {
     }
 
     if (activeTeam.items.length < TEAM_LENGTH_NORMAL[0] || activeTeam.items.length > TEAM_LENGTH_NORMAL[1]) {
-        return <div className="color-yellow" style={{ textAlign: 'center', padding: '2rem' }}>{t('team:members_limit')}</div>
+        return <div className="color-yellow"
+                    style={{ textAlign: 'center', padding: '2rem' }}>{t('team:members_limit')}</div>
     }
 
-    const testResultList: baseTestResultType[] =  activeTeam.items.map((item: IMember) => {
+    const testResultList: baseTestResultType[] = activeTeam.items.map((item: IMember) => {
         return item.decData[1]
     })
     const poolMembers: IMember[] = teams[0].items || []
@@ -71,9 +72,9 @@ const TeamCoopResult: React.FC = () => {
     const teamDesc = getTeamDesc(descIndexes, descriptions.complementarityDesc.options)
 
     // team specialization description
-    const specDescItems = t('team:spec_desc_items', {returnObjects: true})
+    const specDescItems: string[] = t('team:spec_desc_items', { returnObjects: true })
     const teamSpecInd = getTeamSpec(team.portrait)
-    const specDescription = `${t('team:spec_desc_title')} ${specDescItems[1]}`
+    const specDescription = getTeamSpecDescription(teamSpecInd, specDescItems, t('team:spec_desc_title'), t('common:and'))
 
     const fullDescription = getResultTableData()
 
@@ -240,28 +241,52 @@ const TeamCoopResult: React.FC = () => {
     }
 
     /**
-     * get team specialization
-*/
-    function getTeamSpec(portrait: readonly IOctant[]): number {
+     * get team specialization indexes
+     */
+    function getTeamSpec(portrait: readonly IOctant[]): number[] {
         const diff = .3
-        const segments = ['A', 'B', 'a', 'b']
+        const segmentsCodes = ['A', 'B', 'a', 'b']
         const segmentsValues: IOctant[] = []
 
+        // get max value in every segment
         for (let i = 0; i < 7; i += 2) {
             segmentsValues.push(portrait[i].value >= portrait[i + 1].value ? portrait[i] : portrait[i + 1])
         }
 
-        const sortedSegments = [...segmentsValues].sort((a, b) => (b.value - a.value));
+        const sortedSegments: IOctant[] = [...segmentsValues].sort((a, b) => (b.value - a.value));
         const leadSegment = sortedSegments[0]
 
-        // get second octant and check
-        segmentsValues.slice(1).forEach(octant => {
-            if (( octant.value > leadSegment.value * (1 - diff)) && (octant.code !== leadSegment.code)) {
-                console.log(octant)
+        // get octants from another segments which has value as large as the lead segment ( >= .7 * lead)
+        const specIndexes: number[] = []
+        sortedSegments.forEach(({ value, code }) => {
+            if ((value > leadSegment.value * (1 - diff))) {
+                specIndexes.push(segmentsCodes.indexOf(code[0]))
             }
+            return
         })
+        return specIndexes
+    }
 
-        return 1
+    /**
+     * get team specialization description by spec indexes
+     */
+    function getTeamSpecDescription(indexes: number[], specWords: string[], phraseStart: string, unionWord: string): string {
+        if (!indexes || indexes.length === 0 || !specWords || specWords.length < 4) {
+            return ''
+        }
+
+        switch (indexes.length) {
+            case 1:
+                return `${phraseStart} ${specWords[indexes[0]]}`
+            case 2:
+                return `${phraseStart} ${specWords[indexes[0]]} ${unionWord} ${specWords[indexes[1]]}`
+            case 3:
+                return `${phraseStart} ${specWords[indexes[0]]}, ${specWords[indexes[1]]} ${unionWord} ${specWords[indexes[2]]}`
+            case 4:
+                return specWords[4];
+            default:
+                return ''
+        }
     }
 
 }
