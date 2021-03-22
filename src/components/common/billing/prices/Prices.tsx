@@ -38,12 +38,13 @@ const Prices: React.FC = () => {
         }
     }, [tariffToBuy])
 
+    // TODO get plans from API
     const tariffs: { price: number, period?: string }[] = [
         {
             price: 0,
         },
         {
-            price: tariffId === 3 ? 29.99 : 199.99,
+            price: tariffId === 3 ? 39.99 : 399.99,
             period: tariffId === 3 ? t('prices:per_month') : t('prices:per_year')
         }
     ]
@@ -60,7 +61,7 @@ const Prices: React.FC = () => {
                 {tariffs && (
                     <div className="row">
                         {location.pathname === '/' && freeTexts && (
-                            <div className={`col-lg-3 ${style.col}`}>
+                            <div className={`col-xl-3 col-lg-6 ${style.col}`}>
                                 <div className={style.card}>
                                     <div className={style.cardTitle}>{freeTexts.title}</div>
                                     <div className={style.amount}>{tariffs[0].price}</div>
@@ -77,7 +78,7 @@ const Prices: React.FC = () => {
                                 </div>
                             </div>
                         )}
-                        {paidTexts && <div className={`col-lg-3 ${style.col}`}>
+                        {paidTexts && <div className={`col-xl-3 col-lg-6 ${style.col}`}>
                             <div className={style.card}>
                                 <div className={style.top}>
                                     <div className={style.cardTitle}>{paidTexts.title}</div>
@@ -124,7 +125,7 @@ const Prices: React.FC = () => {
                             </div>
                         </div>}
                         {corporateTexts && reportTexts && [corporateTexts, reportTexts].map((block, i) => (
-                            <div className={`col-lg-3 ${style.col}`} key={block.title}>
+                            <div className={`col-xl-3 col-lg-6 ${style.col}`} key={block.title}>
                                 <div className={style.card}>
                                     <div className={style.top}>
                                         <div className={style.cardTitle}>{block.title}</div>
