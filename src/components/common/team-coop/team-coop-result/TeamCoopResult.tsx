@@ -174,9 +174,6 @@ const TeamCoopResult: React.FC = () => {
         const allCandidates = team.getAllCandidates(poolMembers, teamMembers)
         const candidates = team.getCandidates(teamSpec, allCandidates)
         const { title, options } = descriptions.candidatesDesc
-        if (teamMembers.length < 4 && teamSpec === 0) {
-            return { title, desc: t('team:not_enough_members_for_universal'), status: -1 }
-        }
         if (!candidates) {
             return { title, desc: options[1], status: 2 }
         }

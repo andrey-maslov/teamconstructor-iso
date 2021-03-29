@@ -43,6 +43,7 @@ const ColumnTop: React.FC<ColumnTop> = ({ deleteHandler, label, columnIndex }) =
                                 className={style.titleInput}
                                 onFocus={(e: any) => e.target.select()}
                                 autoFocus={true}
+                                onBlur={handleSubmit(submit)}
                                 ref={register({
                                     required: `${t('common:errors.required')}`,
                                     validate: {
