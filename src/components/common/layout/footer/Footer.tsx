@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom'
 import LangSwitcherAlt from '../../buttons/lang-switcher-alt/LangSwitcherAlt'
 import style from './footer.module.scss'
 import { CONTACT_EMAIL } from '../../../../constants/constants'
+import providers_without_bg from '../../../../../public/img/providers_without_bg.png'
+import providers_without_bg2x from '../../../../../public/img/providers_without_bg@2x.png'
 
 const Footer: React.FC = () => {
 
@@ -42,6 +44,12 @@ const Footer: React.FC = () => {
     return (
         <footer className={`${style.footer} footer`}>
             <div className="container">
+                <div className={style.providers}>
+                    <img
+                        srcSet={`${providers_without_bg2x} 2x, ${providers_without_bg2x} 3x`}
+                        src={providers_without_bg}
+                        alt="payment providers: visa, mastercard, belcard, apple pay, samsung pay" />
+                </div>
                 <div className={style.logo}>
                     <TopLogo />
                 </div>

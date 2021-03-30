@@ -120,6 +120,19 @@
   }
 }
 
+.providers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rem;
+  overflow: auto;
+
+  img {
+    max-width: 100%;
+    width: 500px;
+  }
+}
+
 
 @media(max-width: 768px) {
 
