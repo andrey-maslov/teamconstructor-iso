@@ -1,29 +1,34 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import TopLogo from '../header/top-logo/TopLogo'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import LangSwitcherAlt from '../../buttons/lang-switcher-alt/LangSwitcherAlt'
 import style from './footer.module.scss'
 import { CONTACT_EMAIL } from '../../../../constants/constants'
-import providers_without_bg from '../../../../../public/img/providers_without_bg.png'
-import providers_without_bg2x from '../../../../../public/img/providers_without_bg@2x.png'
+import PayProviders from '../PayProviders/PayProviders'
 
 const Footer: React.FC = () => {
 
-    const { t } = useTranslation();
+    const { t } = useTranslation()
+    const { pathname } = useLocation()
+    const showExtendedFooter = pathname === '/' || pathname === '/subscriptions'
 
     const links = [
-        {
-            link: '/privacy-policy',
-            title: t('common:nav.privacy_policy'),
-        },
         {
             link: '/terms',
             title: t('common:nav.terms'),
         },
         {
+            link: '/rules-of-getting-and-cancelling',
+            title: t('common:nav.rules_of_getting_cancelling'),
+        },
+        {
             link: '/cookie-policy',
             title: t('common:nav.cookie'),
+        },
+        {
+            link: '/privacy-policy',
+            title: t('common:nav.privacy_policy'),
         },
     ]
 
@@ -44,21 +49,31 @@ const Footer: React.FC = () => {
     return (
         <footer className={`${style.footer} footer`}>
             <div className="container">
-                <div className={style.providers}>
-                    <img
-                        srcSet={`${providers_without_bg2x} 2x, ${providers_without_bg2x} 3x`}
-                        src={providers_without_bg}
-                        alt="payment providers: visa, mastercard, belcard, apple pay, samsung pay" />
-                </div>
                 <div className={style.logo}>
                     <TopLogo />
                 </div>
-                <FooterLinks />
+
+                {showExtendedFooter && (
+                    <div>
+                        <PayProviders />
+
+                        <div className="row between-sm">
+                            <div className="col-lg-8">
+                                <p>{t('common:footer.copy')}</p>
+                                <p>{t('common:footer.address')}</p>
+                                <p>{t('common:footer.UNP')}: 491497109</p>
+                                <p>{t('common:footer.bank')}</p>
+                            </div>
+                            <div className="col-lg-4"><FooterLinks /></div>
+                        </div>
+                    </div>
+                )}
+                {!showExtendedFooter && <div className={style.line}><FooterLinks /></div>}
                 <div className={style.copy}>
                     <div className="row justify-content-between">
                         <div className="col-md-4">
                             <div className={style.copyBox}>
-                                © {new Date().getFullYear()} | {t('common:footer.copy')}
+                                © {new Date().getFullYear()} | {t('common:footer.copy').replace(/"/gi, '' )}
                             </div>
                         </div>
                         <div className="col-md-4">

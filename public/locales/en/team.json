@@ -63,5 +63,11 @@
   "member_psy_portrait": "Psychological portrait of an employee",
   "member_psy_profile": "Employee profile and stress report",
   "spec_desc_title": "The team is well suited for",
-  "spec_desc_items": ["generating ideas", "sales", "routine work", "maintaining", "The team is universal for any task"]
+  "spec_desc_items": [
+    "generating ideas",
+    "sales",
+    "routine work",
+    "maintaining",
+    "The team is universal for any task"
+  ]
 }

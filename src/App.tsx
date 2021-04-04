@@ -44,6 +44,9 @@ const App: React.FC = () => {
                         <Route exact path="/cookie-policy" render={() => <ContentPage page="cookie-policy" />} />
                         <Route exact path="/privacy-policy" render={() => <ContentPage page="privacy-policy" />} />
                         <Route exact path="/terms" render={() => <ContentPage page="terms" />} />
+                        <Route exact path="/rules-of-getting-and-cancelling" render={() => (
+                            <ContentPage page="rules-of-getting-and-cancelling" />)
+                        } />
                         <Route path="*" render={() => <ErrorPage />} />
                     </Switch>
                     <Footer />
@@ -67,6 +70,9 @@ const App: React.FC = () => {
                     <Route exact path="/cookie-policy" render={() => <ContentPage page="cookie-policy" />} />
                     <Route exact path="/privacy-policy" render={() => <ContentPage page="privacy-policy" />} />
                     <Route exact path="/terms" render={() => <ContentPage page="terms" />} />
+                    <Route exact path="/rules-of-getting-and-cancelling" render={() => (
+                        <ContentPage page="rules-of-getting-and-cancelling" />)
+                    } />
                     <Route exact path="/signin" render={() => <AuthPage page="signin" />} />
                     <Route exact path="/signin/forgot-password" render={() => <AuthPage page="forgot_pwd" />} />
                     <Route exact path="/signin/forgot-password-success"

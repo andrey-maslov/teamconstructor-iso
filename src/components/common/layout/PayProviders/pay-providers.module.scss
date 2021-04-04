@@ -1,0 +1,25 @@
+@import '../../../../assets/scss/vars';
+
+.providers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rem;
+  overflow: auto;
+  flex-wrap: wrap;
+
+  .title {
+    text-align: center;
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+    width: 500px;
+  }
+}
+
+
+@media(max-width: 768px) {
+
+}

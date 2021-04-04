@@ -1,8 +1,11 @@
 {
   "footer": {
-    "copy": "Center of Technology Investments LLC",
+    "copy": "\"Center of Technology Investments\" LLC",
     "author_text": "Developed by:  ",
-    "sharing_text": "Share with friends"
+    "sharing_text": "Share with friends",
+    "UNP": "UNP",
+    "address": "Adress: Belarus, Gomel Region, Vetka District,  Halch, Pobedy 2/1",
+    "bank": "Account: BY05ALFA30122352830040270000 in USD In Alfa-Bank, Swift ALFABY2X"
   },
   "nav": {
     "cookie": "Cookie policy",
@@ -10,7 +13,8 @@
     "terms": "Terms",
     "pair": "Pair",
     "team": "Team",
-    "profile": "Profile"
+    "profile": "Profile",
+    "rules_of_getting_cancelling": "Rules of getting & cancelling paid services"
   },
   "buttons": {
     "login": "Log In",
@@ -144,5 +148,6 @@
   "or": "or",
   "and": "and",
   "something_wrong": "Something wrong",
-  "search_user_btn": "Find a user in our database"
+  "search_user_btn": "Find a user in our database",
+  "pay_title": "You can pay with us using"
 }

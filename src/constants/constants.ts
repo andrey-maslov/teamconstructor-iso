@@ -22,6 +22,7 @@ export const ROUTES = {
     '/cookie-policy': 'page-content',
     '/privacy-policy': 'page-content',
     '/terms': 'page-content',
+    '/rules-of-getting-and-cancelling': 'page-content',
     '/signin': 'page-auth',
     '/signin/forgot-password': 'page-auth',
     '/signin/forgot-password-success': 'page-auth',
