@@ -36,7 +36,7 @@ export const ROUTES = {
 export const HOST = process.env.RAZZLE_SELF_HOST
 export const BASE_API = process.env.RAZZLE_BASE_API
 export const CONTENT_API = 'https://api.salary2.me'
-export const TEST_URL = 'http://salary2.me/test'
+export const TEST_URL = 'https://salary2.me/test'
 export const API_VER = 1
 
 export const TEST_THRESHOLD = 6.75
