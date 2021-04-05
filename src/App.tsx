@@ -70,6 +70,7 @@ const App: React.FC = () => {
                     <Route exact path="/cookie-policy" render={() => <ContentPage page="cookie-policy" />} />
                     <Route exact path="/privacy-policy" render={() => <ContentPage page="privacy-policy" />} />
                     <Route exact path="/terms" render={() => <ContentPage page="terms" />} />
+                    <Route exact path="/payment-rules" render={() => <ContentPage page="payment-rules" />} />
                     <Route exact path="/rules-of-getting-and-cancelling" render={() => (
                         <ContentPage page="rules-of-getting-and-cancelling" />)
                     } />

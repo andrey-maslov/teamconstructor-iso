@@ -23,6 +23,10 @@ const Footer: React.FC = () => {
             title: t('common:nav.rules_of_getting_cancelling'),
         },
         {
+            link: '/payment-rules',
+            title: t('common:nav.payment_rules'),
+        },
+        {
             link: '/cookie-policy',
             title: t('common:nav.cookie'),
         },
