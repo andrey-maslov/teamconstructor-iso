@@ -130,11 +130,16 @@
 
   .list {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
 
     .item {
-      margin-right: 1rem;
+      text-align: center;
+      margin-right: 0;
       margin-bottom: 1rem;
+      width: 33%;
 
       &:last-child {
         margin-right: 0;
@@ -155,21 +160,24 @@
 
 @media(max-width: 1366px) {
 
-  ul.list {
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
+  .line {
 
-    .item {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 0;
-      margin-right: 0;
-    }
+    .list {
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
 
-    a {
-      &:focus {
-        outline: solid 3px rgba($orange, .5);
-        outline-offset: -1px;
+      .item {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 1rem;
+        margin-right: 0;
+      }
+
+      a {
+        &:focus {
+          outline: solid 3px rgba($orange, .5);
+          outline-offset: -1px;
+        }
       }
     }
   }

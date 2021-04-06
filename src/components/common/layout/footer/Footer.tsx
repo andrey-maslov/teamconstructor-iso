@@ -9,9 +9,12 @@ import PayProviders from '../PayProviders/PayProviders'
 
 const Footer: React.FC = () => {
 
-    const { t } = useTranslation()
+    const { i18n, t } = useTranslation()
     const { pathname } = useLocation()
     const showExtendedFooter = pathname === '/' || pathname === '/subscriptions'
+    const pdfLink = i18n.language === 'ru'
+        ? 'teamconstructor_руководство_пользователя.pdf'
+        : 'teamconstructor_user_manual.pdf'
 
     const links = [
         {
@@ -39,6 +42,11 @@ const Footer: React.FC = () => {
     const FooterLinks = () => {
         return (
             <ul className={style.list}>
+                <li className={style.item}>
+                    <a href={`/documents/${pdfLink}`} target="_blank" rel="noreferrer">
+                        {t('common:nav.manual')}
+                    </a>
+                </li>
                 {links.map(({ link, title }) => (
                     <li className={style.item} key={title}>
                         <NavLink to={link} tabIndex={0}>
