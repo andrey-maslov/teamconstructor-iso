@@ -33,6 +33,22 @@ export async function fetchUsersBillingData(): Promise<ISubscription[] | number>
     }
 }
 
+export async function changeAutoRenewal(planId: number, mode: boolean): Promise<any> {
+    const token = getCookieFromBrowser('token')
+    try {
+        const response = await axios.post(
+            `${billingApiUrl}/changeAutoPaymentMode/${planId}`,
+            { mode },
+            getAuthConfig(token))
+        return response.status
+    } catch (err) {
+        if(err.response && err.response.status) {
+            return err.response.status
+        }
+        return 0
+    }
+}
+
 export async function subscribe(planId: number): Promise<ISubscribeResponse | number> {
     const token = getCookieFromBrowser('token')
     try {

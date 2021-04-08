@@ -23,6 +23,7 @@ export const ROUTES = {
     '/privacy-policy': 'page-content',
     '/terms': 'page-content',
     '/rules-of-getting-and-cancelling': 'page-content',
+    '/automatic-renewal-terms': 'page-content',
     '/payment-rules': 'page-content',
     '/signin': 'page-auth',
     '/signin/forgot-password': 'page-auth',

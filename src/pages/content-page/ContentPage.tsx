@@ -39,7 +39,8 @@ const ContentPage: React.FC<{ page: string }> = ({ page }) => {
             'cookie-policy': 2,
             'privacy-policy': 3,
             'rules-of-getting-and-cancelling': 5,
-            'payment-rules': 6
+            'payment-rules': 6,
+            'automatic-renewal-terms': 7,
         }
 
         axios(`${CONTENT_API}/content-blocks/${pages[page]}`)

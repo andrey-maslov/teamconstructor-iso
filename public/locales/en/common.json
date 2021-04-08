@@ -135,7 +135,10 @@
     "end": "End",
     "refund_msg": "The refunds don`t work once you have the subscription, but you can always ",
     "remains": "Remains, days",
-    "start": "Start"
+    "start": "Start",
+    "activate_auto_renewal": "Activate auto-renewal of subscription",
+    "auto_renewal_terms_pre": "By activating auto-renewal of subscription I agree with",
+    "auto_renewal_terms_link": "Terms of automatic renewal"
   },
   "cookie_consent": {
     "text": "We care about you, so you have to agree to our cookie policy",

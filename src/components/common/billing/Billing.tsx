@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import style from './billing.module.scss'
-import { fetchUsersBillingData, unsubscribe } from "../../../actions/api/subscriptionsAPI";
-import { ISubscription, ITariffText } from "../../../constants/types";
+import { changeAutoRenewal, fetchUsersBillingData, unsubscribe } from '../../../actions/api/subscriptionsAPI'
+import { ISubscription, ITariffText } from '../../../constants/types'
 import { RiMoneyDollarBoxFill } from 'react-icons/ri'
-import { SERVICE } from "../../../constants/constants";
-import { useTranslation } from "react-i18next";
+import { SERVICE } from '../../../constants/constants'
+import { useTranslation } from 'react-i18next'
 import { useToasts } from 'react-toast-notifications'
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import { isBrowser } from "../../../helper/helper";
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+import { isBrowser } from '../../../helper/helper'
+import Checkbox from '../Inputs/checkbox/Checkbox'
+import { NavLink } from 'react-router-dom'
 
 const Billing: React.FC = () => {
     const { t } = useTranslation()
     const { addToast } = useToasts()
+    const { register, handleSubmit, errors } = useForm<{ mode: boolean }>()
 
     const freeTexts: ITariffText = t('prices:free', { returnObjects: true })
     const paidTexts: ITariffText = t('prices:paid', { returnObjects: true })
@@ -57,22 +61,28 @@ const Billing: React.FC = () => {
     const [tariff, setTariff] = useState<ISubscription>(basicTariff)
     const { membershipPlan: mp, startedDate, endedDate, autoPayment } = tariff
 
+    const [refreshTariffData, setRefreshTariffData] = useState(true)
+
     // Get current user subscriptions
     useEffect(() => {
-        fetchUsersBillingData().then((data) => {
-            if (Array.isArray(data)) {
-                const list: ISubscription[] = data.filter((item: ISubscription) => (
-                    item?.membershipPlan?.service === SERVICE && item.status === 1
-                ))
-                if (list.length > 0) {
-                    const currentTariff = list[0]
-                    setTariff(currentTariff)
-                }
-            } else {
-                console.log('Error: ', data)
-            }
-        })
-    }, [])
+        if (refreshTariffData) {
+            fetchUsersBillingData()
+                .then((data) => {
+                    if (Array.isArray(data)) {
+                        const list: ISubscription[] = data.filter((item: ISubscription) => (
+                            item?.membershipPlan?.service === SERVICE && item.status === 1
+                        ))
+                        if (list.length > 0) {
+                            const currentTariff = list[0]
+                            setTariff(currentTariff)
+                        }
+                    } else {
+                        console.log('Error: ', data)
+                    }
+                })
+                .finally(() => setRefreshTariffData(false))
+        }
+    }, [refreshTariffData])
 
     return (
         <div className={style.wrapper}>
@@ -126,10 +136,44 @@ const Billing: React.FC = () => {
                             </button>
                         </div>
                     )}
+
+                    {// todo check paid tariff plans
+                        (mp.id === 3 || mp.id === 4) && (
+                            <div className={style.renewal}>
+                                <Checkbox
+                                    isChecked={autoPayment}
+                                    handle={renewalHandle}
+                                    label={t('common:billing.activate_auto_renewal')}
+                                    {...{
+                                        name: 'mode'
+                                    }}
+                                />
+                                <p style={{ marginLeft: '33px', fontSize: '100%' }}>
+                                    {t('common:billing.auto_renewal_terms_pre')}
+                                    {' '}
+                                    <NavLink to="/automatic-renewal-terms">
+                                        {t('common:billing.auto_renewal_terms_link')}
+                                    </NavLink>
+                                </p>
+                            </div>
+                        )}
                 </div>
             )}
         </div>
     )
+
+    // TODO handle and display errors
+    function renewalHandle(e: React.ChangeEvent<HTMLInputElement>): void {
+        changeAutoRenewal(mp.id, e.target.checked)
+            .then((data) => {
+                if (data === 200 && 201) {
+                    setRefreshTariffData(true)
+                } else {
+                    console.log('Error')
+                }
+            })
+            .finally(() => setRefreshTariffData(true))
+    }
 
     function formatDate(dateString: string): string {
         const date = new Date(dateString)
@@ -157,8 +201,8 @@ const Billing: React.FC = () => {
                     onClick: () => unsubscribeUser(planId)
                 }
             ],
-            overlayClassName: "alert-overlay confirm-danger",
-        });
+            overlayClassName: 'alert-overlay confirm-danger'
+        })
     }
 
     function unsubscribeUser(id: number) {
@@ -169,7 +213,7 @@ const Billing: React.FC = () => {
                         appearance: 'success',
                         autoDismiss: true
                     })
-                    if(isBrowser) {
+                    if (isBrowser) {
                         location.reload()
                     }
                 } else {
