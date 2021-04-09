@@ -72,7 +72,7 @@ const Footer: React.FC = () => {
 
                         <div className="row between-sm">
                             <div className="col-lg-8">
-                                Requisites
+                                <Requisites />
                             </div>
                             <div className="col-lg-4"><FooterLinks /></div>
                         </div>

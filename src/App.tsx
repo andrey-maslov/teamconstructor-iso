@@ -67,14 +67,14 @@ const App: React.FC = () => {
                     <Route exact path="/team" render={() => <TeamCoopPage />} />
                     <Route exact path="/profile" render={() => <ProfilePage />} />
                     <Route path="/subscriptions" render={() => <SubscriptionsPage />} />
-                    {/*<Route exact path="/cookie-policy" render={() => <ContentPage page="cookie-policy" />} />*/}
-                    {/*<Route exact path="/privacy-policy" render={() => <ContentPage page="privacy-policy" />} />*/}
-                    {/*<Route exact path="/terms" render={() => <ContentPage page="terms" />} />*/}
-                    {/*<Route exact path="/payment-rules" render={() => <ContentPage page="payment-rules" />} />*/}
-                    {/*<Route exact path="/automatic-renewal-terms" render={() => <ContentPage page="automatic-renewal-terms" />} />*/}
-                    {/*<Route exact path="/rules-of-getting-and-cancelling" render={() => (*/}
-                    {/*    <ContentPage page="rules-of-getting-and-cancelling" />)*/}
-                    {/*} />*/}
+                    <Route exact path="/cookie-policy" render={() => <ContentPage page="cookie-policy" />} />
+                    <Route exact path="/privacy-policy" render={() => <ContentPage page="privacy-policy" />} />
+                    <Route exact path="/terms" render={() => <ContentPage page="terms" />} />
+                    <Route exact path="/payment-rules" render={() => <ContentPage page="payment-rules" />} />
+                    <Route exact path="/automatic-renewal-terms" render={() => <ContentPage page="automatic-renewal-terms" />} />
+                    <Route exact path="/rules-of-getting-and-cancelling" render={() => (
+                        <ContentPage page="rules-of-getting-and-cancelling" />)
+                    } />
                     <Route exact path="/signin" render={() => <AuthPage page="signin" />} />
                     <Route exact path="/signin/forgot-password" render={() => <AuthPage page="forgot_pwd" />} />
                     <Route exact path="/signin/forgot-password-success"

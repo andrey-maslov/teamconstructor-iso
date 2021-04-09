@@ -19,28 +19,27 @@ const FetchedContent: React.FC<{ page: string }> = ({ page }) => {
 
     const [content, setContent] = useState('')
     const { i18n } = useTranslation()
-    const lang = i18n.language
+    const lang = i18n.language.length > 2 ? i18n.language.slice(0, 2) : i18n.language
     const [isLoading, setLoading] = useState(false)
 
     useEffect(() => {
         fetchPageContent(page)
     }, [page, lang])
 
-
     if (isLoading) {
         return <main className='flex-centered'><Loader /></main>
     }
 
-
     return <div className="content" dangerouslySetInnerHTML={{ __html: content }} />
-
 
     function fetchPageContent(page: string) {
 
         setLoading(true)
 
         axios(`${CONTENT_API}/content-blocks/${pages[page]}`)
-            .then(res => setContent(res.data[`content_${lang}`]))
+            .then(res => {
+                setContent(res.data[`content_${lang}`])
+            })
             .catch(err => {
                 console.error(err)
                 setContent('data is not available')
