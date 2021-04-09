@@ -6,6 +6,7 @@ import LangSwitcherAlt from '../../buttons/lang-switcher-alt/LangSwitcherAlt'
 import style from './footer.module.scss'
 import { CONTACT_EMAIL } from '../../../../constants/constants'
 import PayProviders from '../PayProviders/PayProviders'
+import Requisites from './Requisites'
 
 const Footer: React.FC = () => {
 
@@ -71,10 +72,7 @@ const Footer: React.FC = () => {
 
                         <div className="row between-sm">
                             <div className="col-lg-8">
-                                <p>{t('common:footer.copy')}</p>
-                                <p>{t('common:footer.address')}</p>
-                                <p>{t('common:footer.UNP')}: 491497109</p>
-                                <p>{t('common:footer.bank')}</p>
+                                Requisites
                             </div>
                             <div className="col-lg-4"><FooterLinks /></div>
                         </div>
