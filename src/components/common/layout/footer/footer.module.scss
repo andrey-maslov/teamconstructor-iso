@@ -65,7 +65,8 @@
 }
 
 .copy {
-  padding: 1.5rem 0 .5rem;
+  margin-top: 2rem;
+  padding: 2rem 0 .5rem;
   border-top: 1px solid rgba(#fff, .1);
   font-size: 14px;
 
@@ -185,7 +186,7 @@
 
 
   .copy {
-    padding: 20px 0;
+    padding: 2rem 0;
 
     div {
 
@@ -200,4 +201,9 @@
     }
 
   }
+}
+
+@media(max-width: 992px) {
+
+
 }

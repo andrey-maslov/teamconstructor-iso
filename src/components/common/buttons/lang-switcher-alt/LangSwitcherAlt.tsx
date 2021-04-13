@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import OutsideClickHandler from 'react-outside-click-handler'
-import { fetchContent, fetchTerms } from '../../../../actions/actionCreator'
+import { fetchContent, fetchTerms } from '../../../../actions/api/termsAPI'
 import { LANGS } from '../../../../constants/constants'
 import { Popover } from '../../popovers/Popover'
 import style from './lang-switcher-alt.module.scss'
 import { useTranslation } from 'react-i18next'
 import { isBrowser, stripCountry } from '../../../../helper/helper'
+import { GrLanguage } from 'react-icons/gr'
 import Cookie from 'js-cookie'
 
 const LangSwitcherAlt: React.FC = () => {
@@ -55,8 +56,8 @@ const LangSwitcherAlt: React.FC = () => {
                     }}
                     suppressHydrationWarning={true}
                 >
+                    <GrLanguage />
                     {currentLangLabel}
-
                 </button>
 
                 <Popover isVisible={isOpen} className={`lang-popover-alt ${style.popover}`}>

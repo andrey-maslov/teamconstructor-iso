@@ -14,9 +14,13 @@ import Checkbox from '../Inputs/checkbox/Checkbox'
 import { NavLink } from 'react-router-dom'
 
 const Billing: React.FC = () => {
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
     const { addToast } = useToasts()
     const { register, handleSubmit, errors } = useForm<{ mode: boolean }>()
+
+    const pdfLink = i18n.language === 'ru'
+        ? 'teamconstructor_руководство_пользователя.pdf'
+        : 'teamconstructor_user_manual.pdf'
 
     const freeTexts: ITariffText = t('prices:free', { returnObjects: true })
     const paidTexts: ITariffText = t('prices:paid', { returnObjects: true })
@@ -154,6 +158,14 @@ const Billing: React.FC = () => {
                                     <NavLink to="/automatic-renewal-terms">
                                         {t('common:billing.auto_renewal_terms_link')}
                                     </NavLink>
+                                    {`, ${t('common:billing.agree_with')} `}
+                                    <NavLink to="/terms">
+                                        {t('common:billing.terms')}
+                                    </NavLink>
+                                    {` ${t('common:billing.and')} `}
+                                    <a href={`/documents/${pdfLink}`} target="_blank" rel="noreferrer">
+                                        {t('common:billing.user_manual')}
+                                    </a>
                                 </p>
                             </div>
                         )}
