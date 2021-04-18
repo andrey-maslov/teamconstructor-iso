@@ -117,6 +117,8 @@
     "confirm_email": "Подтверждение email",
     "email_send_success": "Email будет изменен после подтверждения",
     "need_to_set_email": "Вам нужно заполнить email",
+    "email_sent": "Письмо отправлено",
+    "resend_email": "Не пришло письмо для подтверждения?",
     "delete": {
       "delete_account": "Удалить аккаунт",
       "btn": "Удалить аккаунт",

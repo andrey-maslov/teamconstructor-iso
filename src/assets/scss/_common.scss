@@ -103,6 +103,19 @@ body {
   }
 }
 
+.link {
+  background-color: transparent;
+  border: 0;
+  color: currentColor;
+  text-decoration: underline;
+  font-weight: 400;
+  cursor: pointer;
+
+  &:hover {
+    color: $orange;
+  }
+}
+
 /*===== LANDING PAGE =====*/
 
 .page-main {

@@ -110,6 +110,8 @@
     "subscr_block_title": "Subscription",
     "welcome": "Welcome to Teamconstructor!",
     "need_to_set_email": "You should set email",
+    "email_sent": "Email sent",
+    "resend_email": "Didn't receive confirmation email?",
     "delete": {
       "are_you_sure": "Are you sure?",
       "delete_account": "Delete account",

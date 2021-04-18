@@ -8,10 +8,13 @@ import { NavLink } from 'react-router-dom'
 import Loader from '../../../components/common/loaders/loader/Loader'
 import InputTransformer from '../../../components/common/Inputs/input-transformer/InputTransformer'
 import CodeBox from '../../../components/common/Inputs/code-box/CodeBox'
-import { DANGER_MODAL, SET_TOAST } from '../../../actions/actionTypes'
+import { CLEAR_USER_DATA, DANGER_MODAL, SET_TOAST } from '../../../actions/actionTypes'
 import { changeEmail, updateUserData } from "../../../actions/api/accountAPI"
-import { TEST_URL } from "../../../constants/constants";
+import { SERVICE, TEST_URL } from '../../../constants/constants'
 import Billing from "../../../components/common/billing/Billing";
+import { getCookieFromBrowser } from '../../../helper/cookie'
+import { accountApiUrl, getAuthConfig } from '../../../actions/api/utils'
+import axios from 'axios'
 
 const UserProfile = () => {
     const {
@@ -37,6 +40,13 @@ const UserProfile = () => {
         lastName,
         email,
         position,
+    })
+
+    const [resendEmailConf, setResendEmailConf] = useState({
+        send: false,
+        isLoading: false,
+        isError: false,
+        isSuccess: false
     })
 
     useEffect(() => {
@@ -75,9 +85,45 @@ const UserProfile = () => {
         dispatch
     ])
 
-    // if (!isReady) {
-    //     return <Loader />
-    // }
+    useEffect(() => {
+        function resendEmailConfirmation() {
+            const token = getCookieFromBrowser('token')
+            const url = `${accountApiUrl}/resend-email-confirmation`
+            if (token) {
+                setResendEmailConf({ ...resendEmailConf, isLoading: true })
+                axios
+                    .post(url, { email, service: SERVICE }, getAuthConfig(token))
+                    .then(() =>
+                        setResendEmailConf({
+                            send: false,
+                            isLoading: false,
+                            isError: false,
+                            isSuccess: true
+                        })
+                    )
+                    .catch(() =>
+                        setResendEmailConf({
+                            send: false,
+                            isLoading: false,
+                            isError: true,
+                            isSuccess: false
+                        })
+                    )
+            } else {
+                dispatch({ type: CLEAR_USER_DATA })
+            }
+        }
+
+        if (resendEmailConf.send) {
+            resendEmailConfirmation()
+        }
+
+        if (resendEmailConf.isSuccess) {
+            setTimeout(() => {
+                setResendEmailConf({ ...resendEmailConf, isSuccess: false })
+            }, 5000)
+        }
+    }, [resendEmailConf.send])
 
     if (!isLoggedIn) {
         return (
@@ -142,6 +188,17 @@ const UserProfile = () => {
                     {!email && <span className="color-red">
                         {t('common:profile.need_to_set_email')}
                     </span>}
+                    {email && !emailConfirmed && (
+                        <button
+                            className="link"
+                            onClick={() => setResendEmailConf({ ...resendEmailConf, send: true })}
+                            disabled={resendEmailConf.isSuccess}
+                            style={{ marginLeft: '5px' }}>
+                            {resendEmailConf.isSuccess
+                                ? t('common:profile.email_sent')
+                                : t('common:profile.resend_email')}
+                        </button>
+                    )}
                 </h5>
                 <div className={`${style.box_content}`}>
                     <div className={style.list}>
