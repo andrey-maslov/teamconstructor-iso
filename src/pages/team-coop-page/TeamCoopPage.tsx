@@ -9,8 +9,8 @@ import CreateProject from '../../components/common/team-coop/create-project/Crea
 import BoardInfo from '../../components/common/team-coop/board-info/BoardInfo'
 import { useTranslation } from 'react-i18next'
 import { useMediaPredicate } from "react-media-hook"
-import { isPremiumUser } from "../../helper/helper";
-import { PREMIUM_ACCESS_LIST } from "../../constants/constants";
+import { checkUserAccess } from "../../helper/helper";
+import { EXTENDED_ACCESS_LIST } from "../../constants/constants";
 
 const TeamCoopPage: React.FC = () => {
 
@@ -22,7 +22,7 @@ const TeamCoopPage: React.FC = () => {
     const { isLoading } = useSelector((state: globalStoreType) => state.app)
 
 
-    if (!isLoggedIn || !isPremiumUser<number>(PREMIUM_ACCESS_LIST, tariffId)) {
+    if (!isLoggedIn || !checkUserAccess<number>(EXTENDED_ACCESS_LIST, tariffId)) {
         return (
             <main className="flex-centered text-center main">
                 <NavLink to="/signin">{t('common:errors.need_to_authorize')}</NavLink>

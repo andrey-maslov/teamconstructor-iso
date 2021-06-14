@@ -9,8 +9,8 @@ import { RiTeamLine } from 'react-icons/ri'
 import { globalStoreType, INavRoute } from '../../../../constants/types'
 import { useTranslation } from 'react-i18next'
 import { confirmAlert } from "react-confirm-alert";
-import { isPremiumUser } from "../../../../helper/helper";
-import { PREMIUM_ACCESS_LIST } from "../../../../constants/constants";
+import { checkUserAccess } from "../../../../helper/helper";
+import { EXTENDED_ACCESS_LIST } from "../../../../constants/constants";
 
 const Header: React.FC = () => {
 
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
         { title: t('common:nav.profile'), path: '/profile', access: 'auth', icon: <FiSettings /> },
     ]
     const routesToDisplay: INavRoute[] = routes.filter(route => {
-        if (isLoggedIn && isPremiumUser(PREMIUM_ACCESS_LIST, tariffId)) {
+        if (isLoggedIn && checkUserAccess(EXTENDED_ACCESS_LIST, tariffId)) {
             return route
         } else if (isLoggedIn) {
             return route.access === 'all' || route.access === 'auth'

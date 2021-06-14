@@ -55,7 +55,6 @@ const Auth: React.FC<IAuthMode> = ({ page }) => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            console.log('redirect to profile')
             history.push('/profile')
         }
     }, [isLoggedIn])

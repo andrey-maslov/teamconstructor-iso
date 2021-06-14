@@ -205,7 +205,7 @@ export function extractEncData(data: string): {
     return getAndDecodeData('', decodeURIComponent(params.encdata))
 }
 
-export function isPremiumUser<T>(checkList: T[], value: T): boolean {
+export function checkUserAccess<T>(checkList: T[], value: T): boolean {
     if (!Array.isArray(checkList)) {
         return false
     }

@@ -13,7 +13,12 @@ import { FiPlus, FiSearch } from 'react-icons/fi'
 import { useTranslation } from "react-i18next"
 import FilterPanel from "./filter-panel/FilterPanel";
 import { confirmAlert } from "react-confirm-alert";
-import { TEAM_LENGTH_NORMAL } from "../../../constants/constants";
+import {
+    PREMIUM_ACCESS_LIST,
+    TEAM_LENGTH_NORMAL,
+    TEAMS_NUMBER_LIMIT_FOR_FREE_TARIFF
+} from '../../../constants/constants'
+import { checkUserAccess } from '../../../helper/helper'
 
 // src:  https://codesandbox.io/s/react-drag-and-drop-react-beautiful-dnd-w5szl?file=/src/index.js:1565-4901
 // with copy element:  https://codesandbox.io/s/react-beautiful-dnd-copy-and-drag-5trm0?from-embed
@@ -64,6 +69,7 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 const DraggableZone: React.FC = () => {
 
     const { teams, id }: {teams: ITeam[], id: string} = useSelector((state: globalStoreType) => state.team.activeProject)
+    const { tariffId } = useSelector((state: globalStoreType) => state.user)
     const staff: ITeam | Record<string, unknown> = teams ? teams[0] : {}
     const dispatch = useDispatch()
     const { addToast } = useToasts()
@@ -74,6 +80,9 @@ const DraggableZone: React.FC = () => {
     const [filterValue, setFilterValue] = useState<string>('')
     // list of members baseID to hide when use filter
     const [membersToHide, setMembersToHide] = useState<number[]>([])
+
+    const isPremiumUser = checkUserAccess(PREMIUM_ACCESS_LIST, tariffId)
+    const isLimitReached = !isPremiumUser && teams.length >= TEAMS_NUMBER_LIMIT_FOR_FREE_TARIFF + 1
 
     useEffect(() => {
         if (staff && staff?.items) {
@@ -147,7 +156,7 @@ const DraggableZone: React.FC = () => {
                     />}
                 </Box>
 
-                <Box title={t('team:team_plural')} addClass={'teams-area'} widget={teamsWidget}>
+                <Box title={t('team:team_plural')} addClass={'teams-area'} widget={!isLimitReached ? teamsWidget : null}>
                     <div className={'teams-wrapper'}>
                         {isReady && teams.slice(1).map((team, i) => (
                             <div key={i}>
@@ -167,9 +176,11 @@ const DraggableZone: React.FC = () => {
 
                             </div>
                         ))}
-                        <button className="btn-add-team" aria-label="add-team" onClick={addTeam}>
-                            <span /><span />
-                        </button>
+                        {!isLimitReached && (
+                            <button className="btn-add-team" aria-label="add-team" onClick={addTeam}>
+                                <span /><span />
+                            </button>
+                        )}
                     </div>
                 </Box>
 
