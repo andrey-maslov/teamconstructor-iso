@@ -96,6 +96,17 @@ i18n
                         const indexHTML = `<!doctype html>
                                             <html lang="${ initLang }">
                                             <head>
+                                                
+                                                <!-- Global site tag (gtag.js) - Google Analytics -->
+                                                <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVBW3DNY8K"></script>
+                                                <script>
+                                                  window.dataLayer = window.dataLayer || [];
+                                                  function gtag(){dataLayer.push(arguments);}
+                                                  gtag('js', new Date());
+                                                
+                                                  gtag('config', 'G-ZVBW3DNY8K');
+                                                </script>
+                                                
                                                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                                                 <meta charSet='utf-8' />
                                                 <meta name="description" content="${ initialI18nStore[initLang].landing && initialI18nStore[initLang].landing.meta.description }">
