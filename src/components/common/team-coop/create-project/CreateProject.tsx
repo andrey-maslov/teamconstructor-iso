@@ -53,6 +53,7 @@ const CreateProject: React.FC = () => {
     );
 
     function submitForm(data: IForm): void {
+        gtag('event', 'click', { 'target': 'create_project' });
         const newProject: Omit<IProject, 'id'> = {
             title: data.title,
             pool: { title: 'pool', id: 0, items: [] },

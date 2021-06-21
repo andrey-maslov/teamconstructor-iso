@@ -104,7 +104,7 @@ i18n
                                                   function gtag(){dataLayer.push(arguments);}
                                                   gtag('js', new Date());
                                                 
-                                                  gtag('config', 'G-ZVBW3DNY8K');
+                                                  // gtag('config', 'G-ZVBW3DNY8K');
                                                 </script>
                                                 
                                                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />

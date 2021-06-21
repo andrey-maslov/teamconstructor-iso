@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Switch, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ToastProvider } from 'react-toast-notifications'
@@ -33,6 +33,13 @@ const App: React.FC = () => {
                             ${getPageClass(pathname)} 
                             ${isLoggedIn ? 'authorized' : 'unauthorized'}
                             ${projects.length ? 'with-sidebar' : ''}`
+
+    useEffect(() => {
+        window.gtag("config", "G-ZVBW3DNY8K", {
+            page_title: pathname,
+            page_path: pathname,
+        })
+    }, [pathname]);
 
     if (IS_UNDER_CONSTR) {
         return (
