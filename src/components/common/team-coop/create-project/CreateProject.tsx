@@ -8,6 +8,7 @@ import Button from "../../buttons/button/Button"
 import style from './create-project.module.scss'
 import { SET_ERROR } from "../../../../actions/actionTypes"
 import { useTranslation } from "react-i18next"
+import * as gtag from '../../../../helper/gtag';
 
 interface IForm {
     title: string
@@ -53,7 +54,7 @@ const CreateProject: React.FC = () => {
     );
 
     function submitForm(data: IForm): void {
-        gtag('event', 'click', { 'target': 'create_project' });
+        gtag.event('click', 'new_project', 'create', data.title);
         const newProject: Omit<IProject, 'id'> = {
             title: data.title,
             pool: { title: 'pool', id: 0, items: [] },
