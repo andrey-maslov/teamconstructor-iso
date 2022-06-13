@@ -30,8 +30,8 @@ const LangSwitcherAlt: React.FC = () => {
         i18n.changeLanguage(lng)
             .then(() => {
                 Cookie.set("i18next", lng)
-                dispatch(fetchTerms(lng))
-                dispatch(fetchContent(lng))
+                // dispatch(fetchTerms(lng))
+                // dispatch(fetchContent(lng))
                 // localizeMeta(lng)
                 if (isOpen) {
                     setIsOpen(false)
@@ -40,8 +40,8 @@ const LangSwitcherAlt: React.FC = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchTerms(currentLang))
-        dispatch(fetchContent(currentLang))
+        // dispatch(fetchTerms(currentLang))
+        // dispatch(fetchContent(currentLang))
     }, [])
 
     return (

@@ -9,13 +9,14 @@ import { BsTable } from 'react-icons/bs'
 import KeyIndicator from '../../result-common/key-indicator/KeyIndicator'
 import { useTranslation } from 'react-i18next'
 import { toPercent } from '../../../../helper/helper'
+import terms from './../../../../terms.json'
+import descriptions from './../../../../descriptions.json'
 
 const PairCoopOutput: React.FC = () => {
 
     const { t } = useTranslation()
 
     //Initial data
-    const { terms, descriptions } = useSelector((state: globalStoreType) => state.terms)
     const { partner1, partner2, isComparisonResultReady } = useSelector((state: globalStoreType) => state.pair)
     const { name: name1, data: data1 } = partner1
     const { name: name2, data: data2 } = partner2

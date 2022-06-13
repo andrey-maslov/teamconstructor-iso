@@ -40,7 +40,7 @@ const LangSwitcher: React.FC<LangSwitcherProps> = ({fetchTerms}) => {
 
     useEffect(() => {
         let lng = currentLang === 'ru' ? 'ru' : 'en'
-        fetchTerms(lng);
+        // fetchTerms(lng);
     }, [])
 
 

@@ -9,10 +9,10 @@ import { FiRefreshCw } from "react-icons/fi"
 import CompareLoader from "../../components/common/loaders/compare-loader/CompareLoader"
 import { useTranslation } from "react-i18next"
 import { CLEAR_PAIR_DATA } from "../../actions/actionTypes"
+import terms from './../../terms.json'
 
 const PairCoopPage: React.FC = () => {
 
-    const { terms } = useSelector((state: any) => state.terms)
     const isCompareReady: boolean = useSelector((state: any) => state.pair.isComparisonResultReady)
     const isComparisonInProcess: boolean = useSelector((state: any) => state.pair.isComparisonInProcess)
     const dispatch = useDispatch()
